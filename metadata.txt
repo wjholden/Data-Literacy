@@ -1,0 +1,9 @@
+---
+title: "Data Literacy"
+author: "William John Holden"
+language: en-US
+
+documentclass: book
+bibliography: references.bib
+csl: https://www.zotero.org/styles/ieee-with-url
+---

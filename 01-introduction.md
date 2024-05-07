@@ -224,17 +224,17 @@ R includes several built-in data sets.
 In the *read-evaluate-print loop* (*REPL*), enter
 
 ```
-head(mtcars)
+> head(mtcars)
 ```
 
 to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
 Now enter the following commands to quickly visualize a few columns in the data set.
 
 ```
-barplot(mtcars$cyl)
-boxplot(mtcars$mpg)
-hist(mtcars$mpg)
-plot(mtcars$wt, mtcars$mpg)
+> barplot(mtcars$cyl)
+> boxplot(mtcars$mpg)
+> hist(mtcars$mpg)
+> plot(mtcars$wt, mtcars$mpg)
 ```
 
 ## Linear and logarithmic scales

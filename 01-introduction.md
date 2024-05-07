@@ -7,26 +7,25 @@ A *statistic* is an estimate of a *parameter*, which is a characteristic of an e
 Statistics are calculated from taking *samples* (subsets) from the population.
 
 For example, suppose we wanted to find the height of the tallest mountain in the world.
-We might sample $n=100$ mountains at random from an almanac.
+We might sample $n=\num{100}$ mountains at random from an almanac.
 Suppose the tallest mountain in our sample is Mount Fuji.
-Mount Fuji, the tallest mountain in Japan, is 3776 meters tall.
-We can conclude that the tallest mountain in the world is *at least* 3776 meters tall.
+Mount Fuji, the tallest mountain in Japan, is $\num{3776}$ meters tall.
+We can conclude that the tallest mountain in the world is *at least* $\num{3776}$ meters tall.
 
 Our estimate is unfortunately quite low.
-Mount Everest in Nepal, the *highest* mountain in the world, stands 8849 meters above sea level.
-Mauna Kea in Hawai'i, the *tallest* mountain in the world, stands 4207 meters above sea level and another 6004 meters below.
+Mount Everest in Nepal, the *highest* mountain in the world, stands $\num{8849}$ meters above sea level.
+Mauna Kea in Hawai'i, the *tallest* mountain in the world, stands $\num{4207}$ meters above sea level and another $\num{6004}$ meters below.
 Our estimates of population parameters, *statistics*, generally improve with larger sample sizes, and many statistical methods provide a *margin of error* quantifying sampling error.
 
 One might use statistics to create a *model* to explain a population, based upon sampling data.
 Models can be useful both for describing the population and also for forming predictions.
 
-## Nominal, ordinal, interval, and ratio variables 
+## Levels of measurement
 
-There are several classes of data that a variable might fit into.
+There are four distinct *levels of measurement* that a value may fit.
 *Nominal* data is simply names or categories, with no concept of order or distance.
 A movie might be animated or live-action: these are simple categories or order.
-The name of the nation where the movie was filmed is another example of nominal data.
-Simple yes and no categories are also nominal data, such as whether a film does or does not have a sequel.
+Another example might be the film's genre (children, comedy, action, romance, documentary, etc).
 
 *Ordinal* data has ordering but not distance.
 Ordinal data might be represented as ordered categories or as numerals, though these numerals do not provide meaningful addition and subtraction.
@@ -35,7 +34,7 @@ Another example of ordinal might be the rankings the films receive at an awards 
 
 *Interval* data is numerical data with a concept of distance but not multiplication.
 The year when a film was produced is an example of interval data.
-If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $2010/2000 = 1.005$ times the first.
+If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $$\num{2010}/$\num{2000} = 1.005$ times the first.
 
 *Ratio* data is numerical data with both distance and multiplication.
 The gross earnings of a film is an example of ratio data.
@@ -65,7 +64,7 @@ AI methods sometimes make incorrect assumptions about data that domain experts c
 ## Discretization 
 
 Measurements with arbitrarily many decimal digits of precision are *continuous*, whereas measurements with finite steps in between (including categories) are *discrete*.
-For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between 150 and 151.
+For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between $\num{150}$ and $\num{151}$.
 On the other hand, the grid coordinates associated with each address are continuous; one could (theoretically) specify grid coordinates to the nanometer.
 
 It can be useful to combine continuous measurements into discrete categories.
@@ -77,7 +76,7 @@ Combining a range of birth years into generational categories is an example of *
 
 ## Missing values
 
-In practice, data sets are often missing values.
+In practice, sets of data (a *data set*) are often missing values.
 Different programming languages have substantially different syntax and semantics for representing and handling missing values.
 
 As a small exercise, open Microsoft Excel and enter the values 1, 2, 3, and 5 into cells A1, A2, A3, and A5.
@@ -98,7 +97,8 @@ If we enter a formula into A7 referencing A6, such as `=SQRT(A6)`, then we will 
 
 Structured Query Language (SQL) databases use the symbol `NULL` to denote missing values.
 One might build the database *schema* (the structure of the database) to explicitly forbid `NULL` values.
-For example, `CREATE TABLE Race (Name TEXT NOT NULL, Time INTEGER NOT NULL)` creates a table of run times where both the name and the time must be specified.
+For example, `CREATE TABLE Run (Name TEXT NOT NULL, Time INTEGER NOT NULL, Distance REAL NOT NULL)` defines a table *schema* where each of the three columns must be specified.
+Many programming languages (including C, Java, and JavaScript) also use the term `null` for variables that do not reference any specific value.
 
 Many programming languages support a `NaN` ("not a number") value in error conditions.
 One might encounter `NaN` when dividing by zero, subtracting infinities, and parsing non-numeric words as numbers.
@@ -147,13 +147,13 @@ Data analysts can benefit greatly by using the appropriate types for the values 
 
 ## Tables, lists, and data frames 
 
-*Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* in the data set and the columns represent the *features*.
+*Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* or *observations* in the data set and the columns represent the *features*.
 For example, a table of employee names might have two columns (the given and surnames) and ten rows, where each row represents one of the ten employees.
 
 In computer science, the terms *list* and *array* both refer to single-column tables, but with different internal memory representation.
 The distinction is usually unimportant to data analysts.
 
-Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*).
+Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*) as their method for representing tables of data.
 Data frames often provide rich syntax for row-wise and column-wise operations.
 By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
 
@@ -199,11 +199,103 @@ Remember that the different in ratio and interval data was that *multiplication*
 Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
 Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
 
-## Box plot, scatter plot, bar plot, and histogram 
+## Data visualization with plots
 
-## Linear and logarithmic scales 
+*Plots* allow us to visualize data.
+Good plots help us to quickly intuit patterns in the data that might otherwise be difficult to understand.
 
-## Functions 
+(Note: the term *graph* has different definitions in lower and higher mathematics.
+We will explain the term graph later.
+For now, use the term "plot" as the verb and noun for visualizing data with graphics.)
+
+The *bar plot* helps us to compare the count each category in a discrete (or discretized) variable.
+The *box plot* helps us to see the center and variation of a numerical variable.
+The *histogram* also helps us to see the center and variation of a numerical variable, often producing the familiar *bell curve* shape, where the height of the curve indicates the count of observations within the range of each "bin."
+A histogram is essentially a set of bar plots over discretized numerical values.
+
+A *scatter plot* (sometimes called an $XY$ plot) uses $x$ and $y$ axes to show relationships between two variables.
+One can also color and shape the points to show third and fourth variables.
+Three-dimensional $XYZ$ plots are sometimes useful, especially in video and interactive presentations.
+
+As a small exercise to experiment with these four plots, go to https://webr.r-wasm.org/latest/ to use the R language in a web browser.
+R is a programming language for statistics and data visualization.
+
+R includes several built-in data sets.
+In the *read-evaluate-print loop* (*REPL*), enter
+
+```
+> head(mtcars)
+```
+
+to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
+Now enter the following commands to quickly visualize a few columns in the data set.
+
+```
+> barplot(mtcars$cyl)
+> boxplot(mtcars$mpg)
+> hist(mtcars$mpg)
+> plot(mtcars$wt, mtcars$mpg)
+```
+
+## Linear and logarithmic scales
+
+Scientists use the term *order of magnitude* to compare values only by the power of $10$.
+One would say $a = 1.6 \times 10^{3}$ is three orders of magnitude smaller than $b = 8.3 \times 10^{6}$,
+which is to say $b/a \approx \num{1000}$.
+
+The *scale* of an axis, such as in bar plot, is the spacing between values.
+A *linear scale* might show marks at 10, 20, 30, 40, and so on.
+A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, and so on.
+
+Logarithmic scales can be useful for comparing values that differ by more than one order of magnitude.
+For example, suppose feature of a data set contains categories $a$, $b$, $c$, and $d$, and the count of each category is
+
+| Category | Count        |
+|----------|--------------|
+| $a$      | $\num{10736} |
+| $b$      | $\num{1711}  |
+| $c$      | $\num{398}   |
+| $d$      | $\num{319}   |
+
+## Sets, relations, and functions
+
+We now introduce a few terms from *discrete mathematics* that are fundamental to all analysis.
+A *set* is an unordered collection of *distinct* elements.
+Sets may be finite or infinite in size.
+An example of a set might be
+
+$$
+W = \left\{
+\textrm{Sunday},
+\textrm{Monday},
+\textrm{Tuesday},
+\textrm{Wednesday},
+\textrm{Thursday},
+\textrm{Friday},
+\textrm{Saturday}
+\right\}
+$$
+
+A *relation* is an association (if present) between members of sets.
+Relations can be used to model any relationship between members any two sets, or even members in the same set.
+An example might be the relation between integers and elements of $W$ with that many letters, i.e. 6 has a relation on Sunday, Monday, and Friday, 7 has a relation on Tuesday, 8 has a relation on Thursday and Saturday, and 9 has a relation on Wednesday.
+The term "relation" is seldom used outside of discrete mathematics, but there is a *special case* of a relation that occurs in all mathematical disciplines: *functions*.
+
+A *function* is a relation that uniquely relates members of one set (the *domain*) to another set (the *range*).
+An example of some functions might be:
+
+$$
+\begin{aligned}
+\textrm{Translate} \left( \textrm{Monday}, \textrm{English}, \textrm{German} \right) &= \textrm{Montag} \\
+\textrm{Length} \left( Wednesday \right) &= 9 \\
+\textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\}
+$$
+
+Each of these functions accepts one or more *arguments* and returns the unique corresponding value (if any) from its range.
+It might be look like the third function, DaysOfLength, has returned three values, but in fact this function has returned a set which contains three values.
+
+Many programming languages use the term "function" as a synonym for *procedure*, *subroutine*, and *method*.
+Functions are "pure" if they have no side-effects (such as mutating a shared or internal value).
 
 ## Discussion prompts
 
@@ -211,9 +303,9 @@ Depending on the problem domain, it may be inappropriate to use matrices and vec
 
 2. What are good and bad uses for spreadsheets? 
 
-3. What is reproducibility and why would this be important for scientific inquiry? 
+3. What is reproducibility? Why would this be important for scientific inquiry? 
 
-4. Why is a pie chart not recommended? 
+4. Like a barplot, a pie chart shows the relative sizes of categorical values. What are some disadvantages of using pie charts?
 
 ## Practical exercises
 
@@ -224,5 +316,4 @@ Depending on the problem domain, it may be inappropriate to use matrices and vec
 3. Discretize the values of a dataset and explain the reasoning. 
 
 4. Be creative and construct intentionally misleading plots that deliberately distort information presented.  
-
 

@@ -77,7 +77,7 @@ Combining a range of birth years into generational categories is an example of *
 
 ## Missing values
 
-In practice, data sets are often missing values.
+In practice, sets of data (a *data set*) are often missing values.
 Different programming languages have substantially different syntax and semantics for representing and handling missing values.
 
 As a small exercise, open Microsoft Excel and enter the values 1, 2, 3, and 5 into cells A1, A2, A3, and A5.
@@ -99,6 +99,7 @@ If we enter a formula into A7 referencing A6, such as `=SQRT(A6)`, then we will 
 Structured Query Language (SQL) databases use the symbol `NULL` to denote missing values.
 One might build the database *schema* (the structure of the database) to explicitly forbid `NULL` values.
 For example, `CREATE TABLE Race (Name TEXT NOT NULL, Time INTEGER NOT NULL)` creates a table of run times where both the name and the time must be specified.
+Many programming languages (including C, Java, and JavaScript) also use the term `null` for variables that do not reference any specific value.
 
 Many programming languages support a `NaN` ("not a number") value in error conditions.
 One might encounter `NaN` when dividing by zero, subtracting infinities, and parsing non-numeric words as numbers.
@@ -153,7 +154,7 @@ For example, a table of employee names might have two columns (the given and sur
 In computer science, the terms *list* and *array* both refer to single-column tables, but with different internal memory representation.
 The distinction is usually unimportant to data analysts.
 
-Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*).
+Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*) as their method for representing tables of data.
 Data frames often provide rich syntax for row-wise and column-wise operations.
 By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
 
@@ -222,6 +223,22 @@ Three-dimensional $XYZ$ plots are sometimes useful, especially in video and inte
 Scientists use the term *order of magnitude* to compare values only by the power of $10$.
 One would say $a = 1.6 \times 10^{3}$ is three orders of magnitude smaller than $b = 8.3 \times 10^{6}$,
 which is to say $b/a \approx \num{1000}$.
+
+The *scale* of an axis, such as in bar plot, is the spacing between values.
+A *linear scale* might show marks at 10, 20, 30, 40, and so on.
+A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, and so on.
+
+Logarithmic scales can be useful for comparing values that differ by more than one order of magnitude.
+For example, suppose feature of a data set contains categories $a$, $b$, $c$, and $d$, and the count of each category is
+
+| Category | Count        |
+|----------|--------------|
+| $a$      | $\num{10736} |
+| $b$      | $\num{1711}  |
+| $c$      | $\num{398}   |
+| $d$      | $\num{319}   |
+
+
 
 ## Functions 
 

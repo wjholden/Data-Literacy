@@ -7,14 +7,14 @@ A *statistic* is an estimate of a *parameter*, which is a characteristic of an e
 Statistics are calculated from taking *samples* (subsets) from the population.
 
 For example, suppose we wanted to find the height of the tallest mountain in the world.
-We might sample $n=100$ mountains at random from an almanac.
+We might sample $n=\num{100}$ mountains at random from an almanac.
 Suppose the tallest mountain in our sample is Mount Fuji.
-Mount Fuji, the tallest mountain in Japan, is 3776 meters tall.
-We can conclude that the tallest mountain in the world is *at least* 3776 meters tall.
+Mount Fuji, the tallest mountain in Japan, is $\num{3776}$ meters tall.
+We can conclude that the tallest mountain in the world is *at least* $\num{3776}$ meters tall.
 
 Our estimate is unfortunately quite low.
-Mount Everest in Nepal, the *highest* mountain in the world, stands 8849 meters above sea level.
-Mauna Kea in Hawai'i, the *tallest* mountain in the world, stands 4207 meters above sea level and another 6004 meters below.
+Mount Everest in Nepal, the *highest* mountain in the world, stands $\num{8849}$ meters above sea level.
+Mauna Kea in Hawai'i, the *tallest* mountain in the world, stands $\num{4207}$ meters above sea level and another $\num{6004}$ meters below.
 Our estimates of population parameters, *statistics*, generally improve with larger sample sizes, and many statistical methods provide a *margin of error* quantifying sampling error.
 
 One might use statistics to create a *model* to explain a population, based upon sampling data.
@@ -35,7 +35,7 @@ Another example of ordinal might be the rankings the films receive at an awards 
 
 *Interval* data is numerical data with a concept of distance but not multiplication.
 The year when a film was produced is an example of interval data.
-If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $2010/2000 = 1.005$ times the first.
+If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $$\num{2010}/$\num{2000} = 1.005$ times the first.
 
 *Ratio* data is numerical data with both distance and multiplication.
 The gross earnings of a film is an example of ratio data.
@@ -65,7 +65,7 @@ AI methods sometimes make incorrect assumptions about data that domain experts c
 ## Discretization 
 
 Measurements with arbitrarily many decimal digits of precision are *continuous*, whereas measurements with finite steps in between (including categories) are *discrete*.
-For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between 150 and 151.
+For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between $\num{150}$ and $\num{151}$.
 On the other hand, the grid coordinates associated with each address are continuous; one could (theoretically) specify grid coordinates to the nanometer.
 
 It can be useful to combine continuous measurements into discrete categories.
@@ -147,7 +147,7 @@ Data analysts can benefit greatly by using the appropriate types for the values 
 
 ## Tables, lists, and data frames 
 
-*Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* in the data set and the columns represent the *features*.
+*Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* or *observations* in the data set and the columns represent the *features*.
 For example, a table of employee names might have two columns (the given and surnames) and ten rows, where each row represents one of the ten employees.
 
 In computer science, the terms *list* and *array* both refer to single-column tables, but with different internal memory representation.
@@ -199,9 +199,29 @@ Remember that the different in ratio and interval data was that *multiplication*
 Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
 Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
 
-## Box plot, scatter plot, bar plot, and histogram 
+## Bar plot, box plot, histogram, and scatter plot
 
-## Linear and logarithmic scales 
+*Plots* allow us to visualize data.
+Good plots help us to quickly intuit patterns in the data that might otherwise be difficult to understand.
+
+(Note: the term *graph* has different definitions in lower and higher mathematics.
+We will explain the term graph later.
+For now, use the term "plot" as the verb and noun for visualizing data with graphics.)
+
+The *bar plot* helps us to compare the count each category in a discrete (or discretized) variable.
+The *box plot* helps us to see the center and variation of a numerical variable.
+The *histogram* also helps us to see the center and variation of a numerical variable, often producing the familiar *bell curve* shape, where the height of the curve indicates the count of observations within the range of each "bin."
+A histogram is essentially a set of bar plots over discretized numerical values.
+
+A *scatter plot* (sometimes called an $XY$ plot) uses $x$ and $y$ axes to show relationships between two variables.
+One can also color and shape the points to show third and fourth variables.
+Three-dimensional $XYZ$ plots are sometimes useful, especially in video and interactive presentations.
+
+## Linear and logarithmic scales
+
+Scientists use the term *order of magnitude* to compare values only by the power of $10$.
+One would say $a = 1.6 \times 10^{3}$ is three orders of magnitude smaller than $b = 8.3 \times 10^{6}$,
+which is to say $b/a \approx \num{1000}$.
 
 ## Functions 
 

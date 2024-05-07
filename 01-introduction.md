@@ -20,13 +20,12 @@ Our estimates of population parameters, *statistics*, generally improve with lar
 One might use statistics to create a *model* to explain a population, based upon sampling data.
 Models can be useful both for describing the population and also for forming predictions.
 
-## Nominal, ordinal, interval, and ratio variables 
+## Levels of measurement
 
-There are several classes of data that a variable might fit into.
+There are four distinct *levels of measurement* that a value may fit.
 *Nominal* data is simply names or categories, with no concept of order or distance.
 A movie might be animated or live-action: these are simple categories or order.
-The name of the nation where the movie was filmed is another example of nominal data.
-Simple yes and no categories are also nominal data, such as whether a film does or does not have a sequel.
+Another example might be the film's genre (children, comedy, action, romance, documentary, etc).
 
 *Ordinal* data has ordering but not distance.
 Ordinal data might be represented as ordered categories or as numerals, though these numerals do not provide meaningful addition and subtraction.
@@ -98,7 +97,7 @@ If we enter a formula into A7 referencing A6, such as `=SQRT(A6)`, then we will 
 
 Structured Query Language (SQL) databases use the symbol `NULL` to denote missing values.
 One might build the database *schema* (the structure of the database) to explicitly forbid `NULL` values.
-For example, `CREATE TABLE Race (Name TEXT NOT NULL, Time INTEGER NOT NULL)` creates a table of run times where both the name and the time must be specified.
+For example, `CREATE TABLE Run (Name TEXT NOT NULL, Time INTEGER NOT NULL, Distance REAL NOT NULL)` defines a table *schema* where each of the three columns must be specified.
 Many programming languages (including C, Java, and JavaScript) also use the term `null` for variables that do not reference any specific value.
 
 Many programming languages support a `NaN` ("not a number") value in error conditions.
@@ -200,7 +199,7 @@ Remember that the different in ratio and interval data was that *multiplication*
 Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
 Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
 
-## Bar plot, box plot, histogram, and scatter plot
+## Data visualization with plots
 
 *Plots* allow us to visualize data.
 Good plots help us to quickly intuit patterns in the data that might otherwise be difficult to understand.
@@ -217,6 +216,26 @@ A histogram is essentially a set of bar plots over discretized numerical values.
 A *scatter plot* (sometimes called an $XY$ plot) uses $x$ and $y$ axes to show relationships between two variables.
 One can also color and shape the points to show third and fourth variables.
 Three-dimensional $XYZ$ plots are sometimes useful, especially in video and interactive presentations.
+
+As a small exercise to experiment with these four plots, go to https://webr.r-wasm.org/latest/ to use the R language in a web browser.
+R is a programming language for statistics and data visualization.
+
+R includes several built-in data sets.
+In the *read-evaluate-print loop* (*REPL*), enter
+
+```
+head(mtcars)
+```
+
+to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
+Now enter the following commands to quickly visualize a few columns in the data set.
+
+```
+barplot(mtcars$cyl)
+boxplot(mtcars$mpg)
+hist(mtcars$mpg)
+plot(mtcars$wt, mtcars$mpg)
+```
 
 ## Linear and logarithmic scales
 
@@ -238,9 +257,11 @@ For example, suppose feature of a data set contains categories $a$, $b$, $c$, an
 | $c$      | $\num{398}   |
 | $d$      | $\num{319}   |
 
+## Sets, relations, and functions
 
+A *set* is an unordered collection of *distinct* elements.
+Sets may be finite or infinite in size.
 
-## Functions 
 
 ## Discussion prompts
 

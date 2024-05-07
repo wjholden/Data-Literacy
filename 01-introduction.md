@@ -8,8 +8,9 @@ Statistics are calculated from taking *samples* (subsets) from the population.
 
 For example, suppose we wanted to find the height of the tallest mountain in the world.
 We might sample $n=100$ mountains at random from an almanac.
-Suppose the tallest mountain in our almanac is Mount Fuji, the tallest mountain in Japan, which is 3776 meters tall.
-We can safely conclude that the tallest mountain is *at least* 3776 meters tall.
+Suppose the tallest mountain in our sample is Mount Fuji.
+Mount Fuji, the tallest mountain in Japan, is 3776 meters tall.
+We can conclude that the tallest mountain in the world is *at least* 3776 meters tall.
 
 Our estimate is unfortunately quite low.
 Mount Everest in Nepal, the *highest* mountain in the world, stands 8849 meters above sea level.
@@ -109,15 +110,94 @@ Still other languages raise an error if no explicit value is assigned to a varia
 
 ## Strong/weak and static/dynamic typing 
 
+Values come in many forms: categorical and numerical, ordered and unordered, discrete and continuous, defined and missing.
+*Types* can be used to constrain variables to allowable values and applicable operations.
 
+For example, suppose a database indicates how many cars a person owns.
+It makes no sense to own a fractional or negative car, so we might find an existing type
+(in this case, whole numbers) or define some new type to model the domain.
 
-## Columns and rows 
+Some programming languages offer *dynamic* types that implicitly change the type (*cast*) of values to operate correctly.
+In Chrome, Edge Chromium, or Firefox press F12 to open the developer console and enter the following into the JavaScript console:
 
-## Features and individuals 
+```
+>> "5" * 5
+<- 25
+```
+
+Characters inside quotation marks (`"5"`) are called *strings* and are ordinarily used for text, but JavaScript automatically parses `"5" * 5` as the product of two numerical values and returns `25`.
+
+JavaScript is notoriously inconsistent.
+
+```
+>> "5" + 5
+<- "55"
+```
+
+The resulting string, `"55"`, is the *concatenation* of two strings -- perhaps not what one expects.
+
+Many languages and environments seek to automatically parse values.
+Microsoft Excel and the Python programming language are also dynamic.
+Other languages, such as Java and Go, are more strict with values and do not automatically change values, especially when the conversion might be "lossy" (where information might be lost, such as approximating the exact value of $\pi$ as $3.14$, or rounding $3.14$ to $3$, or even changing $3.0$ to $3$).
+These languages have both *strong* and *static* typing: the programmer must specify the type of each variable, and lossy type conversions require an explicit cast.
+
+Excel does provide some basic functionality to set number *formats*, but this feature might not stop one from confusing one type of data for another.
+Excel uses *weak* typing that does prevent one from using unexpected values.
+Data analysts can benefit greatly by using the appropriate types for the values in their problem.
 
 ## Tables, lists, and data frames 
 
+*Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* in the data set and the columns represent the *features*.
+For example, a table of employee names might have two columns (the given and surnames) and ten rows, where each row represents one of the ten employees.
+
+In computer science, the terms *list* and *array* both refer to single-column tables, but with different internal memory representation.
+The distinction is usually unimportant to data analysts.
+
+Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*).
+Data frames often provide rich syntax for row-wise and column-wise operations.
+By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
+
 ## Vectors and matrices
+
+We now quickly mention the terms *vector* and *matrix* here to disambiguate them from other terms already defined.
+
+Arrays, lists, and columns containing numeric data may sometimes be represented with *vectors*.
+Likewise, tables and data frames might be represented with *matrices*.
+
+A vector is a quantity with both magnitude and direction, often consisting of two or more elements.
+
+$$
+\mathbf{x} = \left( x_1 , x_2 , x_3 \right)
+$$
+
+The above vector $\mathbf{x}$ has three components and length $\sqrt{x_1 ^2 + x_2^2 + x_3^2}$.
+
+A matrix is a collection of vectors used for linear transformations.
+For example, the three-component *identity matrix*
+
+$$
+I = \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}
+$$
+
+has the property
+
+$$
+\begin{aligned}
+I \mathbf{x} &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix} \begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} \\
+&= \begin{pmatrix}
+1 \cdot x_1 + 0 \cdot x_2 + 0 \cdot x_3 \\ 
+0 \cdot x_1 + 1 \cdot x_2 + 0 \cdot x_3 \\
+0 \cdot x_1 + 0 \cdot x_2 + 1 \cdot x_3 \\
+\end{pmatrix}\\
+&= \mathbf{x}
+\end{aligned}
+$$
+
+Vectors and matrices form the foundations of *linear algebra*, a rich and powerful branch of mathematics that produces many of the results needed for modern statistics, ML, and AI methods.
+
+Remember that the different in ratio and interval data was that *multiplication* is only defined for ratio data.
+Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
+Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
 
 ## Box plot, scatter plot, bar plot, and histogram 
 

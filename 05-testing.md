@@ -28,7 +28,7 @@ A study shows [Equation]. What does this result mean?
 
 Describe a workplace situation where the Central Limit Theorem applies. 
 
-## Practical exercise
+## Practical exercises
 
 One group generates a random data set that should not fit a normal distribution. Another group takes samples and applies the Central Limit Theorem to estimate the population mean. 
 

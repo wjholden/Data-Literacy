@@ -259,9 +259,43 @@ For example, suppose feature of a data set contains categories $a$, $b$, $c$, an
 
 ## Sets, relations, and functions
 
+We now introduce a few terms from *discrete mathematics* that are fundamental to all analysis.
 A *set* is an unordered collection of *distinct* elements.
 Sets may be finite or infinite in size.
+An example of a set might be
 
+$$
+W = \left\{
+\textrm{Sunday},
+\textrm{Monday},
+\textrm{Tuesday},
+\textrm{Wednesday},
+\textrm{Thursday},
+\textrm{Friday},
+\textrm{Saturday}
+\right\}
+$$
+
+A *relation* is an association (if present) between members of sets.
+Relations can be used to model any relationship between members any two sets, or even members in the same set.
+An example might be the relation between integers and elements of $W$ with that many letters, i.e. 6 has a relation on Sunday, Monday, and Friday, 7 has a relation on Tuesday, 8 has a relation on Thursday and Saturday, and 9 has a relation on Wednesday.
+The term "relation" is seldom used outside of discrete mathematics, but there is a *special case* of a relation that occurs in all mathematical disciplines: *functions*.
+
+A *function* is a relation that uniquely relates members of one set (the *domain*) to another set (the *range*).
+An example of some functions might be:
+
+$$
+\begin{aligned}
+\textrm{Translate} \left( \textrm{Monday}, \textrm{English}, \textrm{German} \right) &= \textrm{Montag} \\
+\textrm{Length} \left( Wednesday \right) &= 9 \\
+\textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\}
+$$
+
+Each of these functions accepts one or more *arguments* and returns the unique corresponding value (if any) from its range.
+It might be look like the third function, DaysOfLength, has returned three values, but in fact this function has returned a set which contains three values.
+
+Many programming languages use the term "function" as a synonym for *procedure*, *subroutine*, and *method*.
+Functions are "pure" if they have no side-effects (such as mutating a shared or internal value).
 
 ## Discussion prompts
 
@@ -269,9 +303,9 @@ Sets may be finite or infinite in size.
 
 2. What are good and bad uses for spreadsheets? 
 
-3. What is reproducibility and why would this be important for scientific inquiry? 
+3. What is reproducibility? Why would this be important for scientific inquiry? 
 
-4. Why is a pie chart not recommended? 
+4. Like a barplot, a pie chart shows the relative sizes of categorical values. What are some disadvantages of using pie charts?
 
 ## Practical exercises
 
@@ -282,5 +316,4 @@ Sets may be finite or infinite in size.
 3. Discretize the values of a dataset and explain the reasoning. 
 
 4. Be creative and construct intentionally misleading plots that deliberately distort information presented.  
-
 

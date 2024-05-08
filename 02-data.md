@@ -1,8 +1,6 @@
 # Data Operations
 
-## Database schema 
-
-## Forms and input validation 
+## Forms and input validation
 
 ## Select, project, and join 
 

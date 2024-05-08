@@ -205,8 +205,8 @@ Depending on the problem domain, it may be inappropriate to use matrices and vec
 Good plots help us to quickly intuit patterns in the data that might otherwise be difficult to understand.
 
 (Note: the term *graph* has different definitions in lower and higher mathematics.
-We will explain the term graph later.
-For now, use the term "plot" as the verb and noun for visualizing data with graphics.)
+We will explain the term "graph" in chapter \ref{chapter:graph}.
+This text uses the term "plot" as the verb and noun for visualizing data with graphics.)
 
 The *bar plot* helps us to compare the count each category in a discrete (or discretized) variable.
 The *box plot* helps us to see the center and variation of a numerical variable.
@@ -252,16 +252,27 @@ For example, suppose feature of a data set contains categories $a$, $b$, $c$, an
 
 | Category | Count        |
 |----------|--------------|
-| $a$      | $\num{10736} |
-| $b$      | $\num{1711}  |
-| $c$      | $\num{398}   |
-| $d$      | $\num{319}   |
+| $a$      | \num{10736} |
+| $b$      | \num{1711}  |
+| $c$      | \num{398}   |
+| $d$      | \num{319}   |
 
-## Sets, relations, and functions
+Return to https://webr.r-wasm.org/latest/ and plot this data with linear and logarithmic scales:
+
+```
+> category_counts <- c(10736, 1711, 398, 319)
+> category_counts
+[1] 10736  1711   398   319
+> barplot(category_counts)
+> barplot(category_counts, log="y")
+```
+
+## Sets, relations, functions, and algorithms
 
 We now introduce a few terms from *discrete mathematics* that are fundamental to all analysis.
 A *set* is an unordered collection of *distinct* elements.
 Sets may be finite or infinite in size.
+Sets are denoted with curly braces, and the empty set has the special symbol $\emptyset = \left\{ \right\}$.
 An example of a set might be
 
 $$
@@ -276,7 +287,7 @@ W = \left\{
 \right\}
 $$
 
-A *relation* is an association (if present) between members of sets.
+A *relation* is an association between members of sets.
 Relations can be used to model any relationship between members any two sets, or even members in the same set.
 An example might be the relation between integers and elements of $W$ with that many letters, i.e. 6 has a relation on Sunday, Monday, and Friday, 7 has a relation on Tuesday, 8 has a relation on Thursday and Saturday, and 9 has a relation on Wednesday.
 The term "relation" is seldom used outside of discrete mathematics, but there is a *special case* of a relation that occurs in all mathematical disciplines: *functions*.
@@ -286,16 +297,22 @@ An example of some functions might be:
 
 $$
 \begin{aligned}
-\textrm{Translate} \left( \textrm{Monday}, \textrm{English}, \textrm{German} \right) &= \textrm{Montag} \\
-\textrm{Length} \left( Wednesday \right) &= 9 \\
+\textrm{Translate} \left( \textrm{Friday}, \textrm{English}, \textrm{German} \right) &= \textrm{Freitag} \\
+\textrm{Length} \left( \textrm{Wednesday} \right) &= 9 \\
 \textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\}
+\end{aligned}
 $$
 
-Each of these functions accepts one or more *arguments* and returns the unique corresponding value (if any) from its range.
-It might be look like the third function, DaysOfLength, has returned three values, but in fact this function has returned a set which contains three values.
+Each of these functions accepts one or more *parameters* as *arguments* and returns the unique corresponding value (if any) from its range.
+It may appear that the third function, DaysOfLength, has returned three values, but actually this function has returned a single set which contains three values.
 
 Many programming languages use the term "function" as a synonym for *procedure*, *subroutine*, and *method*.
-Functions are "pure" if they have no side-effects (such as mutating a shared or internal value).
+Functions are "pure" if they have no side-effects, such as mutating a value outside of the function.
+
+The mathematical definition of the term *algorithm* is the set of instructions necessary to solve a problem.
+Long division, a procedure for manually dividing numbers, is an example of an algorithm.
+The term "algorithm" has recently entered the popular lexicon in relation to AI systems.
+Here, the instructions of the algorithm are part of a model, which is created from data.
 
 ## Discussion prompts
 

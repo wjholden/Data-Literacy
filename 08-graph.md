@@ -1,4 +1,4 @@
-# Graph Theory
+# Graph Theory {#chapter:graph}
 
 ## Vertices and edges; [Equation] 
 

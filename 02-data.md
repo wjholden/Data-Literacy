@@ -5,7 +5,7 @@
 ## Relational algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS).
-The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$), set *union* ($\cup$), and set *difference* ($\setminus$).
+The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($\setminus$).
 
 Selection takes all or a subset of a table's rows.
 Projection takes all or a subset of a table's columns.
@@ -31,6 +31,24 @@ If $C = \left\{ c \right\}$, then $A \times B \times C = \left\{
 \left( j, x , c \right),
 \left( j, y , c \right),
 \left( j, z , c \right) \right\}$.
+
+As an exercise, go to https://sqlime.org to use a DBMS called SQLite.
+Enter the following commands to reproduce the above Cartesian product.
+
+```
+CREATE TABLE A (a text);
+CREATE TABLE B (b text);
+CREATE TABLE C (c text);
+
+INSERT INTO A(a) VALUES ('i'), ('j');
+INSERT INTO B(b) VALUES ('x'), ('y'), ('z');
+INSERT INTO C(c) VALUES ('c');
+
+SELECT * FROM A CROSS JOIN B CROSS JOIN C;
+```
+
+Some mathematical texts provide a very strict definition of the Cartesian product that is not *commutative* ($R \times S \ne S \times R$) nor *associative* ($R \times (S \times U) \ne (R \times S) \times U$).
+This text views tuples as unordered and "flattened" sets, matching the model implemented in DBMSs.
 
 ## Filter, map, and reduce 
 

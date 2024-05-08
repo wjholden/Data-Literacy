@@ -2,7 +2,10 @@
 
 ## Forms and input validation
 
-## Select, project, and join 
+## Relational algebra
+
+Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS).
+The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$), set *union* ($\cup$), and set *difference* ($\setminus$).
 
 ## Filter, map, and reduce 
 

@@ -13,17 +13,24 @@ For example, suppose a table's schema is defined as `CREATE TABLE WeightliftingM
 The query `SELECT Athlete FROM WeightliftingMeet WHERE Mass >= 100 AND Good == TRUE` performs both a selection (specified in the `WHERE` clause) and a projection (the columns specified immediately after `SELECT`, in this case `ATHLETE`).
 
 A Cartesian product is the multiplication of sets.
-Let $A = \left\{ i, j, k \right\}$ and $B = \left\{ x, y, z \right\}$.
+Let $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$.
 Then $A \times B = \left\{
 \left( i, x \right),
 \left( i, y \right),
 \left( i, z \right),
 \left( j, x \right),
 \left( j, y \right),
-\left( j, z \right),
-\left( k, x \right)
-\left( k, y \right)
-\left( k, z \right) \right\}.
+\left( j, z \right) \right\}$.
+The Cartesian product produces the set of all possible pairwise combinations of elements in each set.
+These composite values are called *tuples*.
+Tuples may contain more than two values.
+If $C = \left\{ c \right\}$, then $A \times B \times C = \left\{
+\left( i, x , c\right),
+\left( i, y , c \right),
+\left( i, z , c\right),
+\left( j, x , c \right),
+\left( j, y , c \right),
+\left( j, z , c \right) \right\}$.
 
 ## Filter, map, and reduce 
 

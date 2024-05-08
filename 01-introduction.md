@@ -299,7 +299,12 @@ $$
 \begin{aligned}
 \textrm{Translate} \left( \textrm{Friday}, \textrm{English}, \textrm{German} \right) &= \textrm{Freitag} \\
 \textrm{Length} \left( \textrm{Wednesday} \right) &= 9 \\
-\textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\}
+\textrm{Distance} \left( \textrm{Thursday} , \textrm{Tuesday} \right) &= -2 \\
+\textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\} \\
+\textrm{Sunday} &= \textrm{Next} \left( \textrm{Saturday} \right) \\
+&= \textrm{Previous} \left( \textrm{Monday} \right) \\
+&= \textrm{Previous} \left( \textrm{Previous} \left( \textrm{Tuesday} \right) \right) \\
+&= \textrm{Previous} \left( \textrm{Next} \left( \textrm{Sunday} \right) \right)
 \end{aligned}
 $$
 

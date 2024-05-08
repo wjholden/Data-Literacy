@@ -47,8 +47,10 @@ INSERT INTO C(c) VALUES ('c');
 SELECT * FROM A CROSS JOIN B CROSS JOIN C;
 ```
 
-Some mathematical texts provide a very strict definition of the Cartesian product that is not *commutative* ($R \times S \ne S \times R$) nor *associative* ($R \times (S \times U) \ne (R \times S) \times U$).
-This text views tuples as unordered and "flattened" sets, matching the model implemented in DBMSs.
+This text views tuples as unordered and "flattened" sets, and therefore Cartesian products are both *commutative* ($R \times S = S \times R$) and *associative* ($R \times \left( S \times T \right) = \left( R \times S \right) \times T$).
+Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutivity nor associativity.
+This text uses the looser definition for compatibility with practical DBMSs, including SQLite.
+Remember that mathematics is partly discovered and partly invented.
 
 ## Filter, map, and reduce 
 

@@ -1,6 +1,6 @@
 # Measures of Central Tendency
 
-## Arithmetic mean
+## Least squares method
 
 The canonical definition of the *arithmetic mean* for a set of $n$ numbers $x$ is
 
@@ -36,15 +36,31 @@ One might also consider the *absolute value* (`ABS` in Excel) as an alternative,
 Squaring the errors penalizes large errors more than small errors.
 Accepting small errors but avoiding large errors is the bias that gives the least squares method its strength.
 
-## Mode
+## Expected values
+
+The term *average* can refer to *mean*, *median*, and *mode*.
+Mean only applies to interval and ratio data.
+Median is simply the middle value among ordinal, interval, and ratio data.
+Mode is the "commonest" (most frequent) value among nominal, ordinal, interval, and ratio data.
+
+| Average  | Levels of measurement | Symbols            |
+|----------|-----------------------|--------------------|
+| Mean     | Interval, ratio       | $\mu$, $\bar{x}$   |
+| Median   | Ordinal, interval, ratio | (None)          |
+| Mode     | Nominal, ordinal, interval, ratio | (None) |
+
+All three of these *measures of central tendency* enable us to find the *expected value* in a data set, $E(x)$.
+Population means are assigned the symbol $\mu$.
+Estimates of the population mean (the sample mean) usually use the name of the sample with a bar, such as $\bar{x}$.
+
+Median and mode can be useful even when analyzing interval and ratio data.
+Consider a classroom of 10 students who are 6 years old and 1 teacher who is 50 years old.
+If one selects a random person in the room, what is the expected value for their age?
+In this case, the modal value (6) is likely a better estimate than the mean value (10).
+
+## The Four Moments
 
 
-
-## Median 
-
-## Arithmetic Mean 
-
-## The four moments: mean, variance (and standard deviation), skewness, and kurtosis 
 
 ## Exponential moving averages (EMA) 
 

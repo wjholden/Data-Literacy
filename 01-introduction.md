@@ -118,7 +118,8 @@ It makes no sense to own a fractional or negative car, so we might find an exist
 (in this case, whole numbers) or define some new type to model the domain.
 
 Some programming languages offer *dynamic* types that implicitly change the type (*cast*) of values to operate correctly.
-In Chrome, Edge Chromium, or Firefox press F12 to open the developer console and enter the following into the JavaScript console:
+Go to https://jsfiddle.net or press F12 to open the developer console in most modern browsers.
+Enter the following into the JavaScript console:
 
 ```
 >> "5" * 5

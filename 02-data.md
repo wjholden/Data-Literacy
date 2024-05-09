@@ -142,7 +142,62 @@ SELECT * FROM Marathon
 
 ## Filter, map, and reduce
 
+SQL syntax makes it easy to write select, project, and join (SPJ) queries.
+SQL's grouping and aggregate functions make it possible to perform row-wise and column-wise operations.
+One can find comparable semantics (with different syntax) in many programming language's *filter*, *map*, and *reduce* functions.
 
+Filter works much like the `WHERE` clause: it takes a subset of the rows, based off of a condition.
+In JavaScript, we might filter an array with:
+
+```
+>> ['cat', 'dog', 'fish', 'bird'].filter(v => v.includes('i'))
+<- ['fish', 'bird']
+```
+
+Map performs the same function over each element of an input set, creating "mappings" to elements of an output set.
+
+```
+>> ['fish', 'bird'].map(v => v.toUpperCase())
+<- ['FISH', 'BIRD']
+```
+
+Reduce, also known as *fold*, performs some operation on each element of an input set and returns an *accumulator*, which is passed again to the reduce function with the next input value.
+To take an array's sum, we use an initial accumulator value of 0.
+
+```
+>> 15 + 25 + 35
+<- 75
+>> [15,25,35].reduce((a, v) => a + v, 0)
+<- 75
+```
+
+For the array's product, we use 1 for the initial accumulator value.
+
+```
+>> 15 * 25 * 35
+<- 13125
+>> [15,25,35].reduce((a, v) => a * v, 1)
+<- 13125
+```
+
+Both filter and map can be implemented in terms of reduce.
+
+```
+>> ['cat', 'dog', 'fish', 'bird'].reduce((a,v) => {
+        if (v.includes('i')) {
+            a.push(v);
+        }
+        return a;
+    }, [])
+<- ['fish', 'bird']
+>> ['fish', 'bird'].reduce((a,v) => {
+        a.push(v.toUpperCase());
+        return a;
+    }, [])
+<- ['FISH', 'BIRD']
+```
+
+Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
 ## Vectorized functions 
 

@@ -6,9 +6,7 @@ The canonical definition of the *arithmetic mean* for a set of $n$ numbers $x$ i
 
 $$
 \bar{x} = 
-\frac{
-\sum_{i \in x}{i}
-}{n} = 
+\frac{1}{n} \sum_{i = 1}^{n}{x_i}= 
 \frac{x_1 + x_2 + x_3 + \cdots + x_4}{n}.
 $$
 

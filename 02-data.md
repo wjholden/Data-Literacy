@@ -36,7 +36,7 @@ A \times B \times C = \left\{
 \left( j, z , c \right) \right\}.
 $$
 
-As an exercise, go to https://sqlime.org to use a DBMS named SQLite.
+As an exercise, go to https://sqlime.org/#deta:mb9f8wq2mq0b to use a DBMS named SQLite.
 Enter the following commands to reproduce the above Cartesian product.
 
 ```
@@ -77,7 +77,7 @@ For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
 Each table has a column that uniquely identifies an athlete.
 To get a triathletes (the athletes who participate in swimming, cycling, and running),
 we use an *equijoin* to find the product where the names are equal.
-Return to https://sqlime.org to demonstrate experiment with the `JOIN` operator.
+Return to https://sqlime.org/#deta:36fadcq9apak to demonstrate experiment with the `JOIN` operator.
 
 ```
 CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
@@ -100,13 +100,14 @@ As an exercise, try to predict how many rows will return from `SELECT * FROM Swi
 ## Grouping and aggregation
 
 DBMSs provide robust *grouping* functions for operating on related rows.
-Return to https://sqlime.org and create a small table of hypothetical marathon times.
+Return to https://sqlime.org/#deta:32lpfoo57r8g and create a small table of hypothetical marathon times.
 
 ```
-CREATE TABLE Marathon (rn TEXT UNIQUE, time INTEGER,
+CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
+  time INTEGER,
   gender TEXT CHECK( gender IN ('M', 'F') ));
 
-INSERT INTO Marathon (rn, time, gender) VALUES
+INSERT OR IGNORE INTO Marathon (rn, time, gender) VALUES
   ('Kyle', 2*60*60 + 14*60 + 22, 'M'),
   ('Hank', 2*60*60 + 10*60 + 45, 'M'),
   ('Lily', 2*60*60 + 24*60 + 47, 'F'),
@@ -199,7 +200,7 @@ Both filter and map can be implemented in terms of reduce.
 
 Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
-## Vectorized functions
+## Vectorized functions and concurrency
 
 A *vectorized function* automatically iterates over array inputs.
 This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
@@ -221,9 +222,92 @@ No sum depends on another, and therefore the computing machine can safely perfor
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
 but performance benefits often justify the additional complexity.
 
-# Concurrency
+Some problems can be partitioned into *subproblems* which can be solved in parallel.
+Other problems cannot.
+Some encryption algorithms intentionally *chain* the output from one block into the next.
+One cannot calculate block $n$ without first calculating block $n-1$, and $n-2$, and so on.
+The reduce operation applies to this algorithm design.
 
-## Consistency, availability, and partition-tolerance (CAP) theorem 
+Other problems can be effortlessly partitioned into subproblems and solved quickly with a *divide-and-conquer* approach.
+A trivial example might be finding the minimum value in a large dataset.
+One can partition the dataset, find the minimum value in each partition, and then find the minimum value among those results.
+This process can be repeated.
+
+Go to https://go.dev/play/p/IOwH08R_z7Z to experiment with a divide-and-conquer `minimum` function in the Go language.
+
+```
+package main
+
+import "fmt"
+
+func min(x, y int) int {
+	if x <= y {
+		return x
+	}
+	return y
+}
+
+func minimum(x []int) int {
+	fmt.Println(x)
+	n := len(x)
+	switch n {
+	case 1:
+		return x[0]
+	case 2:
+		return min(x[0], x[1])
+	default:
+		middle := n / 2
+		lower := minimum(x[:middle])
+		upper := minimum(x[middle:])
+		return min(lower, upper)
+	}
+}
+
+func main() {
+	fmt.Println(minimum([]int{610, 144, 34, 21, 2584, 55, 55}))
+}
+```
+
+Click the "Run" button several times and observe that the output is completely *deterministic*.
+Now go to https://go.dev/play/p/Vbe7BWrwlku for a slightly modified version of the same program.
+
+```
+	default:
+		middle := n / 2
+		lower := make(chan int)
+		upper := make(chan int)
+		go func() { lower <- minimum(x[:middle]) }()
+		go func() { upper <- minimum(x[middle:]) }()
+		return min(<-lower, <-upper)
+	}
+```
+
+This version constructs two *channels* for communication among concurrent tasks.
+We use the `go` keyword to create two *Goroutines* (threads in the Go language), which concurrently solve the `minimum` function over subproblems.
+Finally, we read the results from each channel with `<-lower` and `<-upper` and return.
+Click the "Run" button several times and observe that the final result is consistent, but the order of operations is not.
+
+The computer industry has recently turned to *Graphical Processing Units* (GPU) as a fast, inexpensive, and energy-efficient method for solving highly parallelizable problems.
+GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
+These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
+
+## Consistency, availability, and partition-tolerance (CAP) theorem
+
+Brewer's *CAP theorem* states that a *distributed system* has at most two qualities of *consistency*, *availability*, and *partition-tolerance*.
+Consider a system of databases with many replicas.
+The replicas are consistent if they contain perfect copies of the database,
+and they are available only they are writable.
+The distributed system is partition-tolerant if all replicas remain identical, but this is impossible if one allows writes that cannot propagate into the other partition.
+
+The CAP theorem has many practical implications on data integrity and should be considered in design methodology.
+One must anticipate server and network outages that would create a partition in the distributed in the system and then choose the desired behavior.
+Can we accept lost database writes when we reconcile after a partition is restored?
+Or should be accept service outages in order to protect the integrity of the database during an interruption?
+
+A partial solution is to weaken our definition of each quality.
+Perhaps a system reserves certain rows or columns that are only writable by a specific database, guaranteeing that there will be no conflict if this database continues to write to those changes during a partition.
+A system might establish some form of confidence intervals in certain data, such as the position of a tracked aircraft with error margins, in recognition that imperfect information might still be useful.
+Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to preserve partial availability in the majority partition.
 
 ## Discussion prompts
 

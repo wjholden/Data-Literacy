@@ -144,9 +144,29 @@ SELECT * FROM Marathon
 
 
 
-## Vectorized functions 
+## Vectorized functions
 
-## Concurrency 
+A *vectorized function* automatically iterates over array inputs.
+This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
+Some examples in the R language, which one can reproduce at https://webr.r-wasm.org/latest/, are:
+
+```
+> c(1, 2, 3) + 4
+[1] 5 6 7
+> c(1, 2, 3) + c(4, 5, 6)
+[1] 5 7 9
+> sqrt(c(1, 4, 9))
+[1] 1 2 3
+```
+
+Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
+No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
+
+*Concurrency* is the ability for a computing machine to perform simulataneous operations.
+Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
+but performance benefits often justify the additional complexity.
+
+# Concurrency
 
 ## Consistency, availability, and partition-tolerance (CAP) theorem 
 

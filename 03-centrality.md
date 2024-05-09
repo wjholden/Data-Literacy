@@ -29,8 +29,16 @@ The Goal Seek function runs and should produce a value in `A1` near to that in `
 Enter `10` into `A1` to nudge Excel with a hint if you get a ridiculous answer.)
 
 We have used Goal Seek to minimize the *sum of the squared differences* between our values, $x_i$, and our estimate of the mean, $\bar{x}$.
+This *least squares method* dates back to Carl Friedrich Gauss and Adrien-Marie Legendre in the 1800s.
 
-## Mode 
+Squaring the errors makes the values positive, which prevents underestimates from negating overestimates.
+One might also consider the *absolute value* (`ABS` in Excel) as an alternative, but there is a second reason for squaring the errors.
+Squaring the errors penalizes large errors more than small errors.
+Accepting small errors but avoiding large errors is the bias that gives the least squares method its strength.
+
+## Mode
+
+
 
 ## Median 
 

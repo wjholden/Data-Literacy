@@ -13,8 +13,8 @@ For example, suppose a table's schema is defined as `CREATE TABLE WeightliftingM
 The query `SELECT Athlete FROM WeightliftingMeet WHERE Mass >= 100 AND Good == TRUE` performs both a selection (specified in the `WHERE` clause) and a projection (the columns specified immediately after `SELECT`, in this case `ATHLETE`).
 
 A Cartesian product is the multiplication of sets.
-Let $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$.
-Then $A \times B = \left\{
+If $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$,
+then $A \times B = \left\{
 \left( i, x \right),
 \left( i, y \right),
 \left( i, z \right),
@@ -24,15 +24,19 @@ Then $A \times B = \left\{
 The Cartesian product produces the set of all possible pairwise combinations of elements in each set.
 These composite values are called *tuples*.
 Tuples may contain more than two values.
-If $C = \left\{ c \right\}$, then $A \times B \times C = \left\{
+If $C = \left\{ c \right\}$, then
+
+$$
+A \times B \times C = \left\{
 \left( i, x , c\right),
 \left( i, y , c \right),
 \left( i, z , c\right),
 \left( j, x , c \right),
 \left( j, y , c \right),
-\left( j, z , c \right) \right\}$.
+\left( j, z , c \right) \right\}.
+$$
 
-As an exercise, go to https://sqlime.org to use a DBMS called SQLite.
+As an exercise, go to https://sqlime.org to use a DBMS named SQLite.
 Enter the following commands to reproduce the above Cartesian product.
 
 ```
@@ -50,11 +54,95 @@ SELECT * FROM A CROSS JOIN B CROSS JOIN C;
 This text views tuples as unordered and "flattened" sets, and therefore Cartesian products are both *commutative* ($R \times S = S \times R$) and *associative* ($R \times \left( S \times T \right) = \left( R \times S \right) \times T$).
 Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutivity nor associativity.
 This text uses the looser definition for compatibility with practical DBMSs, including SQLite.
-Remember that mathematics is partly discovered and partly invented.
+Mathematics is partly discovered and partly invented.
 
-## Filter, map, and reduce 
+Set union, $\cup$, combines two sets.
+Sets definitionally contain only distinct elements.
+If $A = \left\{ i, j, k \right\}$ and $B = \left\{ k, l, m \right\}$, then
 
-## Grouping and aggregation 
+$$
+A \cup B = \left\{ i, j, k, l, m \right\}.
+$$
+
+Set difference, $\setminus$, retains the elements of the left set that are not present in the right set.
+
+$$
+A \setminus B = \left\{ i, j, k \right\} \setminus \left\{ k, l, m \right\} = \left\{ i, j \right\}.
+$$
+
+## Join
+
+The *join* ($\bowtie$) is a combination of the Cartesian product and selection.
+For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
+Each table has a column that uniquely identifies an athlete.
+To get a triathletes (the athletes who participate in swimming, cycling, and running),
+we use an *equijoin* to find the product where the names are equal.
+Return to https://sqlime.org to demonstrate experiment with the `JOIN` operator.
+
+```
+CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS Bike (bn TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS Run (rn TEXT UNIQUE);
+
+INSERT OR IGNORE INTO Swim (sn) VALUES
+    ('John'), ('Jane'), ('Luke'), ('Phil');
+INSERT OR IGNORE INTO Bike (bn) VALUES
+    ('Mary'), ('Alex'), ('Jane'), ('Levi');
+INSERT OR IGNORE INTO Run (rn) VALUES
+    ('Mike'), ('John'), ('Jane'), ('Sven');
+
+SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
+```
+
+There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
+As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
+
+## Grouping and aggregation
+
+DBMSs provide robust *grouping* functions for operating on related rows.
+Return to https://sqlime.org and create a small table of hypothetical marathon times.
+
+```
+CREATE TABLE Marathon (rn TEXT UNIQUE, time INTEGER,
+  gender TEXT CHECK( gender IN ('M', 'F') ));
+
+INSERT INTO Marathon (rn, time, gender) VALUES
+  ('Kyle', 2*60*60 + 14*60 + 22, 'M'),
+  ('Hank', 2*60*60 + 10*60 + 45, 'M'),
+  ('Lily', 2*60*60 + 24*60 + 47, 'F'),
+  ('Emma', 2*60*60 + 22*60 + 37, 'F'),
+  ('Elle', 2*60*60 + 25*60 + 16, 'F'),
+  ('Fred', 2*60*60 + 6*60 + 17, 'M');
+
+SELECT MIN(time) FROM Marathon GROUP BY (gender);
+```
+
+`MIN` is one of the *aggregate functions* in SQLite.
+The `GROUP BY` clause tells the DBMS to split the rows into groups on the `gender` column.
+
+One might be tempted to find the names of our male and female champions with
+`SELECT rn, MIN(time) FROM Marathon GROUP BY (gender)`.
+This may work in some DBMSs but there is a subtle bug.
+It might be obvious that we want the `rn` associated with the `MIN(time)` value, but suppose we change the query to also include `MAX(time)`:
+
+```
+SELECT rn, MIN(time), MAX(time) FROM Marathon GROUP BY (gender);
+```
+
+Now it is no longer clear which `rn` the query should return.
+Should the DBMS return the `rn` associated with the `MIN(time)`, the `MAX(time)`, or some other `rn` from the group?
+
+The solution in this particular case is to nest our `MIN(time)` aggregation as a *subquery*.
+
+```
+SELECT * FROM Marathon
+  WHERE time IN (
+    SELECT MIN(time) FROM Marathon GROUP BY (gender));
+```
+
+## Filter, map, and reduce
+
+
 
 ## Vectorized functions 
 
@@ -64,21 +152,20 @@ Remember that mathematics is partly discovered and partly invented.
 
 ## Discussion prompts
 
-How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
+1. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
 
-Where should unclassified data be stored and processed? 
+2. Where should unclassified data be stored and processed? 
 
-What are some methods to prevent conflicts among concurrent writes in a shared database? 
+3. What are some methods to prevent conflicts among concurrent writes in a shared database? 
 
-What could possibly go wrong when altering database schema? 
+4. What could possibly go wrong when altering database schema? 
 
 ## Practical exercises
 
-Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
+1. Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
 
-Given a noisy dataset, identify problems in each column that could influence inclusion and exclusion criteria. 
+2. Given a noisy dataset, identify problems in each column that could influence inclusion and exclusion criteria. 
 
-Implement filter and map in terms of reduce using a programming language which provides reduce. 
+3. Implement filter and map in terms of reduce using a programming language which provides reduce. 
 
-Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 
-
+4. Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 

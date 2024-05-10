@@ -5,14 +5,19 @@ import "fmt"
 type nnet struct {
 	w [][][]float32
 	b [][]float32
+	f func(float32) float32
 }
 
-func (n *nnet) evaluate(input []float32) float32 {
-	return 0.0
+func NewNNet(f func(float32) float32, layers ...int) *nnet {
+	return nil
 }
 
-func (n *nnet) backpropagate(output []float32) {
+func (n *nnet) train(output []float32) {
 
+}
+
+func (n *nnet) test(input []float32) []float32 {
+	return nil
 }
 
 func main() {

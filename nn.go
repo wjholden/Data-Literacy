@@ -6,37 +6,37 @@ import (
 )
 
 type nnet struct {
-	w [][][]float32
-	b [][]float32
-	f func(float32) float32
+	w [][][]float64
+	b [][]float64
+	f func(float64) float64
 }
 
-func NewNNet(f func(float32) float32, layers ...int) *nnet {
+func NewNNet(f func(float64) float64, layers ...int) *nnet {
 	nlayers := len(layers)
-	weights := make([][][]float32, nlayers-1)
-	bias := make([][]float32, nlayers-1)
+	weights := make([][][]float64, nlayers-1)
+	bias := make([][]float64, nlayers-1)
 	for i := range nlayers - 1 {
 		next_layer_size := layers[1+i]
-		weights[i] = make([][]float32, next_layer_size)
-		bias[i] = make([]float32, next_layer_size)
+		weights[i] = make([][]float64, next_layer_size)
+		bias[i] = make([]float64, next_layer_size)
 		for j := range next_layer_size {
 			layer_size := layers[i]
-			weights[i][j] = make([]float32, layer_size)
+			weights[i][j] = make([]float64, layer_size)
 			for k := range layers[i] {
-				weights[i][j][k] = 2*rand.Float32() - 1
+				weights[i][j][k] = 2*rand.Float64() - 1
 			}
-			bias[i][j] = 2*rand.Float32() - 1
+			bias[i][j] = 2*rand.Float64() - 1
 		}
 	}
 	nn := nnet{w: weights, b: bias, f: f}
 	return &nn
 }
 
-func (n *nnet) eval(x []float32) [][]float32 {
-	y := make([][]float32, len(n.w))
+func (n *nnet) eval(x []float64) [][]float64 {
+	y := make([][]float64, len(n.w))
 	for i, layer := range n.w {
 		layer_size := len(layer)
-		y[i] = make([]float32, layer_size)
+		y[i] = make([]float64, layer_size)
 		for j, neuron := range layer {
 			net := n.b[i][j]
 			for k, weight := range neuron {
@@ -49,26 +49,24 @@ func (n *nnet) eval(x []float32) [][]float32 {
 	return y
 }
 
-func (n *nnet) train(x, y []float32) {
-	outputs := n.eval(x)
-	for i := len(outputs) - 1 ; i >= 0 ; i-- {
-		
-	}
+func (n *nnet) train(x, y []float64) {
+
 }
 
-func (n *nnet) test(x []float32) []float32 {
+func (n *nnet) test(x []float64) []float64 {
 	return n.eval(x)[len(n.w)-1]
 }
 
 func main() {
-	relu := func(y float32) float32 {
+	relu := func(y float64) float64 {
 		if y > 0 {
 			return y
 		} else {
 			return 0
 		}
 	}
-	nn := NewNNet(relu, 2, 3, 1)
+	nn := NewNNet(relu, 2, 2)
 	fmt.Println(nn)
-	fmt.Println(nn.eval([]float32{1.1, 2.2}))
+	nn.train([]float64{1.1, 2.2}, []float64{5.0})
+	fmt.Println(nn.eval([]float64{1.1, 2.2}))
 }

@@ -37,7 +37,20 @@ func (n *nnet) train(x, y []float32) {
 }
 
 func (n *nnet) test(x []float32) []float32 {
-	return nil
+	var y []float32
+	for i, layer := range n.w {
+		layer_size := len(layer)
+		y = make([]float32, layer_size)
+		for j, neuron := range layer {
+			net := n.b[i][j]
+			for k, weight := range neuron {
+				net += x[k] * weight
+			}
+			y[j] = n.f(net)
+		}
+		x = y
+	}
+	return y
 }
 
 func main() {
@@ -50,4 +63,5 @@ func main() {
 	}
 	nn := NewNNet(relu, 2, 3, 1)
 	fmt.Println(nn)
+	fmt.Println(nn.test([]float32{1.1, 2.2}))
 }

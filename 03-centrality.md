@@ -1,6 +1,6 @@
 # Measures of Central Tendency
 
-## Least squares method
+## Least squares method  {#section:least-squares-method}
 
 The canonical definition of the *arithmetic mean* for a set of $n$ numbers $x$ is
 
@@ -60,38 +60,114 @@ In this case, the modal value (6) is likely a better estimate than the mean valu
 
 ## The Four Moments
 
+The *four moments* describe the *distribution* of values in a data set.
+The first moment is the mean.
+The second moment is *variance*, the expected squared difference of values to the mean.
+The third moment is *skewness*, the expected cubed difference of values to the mean.
+The fourth moment is *kurtosis*, the expected difference of values to the mean raised to the fourth power.
 
+| Moment | Name     | Definition               |
+|--------|----------|--------------------------|
+| 1      | Mean     | $E(x) = \mu$             |
+| 2      | Variance | $E(x-\mu)^2$             |
+| 3      | Skewness | $E(x-\mu)^3$             |
+| 4      | Kurtosis | $E(x-\mu)^4$             |
 
-## Exponential moving averages (EMA) 
+Variance ($\sigma^2$) is calculated from the sum of the squared differences in the random variable ($x$) and the mean ($\mu$).
 
-## Covariance 
+$$
+\begin{aligned}
+\sigma^2 &= E(x-\mu)^2 \\
+&= E(x^2 - 2x\mu + \mu^2) \\
+&= E(x^2) - 2E(x)\mu + \mu^2 \\
+&= E(x^2) - 2(\mu)\mu + \mu^2 \\
+&= E(x^2) -2\mu^2 + \mu^2 \\
+&= E(x^2) - \mu^2.
+\end{aligned}
+$$
 
-## Outliers 
+To calculate the sample variance ($s^2$) in practice, we use the formula
 
-## Unbalanced data sets 
+$$
+s^2 = \frac{1}{n-1} \sum_{i=1}^{n} {\left( x_i - \bar{x} \right)^2}.
+$$
+
+where $n$ is the number of elements in $x$.
+Observe that the calculation for this statistic is similar to the least squares method in section \ref{section:least-squares-method}.
+$s^2$ is the average squared distance from the mean within the data set.
+
+The *standard deviation* is the square root of variance,
+
+$$
+s = \sqrt{s^2}.
+$$
+
+An *outlier* is a value that is very different from other values in the data set.
+Let $x = \left\{ 15, 75, 79, 10, 7, 54, \num{4600}, 91, 45, 86 \right\}$.
+One can immediately intuit that the value $\num{4600}$ is substantially different from all of the other values.
+Outliers can be defined in terms of the mean and standard deviation, where outliers are any values greater than $\bar{x} + 2s$ or less than $\bar{x} - 2s$.
+We can use the `mean` and `sd` functions with `subset` in the R language at https://webr.r-wasm.org/latest/ to confirm that $\num{4600}$ is an outlier.
+
+```
+> x = c(15, 75, 79, 10, 7, 54, 4600, 91, 45, 86)
+> subset(x, x <= mean(x) - sd(x) | x >= mean(x) + sd(x))
+[1] 4600
+```
+
+We can use skewness to detect whether the data is imbalanced (skews) above or below the mean. If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer, and if skewness is zero then the distribution is equally balanced over the mean.
+The Excel function for skewness is `SKEW`.
+
+We can use kurtosis to detect if a data set contains outliers.
+Most mathematical texts and software use kurtosis of 3 as an "normal" reference value, but Excel subtracts 3 and thus a "normal" kurtosis is 0.
+The Excel function for kurtosis is `KURT`.
+
+## Exponential moving averages
+
+An *exponential moving average* (EMA) is a weighted average that creates a bias favoring recent observations.
+EMAs are used in the financial sector as an implicit means of modeling stock prices with time.
+
+EMA is defined *recursively* and parameterized with a weighting multiplier $0 < p < 1$.
+
+$$
+\text{EMA} \left( x, i \right) = 
+\begin{cases}
+p x_i + (1 - p) \text{EMA} \left( x, i - 1 \right), & \text{if $i > 1$}. \\
+x_1, & \text{otherwise}.
+\end{cases}
+$$
+
+EMA can be easily implemented in terms of reduce, as shown in JavaScript.
+
+```
+>> x = [7, 8, 9, 10, 9, 8, 7, 9, 11, 13, 15, 17]
+>> p = .25
+>> x.reduce((ema,v) => p * v + (1-p) * ema, x[0])
+<- 12.661770105361938
+```
+
+The *base case* is at $x_1$ in mathematical notation but `x[0]` in JavaScript.
+This is a matter of convention; the first element of a list is position 1 in math, but 0 in many programming languages.
 
 ## Discussion prompts
 
-Is four a lot? 
+1. Is four a lot? 
 
-First battalion has an average ACFT score of 482 while second battalion has an average ACFT score of 491. Which is better? 
+2. First battalion has an average ACFT score of 482 while second battalion has an average ACFT score of 491. Which is better? 
 
-What do we do when statistics show us something that contradicts our values? For example, suppose we discover that Soldiers of a specific demographic have much lower promotion rates than their peers. 
+3. What do we do when statistics show us something that contradicts our values? For example, suppose we discover that Soldiers of a specific demographic have much lower promotion rates than their peers. 
 
-Is it more important for an organization to think about variance or the 99th percentile? 
+4. Is it more important for an organization to think about variance or the 99th percentile? 
 
-Given a sample set [Equation], what is the estimate of the mean ([Equation]), and what is the sample variance? 
-
+5. Given a sample set [Equation], what is the estimate of the mean ([Equation]), and what is the sample variance? 
 
 ## Practical exercises
 
-Calculate the influence that outliers have on different-sized datasets that contain outliers. 
+1. Calculate the influence that outliers have on different-sized datasets that contain outliers. 
 
-Calculate the exponential moving average in a small dataset. 
+2. Calculate the exponential moving average in a small dataset. 
 
-Given a dataset and experimental result, identify problems caused by analyzing categorical data represented in a numeric form. 
+3. Given a dataset and experimental result, identify problems caused by analyzing categorical data represented in a numeric form. 
 
-Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
+4. Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
 
-Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 
-
+5. Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 

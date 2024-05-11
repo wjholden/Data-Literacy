@@ -158,6 +158,10 @@ Scientific languages, such as Julia and R, often use the term *data frame* (or *
 Data frames often provide rich syntax for row-wise and column-wise operations.
 By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
 
+## Forms and input validation
+
+
+
 ## Vectors and matrices
 
 We now quickly mention the terms *vector* and *matrix* here to disambiguate them from other terms already defined.
@@ -168,29 +172,29 @@ Likewise, tables and data frames might be represented with *matrices*.
 A vector is a quantity with both magnitude and direction, often consisting of two or more elements.
 
 $$
-\mathbf{x} = \left( x_1 , x_2 , x_3 \right)
+\mathbf{x} = \left( x_1 , x_2 , x_3 , \cdots , x_n \right)
 $$
 
-The above vector $\mathbf{x}$ has three components and length $\sqrt{x_1 ^2 + x_2^2 + x_3^2}$.
+The above vector $\mathbf{x}$ has three components and length $\sqrt{x_1 ^2 + x_2^2 + x_3^2 + \cdots + x_n^2}$.
 
 A matrix is a collection of vectors used for linear transformations.
 For example, the three-component *identity matrix*
 
 $$
-I = \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}
+I_3 = \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix}
 $$
 
 has the property
 
 $$
 \begin{aligned}
-I \mathbf{x} &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix} \begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} \\
+I_3 \mathbf{x} &= \begin{pmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1\end{pmatrix} \begin{pmatrix}x_1 \\ x_2 \\ x_3\end{pmatrix} \\
 &= \begin{pmatrix}
 1 \cdot x_1 + 0 \cdot x_2 + 0 \cdot x_3 \\ 
 0 \cdot x_1 + 1 \cdot x_2 + 0 \cdot x_3 \\
 0 \cdot x_1 + 0 \cdot x_2 + 1 \cdot x_3 \\
 \end{pmatrix}\\
-&= \mathbf{x}
+&= \mathbf{x}.
 \end{aligned}
 $$
 
@@ -268,7 +272,7 @@ Return to https://webr.r-wasm.org/latest/ and plot this data with linear and log
 > barplot(category_counts, log="y")
 ```
 
-## Sets, relations, functions, and algorithms
+## Sets, relations, functions, and algorithms {#section:discrete-math}
 
 We now introduce a few terms from *discrete mathematics* that are fundamental to all analysis.
 A *set* is an unordered collection of *distinct* elements.

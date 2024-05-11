@@ -1,7 +1,5 @@
 # Data Operations
 
-## Forms and input validation
-
 ## Relational algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS).
@@ -9,8 +7,7 @@ The relational algebra can be described with five primitives: *selection* ($\sig
 
 Selection takes all or a subset of a table's rows.
 Projection takes all or a subset of a table's columns.
-For example, suppose a table's schema is defined as `CREATE TABLE WeightliftingMeet (Athlete TEXT, Lift TEXT, Mass REAL, Good BOOLEAN)`.
-The query `SELECT Athlete FROM WeightliftingMeet WHERE Mass >= 100 AND Good == TRUE` performs both a selection (specified in the `WHERE` clause) and a projection (the columns specified immediately after `SELECT`, in this case `ATHLETE`).
+In Structured Query Languages (SQL), selection is specified in the `WHERE` clause and projection is specified in the list of columns immediately after `SELECT`.
 
 A Cartesian product is the multiplication of sets.
 If $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$,

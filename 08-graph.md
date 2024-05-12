@@ -58,8 +58,7 @@ returning the path (`p`) and its cumulative distance.
 Refer to section \ref{section:filter-map-reduce} for a description of the reduce operation.
 
 ```
-MATCH (:CITY {name:'Paris'})-[p:ROUTE*]->(:CITY {name:'Hague'})
-WHERE 
+MATCH (:CITY {name:'Paris'})-[p:ROUTE*]->(:CITY {name:'Hague'}) 
 RETURN p, REDUCE(length=0, e IN p | length + e.dist) AS distance;
 ```
 
@@ -89,7 +88,7 @@ One's ancestoral family tree is an instance of a tree; without a time machine, i
 
 ## Representation
 
-Graphs are modeled using either an *adjacency list* or *adjacency matrix*.
+Graphs are modeled using either an *adjacency list* or an *adjacency matrix*.
 An adjacency list might look like
 
 $$
@@ -135,6 +134,9 @@ Upon entering the city from the sea-side, the player explores the city and disco
 This is an example of a *depth-first search* (DFS).
 
 Go to https://go.dev/play/p/AuH2qOgSG-c to run the following DFS implementation, written in Go.
+This implementation uses a *recursive* definition of the DFS function (the DFS function invokes itself as it explores the graph).
+The function uses an external data structure (`quest`) to identify which vertices have already been discovered.
+Upon successful search, the function prints its position in the graph as the recursive calls "unwind."
 
 ```
 package main
@@ -184,7 +186,152 @@ func main() {
 ```
 
 The program should output `Discovered treasure: castle city beach sea start`.
+DFS successfully discovers the treasure, but we have no guarantee that this algorithm will find the *optimal* (shortest) path.
 
+Imagine the protagonist of our hypothetical adventure game was not a lone wanderer, but rather a field marshall commanding a large army.
+This army explores one region at a time, holding each area as adjacent units proceed into their respective area.
+The army incrementally expands the radius of the search *frontier*.
+Once one unit discovers the treasure, we are certain that no shorter path was possible thanks to an *invariant* in our search algorithm.
+
+Maintaining an invariant is essential for *mathematical induction*, where we establish that some *predicate* $P$ is true for the *base case* $P(0)$ and that $P(k)$ implies $P(k+1)$ and therefore $P(n)$ is true for all $n > 0$.
+The proof for the correctness of a BFS follows:
+
+1. Along the frontier of radius $r=0$, the BFS algorithm on graph $G$ has not discovered a path from $u$ to $v$. $\delta(u,v)$ is therefore at *closest* $r=1$.
+2. At $r=1$, BFS has not found $v$ and therefore $2 \le \delta(u,v)$.
+3. At $r=2$, BFS has not found $v$ and therefore $3 \le \delta(u,v)$.
+4. $\vdots$
+5. At $r=k$, BFS has not found $v$ and therefore $k+1 \le \delta(u,v)$.
+6. $\vdots$
+7. At $r=n$, BFS has located $v$ and therefore $n = \delta(u,v)$. $\square$
+
+Gp to https://go.dev/play/p/yMIcmcsK_V9 and run the following BFS implementation, written in Go.
+This implementation uses an *iterative* BFS function.
+The BFS function does not invoke itself.
+Instead, the procedure adds unexplored vertices to a queue and records the "parent" of each vertex.
+We "unwind" the resulting tree from child to parent nodes to construct the shortest path.
+
+```
+func bfs(src, dst string) map[string]string {
+	parent := map[string]string{src: src}
+	queue := []string{src}
+	for len(queue) > 0 {
+		position := queue[0]
+		queue = queue[1:]
+		if position == dst {
+			break
+		}
+		for _, neighbor := range g[position] {
+			if _, ok := parent[neighbor]; !ok {
+				parent[neighbor] = position
+				queue = append(queue, neighbor)
+			}
+		}
+	}
+	return parent
+}
+
+func main() {
+	tree := bfs("start", "treasure")
+	fmt.Printf("Discovered treasure:")
+	position := "treasure"
+	for position != tree[position] {
+		position = tree[position]
+		fmt.Printf(" %s", position)
+	}
+    fmt.Println()
+}
+```
+
+This program should output `Discovered treasure: castle city start`.
+BFS finds the shortest path between two vertices by *hop count*, but it does not consider edge weights.
+*Dijkstra's algorithm* performs a breadth-first traversal ordered by cumulative path cost.
+
+<!--
+Dijkstra in Go https://go.dev/play/p/hcNbTvGli-z
+Too long and ugly to share.
+-->
+
+Dijkstra's algorithm uses a *priority queue* to visit nodes from shortest to longest path.
+For this reason, Dijkstra's algorithm is also known as the *shortest-path first* (SPF).
+Like BFS, Dikjstra's algorithm is a *greedy algorithm* that discovered a globally optimal solution by repeatedly making locally optimal decisions.
+Let us turn to the Python language to demonstrate Dijkstra's algorithm on our same treasure-hunting graph, this time with edge weights.
+Run this program at https://www.python.org/shell/.
+
+```
+from heapq import *
+
+g = dict(
+    [
+        ("start", ["forest", "mountains", "sea", "city"]),
+        ("forest", ["start", "mountains", "desert", "cave"]),
+        ("mountains", ["start", "forest", "glacier"]),
+        ("desert", ["forest"]),
+        ("cave", ["forest", "inferno"]),
+        ("inferno", ["cave"]),
+        ("glacier", ["mountains"]),
+        ("sea", ["start", "beach"]),
+        ("beach", ["sea", "city"]),
+        ("city", ["beach", "start", "castle"]),
+        ("castle", ["city", "treasure"]),
+        ("treasure", ["castle"]),
+    ]
+)
+
+w = dict(
+    [
+        (("start", "forest"), 70),
+        (("start", "mountains"), 60),
+        (("start", "sea"), 54),
+        (("start", "city"), 81),
+        (("forest", "start"), 42),
+        (("forest", "mountains"), 51),
+        (("forest", "desert"), 56),
+        (("forest", "cave"), 63),
+        (("mountains", "start"), 71),
+        (("mountains", "forest"), 38),
+        (("mountains", "glacier"), 72),
+        (("desert", "forest"), 93),
+        (("cave", "forest"), 19),
+        (("cave", "inferno"), 17),
+        (("inferno", "cave"), 71),
+        (("glacier", "mountains"), 25),
+        (("sea", "start"), 49),
+        (("sea", "beach"), 88),
+        (("beach", "sea"), 79),
+        (("beach", "city"), 29),
+        (("city", "beach"), 30),
+        (("city", "start"), 33),
+        (("city", "castle"), 36),
+        (("castle", "city"), 39),
+        (("castle", "treasure"), 76),
+        (("treasure", "castle"), 76),
+    ]
+)
+
+
+def dijkstra(src, dst):
+    explored = set()
+    distance = dict()
+    distance[src] = 0
+    queue = []
+    heappush(queue, (0, src))
+    while queue:
+        _, current = heappop(queue)
+        if current == dst:
+            print("Path found": distance[dst])
+            return distance[dst]
+        if current in explored:
+            continue
+        explored.add(current)
+        for neighbor in g[current]:
+            if neighbor not in explored:
+                d = distance[current] + w[(current, neighbor)]
+                distance[neighbor] = d
+                heappush(queue, (d, neighbor))
+    print("No path found")
+
+dijkstra("start", "treasure")
+```
 
 ## Dijkstra’s algorithm
 

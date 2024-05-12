@@ -256,6 +256,8 @@ For this reason, Dijkstra's algorithm is also known as the *shortest-path first*
 Like BFS, Dikjstra's algorithm is a *greedy algorithm* that discovered a globally optimal solution by repeatedly making locally optimal decisions.
 Let us turn to the Python language to demonstrate Dijkstra's algorithm on our same treasure-hunting graph, this time with edge weights.
 Run this program at https://www.python.org/shell/.
+(Note: the Python language is very "picky" about tabs.
+A plain text verion of this program is available at https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py.)
 
 ```
 from heapq import *
@@ -333,13 +335,72 @@ def dijkstra(src, dst):
 dijkstra("start", "treasure")
 ```
 
-## Dijkstra’s algorithm
+This program should output `Path found: 193`, revealing that the shortest path from `start` to `treasure` has a total path cost of 193.
 
-## A*
+Neo4j produces the same result.
+We reconstruct our graph in the Cypher language at https://console.neo4j.org:
 
-## Computational complexity and Big-[Equation] 
+```
+CREATE
+    (start:LOCATION {name:'start'}),
+    (inferno:LOCATION {name:'inferno'}),
+    (beach:LOCATION {name:'beach'}),
+    (castle:LOCATION {name:'castle'}),
+    (forest:LOCATION {name:'forest'}),
+    (mountains:LOCATION {name:'mountains'}),
+    (desert:LOCATION {name:'desert'}),
+    (cave:LOCATION {name:'cave'}),
+    (glacier:LOCATION {name:'glacier'}),
+    (sea:LOCATION {name:'sea'}),
+    (city:LOCATION {name:'city'}),
+    (treasure:LOCATION {name:'treasure'}),
+    (start)-[:CONN {distance:70}]->(forest),
+    (start)-[:CONN {distance:60}]->(mountains),
+    (start)-[:CONN {distance:54}]->(sea),
+    (start)-[:CONN {distance:81}]->(city),
+    (inferno)-[:CONN {distance:71}]->(cave),
+    (beach)-[:CONN {distance:79}]->(sea),
+    (beach)-[:CONN {distance:29}]->(city),
+    (castle)-[:CONN {distance:39}]->(city),
+    (castle)-[:CONN {distance:76}]->(treasure),
+    (city)-[:CONN {distance:30}]->(beach),
+    (city)-[:CONN {distance:33}]->(start),
+    (city)-[:CONN {distance:36}]->(castle),
+    (treasure)-[:CONN {distance:76}]->(castle),
+    (forest)-[:CONN {distance:42}]->(start),
+    (forest)-[:CONN {distance:51}]->(mountains),
+    (forest)-[:CONN {distance:56}]->(desert),
+    (forest)-[:CONN {distance:63}]->(cave),
+    (mountains)-[:CONN {distance:71}]->(start),
+    (mountains)-[:CONN {distance:38}]->(forest),
+    (mountains)-[:CONN {distance:72}]->(glacier),
+    (desert)-[:CONN {distance:93}]->(forest),
+    (cave)-[:CONN {distance:19}]->(forest),
+    (cave)-[:CONN {distance:17}]->(inferno),
+    (glacier)-[:CONN {distance:25}]->(mountains),
+    (sea)-[:CONN {distance:49}]->(start),
+    (sea)-[:CONN {distance:88}]->(beach);
+```
 
-## Power Law Distribution 
+and then we can use the built-in `shortestPath` function to obtain the same result.
+
+```
+MATCH
+    (src:LOCATION {name:'start'}),
+    (dst:LOCATION {name:'treasure'}),
+    path = shortestPath((src)-[:CONN*]->(dst))
+RETURN
+    path,
+    REDUCE(d=0, e in relationships(path) | d + e.distance) AS distance;
+```
+
+Neo4j should also report a distance of 193.
+
+As an exercise, change `->(dst)` to `-(dst)` and re-run the query with this change.
+The total distance is now 145.
+The difference in `()-[]->()` and `()-[]-()` is that one is a directed edge, the other is undirected.
+With `-()` instead of `->()`, Neo4j treats all edges in the graph as undirected.
+Neo4j allows *parallel edges* that connect the same two vertices.
 
 ## Discussion prompts
 

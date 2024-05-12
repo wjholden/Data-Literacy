@@ -138,7 +138,7 @@ SELECT * FROM Marathon
     SELECT MIN(time) FROM Marathon GROUP BY (gender));
 ```
 
-## Filter, map, and reduce
+## Filter, map, and reduce {#section:filter-map-reduce}
 
 SQL syntax makes it easy to write select, project, and join (SPJ) queries.
 SQL's grouping and aggregate functions make it possible to perform row-wise and column-wise operations.

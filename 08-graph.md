@@ -391,7 +391,8 @@ MATCH
     path = shortestPath((src)-[:CONN*]->(dst))
 RETURN
     path,
-    REDUCE(d=0, e in relationships(path) | d + e.distance) AS distance;
+    REDUCE(d=0, e in relationships(path) | d + e.distance)
+    AS distance;
 ```
 
 Neo4j should also report a distance of 193.
@@ -404,26 +405,23 @@ Neo4j allows *parallel edges* that connect the same two vertices.
 
 ## Discussion prompts
 
-A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
+1. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
 
-What algorithm can be used to solve the “seven ways to Kevin Bacon” problem? 
+2. What algorithm can be used to solve the “seven ways to Kevin Bacon” problem? 
 
-Is a Gantt chart a graph? How can one find the critical path of a project if represented as a graph? 
-
-Which is bigger, [Equation] or [Equation]? 
+3. Is a Gantt chart a graph? How can one find the critical path of a project if represented as a graph? 
 
 
 ## Practical exercises
 
-Compare two different heuristic functions in a provided A* informed search implementation on the 8-piece puzzle problem. 
+<!-- Compare two different heuristic functions in a provided A* informed search implementation on the 8-piece puzzle problem. -->
 
-Convert currency exchange rates from multiplication to addition using a logarithm, then prove that infinite arbitration is impossible given a set of exchange rates and Bellman-Ford implementation. 
+1. Convert currency exchange rates from multiplication to addition using a logarithm, then prove that infinite arbitration is impossible given a set of exchange rates and Bellman-Ford implementation. 
 
-Define a topological sorting and relate it to a workplace problem. 
+2. Define a topological sorting and relate it to a workplace problem. 
 
-Define the Traveling Salesman Problem (TSP) and explain the computational difficulty of this problem. 
+3. Define the Traveling Salesman Problem (TSP) and explain the computational difficulty of this problem. 
 
-Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
+4. Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
 
-Simulate an infection model in a dense social graph where edge weights represent probability of infection. 
-
+5. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 

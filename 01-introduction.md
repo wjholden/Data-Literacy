@@ -148,6 +148,8 @@ Data analysts can benefit greatly by using the appropriate types for the values 
 
 ## Tables, lists, and data frames 
 
+<!-- https://drops.dagstuhl.de/storage/01oasics/oasics-vol076-plateau2019/OASIcs.PLATEAU.2019.6/OASIcs.PLATEAU.2019.6.pdf -->
+
 *Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* or *observations* in the data set and the columns represent the *features*.
 For example, a table of employee names might have two columns (the given and surnames) and ten rows, where each row represents one of the ten employees.
 

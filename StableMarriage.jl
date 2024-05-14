@@ -29,20 +29,48 @@ function isstable(m::Matrix, w::Matrix, a::Vector)
     return true
 end
 
+function isstable2(m, w, a)
+    n = length(a)
+
+    mp, wp = Dict(), Dict()
+
+    for x ∈ 1:n
+        for rank ∈ 1:n
+            mp[(x,m[x,rank])]=rank
+            wp[(x,w[x,rank])]=rank
+        end
+    end
+
+    wife = a
+    husband = Dict(zip(a, 1:n))
+
+    for man ∈ 1:n
+        for woman ∈ 1:n
+            if mp[(man,woman)] < mp[(man, wife[man])] &&
+                wp[(woman,man)] < wp[(woman, husband[woman])]
+                return false
+            end
+        end
+    end
+
+    true
+end
+
 # The Stable Marriage Problem: Structure and Algorithms
 # Dan Gusfield and Rubert W. Irving
 # https://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15251-f10/Site/Materials/Lectures/Lecture21/lecture21.pdf
 m = [2 4 1 3; 3 1 4 2; 2 3 1 4; 4 1 3 2]
 w = [2 1 4 3; 4 3 1 2; 1 4 3 2; 2 1 4 3]
-@test isstable(m, w, [4, 3, 2, 1]) == true
-@test isstable(m, w, [4, 1, 2, 3]) == true
-@test isstable(m, w, [1, 3, 2, 4]) == false
+@test isstable2(m, w, [4, 3, 2, 1]) == true
+@test isstable2(m, w, [4, 1, 2, 3]) == true
+@test isstable2(m, w, [1, 3, 2, 4]) == false
 
 # https://kostochk.web.illinois.edu/math412-10/Gale-Sh.pdf
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [1, 2, 3]) == true
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [3, 1, 2]) == true
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [2, 3, 1]) == true
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [1, 3, 2]) == false
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [3, 2, 1]) == false
-@test isstable([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3], [2, 1, 3]) == false
-
+m_gale_sh = [1 2 3; 2 3 1; 3 1 2]
+w_gale_sh = [2 3 1; 3 1 2; 1 2 3]
+@test isstable2(m_gale_sh, w_gale_sh, [1, 2, 3]) == true
+@test isstable2(m_gale_sh, w_gale_sh, [3, 1, 2]) == true
+@test isstable2(m_gale_sh, w_gale_sh, [2, 3, 1]) == true
+@test isstable2(m_gale_sh, w_gale_sh, [1, 3, 2]) == false
+@test isstable2(m_gale_sh, w_gale_sh, [3, 2, 1]) == false
+@test isstable2(m_gale_sh, w_gale_sh, [2, 1, 3]) == false

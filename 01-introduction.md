@@ -34,11 +34,11 @@ Another example of ordinal might be the rankings the films receive at an awards 
 
 *Interval* data is numerical data with a concept of distance but not multiplication.
 The year when a film was produced is an example of interval data.
-If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $$\num{2010}/$\num{2000} = 1.005$ times the first.
+If two films were produced in 2000 and 2010, then it makes sense to say one was made ten years later, but we would not say that the latter film is $\frac{\num{2010}}{\num{2000}} = 1.005$ times the first.
 
 *Ratio* data is numerical data with both distance and multiplication.
 The gross earnings of a film is an example of ratio data.
-If the 2000 film earned one million dollars and the second earned two million dollars, then it makes sense to say the second film earned double the first.
+If the 2000 film earned one million dollars and the 2010 film earned two million dollars, then it makes sense to say the second film earned double the first.
 
 | Name | Operations | Type |
 |-|-|-|
@@ -49,8 +49,8 @@ If the 2000 film earned one million dollars and the second earned two million do
 
 Interval data might be initially confusing to distinguish from ratio data.
 One indication is the absence of a meaningful zero.
-Does zero degrees Celsius or Fahrenheit mean the absence of temperature? 
-No, these measurements are simply points along a scale.
+Does zero degrees Celsius or zero degrees Fahrenheit mean the absence of temperature? 
+No. These temperature measurements are simply points along a *scale*.
 Twenty degrees Celsius is not "twice" ten degrees Celsius; multiplication is not defined on interval data.
 
 Grid coordinates might be another example of interval data.
@@ -59,7 +59,7 @@ One can calculate the distance between two grid coordinates, but we would not sa
 Data might be represented in numerical formats when some operations do not make sense.
 Suppose a political scientist encoded voter's political party as "1", "2", "3", and "4".
 Is "2" an intermediate value between "1" and "3", or are these actually nominal data where the only arithmetic operations are $=$ and $\ne$?
-AI methods sometimes make incorrect assumptions about data that domain experts can easily prevent.
+AI methods may form incorrect assumptions about data that domain experts can easily prevent.
 
 ## Discretization 
 
@@ -76,7 +76,7 @@ Combining a range of birth years into generational categories is an example of *
 
 ## Missing values
 
-In practice, sets of data (a *data set*) are often missing values.
+In practice, *data sets* often have missing values.
 Different programming languages have substantially different syntax and semantics for representing and handling missing values.
 
 As a small exercise, open Microsoft Excel and enter the values 1, 2, 3, and 5 into cells A1, A2, A3, and A5.

@@ -158,7 +158,9 @@ This is a matter of convention; the first element of a list is position 1 in mat
 
 4. Is it more important for an organization to think about variance or the 99th percentile? 
 
-5. Given a sample set [Equation], what is the estimate of the mean ([Equation]), and what is the sample variance? 
+5. Given a sample set $x = \left\{ 5 \right\}$, what is the estimate of the mean ($\bar{x}$), and what is the sample variance ($s_x$)$?
+That is, what is the expected value ($E(x)$) of a random sample taken from $x$, and what is the average difference of variables to the expected value?
+Use software to verify your answer. In the R language, this would be `mean(c(5))` and `sd(c(5))`.
 
 ## Practical exercises
 

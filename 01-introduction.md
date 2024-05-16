@@ -160,7 +160,7 @@ Scientific languages, such as Julia and R, often use the term *data frame* (or *
 Data frames often provide rich syntax for row-wise and column-wise operations.
 By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
 
-## Forms and input validation
+<!-- ## Forms and input validation -->
 
 
 
@@ -334,15 +334,24 @@ Here, the instructions of the algorithm are part of a model, which is created fr
 
 3. What is reproducibility? Why would this be important for scientific inquiry? 
 
-4. Like a barplot, a pie chart shows the relative sizes of categorical values. What are some disadvantages of using pie charts?
+4. Like a barplot, a pie chart shows the relative sizes of categorical values.
+What are some advantages and disadvantages of using pie charts?
+
+5. A manager sends an Excel spreadsheet to their employees, telling them to each
+enter information and send it back. What are some challenges the manager might
+experience while merging these spreadsheets?
 
 ## Practical exercises
 
-1. Given a dataset, plot the data and explain why this plot technique is appropriate. 
+1. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
+Compare this experience to the hypothetical manager who gathered information by
+manually merging spreadsheets.
 
-2. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
+2. Given a dataset, plot the data and explain why this plot technique is appropriate. 
 
-3. Discretize the values of a dataset and explain the reasoning. 
+3. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
 
-4. Be creative and construct intentionally misleading plots that deliberately distort information presented.  
+4. Discretize the values of a dataset and explain the reasoning. 
+
+5. Be creative and construct intentionally misleading plots that deliberately distort information presented.  
 

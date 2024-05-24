@@ -48,7 +48,15 @@ function make_preference_functions(M::Matrix, W::Matrix)
 end
 
 """
+Determine whether the matchings of a stable marriage problem are stable or not.
+The returned integer is a metric quantifying stability.
+If the metric is 0, then the matchings are stable.
 
+# Usage
+Generate the `men` and `women` functions using `make_preference_functions`.
+
+The `matching` array is a list pairing men to women, where `matching[i] = j`
+relates man `i` to woman `j`.
 """
 function stability(men::Function, women::Function, matching::Array)
     n = length(matching)
@@ -58,10 +66,15 @@ function stability(men::Function, women::Function, matching::Array)
 
     for man ∈ 1:n
         for woman ∈ 1:n
-            if men(man,woman) < men(man, wife[man]) &&
-                women(woman,man) < women(woman, husband[woman])
-                metric += (men(man,woman) - men(man, wife[man]))^2
-                metric += (women(woman,man) - women(woman, husband[woman]))^2
+            # Candidate and current preferences for the man
+            x1, x2 = men(man, woman), men(man, wife[man])
+            # Candidate and current preferences for the woman
+            y1, y2 = women(woman, man), women(woman, husband[woman])
+            # The matching is unstable if, and only if, both the man
+            # and the woman prefer each other to their current matches.
+            if x1 < x2 && y1 < y2
+                metric += (x1 - x2)^2
+                metric += (y1 - y2)^2
             end
         end
     end
@@ -77,3 +90,33 @@ m, w = make_preference_functions([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3])
 @test stability(m, w, [1, 3, 2]) > 0
 @test stability(m, w, [3, 2, 1]) > 0
 @test stability(m, w, [2, 1, 3]) > 0
+
+
+using DataStructures, StatsBase
+
+function informed_search(men, women, matching)
+    pq = PriorityQueue()
+    visited = Set()
+    enqueue!(pq, matching=>stability(men, women, matching))
+    while !isempty(pq)
+        current = dequeue!(pq)
+        push!(visited, current)
+        
+        if stability(men, women, current) == 0
+            println("Found solution: $(current)")
+            return current
+        else
+            println("Explore: $(current)")
+        end
+
+        # Create three random permutations from our current solution
+        for _ ∈ 1:3
+            x = copy(current)
+            y = sample(1:length(matching), 2; replace=false)
+            x[y[1]], x[y[2]] = x[y[2]], x[y[1]]
+            if x ∉ visited && !haskey(pq, x)
+                enqueue!(pq, x=>stability(men, women, x))
+            end
+        end
+    end
+end;

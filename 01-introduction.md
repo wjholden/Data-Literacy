@@ -53,8 +53,10 @@ Does zero degrees Celsius or zero degrees Fahrenheit mean the absence of tempera
 No. These temperature measurements are simply points along a *scale*.
 Twenty degrees Celsius is not "twice" ten degrees Celsius; multiplication is not defined on interval data.
 
-Grid coordinates might be another example of interval data.
+Grid coordinates are another example of interval data.
 One can calculate the distance between two grid coordinates, but we would not say that coordinate 1111 is "half" of coordinate 2222.
+
+Women's pant sizes in the United States, with the confusing size "00," is yet another example of interval data.
 
 Data might be represented in numerical formats when some operations do not make sense.
 Suppose a political scientist encoded voter's political party as "1", "2", "3", and "4".

@@ -1,3 +1,69 @@
+using Random, StatsBase, DataStructures, Test
+rng = MersenneTwister(parse(Int, ARGS[1]))
+
+function informed_search(souce, edges::Function, heuristic::Function; printgraph=false)
+    printgraph && println("digraph {")
+
+    pq = PriorityQueue()
+    visited = Set()
+    enqueue!(pq, souce=>heuristic(souce))
+
+    while !isempty(pq)
+        u = dequeue!(pq)
+        push!(visited, u)
+        printgraph && println("\"$(u)\" [color=\"blue\"];")
+        
+        if heuristic(u) == 0
+            printgraph && println("}")
+            return u
+        end
+
+        for v ∈ edges(u)
+            if v ∉ visited && !haskey(pq, v)
+                enqueue!(pq, v=>heuristic(v))
+                printgraph && println("\"$(u)\" -> \"$(v)\";")
+            end
+        end
+    end
+
+    error("Failed to find a solution.")
+end
+
+"""
+Determine whether the matchings of a stable marriage problem are stable or not.
+The returned integer is a metric quantifying stability.
+If the metric is 0, then the matchings are stable.
+
+# Usage
+Generate the `men` and `women` functions using `make_preference_functions`.
+
+The `matching` array is a list pairing men to women, where `matching[i] = j`
+relates man `i` to woman `j`.
+"""
+function stability(men::Function, women::Function, matching::Vector)
+    n = length(matching)
+    wife = matching
+    husband = Dict(values(matching) .=> keys(matching))
+    metric = 0
+
+    for man ∈ 1:n
+        for woman ∈ 1:n
+            # Candidate and current preferences for the man
+            x1, x2 = men(man, woman), men(man, wife[man])
+            # Candidate and current preferences for the woman
+            y1, y2 = women(woman, man), women(woman, husband[woman])
+            # The matching is unstable if, and only if, both the man
+            # and the woman prefer each other to their current matches.
+            if x1 < x2 && y1 < y2
+                metric += (x1 - x2)^2
+                metric += (y1 - y2)^2
+            end
+        end
+    end
+
+    return metric
+end
+
 """
 Create two *preference functions* to relate men and women to their preferences.
 For the men's preference matrix, `M`, each row represents one man, columns
@@ -29,7 +95,7 @@ julia> W = [2 3 1; 3 1 2; 1 2 3]
 The output is a tuple of binary functions. Call them `mpf` and `wpf`.
 Continuing the example, `mpf(2, 1) == 2` and `wpf(1, 2) == 3`.
 """
-function make_preference_functions(M::Matrix, W::Matrix)
+function preference_functions(M::Matrix, W::Matrix)
     n = size(M, 1)
     @assert size(M,1)==size(M,2)==size(W,1)==size(W,2)
 
@@ -42,81 +108,32 @@ function make_preference_functions(M::Matrix, W::Matrix)
         end
     end
 
-    men(man, woman) = mp[(man, woman)]
-    women(woman, man) = wp[(woman, man)] 
-    return men, women
+    return (x,y) -> mp[(x,y)], (y,x) -> wp[(y,x)]
 end
 
-"""
-Determine whether the matchings of a stable marriage problem are stable or not.
-The returned integer is a metric quantifying stability.
-If the metric is 0, then the matchings are stable.
-
-# Usage
-Generate the `men` and `women` functions using `make_preference_functions`.
-
-The `matching` array is a list pairing men to women, where `matching[i] = j`
-relates man `i` to woman `j`.
-"""
-function stability(men::Function, women::Function, matching::Array)
-    n = length(matching)
-    wife = matching
-    husband = Dict(zip(matching, 1:n))
-    metric = 0
-
-    for man ∈ 1:n
-        for woman ∈ 1:n
-            # Candidate and current preferences for the man
-            x1, x2 = men(man, woman), men(man, wife[man])
-            # Candidate and current preferences for the woman
-            y1, y2 = women(woman, man), women(woman, husband[woman])
-            # The matching is unstable if, and only if, both the man
-            # and the woman prefer each other to their current matches.
-            if x1 < x2 && y1 < y2
-                metric += (x1 - x2)^2
-                metric += (y1 - y2)^2
-            end
-        end
-    end
-
-    return metric
+let
+    m, w = preference_functions([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3])
+    @test stability(m, w, [1, 2, 3]) == 0
+    @test stability(m, w, [3, 1, 2]) == 0
+    @test stability(m, w, [2, 3, 1]) == 0
+    @test stability(m, w, [1, 3, 2]) > 0
+    @test stability(m, w, [3, 2, 1]) > 0
+    @test stability(m, w, [2, 1, 3]) > 0
 end
 
-using Test
-m, w = make_preference_functions([1 2 3; 2 3 1; 3 1 2], [2 3 1; 3 1 2; 1 2 3])
-@test stability(m, w, [1, 2, 3]) == 0
-@test stability(m, w, [3, 1, 2]) == 0
-@test stability(m, w, [2, 3, 1]) == 0
-@test stability(m, w, [1, 3, 2]) > 0
-@test stability(m, w, [3, 2, 1]) > 0
-@test stability(m, w, [2, 1, 3]) > 0
-
-
-using DataStructures, StatsBase
-
-function informed_search(men, women, matching)
-    pq = PriorityQueue()
-    visited = Set()
-    enqueue!(pq, matching=>stability(men, women, matching))
-    while !isempty(pq)
-        current = dequeue!(pq)
-        push!(visited, current)
-        
-        if stability(men, women, current) == 0
-            println("Found solution: $(current)")
-            return current
-        else
-            println("Explore: $(current)")
-        end
-
-        # Create three random permutations from our current solution
+function edges(matching)
+    chnl = Channel() do ch
         for _ ∈ 1:3
-            x = copy(current)
-            y = sample(1:length(matching), 2; replace=false)
+            x = copy(matching)
+            y = sample(rng, 1:length(matching), 2; replace=false)
             x[y[1]], x[y[2]] = x[y[2]], x[y[1]]
-            if x ∉ visited && !haskey(pq, x)
-                enqueue!(pq, x=>stability(men, women, x))
-            end
+            push!(ch, x)
         end
     end
-end;
+    chnl
+end
+
+rpref(n) = permutedims(reduce(hcat, (shuffle(rng, 1:n) for _ in 1:n)))
+x = parse(Int, ARGS[2])
+mf, wf = preference_functions(rpref(x), rpref(x))
+informed_search(shuffle(rng, 1:x), edges, (x) -> stability(mf, wf, x); printgraph=true)

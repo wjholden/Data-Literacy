@@ -35,6 +35,67 @@ One might also consider the *absolute value* (`ABS` in Excel) as an alternative,
 Squaring the errors penalizes large errors more than small errors.
 Accepting small errors but avoiding large errors is the bias that gives the least squares method its strength.
 
+## Calculus-based derivation
+
+Readers familiar with calculus may recognize that one can find the arithmetic mean, $\mu$, by finding the zero in the *derivative* for the sum of the squared errors (SSE) function.
+Let $X$ be a sample of size $n$.
+
+$$
+X = \left\{ x_1, x_2, \ldots , x_n \right\}.
+$$
+
+Then the errors of our estimate of the mean, $\bar{x}$, can be found using the error function
+
+$$
+\text{Err}\left( \bar{x} \right) = X - \bar{x} = \left\{ x_1 - \bar{x} , x_2 - \bar{x}, \ldots , x_n -bar{x} \right\},
+$$
+
+and the sum of the squared errors is
+
+$$
+\text{SSE}\left( \bar{x} \right) = \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2.
+$$
+
+To minimize SSE, we take the derivative of SSE in respect to $\bar{x}$ and find its zero.
+
+$$
+\begin{aligned}
+0 &= \text{SSE}' \left( \bar{x} \right) \\
+&=  \left( \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2 \right)' \\
+&= \left( \left( x_1^2 -2 x_1 \bar{x} + \bar{x}^2 \right) + \left( x_2^2 -2 x_2 \bar{x} + \bar{x}^2 \right) + \ldots + \left( x_n^2 -2 x_n \bar{x} + \bar{x}^2 \right) \right)' \\
+&= \left(-2x_1 + 2\bar{x} \right) + \left( -2x_2 + 2\bar{x} \right) + \ldots + \left( -2x_n + 2\bar{x} \right) \\
+&= -2x_1 -2x_2 - \ldots - 2x_n + n \left( 2\bar{x} \right) \\
+-2n\bar{x} &= -2x_1 - 2x_2 - \ldots - 2x_n \\
+\bar{x} &= \frac{-2x_1 - 2x_2 - \ldots - 2x_n}{-2n} \\
+&= \frac{x_1+x_2+\ldots+x_n}{n}
+\end{aligned}
+$$
+
+The arithmetic mean is found at $\mu = \bar{x} = \frac{x_1+x_2+\ldots+x_n}{n}$. $\square$
+
+A less-general demonstration of the above proof is given below in the Wolfram Language.
+
+```
+Wolfram Language 14.0.0 Engine for Microsoft Windows (64-bit)
+Copyright 1988-2023 Wolfram Research, Inc.
+
+In[1]:= X := {x1, x2, x3}
+
+In[2]:= Err[mu_] := X - mu
+
+In[3]:= SSE[mu_] := Total[Err[mu]^2]
+
+In[4]:= SSE'[mu]
+
+Out[4]= -2 (-mu + x1) - 2 (-mu + x2) - 2 (-mu + x3)
+
+In[5]:= Solve[SSE'[mu] == 0, mu]
+
+                x1 + x2 + x3
+Out[5]= {{mu -> ------------}}
+                     3
+```
+
 ## Expected values
 
 The term *average* can refer to *mean*, *median*, and *mode*.

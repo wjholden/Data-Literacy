@@ -328,6 +328,8 @@ Long division, a procedure for manually dividing numbers, is an example of an al
 The term "algorithm" has recently entered the popular lexicon in relation to AI systems.
 Here, the instructions of the algorithm are part of a model, which is created from data.
 
+<!-- ## Bisection algorithm (todo) -->
+
 ## Discussion prompts
 
 1. Who owns knowledge management? 

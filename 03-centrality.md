@@ -47,7 +47,7 @@ $$
 Then the errors of our estimate of the mean, $\bar{x}$, can be found using the error function
 
 $$
-\text{Err}\left( \bar{x} \right) = X - \bar{x} = \left\{ x_1 - \bar{x} , x_2 - \bar{x}, \ldots , x_n -bar{x} \right\},
+\text{Err}\left( \bar{x} \right) = X - \bar{x} = \left\{ x_1 - \bar{x} , x_2 - \bar{x}, \ldots , x_n - \bar{x} \right\},
 $$
 
 and the sum of the squared errors is

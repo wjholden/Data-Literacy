@@ -403,6 +403,39 @@ The difference in `()-[]->()` and `()-[]-()` is that one is a directed edge, the
 With `-()` instead of `->()`, Neo4j treats all edges in the graph as undirected.
 Neo4j allows *parallel edges* that connect the same two vertices.
 
+## Informed search
+
+DFS, BFS, and Dijkstra's algorithms are all *uninformed* search algorithms.
+The A* algorithm is an *informed* search algorithm: it uses some *heuristic* to explore its frontier
+ordered by minimum estimated distance to the destination.
+
+A* can solve hard problems that are not immediately recognizable as searches.
+The canonical example is the 8-piece puzzle.
+An eight-piece puzzle arranges 8 pieces into a $3 \times 3$ grid where one position is empty.
+The challenge is to slide the pieces until all pieces are in order.
+
+$$
+\begin{bmatrix}
+5 & 4 & 1\\
+& 2 & 8\\
+3 & 6 & 7
+\end{bmatrix}
+\to
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 
+\end{bmatrix}
+$$
+
+The choice of heuristic function influences the path A* chooses as it searches for a solution.
+One heuristic function for the 8-piece puzzle problem returns the count of mismatched pieces.
+If two pieces are out of place then the heuristic distance is 2,
+if three pieces are out of place then the heuristic distance is 3,
+and so on.
+An alternative, more sophsticated heuristic function, uses the *Manhattan distance* of each puzzle piece to its destination.
+Manhattan distance is...*todo*.
+
 ## Discussion prompts
 
 1. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 

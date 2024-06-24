@@ -16,6 +16,8 @@ all: dl.pdf
 
 08-graph.md:
 
+99-references.md:
+
 metadata.txt:
 
 references.bib:
@@ -23,7 +25,7 @@ references.bib:
 dl.pdf: *.md metadata.txt references.bib
 	pandoc -o dl.pdf metadata.txt 00-preface.md \
 	01-introduction.md 02-data.md 03-centrality.md \
-	08-graph.md \
+	08-graph.md 99-references.md \
 	--citeproc --pdf-engine=xelatex --toc --number-sections
 
 clean:

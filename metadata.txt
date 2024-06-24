@@ -9,4 +9,6 @@ csl: https://www.zotero.org/styles/ieee-with-url
 
 header-includes:
     - \usepackage{siunitx}
+    - \usepackage{nicematrix}
+    - \usepackage{amsmath}
 ---

@@ -66,6 +66,7 @@ w = [2 1 4 3; 4 3 1 2; 1 4 3 2; 2 1 4 3]
 @test isstable2(m, w, [1, 3, 2, 4]) == false
 
 # https://kostochk.web.illinois.edu/math412-10/Gale-Sh.pdf
+# 10.1080/00029890.1962.11989827
 m_gale_sh = [1 2 3; 2 3 1; 3 1 2]
 w_gale_sh = [2 3 1; 3 1 2; 1 2 3]
 @test isstable2(m_gale_sh, w_gale_sh, [1, 2, 3]) == true

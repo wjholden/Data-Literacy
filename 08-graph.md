@@ -105,12 +105,12 @@ A separate data structure would be necessary to represent edge weights.
 An adjacency matrix represents edges with weights in a single data structure, such as
 
 $$
-E = \bordermatrix{
-& \text{Paris} & \text{Brussels} & \text{Hague} \cr
-\text{Paris} & 0 & 350 & \infty \cr
-\text{Brussels} & 350 & 0 & 180 \cr
+E = \begin{bNiceMatrix}[first-row,first-col]
+& \text{Paris} & \text{Brussels} & \text{Hague} \\
+\text{Paris} & 0 & 350 & \infty \\
+\text{Brussels} & 350 & 0 & 180 \\
 \text{Hague} & \infty & 180 & 0
-}.
+\end{bNiceMatrix}.
 $$
 
 In this example, the distance of a vertex to itself is defined as zero,
@@ -126,6 +126,8 @@ $$
 $$
 
 ## Search algorithms
+
+### Depth-first search
 
 Imagine a video game where the player searches the kingdom for treasure.
 The player has no knowledge of where the treasure might be, so from a starting point they fully explore the forest, mountains, and sea.
@@ -188,9 +190,11 @@ func main() {
 The program should output `Discovered treasure: castle city beach sea start`.
 DFS successfully discovers the treasure, but we have no guarantee that this algorithm will find the *optimal* (shortest) path.
 
+### Breadth-first search
+
 Imagine the protagonist of our hypothetical adventure game was not a lone wanderer, but rather a field marshall commanding a large army.
 This army explores one region at a time, holding each area as adjacent units proceed into their respective area.
-The army incrementally expands the radius of the search *frontier*.
+The army incrementally expands the radius of the search *frontier* in a search technique called *breadth-first search* (BFS).
 Once one unit discovers the treasure, we are certain that no shorter path was possible thanks to an *invariant* in our search algorithm.
 
 Maintaining an invariant is essential for *mathematical induction*, where we establish that some *predicate* $P$ is true for the *base case* $P(0)$ and that $P(k)$ implies $P(k+1)$ and therefore $P(n)$ is true for all $n > 0$.
@@ -244,14 +248,16 @@ func main() {
 
 This program should output `Discovered treasure: castle city start`.
 BFS finds the shortest path between two vertices by *hop count*, but it does not consider edge weights.
-*Dijkstra's algorithm* performs a breadth-first traversal ordered by cumulative path cost.
+In the following section, we will find that we can often explore graphs much faster by ordering our breadth-first traversal by cumulative path cost.
+
+### Dijkstra's algorithm {#section:dijkstra}
 
 <!--
 Dijkstra in Go https://go.dev/play/p/hcNbTvGli-z
 Too long and ugly to share.
 -->
 
-Dijkstra's algorithm uses a *priority queue* to visit nodes from shortest to longest path.
+*Dijkstra's algorithm* uses a *priority queue* to visit nodes from shortest to longest path [@10.1145/3544585.3544600].
 For this reason, Dijkstra's algorithm is also known as the *shortest-path first* (SPF).
 Like BFS, Dikjstra's algorithm is a *greedy algorithm* that discovered a globally optimal solution by repeatedly making locally optimal decisions.
 Let us turn to the Python language to demonstrate Dijkstra's algorithm on our same treasure-hunting graph, this time with edge weights.
@@ -403,11 +409,11 @@ The difference in `()-[]->()` and `()-[]-()` is that one is a directed edge, the
 With `-()` instead of `->()`, Neo4j treats all edges in the graph as undirected.
 Neo4j allows *parallel edges* that connect the same two vertices.
 
-## Informed search
+### Informed search with A*
 
 DFS, BFS, and Dijkstra's algorithms are all *uninformed* search algorithms.
 The A* algorithm is an *informed* search algorithm: it uses some *heuristic* to explore its frontier
-ordered by minimum estimated distance to the destination.
+ordered by minimum estimated distance to the destination [@4082128].
 
 A* can solve hard problems that are not immediately recognizable as searches.
 The canonical example is the 8-piece puzzle.
@@ -433,8 +439,138 @@ One heuristic function for the 8-piece puzzle problem returns the count of misma
 If two pieces are out of place then the heuristic distance is 2,
 if three pieces are out of place then the heuristic distance is 3,
 and so on.
-An alternative, more sophsticated heuristic function, uses the *Manhattan distance* of each puzzle piece to its destination.
-Manhattan distance is...*todo*.
+An alternative, more sophsticated heuristic function, uses the *Manhattan distance* (also known as *Taxicab distance*) of each puzzle piece to its destination.
+Manhattan distance is the sum of unsigned differences of each dimension between two coordinates in $n$-dimensional space.
+The intuition is that a taxicab cannot fly in a straight line, but rather has to corner the rectangular blocks of Manhattan.
+
+$$
+d_T \left( p, q \right) = \sum_{i=i}^n{ \left| p_i - q_i \right| }
+$$
+
+For example, if $p = (x_1, y_1)$ and $q = (x_2, y_2)$, then $d_T(p,q) = \left| x_1 - x_2 \right| + \left| y_1 - y_2 \right|$.
+A heuristic function for an A* solution to the 8-piece puzzle problem uses Manhattan distance to quantify the closeness of the current game state to the desired solution.
+This approach works because progress *towards* the solution ultimately results in a global solution.
+The design of the heuristic function is key to the informed search technique.
+
+Some problems contain *local extrema* (local but not global minimal or maximal values) that might stop the search at a suboptimal solution.
+If the problem has an extremely large space (there are too many candidate solutions to search exhaustively),
+then it may be acceptable to accept a "good-enough" local best candidate solution as an approximation for the global optimum.
+The *local search* technique uses an *ensemble* of *search agents* which independently search *neighborhoods* of the problem space.
+A local search could be built upon A* searches from different origins.
+Ideally, the A*-based local search should explore the problem with reasonable depth, mobility, and coverage [@schuurmans2001local].
+
+### A* and the Stable Marriage Problem
+
+We will demonstrate the A* informed search algorithm on the *Stable Marriage Problem* [@gale1962college].
+The Stable Marriage Problem seeks to pair the members of two equal-sized sets to one another based upon their mutual preferences.
+This problem and its solution are applied to many practical situations, including the Army Talent Alignment Process (ATAP);
+see https://www.youtube.com/watch?v=9mEBe7fzrmI for an official and detailed explanation.
+Explained with marriages, the problem has all of the men rank all of the women from most to least preferred.
+Correspondingly, the women also rank all of the men from most to least preferred.
+
+$$
+\begin{aligned}
+M &= \begin{bNiceMatrix}[first-row,first-col]
+& \text{Woman 1} & \text{Woman 2} & \text{Woman 3} \\ 
+\text{Man 1} & 1 & 2 & 3 \\
+\text{Man 2} & 3 & 1 & 2 \\
+\text{Man 3} & 2 & 3 & 1
+\end{bNiceMatrix}\\
+W &= \begin{bNiceMatrix}[first-row,first-col]
+& \text{Man 1} & \text{Man 2} & \text{Man 3} \\ 
+\text{Woman 1} & 3 & 1 & 2 \\
+\text{Woman 2} & 2 & 3 & 1 \\
+\text{Woman 3} & 1 & 2 & 3
+\end{bNiceMatrix}
+\end{aligned}
+$$
+
+Each man is paired to one woman.
+The set of matching is considered "stable" when there is no "*rogue couple*": a man $x$ who prefers some other woman $y$ to his current wife *and* that $y$ prefers $x$ to her current husband.
+(The solution does not need to give everyone their first preference.
+It is acceptable for some person to prefer someone other than their current spouse; instability occurs only when that person requites.)
+In the above example, the pairing $\left[ 1, 2, 3 \right]$ (man 1 paired to woman 1, man 2 with woman 2, 3 with 3) is stable.
+The pairing $\left[ 3, 2, 1 \right]$ (man 1 paired to woman 3, man 2 with woman 2, 3 with 1) is not stable because man 1 perfers woman 2 to his current spouse (woman 3) and woman 2 prefers man 1 to her current spouse (man 2).
+
+The stable marriage problem is known to be solvable with a simple and predictable algorithm by Gale and Shapley [@gale1962college].
+First, each man proposes to his most-preferred woman.
+Women who receive multiple proposals maintain only their most-preferred proposal and reject the others.
+Second, each rejected man proposes to his next-preferred woman; women receiving new proposals continue to maintain only the one most-preferred.
+The process continues until no man is rejected in a round.
+Finally, the women accept their most-preferred proposal and the algorithm terminates.
+
+A *reduction* is a method of solving one problem by restating it in terms of another.
+Reductions can be a powerful but difficult technique for solving hard problems.
+By reducing the stable marriage problem to a graph search problem, we can solve the problem with an A* algorithm.
+Our A* solution will be slower and less efficient than the Gale-Shapley algorithm, but it will demonstrate a method for solving difficult problems using general and reusable techniques.
+The 8-piece puzzle problem could likely also be solved with a very fast and direct algorithm, but it may be very difficult for us to discover this solution.
+Likewise, there may be an optimal algorithm to solve a Rubik's cube, but given an A* solver and a fast computer we may be able to find an economically-acceptable solution.
+
+Our informed search algorithm is implemented in Julia.
+This is comparable our implementation of Dijkstra's algorithm (see section \ref{dijkstra}),
+but instead of searching for a named destination this function instead uses its heuristic function.
+If the heuristic function returns the value zero, then the search is considered successful and the program terminates.
+This A* program also prints its search in the DOT graph description language, which can be rendered as a graphic using the GraphViz program.
+
+```
+function informed_search(source, edges::Function, heuristic::Function; printgraph=false)
+    printgraph && println("digraph {")
+
+    pq = PriorityQueue()
+    visited = Set()
+    enqueue!(pq, source=>heuristic(source))
+
+    while !isempty(pq)
+        u = dequeue!(pq)
+        push!(visited, u)
+        printgraph && println("\"$(u)\" [color=\"blue\"];")
+        
+        if heuristic(u) == 0
+            printgraph && println("}")
+            return u
+        end
+
+        for v ∈ edges(u)
+            if v ∉ visited && !haskey(pq, v)
+                enqueue!(pq, v=>heuristic(v))
+                printgraph && println("\"$(u)\" -> \"$(v)\";")
+            end
+        end
+    end
+
+    error("Failed to find a solution.")
+end
+```
+
+The heuristic function for the stable marriage function seeks to quantify and differentiate instability by returning the sum of the squared distance (see section \ref{section:least-squares-method}) of a rogue couple's candidate and current preferences.
+
+```
+function stability(men::Matrix, women::Matrix, matching::Vector)
+    n = length(matching)
+    wife = matching
+    husband = Dict(values(matching) .=> keys(matching))
+    metric = 0
+
+    for man ∈ 1:n
+        for woman ∈ 1:n
+            # Candidate and current preferences for the man
+            x1, x2 = men[man, woman], men[man, wife[man]]
+            # Candidate and current preferences for the woman
+            y1, y2 = women[woman, man], women[woman, husband[woman]]
+            # The matching is unstable if, and only if, both the man
+            # and the woman prefer each other to their current matches.
+            if x1 < x2 && y1 < y2
+                metric += (x1 - x2)^2
+                metric += (y1 - y2)^2
+            end
+        end
+    end
+
+    return metric
+end
+```
+
+
 
 ## Discussion prompts
 

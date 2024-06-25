@@ -10,5 +10,15 @@ csl: https://www.zotero.org/styles/ieee-with-url
 header-includes:
     - \usepackage{siunitx}
     - \usepackage{nicematrix}
-    - \usepackage{amsmath}
+    - \usepackage{amsmath,amssymb,amsfonts}
+
+# https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
+# https://tug.org/FontCatalogue/typewriterfonts.html
+#mainfont: 
+#sansfont: 
+# https://juliamono.netlify.app/
+# I don't just *love* JuliaMono, but for Julia you want/need some characters
+# that aren't ordinarily included in a monospace font.
+monofont: JuliaMono-Light.ttf
+#mathfont: 
 ---

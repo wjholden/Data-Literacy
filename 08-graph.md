@@ -486,13 +486,13 @@ W &= \begin{bNiceMatrix}[first-row,first-col]
 $$
 
 Each man is paired to one woman.
-The set of matching is considered "stable" when there is no "*rogue couple*": a man $x$ who prefers some other woman $y$ to his current wife *and* that $y$ prefers $x$ to her current husband.
+The set of matching is considered "stable" when there is no "*rogue couple*": where a man $x$ who prefers some other woman $y$ to his current wife *and* where woman $y$ prefers man $x$ to her current husband.
 (The solution does not need to give everyone their first preference.
 It is acceptable for some person to prefer someone other than their current spouse; instability occurs only when that person requites.)
 In the above example, the pairing $\left[ 1, 2, 3 \right]$ (man 1 paired to woman 1, man 2 with woman 2, 3 with 3) is stable.
 The pairing $\left[ 3, 2, 1 \right]$ (man 1 paired to woman 3, man 2 with woman 2, 3 with 1) is not stable because man 1 perfers woman 2 to his current spouse (woman 3) and woman 2 prefers man 1 to her current spouse (man 2).
 
-The stable marriage problem is known to be solvable with a simple and predictable algorithm by Gale and Shapley [@gale1962college].
+The Stable Marriage Problem is known to be solvable with a simple and predictable algorithm by Gale and Shapley [@gale1962college].
 First, each man proposes to his most-preferred woman.
 Women who receive multiple proposals maintain only their most-preferred proposal and reject the others.
 Second, each rejected man proposes to his next-preferred woman; women receiving new proposals continue to maintain only the one most-preferred.
@@ -507,14 +507,16 @@ The 8-piece puzzle problem could likely also be solved with a very fast and dire
 Likewise, there may be an optimal algorithm to solve a Rubik's cube, but given an A* solver and a fast computer we may be able to find an economically-acceptable solution.
 
 Our informed search algorithm is implemented in Julia.
-This is comparable our implementation of Dijkstra's algorithm (see section \ref{dijkstra}),
+This is comparable our implementation of Dijkstra's algorithm (see section \ref{section:dijkstra}),
 but instead of searching for a named destination this function instead uses its heuristic function.
 If the heuristic function returns the value zero, then the search is considered successful and the program terminates.
 This A* program also prints its search in the DOT graph description language, which can be rendered as a graphic using the GraphViz program.
 
 ```
-function informed_search(source, edges::Function, heuristic::Function; printgraph=false)
-    printgraph && println("digraph {")
+using DataStructures
+
+function informed_search(source, edges::Function, heuristic::Function)
+    println("digraph {")
 
     pq = PriorityQueue()
     visited = Set()
@@ -523,17 +525,17 @@ function informed_search(source, edges::Function, heuristic::Function; printgrap
     while !isempty(pq)
         u = dequeue!(pq)
         push!(visited, u)
-        printgraph && println("\"$(u)\" [color=\"blue\"];")
+        println("\"$(u)\" [color=\"blue\"];")
         
         if heuristic(u) == 0
-            printgraph && println("}")
-            return u
+            println("}")
+            return
         end
 
         for v ∈ edges(u)
             if v ∉ visited && !haskey(pq, v)
                 enqueue!(pq, v=>heuristic(v))
-                printgraph && println("\"$(u)\" -> \"$(v)\";")
+                println("\"$(u)\" -> \"$(v)\";")
             end
         end
     end
@@ -545,7 +547,7 @@ end
 The heuristic function for the stable marriage function seeks to quantify and differentiate instability by returning the sum of the squared distance (see section \ref{section:least-squares-method}) of a rogue couple's candidate and current preferences.
 
 ```
-function stability(men::Matrix, women::Matrix, matching::Vector)
+function stability(men::Matrix, women::Matrix, matching)
     n = length(matching)
     wife = matching
     husband = Dict(values(matching) .=> keys(matching))
@@ -570,7 +572,109 @@ function stability(men::Matrix, women::Matrix, matching::Vector)
 end
 ```
 
+The size of our problem comes from the number of possible matchings.
+If there are $n$ men and $n$ women, then the first man can be matched to $n$ women,
+the second man can be matched to $n-1$ women, and so on until the last man can only be matched to the only remaining woman.
+Thus, 
 
+$$
+\text{Problem size} = n \cdot (n-1) \cdot (n-2) \cdot \ldots \cdot 3 \cdot 2 \cdot 1 = n!
+$$
+
+A problem of factorial size is a large combinatorial problem.
+We will not attempt to visit all possible nodes in the problem space.
+Instead, our edge function will generate three permutations of the current position by switching two matchings.
+
+```
+using StatsBase
+
+function e(u)
+    v = Set()
+    for _ ∈ 1:3
+        x = copy(u)
+        # Sample, without replacement, two random elements to swap.
+        y = sample(collect(eachindex(u)), 2, replace=false)
+        x[y[1]], x[y[2]] = x[y[2]], x[y[1]]
+        push!(v, x)
+    end
+    return v
+end
+```
+
+Our ranking matrices for men, $M$, and women, $W$ are taken from example 2 from Gale and Shapley [@gale1962college].
+
+$$
+M = \left[
+\begin{array}{cccc}
+1 & 2 & 3 & 4 \\
+1 & 4 & 3 & 2 \\
+2 & 1 & 3 & 4 \\
+4 & 2 & 3 & 1 \\
+\end{array}
+\right]
+$$
+
+$$
+W = \left[
+\begin{array}{cccc}
+3 & 4 & 2 & 1 \\
+3 & 1 & 4 & 2 \\
+2 & 3 & 4 & 1 \\
+3 & 2 & 1 & 4 \\
+\end{array}
+\right]
+$$
+
+The Julia language has a compact notation to create matrix literals.
+
+```
+M = [1 2 3 4; 1 4 3 2; 2 1 3 4; 4 2 3 1]
+W = [3 4 2 1; 3 1 4 2; 2 3 4 1; 3 2 1 4]
+```
+
+We construct a *closure* to encapsulate $M$ and $W$ with our stability metric function into the heuristic function.
+
+```
+h(u) = stability(M, W, u)
+```
+
+This syntax declares a unary function `h` that will enable our A* to navigate matrices $M$ and $W$ without direct knowledge of either.
+
+Finally, we invoke the A* informed search algorithm to navigate the Stable Marriage Problem as a graph, starting from pairings $\left[ 4 , 3, 2, 1 \right]$ (man 1 matched to woman 4, man 2 to woman 3, 3 to 2, and 4 to 1).
+
+```
+julia> informed_search([4,3,2,1], e, h)
+digraph {
+"[4, 3, 2, 1]" [color="blue"];
+"[4, 3, 2, 1]" -> "[4, 2, 3, 1]";
+"[4, 3, 2, 1]" -> "[4, 1, 2, 3]";
+"[4, 3, 2, 1]" -> "[4, 3, 1, 2]";
+"[4, 3, 1, 2]" [color="blue"];
+"[4, 3, 1, 2]" -> "[4, 2, 1, 3]";
+"[4, 3, 1, 2]" -> "[4, 1, 3, 2]";
+"[4, 2, 1, 3]" [color="blue"];
+"[4, 2, 1, 3]" -> "[2, 4, 1, 3]";
+"[4, 2, 1, 3]" -> "[1, 2, 4, 3]";
+"[2, 4, 1, 3]" [color="blue"];
+"[2, 4, 1, 3]" -> "[2, 1, 4, 3]";
+"[2, 4, 1, 3]" -> "[3, 4, 1, 2]";
+"[3, 4, 1, 2]" [color="blue"];
+}
+```
+
+(Note: this *stochastic* algorithm uses randomness in the `sample` operation.
+Outputs are not determininstic.
+In rare cases, this procedure may not discover the one and only solution, $\left[ 3, 4, 1, 2 \right]$.
+See https://github.com/wjholden/Data-Literacy/blob/main/StableMarriageSearch.jl for an expanded version of this program which uses a seeded random number generator for reproducibility.)
+
+We can input this `digraph` data into https://dreampuf.github.io/GraphvizOnline/ to visualize the search tree, as shown in figure \ref{fig:gale-shapley-ex2}.
+
+![A search tree of the Stable Marriage Problem, reduced to an informed search that is solvable with A*.](gale-shapley-ex2.pdf){#fig:gale-shapley-ex2}
+
+Again, we applied informed search to the Stable Marriage Problem as an exercise in artificial intelligence methods.
+Though slow, an informed search can navigate difficult problems with very little information: a simple heuristic function tells A* whether it has gotten closer or farther from the solution.
+This technique can be useful for solving challenging problems where an optimal solution is not known.
+Moreover, we can also apply informed search to *intractable* problems where computational complexity forces us to accept approximate solutions as a compromise.
 
 ## Discussion prompts
 

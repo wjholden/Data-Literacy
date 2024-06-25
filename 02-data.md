@@ -2,7 +2,7 @@
 
 ## Relational algebra
 
-Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS).
+Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].
 The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($\setminus$).
 
 Selection takes all or a subset of a table's rows.

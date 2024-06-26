@@ -17,6 +17,8 @@ Graphs can be used to model any form of *network* where the elements of sets bea
 Graphs can be directed, where the source and destination vertices in an edge are significant ($(u, v) \ne (v, u)$),
 or undirected ($(u,v) = (v,u)$).
 
+![Graphs are conventionally visualized as circles (vertices) connected by lines (edges).](paris-brussels-hague.dot.pdf)
+
 The edges of a graph may have a *distance function* ($\delta$; also known as *weight* and *cost*), which relates each edge with some real number.
 Such graphs are *weighted graphs*.
 For example, suppose a high-speed railroad has train stations in Paris, Brussels, and the Hague.
@@ -125,6 +127,10 @@ $$
 \left(u , v\right) \notin E \implies \delta \left( u, v \right) = \infty
 $$
 
+The $\in$ operator and its negation, $\notin$, tests whether an object is an "element of" a set; $\in$ is read "in" and $\notin$ is read "not in."
+The symbol $\implies$ is for *conditional implication* and is read "implies."
+If the *statement* on the left of $\implies$ is true, then the statement on the right must also be true.
+
 ## Search algorithms
 
 ### Depth-first search
@@ -134,6 +140,8 @@ The player has no knowledge of where the treasure might be, so from a starting p
 Both the starting point and the sea connect to opposite sides of the city.
 Upon entering the city from the sea-side, the player explores the city and discovers the treasure.
 This is an example of a *depth-first search* (DFS).
+
+![There are many paths from the starting point to the treasure in this kingdom.](kingdom.dot.pdf)
 
 Go to https://go.dev/play/p/AuH2qOgSG-c to run the following DFS implementation, written in Go.
 This implementation uses a *recursive* definition of the DFS function (the DFS function invokes itself as it explores the graph).
@@ -669,7 +677,7 @@ See https://github.com/wjholden/Data-Literacy/blob/main/StableMarriageSearch.jl 
 
 We can input this `digraph` data into https://dreampuf.github.io/GraphvizOnline/ to visualize the search tree, as shown in figure \ref{fig:gale-shapley-ex2}.
 
-![A search tree of the Stable Marriage Problem, reduced to an informed search that is solvable with A*.](gale-shapley-ex2.pdf){#fig:gale-shapley-ex2}
+![A search tree of the Stable Marriage Problem, reduced to an informed search that is solvable with A*.](gale-shapley-ex2.dot.pdf){#fig:gale-shapley-ex2}
 
 Again, we applied informed search to the Stable Marriage Problem as an exercise in artificial intelligence methods.
 Though slow, an informed search can navigate difficult problems with very little information: a simple heuristic function tells A* whether it has gotten closer or farther from the solution.

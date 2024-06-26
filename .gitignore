@@ -1,3 +1,6 @@
+## Don't include .dot.pdf renders of figures.
+*.dot.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

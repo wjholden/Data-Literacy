@@ -1,0 +1,15 @@
+graph {
+    start -- forest;
+    start -- mountains;
+    start -- sea;
+    start -- city;
+    forest -- mountains;
+    forest -- desert;
+    forest -- cave;
+    mountains -- glacier;
+    cave -- inferno;
+    sea -- beach;
+    beach -- city;
+    city -- castle;
+    castle -- treasure;
+}

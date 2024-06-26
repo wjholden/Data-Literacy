@@ -1,0 +1,5 @@
+graph {
+    rankdir="LR";
+    Paris -- Brussels [label="350"];
+    Brussels -- Hague [label="180"];
+}

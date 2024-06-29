@@ -19,11 +19,14 @@ or undirected ($(u,v) = (v,u)$).
 
 ![Graphs are conventionally visualized as circles (vertices) connected by lines (edges).](paris-brussels-hague.dot.pdf)
 
+A *path* is a series of edges that *transitively* connect two vertices that are not directly connected.
+We say that $u \leadsto v$ ($u$ leads to $v$) if the graph contains some path from $u$ to $v$.
+
 The edges of a graph may have a *distance function* ($\delta$; also known as *weight* and *cost*), which relates each edge with some real number.
 Such graphs are *weighted graphs*.
 For example, suppose a high-speed railroad has train stations in Paris, Brussels, and the Hague.
 The distance from Paris to Brussels is about $\qty{350}\km$ and the distance from Brussels to Hague is another $\qty{180}\km$.
-The total length of the *path* from Paris to Hague via Brussels is therefore $\qty{350}\km + \qty{180}\km = \qty{530}\km$.
+The total path length from Paris to Hague via Brussels is therefore $\qty{350}\km + \qty{180}\km = \qty{530}\km$.
 
 $$
 \begin{aligned}
@@ -85,7 +88,8 @@ Vertices $a$, $b$, and $c$ together form a *connected component*.
 A directed graph with one or more connected components is not a DAG, but the graph of components
 (where vertices of the component subgraph are merged into a "super vertex") is itself a DAG.
 
-A *tree* is another special case of an acyclic graph, typically in undirected graphs.
+A *tree* is another special case of an acyclic graph.
+Trees are often drawn in a vertical hierarchy where each *child node* has one *parent*, and the only parent node with no parent is called the *root node*.
 One's ancestoral family tree is an instance of a tree; without a time machine, it is impossible to one to form a loop with an ancestor.
 
 ## Representation
@@ -424,8 +428,9 @@ The A* algorithm is an *informed* search algorithm: it uses some *heuristic* to 
 ordered by minimum estimated distance to the destination [@4082128].
 
 A* can solve hard problems that are not immediately recognizable as searches.
-The canonical example is the 8-piece puzzle.
-An eight-piece puzzle arranges 8 pieces into a $3 \times 3$ grid where one position is empty.
+The canonical example is the 8-piece puzzle problem.
+An 8-piece puzzle arranges 8 movable square tiles into a $3 \times 3$ grid.
+One position is empty.
 The challenge is to slide the pieces until all pieces are in order.
 
 $$
@@ -466,6 +471,12 @@ then it may be acceptable to accept a "good-enough" local best candidate solutio
 The *local search* technique uses an *ensemble* of *search agents* which independently search *neighborhoods* of the problem space.
 A local search could be built upon A* searches from different origins.
 Ideally, the A*-based local search should explore the problem with reasonable depth, mobility, and coverage [@schuurmans2001local].
+
+Interestingly, the 8-piece and comparable 15-piece puzzle problems are not guaranteed to be solvable.
+Exactly half of all possible $9! = \num{362880}$ and $15! = \num{1307674368000}$ permutations are reachable from any random 8- and 15-piece puzzle game state [@10.2307/2369492].
+$n$-piece puzzles ($n \ge 3$) contain two partitions and are therefore classified as *bipartite* graphs.
+The puzzle is unsolvable if started in the partition that does not contain the solution.
+We must understand that search algorithms might not be able to solve a problem if the graph of the problem space contains a partition.
 
 ### A* and the Stable Marriage Problem
 

@@ -28,7 +28,7 @@ The Goal Seek function runs and should produce a value in A1 near to that in F1.
 (Goal Seek is not foolproof. Enter `10` into A1 to nudge Excel with a hint if you get a ridiculous answer.)
 
 We have used Goal Seek to minimize the *sum of the squared differences* between our values, $x_i$, and our estimate of the mean, $\bar{x}$.
-This *least squares method* dates back to Carl Friedrich Gauss and Adrien-Marie Legendre in the 1800s.
+This *least squares method* dates back to Carl Friedrich Gauss and Adrien-Marie Legendre in the 1800s [@legendre_1805] [@legendre_translation].
 
 Squaring the errors makes the values positive, which prevents underestimates from negating overestimates.
 One might also consider the *absolute value* (`ABS` in Excel) as an alternative, but there is a second reason for squaring the errors.
@@ -126,12 +126,12 @@ The second moment is *variance*, the expected squared difference of values to th
 The third moment is *skewness*, the expected cubed difference of values to the mean.
 The fourth moment is *kurtosis*, the expected difference of values to the mean raised to the fourth power.
 
-| Moment | Name     | Definition               |
-|--------|----------|--------------------------|
-| 1      | Mean     | $E(x) = \mu$             |
-| 2      | Variance | $E(x-\mu)^2$             |
-| 3      | Skewness | $E(x-\mu)^3$             |
-| 4      | Kurtosis | $E(x-\mu)^4$             |
+| Moment  | Name     | Definition               | Symbol     |
+|---------|----------|--------------------------|------------|
+| $\mu_1$ | Mean     | $E(x)$                   | $\mu$      |
+| $\mu_2$ | Variance | $E(x-\mu)^2$             | $\sigma^2$ |
+| $\mu_3$ | Skewness | $E(x-\mu)^3$             | $\beta_1$  |
+| $\mu_4$ | Kurtosis | $E(x-\mu)^4$             | $\beta_2$  |
 
 Variance ($\sigma^2$) is calculated from the sum of the squared differences in the random variable ($x$) and the mean ($\mu$).
 
@@ -174,12 +174,13 @@ We can use the `mean` and `sd` functions with `subset` in the R language at http
 [1] 4600
 ```
 
-We can use skewness to detect whether the data is imbalanced (skews) above or below the mean. If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer, and if skewness is zero then the distribution is equally balanced over the mean.
+We can use skewness ($\beta_1$) to detect whether the data is imbalanced (skewed) above or below the mean. If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer, and if skewness is zero then the distribution is equally balanced over the mean.
 The Excel function for skewness is `SKEW`.
 
-We can use kurtosis to detect if a data set contains outliers.
-Most mathematical texts and software use kurtosis of 3 as an "normal" reference value, but Excel subtracts 3 and thus a "normal" kurtosis is 0.
-The Excel function for kurtosis is `KURT`.
+We can use kurtosis ($\beta_2$) to detect if a data set contains outliers.
+The kurtosis of the normal distribution is 3.
+Karl Pearson defines the *degree of kurtosis* as $\eta = \beta_2 - 3$ [@10.1093/biomet/4.1-2.169, p. 181].
+Other texts call this *excess kurtosis*. Excel's `KURT` function returns excess kurtosis, so when `KURT` returns 0 then the distribution may fit the normal and contains no outliers.
 
 ## Exponential moving averages
 
@@ -196,7 +197,7 @@ x_1, & \text{otherwise}.
 \end{cases}
 $$
 
-EMA can be easily implemented in terms of reduce, as shown in JavaScript.
+EMA can be easily implemented in terms of the `reduce` operation, as shown below in JavaScript.
 
 ```
 >> x = [7, 8, 9, 10, 9, 8, 7, 9, 11, 13, 15, 17]

@@ -63,10 +63,62 @@ $$
 
 There is only one way to take an empty set from another set.
 
+We will now construct a generalized function to count the number of subsets for any combination of $r$ elements taken from a set of size $n$.
+Initially, consider the first element in the set.
+If we choose this element, then we still to select $r-1$ elements from the remaining $n-1$ elements.
+If we do not choose this element, then we still must choose $r$ elements from the remaining $n-1$ elements.
+This gives us *Pascal's formula*, a *recursive* definition for counting combinations.
 
+$$
+\binom{n}{r} = \binom{n-1}{r-1} + \binom{n-1}{r-1}
+$$
+
+We need at least one *base case* to prevent this function from entering an infinite loop.
+These identities should be intuitive from the earlier exercise, though the proof for the final case is left as an exercise to the reader.
+
+$$
+\binom{n}{r}
+\begin{cases}
+1, & \text{if $n = r$}. \\
+1, & \text{if $r = 0$}. \\
+n, & \text{if $r = 1$}. \\
+0, & \text{if $n < r$}. \\
+\end{cases}
+$$
+
+Implemented in the R language (https://webr.r-wasm.org/latest/), 
+
+```
+pascal <- function(n,r) {
+  if (n < r) {
+    return(0)
+  } else if (n == r) {
+    return(1)
+  } else if (r == 0) {
+    return(1)
+  } else if (r == 1) {
+    return(n)
+  } else {
+    return(pascal(n-1,r) + pascal(n-1,r-1))
+  }
+}
+```
+
+we can reproduce the results of our passengers example. The `sapply` function in R is comparable to the `map` operation (see section \ref{section:filter-map-reduce}).
+
+```
+> sapply(0:4, function(r) pascal(4, r))
+[1] 1 4 6 4 1
+```
 
 ## Event spaces
 
 ## Pareto fronts
 
 ## Covariance
+
+## Discussion prompts
+
+## Practical exericses
+
+1. Use a nested `sapply` statement to improve `sapply(0:4, function(r) pascal(4, r))` to iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?

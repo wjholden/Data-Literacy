@@ -77,7 +77,7 @@ We need at least one *base case* to prevent this function from entering an infin
 These identities should be intuitive from the earlier exercise, though the proof for the final case is left as an exercise to the reader.
 
 $$
-\binom{n}{r}
+\binom{n}{r} = 
 \begin{cases}
 1, & \text{if $n = r$}. \\
 1, & \text{if $r = 0$}. \\
@@ -110,6 +110,61 @@ we can reproduce the results of our passengers example. The `sapply` function in
 > sapply(0:4, function(r) pascal(4, r))
 [1] 1 4 6 4 1
 ```
+
+## Permutations
+
+An alternative definition for the combination formula requires *permutations* -- ordered subsets.
+From set $S = \left\{ a, b, c, d \right\}$ there are twelve two-element permutations, represented here as *tuples*:
+$(a,b)$, $(b,a)$, $(a,c)$, $(c,a)$, $(a,d)$, $(d,a)$, $(b,c)$, $(c, b)$, $(b, d)$, $(d, b)$, $(c,d)$, and $(d,c)$.
+
+When counting the size of the permutation set of length $r$ chosen from a set of size $n$, we begin wtih $n$ possible elements for the first tuple element, then $n-1$ possible elements for the second tuple element, and so on until all $r$ tuple elements are filled.
+
+$$
+nPr = n \times (n-1) \times (n-2) \times \ldots \times (n-r+1) = \frac{n!}{(n-r)!}
+$$
+
+The *permutation formula* is usually defined using the *factorial* function, denoted by the "$!$" postfix operator.
+
+$$
+n! = n \times (n-1) \times (n-2) \times \ldots \times 2 \times 1 = \prod_{i=1}^{n}{i}
+$$
+
+$0!=1$ by definition.
+The intuition for this is the bicycle: there was one way to choose an empty set from a set, and likewise there is one empty tuple of zero ordered elements taken from a set.
+
+The number of $r=n$-length permutations of a set of size $n$ is simply
+
+$$
+nPn = \frac{n!}{(n-n)!} = \frac{n!}{0!} = \frac{n!}{1} = n!
+$$
+
+Now we can define the combination formula in terms of the permutation formula.
+We count the number of permutations but de-duplicate this count, as combinations are unordered.
+The number of duplicated entries is $rPr = r!$.
+
+$$
+nCr = \frac{nPr}{r!} = \frac{\frac{n!}{\left(n-r\right)!}}{r!} = \frac{n!}{r!\left(n-r\right)!}
+$$
+
+## The curse of combinatorics
+
+The "curse of combinatorics" is simply that the number of possible combinations can become very large.
+Consider a bicycle factory that must manufacture a part in four materials (steel, aluminum, carbon fiber, and titanium),
+three sizes (small, medium, and large), five styles (road, mountain, touring, utility, and economy),
+and for five markets (North America, European Union, Latin America, East Asia, and Middle East) which each have different compliance requirements.
+There are $4 \times 3 \times 5 \times 5 = 300$ distinct variations of this part.
+Suppose a distributor wants to warehouse 50 of each part, but expects the factory to wait until the part is sold before receiving payment.
+Should the factory give the the distributor $300 \times 50 = \num{15000}$ of this part?
+
+Now suppose an investor wants a rigorous test of the bicycle factory's products.
+The investor demands that 30 copies of each part be tested in various ways.
+$300 \times 30 = \num{9000}$ total parts being committed to this study might be unrealistic.
+
+As a different example, imagine one wanted to conduct a large study on exercise and health outcomes.
+Basic demographic variables include age, gender, location, height, weight, and race.
+Exercise variables in this study include weekly minutes performing cardiovascular training, minutes of resistance training, and minutes of flexibility training.
+Other exercise variables in this study include metrics of speed, endurance, strength, and flexibility, blood pressure, resting heart rate, body composition.
+
 
 ## Event spaces
 

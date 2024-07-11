@@ -63,7 +63,7 @@ Suppose a political scientist encoded voter's political party as "1", "2", "3", 
 Is "2" an intermediate value between "1" and "3", or are these actually nominal data where the only arithmetic operations are $=$ and $\ne$?
 AI methods may form incorrect assumptions about data that domain experts can easily prevent.
 
-## Discretization 
+## Discretization {#section:discretize}
 
 Measurements with arbitrarily many decimal digits of precision are *continuous*, whereas measurements with finite steps in between (including categories) are *discrete*.
 For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between $\num{150}$ and $\num{151}$.

@@ -3,7 +3,7 @@
 ## Relational algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].
-The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($\setminus$).
+The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($-$).
 
 Selection takes all or a subset of a table's rows.
 Projection takes all or a subset of a table's columns.
@@ -61,10 +61,10 @@ $$
 A \cup B = \left\{ i, j, k, l, m \right\}.
 $$
 
-Set difference, $\setminus$, retains the elements of the left set that are not present in the right set.
+Set difference, $-$, retains the elements of the left set that are not present in the right set.
 
 $$
-A \setminus B = \left\{ i, j, k \right\} \setminus \left\{ k, l, m \right\} = \left\{ i, j \right\}.
+A - B = \left\{ i, j, k \right\} - \left\{ k, l, m \right\} = \left\{ i, j \right\}.
 $$
 
 ## Join

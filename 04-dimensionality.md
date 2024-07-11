@@ -160,13 +160,56 @@ Now suppose an investor wants a rigorous test of the bicycle factory's products.
 The investor demands that 30 copies of each part be tested in various ways.
 $300 \times 30 = \num{9000}$ total parts being committed to this study might be unrealistic.
 
-As a different example, imagine one wanted to conduct a large study on exercise and health outcomes.
+## Sample spaces
+
+Imagine one wanted to conduct a large study on exercise and health outcomes.
 Basic demographic variables include age, gender, location, height, weight, and race.
 Exercise variables in this study include weekly minutes performing cardiovascular training, minutes of resistance training, and minutes of flexibility training.
-Other exercise variables in this study include metrics of speed, endurance, strength, and flexibility, blood pressure, resting heart rate, body composition.
+Other exercise variables in this study include metrics of speed, endurance, strength, flexibility, blood pressure, resting heart rate, body composition, bone density, and sleep duration.
 
+Suppose we discretize (see section \ref{section:discretize}) each continuous variable into discrete categories.
+For example, we might change the age variable from its numeric values to categories 1-10, 11-20, 21-30, and so on.
+We separate height into very short, short, average, tall, and very tall.
+We categorize minutes of weekly training into 0-20, 20-60, 60-120, and 120+.
+Some variables are divided into very low, low, medium, high, and very high.
+The process continues until all variables can be represented in discrete (sometimes ordered) categories instead of continuous numeric values.
 
-## Event spaces
+| Variable | Categories |
+|-|-|
+| Age | 10 |
+| Gender | 2 |
+| Location | 5 |
+| Height | 5 |
+| Weight | 10 |
+| Cardio Minutes | 4 |
+| Weights Minutes | 4 |
+| Stretch Minutes | 4 |
+| Speed | 10 |
+| Strength | 10 |
+| Endurance | 10 |
+| Flexbility | 10 |
+| Blood Pressure | 5 |
+| Heart Rate | 5 |
+| Composition | 7 |
+| Bone Density | 5 |
+| Sleep Duration | 9 |
+
+One might expect that, having discretized each variable, it would become easy to draw non-obvious conclusions from a reasonable sample size.
+Unfortunately, there are $10 \times 2 \times 5 \times 5 \times 10 \times 4 \times 4 \times 4 \times 4 = \num{320000}$ possible combinations in the first eight variables alone.
+Is it unusual for a middle-aged, very tall, very heavy, zero-exercise male living in North America to have average fitness metrics with poor body composition?
+We would ideally like to sample many such persons, but even in a large study we likely would not have many individuals meeting exactly these characteristics.
+
+*Data mining* is the search for non-obvious conclusions by analyzing data.
+Data mining efforts are especially characterized by the lack of *first principals*, meaning the researcher may not have any advance hypothesis about the relationships between variables.
+
+Suppose our fitness research showed that heavy bodyweight predicts poor speed.
+This is quite obvious and likely not useful.
+Suppose our fitness research showed that minutes of stretching predicted not only flexibility but also strength and body composition.
+Such as result is less expected, and might (just as a hypothetical example) lead to a discovery that yoga develops muscle better than its reputation.
+
+Data mining efforts in $n$-dimensional space are basically always complicated by this "curse of combinatorics."
+When we repeatedly multiply many variables together, we find that the space of possible combinations becomes so large that even very large samples cover only tiny portions.
+Our example health study has a total of $10 \times 2 \times 5 \times 5 \times 10 \times 4 \times 4 \times 4 \times 10 \times 10 \times 10 \times 10 \times 5 \times 5 \times 7 \times 5 \times 9 = \num{25200000000000}$ possible states in its *sample space*.
 
 ## Pareto fronts
 
@@ -176,4 +219,4 @@ Other exercise variables in this study include metrics of speed, endurance, stre
 
 ## Practical exericses
 
-1. Use a nested `sapply` statement to improve `sapply(0:4, function(r) pascal(4, r))` to iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
+1. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?

@@ -19,6 +19,6 @@ header-includes:
 # https://juliamono.netlify.app/
 # I don't just *love* JuliaMono, but for Julia you want/need some characters
 # that aren't ordinarily included in a monospace font.
-monofont: JuliaMono-Light.ttf
+monofont: JuliaMono-Light
 #mathfont: 
 ---

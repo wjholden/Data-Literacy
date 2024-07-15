@@ -330,6 +330,39 @@ Here, the instructions of the algorithm are part of a model, which is created fr
 
 <!-- ## Bisection algorithm (todo) -->
 
+## Abstraction
+
+Take any three-digit decimal (base 10) number, reverse the digits, and their difference will always be divisible by both 9 and 11.
+For example, $321-123=198$; $198 \div 9 = 22$ and $198 \div 11 = 18$.
+
+How and why would this strange property hold?
+The proof is quite easy using algebra. We change the digits of a three-digit number into variables.
+Some three-digit number $abc = 100a + 10b + c$.
+
+$$
+\begin{aligned}
+abc - cba &= (100a + 10b + c) - (100c + 10b + a) \\
+&= 100a + 10b + c - 100c - 10b - a \\
+&= 99a - 99c \\
+&= 99(a - c) \square
+\end{aligned}
+$$
+
+By *abstracting* numerals into variables, the claim becomes easy to verify.
+
+Here is another example of abstraction.
+How does one calculate 30% of 70 without a calculator?
+First, observe that
+
+$$
+x \% \text{ of } y = \frac{x \times y}{100}.
+$$
+
+So, 30% of 70 is $\frac{30 \times 70}{100} = \frac{\num{2100}}{100} = 21$.
+
+Abstraction can be a powerful tool for solving problems and developing proofs.
+In the field of computer networking, countless problems are solved by the pattern, "we have more than one thing, but it is inconvenient to operate more than one of these things, so we built a method to abstractly represent arbitrarily many of these things as super-things."
+
 ## Discussion prompts
 
 1. Who owns knowledge management? 

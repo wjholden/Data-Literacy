@@ -330,7 +330,7 @@ Here, the instructions of the algorithm are part of a model, which is created fr
 
 <!-- ## Bisection algorithm (todo) -->
 
-## Abstraction
+## Abstraction and Reification
 
 Take any three-digit decimal (base 10) number, reverse the digits, and their difference will always be divisible by both 9 and 11.
 For example, $321-123=198$; $198 \div 9 = 22$ and $198 \div 11 = 18$.
@@ -362,6 +362,33 @@ So, 30% of 70 is $\frac{30 \times 70}{100} = \frac{\num{2100}}{100} = 21$.
 
 Abstraction can be a powerful tool for solving problems and developing proofs.
 In the field of computer networking, countless problems are solved by the pattern, "we have more than one thing, but it is inconvenient to operate more than one of these things, so we built a method to abstractly represent arbitrarily many of these things as super-things."
+
+*Reification* is the opposite of abstraction: we something specific from something general.
+For example, suppose we have a language translation function
+
+$$
+T(x, l_1, l_2)
+$$
+
+where $x$ is the message to be translated, $l_1$ is the input language, and $l_2$ is the output language.
+
+$$
+T(\text{hello}, \text{English}, \text{French}) = \text{bonjour}
+$$
+
+From this general function, we can enclose parameters $l_1$ and $l_2$ into a specific function.
+
+$$
+\begin{aligned}
+T'(x) &= T(x, \text{English}, \text{French}) \\
+T'(\text{goodbye}) &= \text{au revoir}
+\end{aligned}
+$$
+
+Function $T'$ reifys $T$ into a less general form.
+Such functions might be called *convenience functions* that are provided as a "quality of life" improvement for the user.
+An example of a convenience function might be `LOG10(number)` in Excel.
+Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted), but some users may prefer the explicit syntax `LOG10` to improve clarity.
 
 ## Discussion prompts
 

@@ -211,11 +211,114 @@ Data mining efforts in $n$-dimensional space are basically always complicated by
 When we repeatedly multiply many variables together, we find that the space of possible combinations becomes so large that even very large samples cover only tiny portions.
 Our example health study has a total of $10 \times 2 \times 5 \times 5 \times 10 \times 4 \times 4 \times 4 \times 10 \times 10 \times 10 \times 10 \times 5 \times 5 \times 7 \times 5 \times 9 = \num{25200000000000}$ possible states in its *sample space*.
 
+## Paradoxes
+
+A *paradox* is a seemingly contradictory statement.
+Large combinatorial sample spaces sometimes create unexpected situations that may seem paradoxical.
+
+The *birthday paradox* is well-known in computer security.
+Suppose there are 23 students in a class.
+What is the probability that any two students share a birthday?
+One might guess that the probability would be $23/365$ until we notice that **any** two students might share a birthday.
+Student $s_1$ and $s_2$ might have the same birthday, $s_1$ and $s_3$, $s_2$ and $s_3$, and so on.
+
+It is actually easier to calculate the probability that **no** students share a birthday, which we will denote with $q$.
+For the first student ($s_1$), there is a (degenerate) $365/365$ probability that $s_1$ does not have share a birthday with those before because we have not considered any other students.
+For $s_2$, there is a $364/365$ probability that $s_2$ has a distinct birthday from $s_1$.
+For $s_3$, there is a $363/365$ probability that $s_3$ has a distinct birthday from both $s_1$ and $s_2$.
+This continues for the remaining students in the class.
+We multiply these probabilities together to get
+
+$$
+\begin{aligned}
+q_{10} &= \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \ldots \times \frac{343}{365} \\
+&= \prod_{i=1}^{23}{\frac{365 - i + 1}{365}} \\
+&= 0.492703.
+\end{aligned}
+$$
+
+We now take $p = 1-q$ to find the probability that the event *does* occur and find the likelihood that two of our ten students is
+
+$$
+p = 1 - q = 1 - 0.492703 = 0.507297.
+$$
+
+This means that there is more than 50% chance that any two students will share a birthday in a class of 23, a surprising and unintuitive result.
+
+## The Binomial Distribution
+
+We now continue to another example which will demonstrate a limitation of statistical reasoning.
+Suppose this class of students has a large toy box with 1000 toys.
+Each time a child removes a toy, the teacher records the toy and the result of a fair coin flip.
+For example,
+
+| Toy     | Coin  |
+|---------|-------|
+| Shovel  | Heads |
+| Racecar | Tails |
+| Robot   | Heads |
+| Teacup  | Tails |
+
+After a very long time, each of the 1000 toys has been taken from the toy box 10 times.
+The teacher looks over the data and is surprised to find that coin toss has always resulted in tails for each of the ten times that a child has taken the shark toy.
+
+It should be obvious that the shark has nothing to do with the coin flip, yet unlikely events may entice one to assume causal relationships.
+Consider the sample space of the coin flips.
+The first flip, $c_1$, could have been heads or tails.
+The second flip, $c_2$, could also have been heads or tails.
+So far, the sample space contains four possible events, which we will denote HH, HT, TH, and TT.
+On the third flip, the sample space again doubles in size: HHH, HHT, HTH, HTT, THH, THT, TTH, and TTT.
+Each additional flip will continue to double the sample space.
+By the tenth flip, the sample space contains $2^{10} = \num{1024} \approx \num{1000}$ possible events, of which HHHHHHHHHH is just one.
+
+Upon reflection, it should be hardly surprising that one of one thousand toys would randomly associate with a one-in-one-thousand event.
+To find the exact chance, we need the *binomial distribution*.
+The probability of event $x$ occuring in a series of $n$ independent trials of probability $p$ is
+
+$$
+p(x) = \binom{n}{x} p^x (1-p)^{n-x}.
+$$
+
+In Excel, we use the `BINOM.DIST` function.
+In R, `dbinom` in the *probability density function* (PDF) for the binomial distribution.
+To find the probability that our $1/1024$ event occurs *exactly once* in $\num{1000}$ trials, we find
+
+```
+> dbinom(1, 1000, 1/1024)
+[1] 0.3679607
+```
+
+As an exercise, reproduce this result in Excel using the formula
+
+```
+=BINOM.DIST(1,1000,1/1024,FALSE)
+```
+
+We have several options to find the probability that *none* of our $\num{1000}$ toys associate with ten heads.
+First, we can use the same `dbinom` and `BINOM.DIST` functions with $x = 0$.
+Second, we can take the sum of probabilities from the range `x = 1:1000` (the probability of $x=1$, probability that $x=2$, and so on) and then subtract this from one.
+
+```
+> dbinom(0, 1000, 1/1024)
+[1] 0.3764238
+> 1-sum(dbinom(1:1000, 1000, 1/1024))
+[1] 0.3764238
+```
+
+Finally, statistics software often provides a *cumulative distribution function* (CDF) implementation as a shortcut for these summations.
+In R, this is `pbinom`, but in Excel this is provided in `BINOM.DIST` with the final argument set to `TRUE`.
+
+The toy shark example is intended to demonstrate how *spurious correlations* may occur in large sets of data.
+The *Texas sharpshooter fallacy* can describe this effect.
+A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
+
 ## Pareto fronts
 
 ## Covariance
 
 ## Discussion prompts
+
+1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
 
 ## Practical exericses
 

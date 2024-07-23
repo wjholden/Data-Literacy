@@ -286,6 +286,8 @@ To find the probability that our $1/1024$ event occurs *exactly once* in $\num{1
 ```
 > dbinom(1, 1000, 1/1024)
 [1] 0.3679607
+> choose(1000,1) * (1/1024)^1 * (1-1/1024)^(1000-1)
+[1] 0.3679607
 ```
 
 As an exercise, reproduce this result in Excel using the formula
@@ -323,3 +325,4 @@ A sharpshooter fires his pistol at random into a barn wall, then draws circles a
 ## Practical exericses
 
 1. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
+2. About one in twenty white males have some form of color blindness. About 70.2% of the U.S. military report themselves as white, and about 82.8% as male. Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$. If a Command gives a briefing to twelve random generals each year, what is the probability that one or more of those generals is color blind? (Assume, incorrectly but for the sake of simple calculation, that women and non-whites are never color blind.) Assume further that $W$ and $M$ are independent and that $P(W \cap M) = P(W)P(M) = 0.581256$, therefore $P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}$ and consequently $P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628$. Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?

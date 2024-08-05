@@ -143,8 +143,74 @@ We count the number of permutations but de-duplicate this count, as combinations
 The number of duplicated entries is $rPr = r!$.
 
 $$
-nCr = \frac{nPr}{r!} = \frac{\frac{n!}{\left(n-r\right)!}}{r!} = \frac{n!}{r!\left(n-r\right)!}
+nCr = \binom{n}{r} = \frac{nPr}{r!} = \frac{\frac{n!}{\left(n-r\right)!}}{r!} = \frac{n!}{r!\left(n-r\right)!}
 $$
+
+## $n$ choose 2
+
+The case $\binom{n}{2}$ occurs frequently and deserves special discussion.
+The first few terms are (in Interactive Python, or IPython):
+
+```
+In [1]: import math
+
+In [2]: [math.comb(n, 2) for n in range(2,12)]
+Out[2]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
+```
+
+It is not possible to choose two elements from a set of only one,
+there is only one way to choose two from two,
+three ways to choose two from three ($\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ b,c \right\} \subset \left\{ a,b,c \right\}$),
+six ways to choose from four
+($\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ a,d \right\}, \left\{ b,c \right\}, \left\{ b,d \right\}, \left\{ c,d \right\} \subset \left\{ a,b,c,d \right\}$),
+and so on.
+The resulting sequence of integers are called the *triangular numbers*.
+
+Intuitively, the difference in $\binom{k+1}{2}$ and $\binom{k}{2}$ is $k$:
+if we add a $(k+1)$th element to a set, then we can pair this new element with each of the $k$ existing elements.
+The generalized form is
+
+$$
+\binom{n}{2} = 1 + 2 + 3 + \ldots + (n-1) = \frac{n(n-1)}{2}.
+$$
+
+We can demonstrate this identity numerically
+
+```
+In [2]: [sum(k for k in range(n)) for n in range(2,12)]
+Out[2]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
+
+In [3]: [n*(n-1)//2 for n in range(2,12)]
+Out[3]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
+```
+
+and prove with *induction*.
+The basis of induction is the case $n=2$, where
+
+$$
+\binom{2}{2} = 1 = \frac{n(n-1)}{2} = \frac{2(2-1)}{2} = \frac{2(1)}{2} = 1.
+$$
+
+The inductive step is that if $\binom{k}{2} = \frac{k(k-1)}{2}$, then $\binom{k+1}{2} = \frac{(k+1)((k+1)-1)}{2}$.
+Remembering that $\binom{k+1}{2} - \binom{k}{2} = k$, we find
+
+$$
+\begin{aligned}
+\frac{(k+1)((k+1)-1)}{2} - \frac{k(k-1)}{2} &= \frac{(k+1)k}{2} - \frac{k(k-1)}{2} \\
+&= \frac{k((k+1) - (k-1))}{2} \\
+&= \frac{2k}{2} \\
+&= k. \square
+\end{aligned}
+$$
+
+An alternative proof is to use algebra from our definition $\binom{n}{r}=\frac{n!}{r!(n-r)!}$ as follows:
+
+$$
+\binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{(n)(n-1)(n-2)\ldots(3)(2)(1)}{(2)(n-2)(n-3)\ldots(3)(2)(1)} = \frac{(n)(n-1)}{2}.
+$$
+
+Yet another proof is to observe the series $1+2+3+\ldots+(n-1)+n$, cleverly reverse the series and add it to itself to form $(n+1)+((n-1)+2)+\ldots+(n+1)$, observe that there are $n$ of these identical terms and the original sum is half that of the second.
+Though elegant, this proof technique may not as portable to other problems as computational, inductive, and algebraic methods.
 
 ## The curse of combinatorics
 
@@ -321,6 +387,7 @@ A sharpshooter fires his pistol at random into a barn wall, then draws circles a
 ## Discussion prompts
 
 1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
+2. Conduct a classroom competition of "Catch the cheaters!" at https://primerlearning.org. Discuss the winning and losing strategies, then watch https://www.youtube.com/watch?v=XTcP4oo4JI4. 
 
 ## Practical exericses
 

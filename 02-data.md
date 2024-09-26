@@ -290,7 +290,7 @@ These linear transformations can be performed in parallel and GPU makers designe
 
 ## Consistency, availability, and partition-tolerance (CAP) theorem
 
-Brewer's *CAP theorem* states that a *distributed system* has at most two qualities of *consistency*, *availability*, and *partition-tolerance*.
+Brewer's *CAP theorem* states that a *distributed system* has at most two qualities of *consistency*, *availability*, and *partition-tolerance* [@6133253].
 Consider a system of databases with many replicas.
 The replicas are consistent if they contain perfect copies of the database,
 and they are available only they are writable.

@@ -16,6 +16,8 @@ then $G = \left\{ V, E \right\}$ is a graph with two vertices, $u$ and $v$, and 
 Graphs can be used to model any form of *network* where the elements of sets bear relations.
 Graphs can be directed, where the source and destination vertices in an edge are significant ($(u, v) \ne (v, u)$),
 or undirected ($(u,v) = (v,u)$).
+The number of edges associated with a vertex is its *degree*.
+In directed graphs, we distinguish *in-degree* (the number of edges leading into the vertex) and *out-degree* (the number of edges originating from the vertex).
 
 ![Graphs are conventionally visualized as circles (vertices) connected by lines (edges).](paris-brussels-hague.dot.pdf)
 
@@ -694,6 +696,42 @@ Again, we applied informed search to the Stable Marriage Problem as an exercise 
 Though slow, an informed search can navigate difficult problems with very little information: a simple heuristic function tells A* whether it has gotten closer or farther from the solution.
 This technique can be useful for solving challenging problems where an optimal solution is not known.
 Moreover, we can also apply informed search to *intractable* problems where computational complexity forces us to accept approximate solutions as a compromise.
+
+## Centrality
+
+The average person (ten of twelve) in the social graph shown in figure \ref{fig:friends} has *fewer* friends the average friend count of their friends.
+These statistics are summarized in the following table.
+
+![Arithmetic in graphs can produce unintuitive results. In this graph, 10 of 12 vertices has a lower degree than the average among its adjacent nodes.](friends.dot.pdf){#fig:friends}
+
+|Name | Friends | Average friend's friend count |
+|-----|---------|-------------------------------|
+| Frank | 2 | 5 |
+| Jasmine | 2 | 5.5 |
+| Kim | 7 | 3.14 |
+| David | 3 | 3.67 |
+| Sven | 2 | 5 |
+| Felix | 2 | 5 |
+| Jean | 2 | 5 |
+| Ivan | 3 | 3.67 |
+| Adin | 7 | 3.14 |
+| Maria | 2 | 5.5 |
+| Jose | 4 | 4.5 |
+| Phil | 1 | 7 |
+
+How can this be possible?
+We must be careful with definitions.
+The average number of friends in this graph is $3.08$, but we are not looking at the entire graph.
+Instead, we are only looking at a subgraph.
+Look closely at Phil.
+Phil has only one friend, Adin, and Adin is highly-connected.
+In fact, Adin has more friends than all of his friends, except Kim.
+
+Two *centrality measures* for graphs are *closeness* [@10.1121/1.1906679] and *betweenness* [@10.2307/3033543].
+
+* Power Law distribution
+* PageRank
+* 
 
 ## Discussion prompts
 

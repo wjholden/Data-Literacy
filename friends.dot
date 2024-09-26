@@ -1,0 +1,21 @@
+graph {
+    Frank -- Kim;
+    Frank -- David;
+    David -- Sven;
+    David -- Adin;
+    Adin -- Maria;
+    Adin -- Jose;
+    Adin -- Kim;
+    Maria -- Jose;
+    Jose -- Kim;
+    Jasmine -- Jose;
+    Jasmine -- Kim;
+    Ivan -- Adin;
+    Jean -- Ivan;
+    Felix -- Ivan;
+    Kim -- Felix;
+    Kim -- David;
+    Kim -- Jean;
+    Sven -- Adin;
+    Phil -- Adin;
+}

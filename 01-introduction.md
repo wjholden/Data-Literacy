@@ -24,7 +24,7 @@ Models can be useful both for describing the population and also for forming pre
 
 There are four distinct *levels of measurement* that a value may fit [@stevens1946theory].
 *Nominal* data is simply names or categories, with no concept of order or distance.
-A movie might be animated or live-action: these are simple categories or order.
+A movie might be animated or live-action, a dichotomy without order.
 Another example might be the film's genre (children, comedy, action, romance, documentary, etc).
 
 *Ordinal* data has ordering but not distance.

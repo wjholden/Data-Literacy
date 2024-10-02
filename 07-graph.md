@@ -727,11 +727,27 @@ Look closely at Phil.
 Phil has only one friend, Adin, and Adin is highly-connected.
 In fact, Adin has more friends than all of his friends, except Kim.
 
-Two *centrality measures* for graphs are *closeness* [@10.1121/1.1906679] and *betweenness* [@10.2307/3033543].
+Highly-connected nodes, with outlier degree, can be particularly important in many graph applications.
+Transportation networks are an example: congestion at any major airport "hub" can quickly spread to adjacent airports and beyond.
+We will discuss three statistics of graph centrality: *closeness*, *betweenness*, and *PageRank*.
 
-* Power Law distribution
-* PageRank
-* 
+### Closeness
+
+[@10.1121/1.1906679]
+
+### Betweenness
+
+[@10.2307/3033543]
+
+### PageRank
+
+<!-- http://infolab.stanford.edu/~backrub/google.html -->
+
+[@BRIN1998107]
+
+## Power Law distribution
+
+[@doi:10.1126/science.286.5439.509]
 
 ## Discussion prompts
 

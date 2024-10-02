@@ -380,14 +380,57 @@ The toy shark example is intended to demonstrate how *spurious correlations* may
 The *Texas sharpshooter fallacy* can describe this effect.
 A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
 
-## Pareto fronts
+## Pareto frontier
+
+A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
+
+5/3/1 is a barbell strength training program (todo: cite).
+This program emphasizes *rep records*, where the lifter is to lift a submaximal mass as many times as possible.
+This program design adds a second dimension to strength.
+We say that lifter who progresses from lifting \qty{100}{\kilogram} for 6 repetitions to 9 repetitions in six months has become stronger,
+even if the athlete has not directly tested their one-repetition maximum.
+
+![The points along the red line form the Pareto front for this data set.](pareto.pdf){#fig:pareto}
+
+Figure \ref{fig:pareto} provides an example of an athlete's rep records over a two-year period in the barbell squat.
+The frontier, $P(X)$, is visible at the top-right of the scatter plot.
+If, for example, this lifter were to achieve a \qty{120}{\kilogram} squat for 8 repetitions,
+the lift would *dominate* the previous records at $(120,5)$ and $(116,8)$,
+moving the frontier farther from the origin.
+
+A Pareto front only makes sense when the two variables cannot be combined into one.
+Consider, as an absurd example, a running race where the minutes and seconds of finishing times are recorded in separate columns.
+
+| Athlete | Minutes | Seconds |
+|---------|---------|---------|
+| 1       | 18      | 34      |
+| 2       | 19      | 24      |
+| 3       | 20      | 01      |
+
+There is no need to compare the three runner's run times in two dimensions: the minutes and seconds are trivially compressible into a single value with no loss of information.
 
 ## Covariance
+
+Suppose our three athletes also compete in a test of strength.
+
+| Athelete | Squat | Bench | Deadlift |
+|----------|-------|-------|----------|
+| 1        |  85   |  77   | 115      |
+| 2        |  110  | 83    | 148      |
+| 3        | 152   | 116   | 197      |
+
+It is no longer trivial to compress...todo:
+
+- Colinearity and multiple colinearity
+- Duplicate columns
+
+## Principle Component Analysis (PCA)
 
 ## Discussion prompts
 
 1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
 2. Conduct a classroom competition of "Catch the cheaters!" at https://primerlearning.org. Discuss the winning and losing strategies, then watch https://www.youtube.com/watch?v=XTcP4oo4JI4. 
+3. Read the interactive article https://www.mayerowitz.io/blog/mario-meets-pareto [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
 
 ## Practical exericses
 

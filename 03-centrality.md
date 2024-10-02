@@ -163,9 +163,10 @@ s = \sqrt{s^2}.
 $$
 
 An *outlier* is a value that is very different from other values in the data set.
-Let $x = \left\{ 15, 75, 79, 10, 7, 54, \num{4600}, 91, 45, 86 \right\}$.
-One can immediately intuit that the value $\num{4600}$ is substantially different from all of the other values.
-Outliers can be defined in terms of the mean and standard deviation, where outliers are any values greater than $\bar{x} + 2s$ or less than $\bar{x} - 2s$.
+In the set $x = \left\{ 15, 75, 79, 10, 7, 54, \num{4600}, 91, 45, 86 \right\}$,
+one can immediately observe that the value $\num{4600}$ is substantially different from all of the other values.
+Outliers can be defined in terms of the mean and standard deviation.
+Outliers are any values greater than $\bar{x} + 2s$ or less than $\bar{x} - 2s$.
 We can use the `mean` and `sd` functions with `subset` in the R language at https://webr.r-wasm.org/latest/ to confirm that $\num{4600}$ is an outlier.
 
 ```

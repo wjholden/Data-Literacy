@@ -1,5 +1,6 @@
 ## Don't include .dot.pdf renders of figures.
 *.dot.pdf
+pareto.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

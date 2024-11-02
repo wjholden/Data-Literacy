@@ -11,18 +11,17 @@ fig = plot(scatter(sq.Mass, sq.Repetitions), legend=false)
 front = similar(sq, 0)
 
 for x in eachrow(sq)
-    on_front = true
     for y in eachrow(sq)
         if (x.Mass < y.Mass && x.Repetitions < y.Repetitions) ||
             (x.Mass < y.Mass && x.Repetitions == y.Repetitions) ||
             (x.Mass == y.Mass && x.Repetitions < y.Repetitions)
-            on_front = false
-            break
+            @goto not_on_front
         end
     end
-    if on_front
-        push!(front, x)
-    end
+
+    push!(front, x)
+
+    @label not_on_front
 end
 
 sort!(front, :Mass)
@@ -30,4 +29,3 @@ sort!(front, :Mass)
 plot!(fig, front.Mass, front.Repetitions)
 
 @pipe savefig(fig, "pareto.pdf")
-

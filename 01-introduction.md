@@ -166,7 +166,7 @@ By contrast, in an object-oriented language, such as Java and JavaScript, the id
 
 
 
-## Vectors and matrices
+## Vectors and matrices {#section:vector}
 
 We now quickly mention the terms *vector* and *matrix* here to disambiguate them from other terms already defined.
 

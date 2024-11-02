@@ -266,7 +266,7 @@ Is it unusual for a middle-aged, very tall, very heavy, zero-exercise male livin
 We would ideally like to sample many such persons, but even in a large study we likely would not have many individuals meeting exactly these characteristics.
 
 *Data mining* is the search for non-obvious conclusions by analyzing data.
-Data mining efforts are especially characterized by the lack of *first principals*, meaning the researcher may not have any advance hypothesis about the relationships between variables.
+Data mining efforts are especially characterized by the lack of *first principles*, meaning the researcher may not have any advance hypothesis about the relationships between variables.
 
 Suppose our fitness research showed that heavy bodyweight predicts poor speed.
 This is quite obvious and likely not useful.
@@ -380,7 +380,7 @@ The toy shark example is intended to demonstrate how *spurious correlations* may
 The *Texas sharpshooter fallacy* can describe this effect.
 A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
 
-## Pareto frontier
+## Pareto frontier {#section:pareto}
 
 A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
 
@@ -409,6 +409,16 @@ Consider, as an absurd example, a running race where the minutes and seconds of 
 
 There is no need to compare the three runner's run times in two dimensions: the minutes and seconds are trivially compressible into a single value with no loss of information.
 
+In the case of the rep records shown in figure \ref{fig:pareto}, there is a general negative correlation between mass and repetitions.
+This relationship can be estimated with Brzycki's formula (among others) [@brzycki1993strength], which states
+
+$$
+\text{Predicted 1-RM} = \frac{\text{Weight Lifted}}{1.0278 - 0.0289x},
+$$
+
+where $x$ is the number of repetitions performed.
+Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
+
 ## Covariance
 
 Suppose our three athletes also compete in a test of strength.
@@ -418,6 +428,27 @@ Suppose our three athletes also compete in a test of strength.
 | 1        |  85   |  77   | 115      |
 | 2        |  110  | 83    | 148      |
 | 3        | 152   | 116   | 197      |
+
+A Pareto front (see section \ref{section:pareto}) might have been useful if these lifts were not so cleanly ordered,
+but in this example the order of the lifts is unambiguous.
+
+| Athlete | Squat | Bench | Deadlift |
+|---------|-------|-------|----------|
+| 1       | 3     | 3     | 3        |
+| 2       | 2     | 2     | 2        |
+| 3       | 1     | 1     | 1        |
+
+These three columns are exactly identical.
+Joining on their run times, we have
+
+| Athelete | Speed | Strength |
+|----------|-------|----------|
+| 1        | 1     | 3        |
+| 2        | 2     | 2        |
+| 3        | 3     | 1        |
+
+and now we again have a pair of axes that might be visualized in a Pareto frontier.
+It is worth mentioning that vectors (see section \ref{section:vector}) are a well-suited abstraction for such quantities with multiple *components*.
 
 It is no longer trivial to compress...todo:
 

@@ -1,0 +1,8 @@
+[package]
+name = "rsgraph"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+graphrs = "0.9.0"
+polars = { version = "0.44.2", features = ["lazy"] }

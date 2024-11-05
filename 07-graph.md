@@ -341,14 +341,14 @@ def dijkstra(src, dst):
     while queue:
         _, current = heappop(queue)
         if current == dst:
-            print("Path found:", distance[dst])
-            print("Path: ", end='')
+            path = []
             parent = current
             while parent in previous:
-                print(parent, end=' ')
+                path.append(parent)
                 parent = previous[parent]
-            print()
-            return distance[dst]
+            print("Path =", ', '.join(path))
+            print("Distance =", distance[dst])
+            return path, distance[dst]
         if current in explored:
             continue
         explored.add(current)
@@ -738,15 +738,17 @@ In fact, Adin has more friends than all of his friends, except Kim.
 
 Highly-connected nodes, with outlier degree, can be particularly important in many graph applications.
 Transportation networks are an example: congestion at any major airport "hub" can quickly spread to adjacent airports and beyond.
-We will discuss three statistics of graph centrality: *closeness*, *betweenness*, and *PageRank*.
-
-### Closeness
-
-[@10.1121/1.1906679]
+We will discuss three statistics of graph centrality: *betweenness*, *closeness*, and *PageRank*.
 
 ### Betweenness
 
 [@10.2307/3033543]
+
+- Related to critical paths in project management.
+
+### Closeness
+
+[@10.1121/1.1906679]
 
 ### PageRank
 

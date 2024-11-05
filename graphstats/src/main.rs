@@ -1,8 +1,10 @@
 use petgraph::dot::Dot;
 use petgraph::graph::Graph;
+use petgraph::algo::page_rank;
+use petgraph::Undirected;
 
 fn main() {
-    let mut g = Graph::new_undirected();
+    let mut g: Graph<&str, (), Undirected> = Graph::new_undirected();
     let frank = g.add_node("Frank");
     let kim = g.add_node("Kim");
     let david = g.add_node("David");
@@ -17,26 +19,31 @@ fn main() {
     let phil = g.add_node("Phil");
 
     g.extend_with_edges(&[
-        (frank, kim, 1),
-        (frank, david, 1),
-        (david, sven, 1),
-        (david, adin, 1),
-        (adin, maria, 1),
-        (adin, jose, 1),
-        (adin, kim, 1),
-        (maria, jose, 1),
-        (jose, kim, 1),
-        (jasmine, jose, 1),
-        (jasmine, kim, 1),
-        (ivan, adin, 1),
-        (jean, ivan, 1),
-        (felix, ivan, 1),
-        (kim, felix, 1),
-        (kim, david, 1),
-        (kim, jean, 1),
-        (sven, adin, 1),
-        (phil, adin, 1),
+        (frank, kim),
+        (frank, david),
+        (david, sven),
+        (david, adin),
+        (adin, maria),
+        (adin, jose),
+        (adin, kim),
+        (maria, jose),
+        (jose, kim),
+        (jasmine, jose),
+        (jasmine, kim),
+        (ivan, adin),
+        (jean, ivan),
+        (felix, ivan),
+        (kim, felix),
+        (kim, david),
+        (kim, jean),
+        (sven, adin),
+        (phil, adin),
     ]);
 
-    println!("{}", Dot::new(&g));
+    //let g = g;
+    //println!("{}", Dot::new(&g));
+
+    let mut pr = page_rank(&g, 0.75_f32, 10);
+    pr.sort_by(|a,b| a.total_cmp(b));
+    println!("{:?}", pr);
 }

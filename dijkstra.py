@@ -1,4 +1,5 @@
 from heapq import *
+from collections import defaultdict
 
 g = dict(
     [
@@ -48,27 +49,33 @@ w = dict(
     ]
 )
 
-
 def dijkstra(src, dst):
     explored = set()
-    distance = dict()
+    distance = defaultdict(lambda: float('inf'))
+    previous = {'start': None}
     distance[src] = 0
     queue = []
     heappush(queue, (0, src))
     while queue:
         _, current = heappop(queue)
         if current == dst:
-            print("Path found:", distance[dst])
-            return
+            path = []
+            parent = current
+            while parent in previous:
+                path.append(parent)
+                parent = previous[parent]
+            print("Path =", ', '.join(path))
+            print("Distance =", distance[dst])
+            return path, distance[dst]
         if current in explored:
             continue
         explored.add(current)
         for neighbor in g[current]:
-            if neighbor not in explored:
-                d = distance[current] + w[(current, neighbor)]
+            d = distance[current] + w[(current, neighbor)]
+            if neighbor not in explored and d < distance[neighbor]:
                 distance[neighbor] = d
+                previous[neighbor] = current
                 heappush(queue, (d, neighbor))
     print("No path found")
-
 
 dijkstra("start", "treasure")

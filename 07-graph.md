@@ -281,6 +281,7 @@ A plain text verion of this program is available at https://github.com/wjholden/
 
 ```
 from heapq import *
+from collections import defaultdict
 
 g = dict(
     [
@@ -330,32 +331,40 @@ w = dict(
     ]
 )
 
-
 def dijkstra(src, dst):
     explored = set()
-    distance = dict()
+    distance = defaultdict(lambda: float('inf'))
+    previous = {'start': None}
     distance[src] = 0
     queue = []
     heappush(queue, (0, src))
     while queue:
         _, current = heappop(queue)
         if current == dst:
-            print("Path found": distance[dst])
+            print("Path found:", distance[dst])
+            print("Path: ", end='')
+            parent = current
+            while parent in previous:
+                print(parent, end=' ')
+                parent = previous[parent]
+            print()
             return distance[dst]
         if current in explored:
             continue
         explored.add(current)
         for neighbor in g[current]:
-            if neighbor not in explored:
-                d = distance[current] + w[(current, neighbor)]
+            d = distance[current] + w[(current, neighbor)]
+            if neighbor not in explored and d < distance[neighbor]:
                 distance[neighbor] = d
+                previous[neighbor] = current
                 heappush(queue, (d, neighbor))
     print("No path found")
 
 dijkstra("start", "treasure")
 ```
 
-This program should output `Path found: 193`, revealing that the shortest path from `start` to `treasure` has a total path cost of 193.
+This program should output `Path found: 193`, and `Path: treasure castle city start`.
+The shortest path from `start` to `treasure` has a total path cost of 193.
 
 Neo4j produces the same result.
 We reconstruct our graph in the Cypher language at https://console.neo4j.org:

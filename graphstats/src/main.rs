@@ -3,6 +3,8 @@ use petgraph::graph::Graph;
 use petgraph::algo::page_rank;
 use petgraph::Undirected;
 
+// https://depth-first.com/articles/2020/02/03/graphs-in-rust-an-introduction-to-petgraph/
+
 fn main() {
     let mut g: Graph<&str, (), Undirected> = Graph::new_undirected();
     let frank = g.add_node("Frank");

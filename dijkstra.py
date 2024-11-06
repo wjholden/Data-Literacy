@@ -64,8 +64,6 @@ def dijkstra(src, dst):
             while parent in previous:
                 path.append(parent)
                 parent = previous[parent]
-            print("Path =", ', '.join(path))
-            print("Distance =", distance[dst])
             return path, distance[dst]
         if current in explored:
             continue
@@ -78,4 +76,6 @@ def dijkstra(src, dst):
                 heappush(queue, (d, neighbor))
     print("No path found")
 
-dijkstra("start", "treasure")
+path, distance = dijkstra("start", "treasure")
+print("Path =", ', '.join(path))
+print("Distance =", distance)

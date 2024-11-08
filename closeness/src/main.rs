@@ -4,11 +4,6 @@ use petgraph::prelude::*;
 use petgraph::algo::dijkstra;
 
 fn main() {
-    test1();
-    test2();
-}
-
-fn test1() {
     let mut graph: Graph<(), (), Undirected> = Graph::new_undirected();
     let a = graph.add_node(());
     let b = graph.add_node(());
@@ -21,6 +16,7 @@ fn test1() {
         (c,d),
         (d,e)
     ]);
+    let graph = graph;
     closeness(&graph);
 }
 
@@ -75,6 +71,6 @@ fn closeness<N, E>(graph: &Graph<N, E, Undirected>) {
         let n = graph.node_count() as f64;
         let distances = delta.values().cloned().sum::<i32>() as f64;
         let closeness = (n-1.0) / distances;
-        println!("Average distance for {} is {}.", u.index(), closeness);
+        println!("Average distance for vertex {} is {}.", u.index(), closeness);
     }
 }

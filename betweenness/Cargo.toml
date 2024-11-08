@@ -1,0 +1,8 @@
+[package]
+name = "betweenness"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+num-rational = "0.4.2"
+petgraph = "0.6.5"

@@ -725,6 +725,8 @@ Moreover, we can also apply informed search to *intractable* problems where comp
 
 ## Centrality
 
+### Degree
+
 The average person (ten of twelve) in the social graph shown in figure \ref{fig:friends} has *fewer* friends the average friend count of their friends.
 These statistics are summarized in the following table.
 
@@ -755,31 +757,127 @@ In fact, Adin has more friends than all of his friends, except Kim.
 
 Highly-connected nodes, with outlier degree, can be particularly important in many graph applications.
 Transportation networks are an example: congestion at any major airport "hub" can quickly spread to adjacent airports and beyond.
-We will discuss three statistics of graph centrality: *betweenness*, *closeness*, and *PageRank*.
 
-### Betweenness
-
-[@10.2307/3033543]
-
-- Related to critical paths in project management.
+*Degree centrality* is a simple and intuitive graph statistic [@FREEMAN1978215].
+Simply count the in-degree, out-degree, or both, and use this metric to discover important nodes in the graph.
 
 ### Closeness
 
-[@10.1121/1.1906679]
+*Closeness centrality*, $C_C$, is also fairly simple to compute from the sum of unweighted distances from each node to each other node
+[@10.1121/1.1906679].
+Closeness centrality has been used to study criminal and terrorist networks [@Krebs2001MappingNO].
+
+$$
+C_C(x) = \frac{1}{\sum_{y \in v}{\delta(x,y)}}
+$$
+
+The following Rust program uses an unweighted invocation of Dijkstra's algorithm
+in the `petgraph` crate^[The term *crate* is peculiar to Rust.
+In this context, the term is interchangable with "library,"
+which is a more common programming term.].
+One may run this program at \url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=e67ef3bc05daab21dd73a7869093d9cb}.
+
+```rust
+use petgraph::algo::dijkstra;
+use petgraph::prelude::*;
+use petgraph::visit::NodeRef;
+use petgraph::Graph;
+
+fn main() {
+    let mut graph: Graph<(), (), Undirected> = Graph::new_undirected();
+    let a = graph.add_node(());
+    let b = graph.add_node(());
+    let c = graph.add_node(());
+    let d = graph.add_node(());
+    let e = graph.add_node(());
+    graph.extend_with_edges(&[(a, b), (b, c), (c, d), (d, e)]);
+    let graph = graph;
+    closeness(&graph);
+}
+
+fn closeness<N, E>(graph: &Graph<N, E, Undirected>) {
+    for u in graph.node_indices() {
+        let delta = dijkstra(&graph, u.id(), None, |_| 1);
+        let n = graph.node_count() as f64;
+        let distances = delta.values().cloned().sum::<i32>() as f64;
+        let closeness = (n - 1.0) / distances;
+        println!(
+            "Closeness score for vertex {} is {}.",
+            u.index(),
+            closeness
+        );
+    }
+}
+```
+
+The output of this program should be
+
+```
+Closeness score for vertex 0 is 0.4.
+Closeness score for vertex 1 is 0.5714285714285714.
+Closeness score for vertex 2 is 0.6666666666666666.
+Closeness score for vertex 3 is 0.5714285714285714.
+Closeness score for vertex 4 is 0.4.
+```
+
+As an exercise, draw the graph described in this program (either by hand or
+using software) and assess if the centrality statistics seem intuitive. 
+
+### Betweenness
+
+*Betweenness centrality*, $C_B$, seeks to improve upon closeness by considering edge
+weights [@10.2307/3033543].
+The betweenness for a vertex $x$ is calculated the proportion of shortest paths
+$\sigma \left( s, t \right)$ that include $x$ as an intermediary node along
+the path.
+
+$$
+C_B(x) = \sum_{s \ne x, x \ne t, s \ne t}{
+\frac{
+    \sigma \left( s, t | x \right)
+}{
+    \sigma \left( s, t \right)
+}
+}
+$$
+
+The computational complexity of so many pathfindings becomes significant in large
+graphs and dense graphs [@10.1080/0022250X.2001.9990249] [@brandes2007centrality].
 
 ### PageRank
 
 <!-- http://infolab.stanford.edu/~backrub/google.html -->
 
-[@BRIN1998107]
+Google's well-known *PageRank* algorithm uses a creative edge weighting function
+based on a page's importance or quality [@BRIN1998107].
+The metric is parameterized with a dampening factor, $d$, and requires multiple
+iterations.
+
+$$
+\text{PR} \left( u \right) = \sum_{v \in B_u}{\frac{\text{PR} \left( v \right)}{L \left( v \right)}}
+$$
+
+This peculiar concept of a page's "reputation" is central to the efficacy of the
+Google search engine.
+
+There are many more measures of centrality in graphs beyond degree centrality,
+closeness, betweenness, and PageRank. Depending on the application, any or none
+of these metrics may be useful. The analyst studying a graph might consider
+these metrics "man-made"; they were created by scientists and mathematicians
+seeking to model a problem. These metrics can be customized to the user's needs
+to best approach their unique problem domain.
 
 ## Power Law distribution
 
-[@doi:10.1126/science.286.5439.509]
+todo [@doi:10.1126/science.286.5439.509]
 
 ## Minimum Spanning Tree
 
+todo
+
 ## NP-completeness
+
+todo 
 
 ## Discussion prompts
 
@@ -791,6 +889,12 @@ We will discuss three statistics of graph centrality: *betweenness*, *closeness*
 
 4. If the distance from Paris to Sydney is infinitely far, then can we use some 
 *greater infinity* to represent the distance from London to Sydney?
+
+5. Think of a practical problem that can be modeled as a graph, but where the
+four discussed measures of center (degree centrality, closeness, betweenness,
+and PageRank) are not effective. As a discussion point, consider whether values 
+immediately associated with vertices and edges dominate their importance, or
+if some extrinsic network effect has a greater effect.
 
 ## Practical exercises
 

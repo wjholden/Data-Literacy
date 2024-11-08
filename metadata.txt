@@ -11,6 +11,8 @@ header-includes:
     - \usepackage{siunitx}
     - \usepackage{nicematrix}
     - \usepackage{amsmath,amssymb,amsfonts}
+    - \usepackage[breaklinks]{hyperref}
+    - \def\UrlBreaks{\do/\do-\do,}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
 # https://tug.org/FontCatalogue/typewriterfonts.html

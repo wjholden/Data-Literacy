@@ -69,6 +69,20 @@ MATCH (:CITY {name:'Paris'})-[p:ROUTE*]->(:CITY {name:'Hague'})
 RETURN p, REDUCE(length=0, e IN p | length + e.dist) AS distance;
 ```
 
+## Connectivity and distance
+
+A *complete* graph is *fully connected*, having paths between all pairs of vertices.
+One's model for distance may be challenged in incomplete graphs, which contain partitions.
+
+What is the driving distance from Paris, France to Sydney, Australia?
+There is no route (no path) connecting Europe, by ground, to Australia, and therefore
+there is no real number to quantify the distance.
+
+Depending on the application, one might represent an unreachable node as having infinite distance,
+as we will in section \ref{section:dijkstra} with Dijkstra's algorithm.
+One might also use a special, non-numeric values, as described in our discussion
+of missing values in section \ref{section:nan}.
+
 ## Special cases of graphs
 
 A *directed acyclic graph* (DAG) is a special case of a directed graph.
@@ -85,6 +99,8 @@ G = \left\{ \left\{ a, b, c, d \right\} ,
 \right\}.
 $$
 
+![A directed acyclic graph (DAG) may contain no cycles. The left graph is a DAG. The right graph is not because the edges connecting $a$, $b$, and $c$ form a loop.](dag.dot.pdf)
+
 The edges $\left( a, b \right)$, $\left( b, c \right)$, and $\left( c, a \right)$ form a cycle.
 Vertices $a$, $b$, and $c$ together form a *connected component*.
 A directed graph with one or more connected components is not a DAG, but the graph of components
@@ -92,7 +108,8 @@ A directed graph with one or more connected components is not a DAG, but the gra
 
 A *tree* is another special case of an acyclic graph.
 Trees are often drawn in a vertical hierarchy where each *child node* has one *parent*, and the only parent node with no parent is called the *root node*.
-One's ancestoral family tree is an instance of a tree; without a time machine, it is impossible to one to form a loop with an ancestor.
+One's ancestoral family tree is an instance of a tree.
+Without a time machine, it is impossible to one to form a hereditary loop with an ancestor.
 
 ## Representation
 
@@ -760,6 +777,10 @@ We will discuss three statistics of graph centrality: *betweenness*, *closeness*
 
 [@doi:10.1126/science.286.5439.509]
 
+## Minimum Spanning Tree
+
+## NP-completeness
+
 ## Discussion prompts
 
 1. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
@@ -768,6 +789,8 @@ We will discuss three statistics of graph centrality: *betweenness*, *closeness*
 
 3. Is a Gantt chart a graph? How can one find the critical path of a project if represented as a graph? 
 
+4. If the distance from Paris to Sydney is infinitely far, then can we use some 
+*greater infinity* to represent the distance from London to Sydney?
 
 ## Practical exercises
 

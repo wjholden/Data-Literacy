@@ -76,7 +76,7 @@ Rather, the year, year and month, or year, month, and day are almost almost alwa
 We even combine years into groups when discussing generations and peer groups.
 Combining a range of birth years into generational categories is an example of *discretization*.
 
-## Missing values
+## Missing values {#section:nan}
 
 In practice, *data sets* often have missing values.
 Different programming languages have substantially different syntax and semantics for representing and handling missing values.
@@ -123,7 +123,7 @@ Some programming languages offer *dynamic* types that implicitly change the type
 Go to https://jsfiddle.net or press F12 to open the developer console in most modern browsers.
 Enter the following into the JavaScript console:
 
-```
+```javascript
 >> "5" * 5
 <- 25
 ```
@@ -132,7 +132,7 @@ Characters inside quotation marks (`"5"`) are called *strings* and are ordinaril
 
 JavaScript is notoriously inconsistent.
 
-```
+```javascript
 >> "5" + 5
 <- "55"
 ```
@@ -232,19 +232,27 @@ R is a programming language for statistics and data visualization.
 R includes several built-in data sets.
 In the *read-evaluate-print loop* (*REPL*), enter
 
-```
+```r
 > head(mtcars)
 ```
 
 to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
 Now enter the following commands to quickly visualize a few columns in the data set.
 
-```
+```r
 > barplot(mtcars$cyl)
 > boxplot(mtcars$mpg)
 > hist(mtcars$mpg)
 > plot(mtcars$wt, mtcars$mpg)
 ```
+
+![](mtcars-barplot.pdf){width=25%}
+![](mtcars-boxplot.pdf){width=25%}
+![](mtcars-hist.pdf){width=25%}
+![](mtcars-plot.pdf){width=25%}
+\begin{figure}[!h]
+\caption{Visualizations of the Motor Trend Cars (\texttt{mtcars}) data set using the R language.}
+\end{figure}
 
 ## Linear and logarithmic scales
 

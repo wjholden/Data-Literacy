@@ -4,7 +4,7 @@ use graphrs::{Edge, Graph, GraphSpecs, Node};
 use polars::prelude::*;
 
 fn main() {
-    neo4j_example();
+    betweenness_example();
 
     //let closeness_statistic = closeness::closeness_centrality(&graph, false, true);
 
@@ -77,7 +77,7 @@ ORDER BY name ASC
 ```
 
  */
-fn neo4j_example() {
+fn betweenness_example() {
     let v = vec![
         Node::from_name("Alice"),
         Node::from_name("Bob"),
@@ -98,21 +98,29 @@ fn neo4j_example() {
         Edge::with_weight("Frank", "Gale", 1.0),
     ];
 
-    let spec = GraphSpecs::directed();
-
-    let g = Graph::<&str, ()>::new_from_nodes_and_edges(v, e, spec).unwrap();
-
+    let g = Graph::<&str, ()>::new_from_nodes_and_edges(v, e, GraphSpecs::directed()).unwrap();
     let betweenness_statistic = betweenness::betweenness_centrality(&g, true, false).unwrap();
     let closeness_statistic = closeness::closeness_centrality(&g, false, false).unwrap();
-    let mut df: DataFrame = df!(
-        "Name" => betweenness_statistic.clone().into_keys().collect::<Vec<_>>(),
-        "Betweenness" => betweenness_statistic.clone().into_values().collect::<Vec<_>>(),
-        "Closeness" => closeness_statistic.clone().into_values().collect::<Vec<_>>(),
-    )
-    .unwrap();
-    df.sort_in_place(["Name"], Default::default()).unwrap();
-    println!("{}", df);
+    
+    let mut df1: DataFrame = df!(
+        "Name" => betweenness_statistic.clone().into_keys().collect::<Vec<&str>>(),
+        "Betweenness" => betweenness_statistic.clone().into_values().collect::<Vec<f64>>(),
+    ).unwrap();
+
+    let df2: DataFrame = df!(
+        "Name" => closeness_statistic.clone().into_keys().collect::<Vec<&str>>(),
+        "Closeness" => closeness_statistic.clone().into_values().collect::<Vec<f64>>(),
+    ).unwrap();
+
+    //let mut df = df1.inner_join(&df2, [col("Name")], [col("Name")]).unwrap();
+
+    for mut df in vec![df1, df2] {
+        df.sort_in_place(["Name"], Default::default()).unwrap();
+        println!("{}", df);
+    }
 }
+
+ 
 
 fn kingdom() {
     let mut graph: Graph<&str, i32> = Graph::new(GraphSpecs::directed_create_missing());

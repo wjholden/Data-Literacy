@@ -94,7 +94,7 @@ SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
 There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
 As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
 
-## Grouping and aggregation
+## Grouping and aggregation {#section:grouping-and-aggregation}
 
 DBMSs provide robust *grouping* functions for operating on related rows.
 Return to https://sqlime.org/#deta:32lpfoo57r8g and create a small table of hypothetical marathon times.
@@ -287,6 +287,73 @@ Click the "Run" button several times and observe that the final result is consis
 The computer industry has recently turned to *Graphical Processing Units* (GPU) as a fast, inexpensive, and energy-efficient method for solving highly parallelizable problems.
 GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
 These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
+
+## Cumulative sums and Pareto charts
+
+A *Pareto chart* is a useful analytical tool to show the relative importance of
+problems in industrial settings. The chart shows the proportion of problems
+discretized (see section \ref{section:discretize}) into root causes. We can
+compute these cumulative sums using reduce and visualize them with a bar plot.
+
+The following example uses data gathered from \url{https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions}.
+The `%>%` operator, from the `dplyr` package, "pipes" the output from one
+function anonymously into the first argument of the next function.
+Structurally, the `%>%` produces a left-to-right order of operations that
+can be easier to write, read, and maintain than functions written in prefix and
+infix notation. `dplyr` uses `mutate` as row-wise `map` operation with support
+for aggregate functions (such as `sum(n)` below;
+see also section \ref{section:grouping-and-aggregation}).
+
+```r
+> library(tidyverse)
+> v = c("GW1516", "GW1516", "Methenolone", "Meldonium", "GW1516", 
+  "GW1516", "Oxandrolene", "GW1516", "GW1516", "Clomiphene", "Clomiphene",
+  "GW1516", "Turinabol", "GW1516", "GW1516", "GW1516", "RAD140", "GW1516",
+  "GW1516", "Stanozolol", "Drostanolone", "GW1516", "Clomiphene",
+  "GW1516", "GW1516", "Ostarine", "S-23", "GW1516", "Clomiphene", "GW1516",
+  "Meldonium", "GW1516", "GW1516", "5aAdiol", "Stanozolol", "Testosterone", 
+  "Drostanolone", "GW1516", "GW1516", "Metenolone", "GW1516", "Boldenone", 
+  "GW1516", "GW1516", "GW1516")
+> df = data.frame(Violation = v) %>%
+  count(Violation) %>%
+  arrange(-n) %>%
+  mutate(Proportion = 100.0 * n / sum(n)) %>%
+  select(Violation, Proportion) %>%
+  mutate(CumSum = cumsum(Proportion))
+> df
+      Violation Proportion    CumSum
+1        GW1516  55.555556  55.55556
+2    Clomiphene   8.888889  64.44444
+3  Drostanolone   4.444444  68.88889
+4     Meldonium   4.444444  73.33333
+5    Stanozolol   4.444444  77.77778
+6       5aAdiol   2.222222  80.00000
+7     Boldenone   2.222222  82.22222
+8    Metenolone   2.222222  84.44444
+9   Methenolone   2.222222  86.66667
+10     Ostarine   2.222222  88.88889
+11  Oxandrolene   2.222222  91.11111
+12       RAD140   2.222222  93.33333
+13         S-23   2.222222  95.55556
+14 Testosterone   2.222222  97.77778
+15    Turinabol   2.222222 100.00000
+```
+
+This dataset does not quite show the famous "Pareto principle" where 20% of 
+problems cause 80% of problems, but we do see that the distribution is not
+uniform. The first category accounts for over half of the observations.
+Using R's `ggplot` library, we show the resulting Pareto chart with the bars
+and cumulative sum line.
+
+```r
+df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
+	geom_bar(aes(weight = Proportion)) +
+	geom_line(aes(y = CumSum, group=1)) +
+	xlab("Drug Violation") +
+	ylab("Proportion")
+```
+
+![A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.](pareto-chart.pdf)
 
 ## Consistency, availability, and partition-tolerance (CAP) theorem
 

@@ -226,6 +226,83 @@ Now suppose an investor wants a rigorous test of the bicycle factory's products.
 The investor demands that 30 copies of each part be tested in various ways.
 $300 \times 30 = \num{9000}$ total parts being committed to this study might be unrealistic.
 
+## Subsets and Venn diagrams
+
+A set intersection ($\cap$) of two sets is the set of all elements present in
+both sets.
+
+$$
+S \cap T = \left\{
+x |
+x \in S 
+\land
+x \in T
+\right\}.
+$$
+
+\begin{figure}
+\begin{tikzpicture}
+\draw[black] (0,0) rectangle (12,8);
+\draw[black] (6,4) circle (2);
+\node[text width=1] at (1,7) {$U$};
+\node[text width=1] at (6,4) {$S$};
+\end{tikzpicture}
+\label{fig:Venn1}
+\caption{A Venn diagram showing a single dimension, $S \subset U$.}
+\end{figure}
+
+The familiar Venn diagram is commonly used to plot set intersections, but this
+plot is limited and is frequently misused. Traditionally, the square frame of
+the plot represents the universal set, $U$. Each circle of the Venn diagram
+shows a subset of $U$ along some binary attribute.
+In figure \ref{fig:Venn1}, we see a degenerate Venn diagram of a single dimension.
+Values of $U$ are simply in $S$ or not in $S$.
+
+\begin{figure}
+\begin{tikzpicture}
+\draw[black] (0,0) rectangle (12,8);
+\draw[black] (5,4) circle (2);
+\draw[black] (7,4) circle (2);
+\node[text width=1] at (1,7) {$U$};
+\node[text width=1] at (4,4) {$S$};
+\node[text width=1] at (8,4) {$T$};
+\end{tikzpicture}
+\label{fig:Venn2}
+\caption{A Venn diagram showing two dimensions. The overlap of the circles is the intersection, $S \cap T$.}
+\end{figure}
+
+\begin{figure}
+\begin{tikzpicture}
+\draw[black] (0,0) rectangle (12,8);
+\draw[black] (5,5) circle (2);
+\draw[black] (7,5) circle (2);
+\draw[black] (6,3) circle (2);
+\node[text width=1] at (1,7) {$U$};
+\node[text width=1] at (4,5) {$S$};
+\node[text width=1] at (8,5) {$T$};
+\node[text width=1] at (6,2) {$R$};
+\end{tikzpicture}
+\label{fig:Venn3}
+\caption{A Venn diagram showing two dimensions. The overlap of all three circles is the intersection, $R \cap S \cap T$.}
+\end{figure}
+
+The Venn diagram has its more familiar structure with two and three dimensions,
+as shown in figures \ref{fig:Venn2} and \ref{fig:Venn3}.
+
+Venn diagrams are not possible in four or more dimensions -- at least, not with
+circles drawn on a two-dimensional plot.
+The number of subsets of $U$ is two for one dimension (a value is either in $S$
+or not in $S$), four for two dimensions (a value is only in $S$, only in $T$,
+in both, or in neither), eight for three dimensions ($R$, $S$, $T$, $S \cap T$, 
+$S \cap R$, $S \cap T$, $T \cap R$, $R \cap S \cap T$, or none), and so on.
+
+Another challenge one must avoid if using Venn diagrams is that the areas in
+the plot may not correspond to the relative sizes of the subsets. For example,
+imagine a Venn diagram showing the sets of bicycle riders and persons with only
+one foot. The cyclists significantly outnumber the unipeds and their intersection
+is likely quite small, therefore two circles of equal size may present a 
+misleading graphic.
+
 ## Sample spaces
 
 Imagine one wanted to conduct a large study on exercise and health outcomes.
@@ -462,6 +539,7 @@ It is no longer trivial to compress...todo:
 1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
 2. Conduct a classroom competition of "Catch the cheaters!" at https://primerlearning.org. Discuss the winning and losing strategies, then watch https://www.youtube.com/watch?v=XTcP4oo4JI4. 
 3. Read the interactive article https://www.mayerowitz.io/blog/mario-meets-pareto [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
+4. Come up with a creative way to draw a four-dimensional Venn diagram.
 
 ## Practical exericses
 

@@ -296,8 +296,8 @@ discretized (see section \ref{section:discretize}) into root causes. We can
 compute these cumulative sums using reduce and visualize them with a bar plot.
 
 The following example uses data gathered from \url{https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions}.
-The `%>%` operator, from the `dplyr` package, "pipes" the output from one
-function anonymously into the first argument of the next function.
+The `%>%` operator, from the `dplyr` package, anonymously "pipes" the output
+from one function into the first argument of the next function.
 Structurally, the `%>%` produces a left-to-right order of operations that
 can be easier to write, read, and maintain than functions written in prefix and
 infix notation. `dplyr` uses `mutate` as row-wise `map` operation with support
@@ -355,7 +355,7 @@ df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
 
 ![A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.](pareto-chart.pdf)
 
-## Consistency, availability, and partition-tolerance (CAP) theorem
+## The CAP Theorem
 
 Brewer's *CAP theorem* states that a *distributed system* has at most two qualities of *consistency*, *availability*, and *partition-tolerance* [@6133253].
 Consider a system of databases with many replicas.

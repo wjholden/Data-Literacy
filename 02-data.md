@@ -1,6 +1,6 @@
 # Data Operations
 
-## Relational algebra
+## The Relational Algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].
 The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($-$).
@@ -67,7 +67,7 @@ $$
 A - B = \left\{ i, j, k \right\} - \left\{ k, l, m \right\} = \left\{ i, j \right\}.
 $$
 
-## Join
+## Joining Tables
 
 The *join* ($\bowtie$) is a combination of the Cartesian product and selection.
 For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
@@ -94,7 +94,7 @@ SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
 There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
 As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
 
-## Grouping and aggregation {#section:grouping-and-aggregation}
+## Grouping and Aggregation {#section:grouping-and-aggregation}
 
 DBMSs provide robust *grouping* functions for operating on related rows.
 Return to https://sqlime.org/#deta:32lpfoo57r8g and create a small table of hypothetical marathon times.
@@ -138,11 +138,13 @@ SELECT * FROM Marathon
     SELECT MIN(time) FROM Marathon GROUP BY (gender));
 ```
 
-## Filter, map, and reduce {#section:filter-map-reduce}
+## Functional Programming {#section:filter-map-reduce}
 
 SQL syntax makes it easy to write select, project, and join (SPJ) queries.
 SQL's grouping and aggregate functions make it possible to perform row-wise and column-wise operations.
 One can find comparable semantics (with different syntax) in many programming language's *filter*, *map*, and *reduce* functions.
+
+### Filter
 
 Filter works much like the `WHERE` clause: it takes a subset of the rows, based off of a condition.
 In JavaScript, we might filter an array with:
@@ -152,12 +154,16 @@ In JavaScript, we might filter an array with:
 <- ['fish', 'bird']
 ```
 
+### Map
+
 Map performs the same function over each element of an input set, creating "mappings" to elements of an output set.
 
 ```
 >> ['fish', 'bird'].map(v => v.toUpperCase())
 <- ['FISH', 'BIRD']
 ```
+
+### Reduce
 
 Reduce, also known as *fold*, performs some operation on each element of an input set and returns an *accumulator*, which is passed again to the reduce function with the next input value.
 To take an array's sum, we use an initial accumulator value of 0.
@@ -197,7 +203,7 @@ Both filter and map can be implemented in terms of reduce.
 
 Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
-## Vectorized functions and concurrency
+## Array Programming
 
 A *vectorized function* automatically iterates over array inputs.
 This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
@@ -214,6 +220,8 @@ Some examples in the R language, which one can reproduce at https://webr.r-wasm.
 
 Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
 No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
+
+## Concurrency
 
 *Concurrency* is the ability for a computing machine to perform simulataneous operations.
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
@@ -288,7 +296,7 @@ The computer industry has recently turned to *Graphical Processing Units* (GPU) 
 GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
 These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
 
-## Cumulative sums and Pareto charts
+## Cumulative Sums and Pareto Charts
 
 A *Pareto chart* is a useful analytical tool to show the relative importance of
 problems in industrial settings. The chart shows the proportion of problems
@@ -373,7 +381,7 @@ Perhaps a system reserves certain rows or columns that are only writable by a sp
 A system might establish some form of confidence intervals in certain data, such as the position of a tracked aircraft with error margins, in recognition that imperfect information might still be useful.
 Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to preserve partial availability in the majority partition.
 
-## Discussion prompts
+## Discussion Prompts
 
 1. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
 
@@ -383,7 +391,7 @@ Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to pre
 
 4. What could possibly go wrong when altering database schema? 
 
-## Practical exercises
+## Practical Exercises
 
 1. Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
 

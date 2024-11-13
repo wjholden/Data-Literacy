@@ -496,41 +496,116 @@ $$
 where $x$ is the number of repetitions performed.
 Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
 
-## Covariance
+## Covariance and Correlation
 
-Suppose our three athletes also compete in a test of strength.
+In section \ref{sec:moments}, we defined variance as the average squared 
+difference of a random variable $x$ to its expected value, $\bar{x}$.
+*Covariance* [@10.1093/biomet/30.1-2.81] [@10.1093/biomet/33.3.239@] is a similar
+statistic for two variables: covariance is computed from the average product of
+the differences in $x$ and $y$ to their respective expected values, $\bar{x}$
+and $\bar{y}$.
 
-| Athelete | Squat | Bench | Deadlift |
-|----------|-------|-------|----------|
-| 1        |  85   |  77   | 115      |
-| 2        |  110  | 83    | 148      |
-| 3        | 152   | 116   | 197      |
+$$
+\text{cov}\left( x, y \right) = 
+\sum_{i=1}^{n}{
+  \frac
+  {\left( x_i - \bar{x} \right) \left( y_i - \bar{y} \right)}
+  {n-1}
+}
+$$
 
-A Pareto front (see section \ref{section:pareto}) might have been useful if these lifts were not so cleanly ordered,
-but in this example the order of the lifts is unambiguous.
+If we first *scale* vectors $x$ and $y$ such that their mean is zero and variance is 
+one, then the covariance becomes *correlation*, a simple statistic to interpret.
 
-| Athlete | Squat | Bench | Deadlift |
-|---------|-------|-------|----------|
-| 1       | 3     | 3     | 3        |
-| 2       | 2     | 2     | 2        |
-| 3       | 1     | 1     | 1        |
+$$
+\begin{aligned}
+\text{scale} \left( x \right) &= \frac{x - \bar{x}}{s_x} \\
+\text{cor} \left( x, y \right) &= \text{cov} \left( 
+  \text{scale} \left( x \right),
+  \text{scale} \left( y \right)
+  \right)
+\end{aligned}
+$$
 
-These three columns are exactly identical.
-Joining on their run times, we have
+The following Rust program implements both covariance and correlation statistics.
+One can execute this program at \url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=1f3b41a17c10c354ee462062772dbd72}
+and reproduce the result in R at \url{https://docs.r-wasm.org/webr/latest/} with
+`cov(c(5,7,3,6,8), c(65,80,50,70,90))` and `cor(c(5,7,3,6,8), c(65,80,50,70,90))`.
 
-| Athelete | Speed | Strength |
-|----------|-------|----------|
-| 1        | 1     | 3        |
-| 2        | 2     | 2        |
-| 3        | 3     | 1        |
+```rust
+fn main() {
+    let x = vec![5., 7., 3., 6., 8.];
+    let y = vec![65., 80., 50., 70., 90.];
+    println!("Covariance: {}", cov(&x, &y).unwrap());
+    println!("Correlation: {}", cor(&x, &y).unwrap());
+}
 
-and now we again have a pair of axes that might be visualized in a Pareto frontier.
-It is worth mentioning that vectors (see section \ref{section:vector}) are a well-suited abstraction for such quantities with multiple *components*.
+fn cov(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
+    if x.len() != y.len() {
+        return Err(())
+    }
+    let xm = mean(x);
+    let ym = mean(y);
+    let n = x.len() as f64;
+    let covariance = x.iter().zip(y.iter()).map(|(a,b)| {
+        (a - xm) * (b - ym) / (n - 1.0)
+    }).sum::<f64>();
+    Ok(covariance)
+}
 
-It is no longer trivial to compress...todo:
+fn cor(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
+    cov(&scale(x), &scale(y))
+}
 
-- Colinearity and multiple colinearity
-- Duplicate columns
+fn scale(v: &Vec<f64>) -> Vec<f64> {
+    let mu = mean(v);
+    let sigma = sd(v);
+    v.iter().map(|x| {
+        (x - mu) / sigma
+    }).collect()
+}
+
+fn mean(v: &Vec<f64>) -> f64 {
+    v.iter().sum::<f64>() / (v.len() as f64)
+}
+
+fn sd(v: &Vec<f64>) -> f64 {
+    let mu = mean(v);
+    let variance = v.iter().map(|x| {
+        (x - mu).powi(2)
+    });
+    let n = v.len() as f64;
+    (variance.sum::<f64>() / (n - 1.0)).sqrt()
+}
+```
+
+To be more precise, the scaled covariance produces a statistic of *linear* correlation.
+The correlation of the vector
+
+$$
+\left[ -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 \right]
+$$
+
+and its squares
+
+$$
+\left[ 25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25 \right]
+$$
+
+is **zero**.
+
+```r
+> -5:5
+ [1] -5 -4 -3 -2 -1  0  1  2  3  4  5
+> (-5:5)^2
+ [1] 25 16  9  4  1  0  1  4  9 16 25
+> cor(-5:5, (-5:5)^2)
+[1] 0
+```
+
+These two vectors are obviously correlated, but they have no **linear correlation**.
+A more 
+
 
 ## Principle Component Analysis (PCA)
 

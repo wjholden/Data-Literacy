@@ -118,7 +118,7 @@ Consider a classroom of 10 students who are 6 years old and 1 teacher who is 50 
 If one selects a random person in the room, what is the expected value for their age?
 In this case, the modal value (6) is likely a better estimate than the mean value (10).
 
-## The Four Moments
+## The Four Moments {#sec:moments}
 
 The *four moments* describe the *distribution* of values in a data set.
 The first moment is the mean.

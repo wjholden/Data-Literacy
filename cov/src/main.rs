@@ -1,12 +1,16 @@
+use std::collections::HashSet;
+
 fn main() {
-    let x = vec![5., 7., 3., 6., 8.];
-    let y = vec![65., 80., 50., 70., 90.];
+    let x = vec![5., 7., 3., 6., 8., 1.];
+    let y = vec![65., 80., 50., 70., 90., 100.];
     println!("Covariance: {}", cov(&x, &y).unwrap());
     println!("Correlation: {}", cor(&x, &y).unwrap());
-    println!("sortperm: {:?}", sortperm(&x));
-    println!("sortperm: {:?}", sortperm(&y));
-    println!("sortperm: {:?}", sortperm(&vec![1.,2.,3.,4.,5.]));
-    println!("sortperm: {:?}", sortperm(&vec![5.,4.,3.,2.,1.]));
+    println!("Xi Cor: {}", xicor(&x, &y));
+    println!("Xi dups: {}", xicor(&vec![1.,1.,1.], &vec![1.,2.,3.]));
+    //println!("sortperm: {:?}", sortperm(&x));
+    //println!("sortperm: {:?}", sortperm(&y));
+    //println!("sortperm: {:?}", sortperm(&vec![1.,2.,3.,4.,5.]));
+    //println!("sortperm: {:?}", sortperm(&vec![5.,4.,3.,2.,1.]));
 }
 
 fn cov(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
@@ -48,9 +52,48 @@ fn sd(v: &Vec<f64>) -> f64 {
 }
 
 fn sortperm(v: &Vec<f64>) -> Vec<usize> {
-    let mut i: Vec<usize> = (1..=v.len()).collect();
-    i.sort_by(|&a,&b| (v[a-1]).total_cmp(&v[b-1]));
+    let mut i: Vec<usize> = (0..v.len()).collect();
+    i.sort_by(|&a,&b| (v[a]).total_cmp(&v[b]));
     i
+}
+
+fn isunique(v: &Vec<f64>) -> bool {
+    let mut h = HashSet::new();
+    for &i in v.iter() {
+        if h.contains(&i.to_bits()) {
+            return false;
+        }
+        h.insert(i.to_bits());
+    }
+    true
+}
+
+// https://arxiv.org/pdf/1909.10140
+// https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310
+// 
+fn xicor(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
+    // This implementation does not handle the case of duplicate values.
+    let n= x.len();
+
+    // 1) Sort y by x.
+    let mut i: Vec<_> = (0..n).collect();
+    i.sort_by(|&a, &b| x[a].total_cmp(&x[b]));
+    let y: Vec<f64> = i.iter().map(|&i| y[i]).collect();
+
+    // 2) Order y by sorting 1:n by y.
+    let mut order: Vec<_> = (0..n).collect();
+    order.sort_by(|&a, &b| y[a].total_cmp(&y[b]));
+
+    // 3) Rank y by sorting 1:n by order.
+    let mut r: Vec<_> = (0..n).collect();
+    r.sort_by(|&a, &b| order[a].cmp(&order[b]));
+
+    // Sum of absolute distances in successive y ranks.
+    let mut r_consec_abs_dist = 0.0;
+    for i in 1..n {
+        r_consec_abs_dist += (r[i] as f64 - r[i-1] as f64).abs();
+    }
+    1.0 - 3.0 * r_consec_abs_dist / (n.pow(2) as f64 - 1.0)
 }
 
 #[cfg(test)]
@@ -71,4 +114,28 @@ mod tests {
         let y = vec![65., 80., 50., 70., 90.];
         assert_eq!(29.0, cov(&x,&y).unwrap());
     }
+
+    #[test]
+    fn xicor1() {
+        let x = vec![5., 7., 3., 6., 8.];
+        let y = vec![65., 80., 50., 70., 90.];
+        assert_eq!(0.5, xicor(&x, &y));
+    }
+
+    #[test]
+    fn xicor2() {
+        let x = vec![21.0_f64, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
+            24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4,
+            30.4, 33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8,
+            19.7, 15.0,21.4
+        ];
+        let y = vec![2.620_f64, 2.875, 2.320, 3.215, 3.440, 3.460,
+            3.570, 3.190, 3.150, 3.440, 3.440, 4.070, 3.730, 3.780, 5.250,
+            5.424, 5.345, 2.200, 1.615, 1.835, 2.465, 3.520, 3.435, 3.840,
+            3.845, 1.935, 2.140, 1.513, 3.170, 2.770, 3.570, 2.780
+        ];
+        // We don't quite reproduce the reference value from the XICOR R package.
+        assert_eq!(0.5416058, xicor(&x, &y));
+    }
+
 }

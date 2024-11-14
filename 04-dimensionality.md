@@ -500,7 +500,7 @@ Strong correlations in the columns of a data set present an opportunity to compr
 
 In section \ref{sec:moments}, we defined variance as the average squared 
 difference of a random variable $x$ to its expected value, $\bar{x}$.
-*Covariance* [@10.1093/biomet/30.1-2.81] [@10.1093/biomet/33.3.239@] is a similar
+*Covariance* [@10.1093/biomet/30.1-2.81] [@10.1093/biomet/33.3.239] is a similar
 statistic for two variables: covariance is computed from the average product of
 the differences in $x$ and $y$ to their respective expected values, $\bar{x}$
 and $\bar{y}$.
@@ -603,8 +603,67 @@ is **zero**.
 [1] 0
 ```
 
-These two vectors are obviously correlated, but they have no **linear correlation**.
-A more 
+There is a very recent development in the field of statistics with a new
+coefficient of correlation [@10.1080/01621459.2020.1758115].
+This new statistic, known as $\xi$ and pronounced "xi" or "ksaai", seeks to 
+correlate $Y$ as some arbitrary function of $X$ and produces meaningful metrics 
+on non-linear data. For our range $[-5,5]$ and its squares, the correlation 
+coefficient is \num{0.5}.
+
+The algorithm to compute $\xi(X,Y)$ first sorts $Y$ by $X$, then the *ranks*, 
+$r$, of the resulting order of $Y$. If *order* is a list of positions
+specifying the order of another list, then rank is the order of the order.
+More formally, $r_i$ is the number of $j$ such that $Y_{(j)} \le Y_{(i)}$.
+The statistic is
+
+$$
+\xi_n \left( X , Y \right) = 
+1 - \frac{
+  3 \sum_{i=1}^{n-1}{\left| r_{i+1} - r_{i} \right|}
+}{n^2 -1}
+$$
+
+when there are no ties. If the data set does contain duplicates, then we also
+use $l$ values, where $l_i$ is the number $j$ such that $Y_{(j)} \le Y_{(i)}$.
+
+$$
+\xi_n \left( X , Y \right) = 
+1 - \frac{
+  n \sum_{i=1}^{n-1}{\left| r_{i+1} - r_{i} \right|}
+}{
+  2 \sum_{i=1}^{n}{l_i \left( n - l_i \right)}
+}
+$$
+
+A Rust implementation of this new $\xi$ statistic is given below and at
+\url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=6336707980cfc3a54511842d937fb344}.
+
+```rust
+fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
+    // This implementation does not handle duplicate values.
+    let n= x.len();
+
+    // 1) Sort y by x.
+    let mut i: Vec<_> = (0..n).collect();
+    i.sort_by(|&a, &b| x[a].total_cmp(&x[b]));
+    let y: Vec<f32> = i.iter().map(|&i| y[i]).collect();
+
+    // 2) Order y by sorting 1:n by y.
+    let mut order: Vec<_> = (0..n).collect();
+    order.sort_by(|&a, &b| y[a].total_cmp(&y[b]));
+
+    // 3) Rank y by sorting 1:n by order.
+    let mut r: Vec<_> = (0..n).collect();
+    r.sort_by(|&a, &b| order[a].cmp(&order[b]));
+
+    // Sum of absolute distances in successive y ranks.
+    let mut r_consec_abs_dist = 0.0;
+    for i in 1..n {
+        r_consec_abs_dist += (r[i] as f32 - r[i-1] as f32).abs();
+    }
+    1.0 - 3.0 * r_consec_abs_dist / (n.pow(2) as f32 - 1.0)
+}
+```
 
 
 ## Principle Component Analysis (PCA)

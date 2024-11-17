@@ -168,12 +168,35 @@ By contrast, in an object-oriented language, such as Java and JavaScript, the id
 
 ## Vectors and matrices {#section:vector}
 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\draw (0,0) -- (10,0);
+\draw (0,0) -- (0,10);
+
+\draw[->] (0,0) -- (4,3);
+\draw[->] (4,3) -- (7,8);
+\draw[->] (0,0) -- (7,8);
+\draw[->] (0,0) -- (3,5);
+\draw[->] (3,5) -- (7,8);
+
+\node at (4.5,3) {(4,3)};
+\node at (2.5,5) {(3,5)};
+\node at (7.5,8) {(7,8)};
+
+\end{tikzpicture}
+\caption{Vectors are geometric entities. This plot shows that $(4,3)+(3,5)=(3,5)+(4,3)=(7,8)$.}
+\label{fig:vector-sum}
+\end{figure}
+
 We now quickly mention the terms *vector* and *matrix* here to disambiguate them from other terms already defined.
 
 Arrays, lists, and columns containing numeric data may sometimes be represented with *vectors*.
 Likewise, tables and data frames might be represented with *matrices*.
 
-A vector is a quantity with both magnitude and direction, often consisting of two or more elements.
+A vector is a quantity with both magnitude and direction, generally consisting
+of two or more elements. A plot demonstrating vector summation is shown in
+figure \ref{fig:vector-sum}.
 
 $$
 \mathbf{x} = \left( x_1 , x_2 , x_3 , \cdots , x_n \right)
@@ -206,7 +229,102 @@ Vectors and matrices form the foundations of *linear algebra*, a rich and powerf
 
 Remember that the different in ratio and interval data was that *multiplication* is only defined for ratio data.
 Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
+
 Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
+Some programming languages use the terms "vector" and "array" interchangably,
+or to indicate an array has dynamic vice fixed size.
+Many programming languages support *tuples* as an alternative representation
+of a quantity with multiple values.
+
+One must take care to verify an arithmetic operator performs as expected with
+"vectors" and tuples in different languages. Compare and contrast the semantics
+of arrays and tuples in Python
+
+```python
+In [1]: 1 == [1]
+Out[1]: False
+
+In [2]: 1 == (1,)
+Out[2]: False
+
+In [3]: [1, 2] + [3, 4]
+Out[3]: [1, 2, 3, 4]
+
+In [4]: (1, 2) + (3, 4)
+Out[4]: (1, 2, 3, 4)
+```
+
+and R
+
+```r
+> 1 == c(1)
+[1] TRUE
+> 1 == list(1)
+[1] TRUE
+> c(1, 2) + c(3, 4)
+[1] 4 6
+> list(1, 2) + list(3, 4)
+Error in list(1, 2) + list(3, 4) :
+  non-numeric argument to binary operator
+```
+
+Python's behavior is typical of general-purpose programming languages,
+while R's behavior (see section \ref{sec:array-programming}) is common among
+scientific languages.
+
+## Complex Numbers
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\draw (-3,0) -- (3,0);
+\draw (0,-2) -- (0,2);
+
+\draw[->] (1,0) arc (0:80:1);
+\draw[->] (0,1) arc (90:170:1);
+\draw[->] (-1,0) arc (180:260:1);
+\draw[->] (0,-1) arc (270:350:1);
+
+\node at (1.5,.5) {$1+0i$};
+\node at (.75,1.5) {$0+1i$};
+\node at (-1.75,.5) {$-1+0i$};
+\node at (.75,-1.5) {$0-1i$};
+
+\filldraw (1,0) circle (2pt);
+\filldraw (-1,0) circle (2pt);
+\filldraw (0,1) circle (2pt);
+\filldraw (0,-1) circle (2pt);
+
+\end{tikzpicture}
+\caption{Complex numbers are two-dimensional quantities. In this Argand diagram, the $x$ axis is $\pm 1$ and the $y$ axis is $\pm i$. Multiplying a value by $i$ rotates the value among the real and imaginary axes.}
+\label{fig:argand}
+\end{figure}
+
+*Complex numbers*, which have "real" and "imaginary" components, are also
+multidimensional values, but with the property  $i = \sqrt{-1}$ and therefore 
+$i^2 = -1$. This means that their multiplication forms a cycle, as shown in 
+figure \ref{fig:argand}.
+
+$$
+\begin{aligned}
+1 \times i &= i \\
+i \times i &= -1 \\
+-1 \times i &= -i \\
+-i \times i &= 1 \\
+\end{aligned}
+$$
+
+While complex arithmetic is common in physics and signal progressing,
+many scientific disciplines have no use cases for complex numbers.
+If one has a two-dimensional quantity and no application for the multiplication
+rules shown in figure \ref{fig:argand}, then one should avoid complex types
+and instead favor arrays. Still, many languages provide complex arithmetic for
+situations that require it. An R example is shown below.
+
+```r
+> c(1, 1i, -1, -1i) * 1i
+[1]  0+1i -1+0i  0-1i  1+0i
+```
 
 ## Data visualization with plots
 

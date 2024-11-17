@@ -203,7 +203,7 @@ Both filter and map can be implemented in terms of reduce.
 
 Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
-## Array Programming
+## Array Programming {#sec:array-programming}
 
 A *vectorized function* automatically iterates over array inputs.
 This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).

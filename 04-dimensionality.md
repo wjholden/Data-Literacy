@@ -88,7 +88,7 @@ $$
 
 Implemented in the R language (https://webr.r-wasm.org/latest/), 
 
-```
+```r
 pascal <- function(n,r) {
   if (n < r) {
     return(0)
@@ -106,7 +106,7 @@ pascal <- function(n,r) {
 
 we can reproduce the results of our passengers example. The `sapply` function in R is comparable to the `map` operation (see section \ref{section:filter-map-reduce}).
 
-```
+```r
 > sapply(0:4, function(r) pascal(4, r))
 [1] 1 4 6 4 1
 ```
@@ -151,7 +151,7 @@ $$
 The case $\binom{n}{2}$ occurs frequently and deserves special discussion.
 The first few terms are (in Interactive Python, or IPython):
 
-```
+```python
 In [1]: import math
 
 In [2]: [math.comb(n, 2) for n in range(2,12)]
@@ -176,7 +176,7 @@ $$
 
 We can demonstrate this identity numerically
 
-```
+```python
 In [2]: [sum(k for k in range(n)) for n in range(2,12)]
 Out[2]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
 
@@ -241,14 +241,15 @@ x \in T
 $$
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
 \draw[black] (0,0) rectangle (12,8);
 \draw[black] (6,4) circle (2);
 \node[text width=1] at (1,7) {$U$};
 \node[text width=1] at (6,4) {$S$};
 \end{tikzpicture}
-\label{fig:Venn1}
 \caption{A Venn diagram showing a single dimension, $S \subset U$.}
+\label{fig:Venn1}
 \end{figure}
 
 The familiar Venn diagram is commonly used to plot set intersections, but this
@@ -259,6 +260,7 @@ In figure \ref{fig:Venn1}, we see a degenerate Venn diagram of a single dimensio
 Values of $U$ are simply in $S$ or not in $S$.
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
 \draw[black] (0,0) rectangle (12,8);
 \draw[black] (5,4) circle (2);
@@ -267,11 +269,12 @@ Values of $U$ are simply in $S$ or not in $S$.
 \node[text width=1] at (4,4) {$S$};
 \node[text width=1] at (8,4) {$T$};
 \end{tikzpicture}
-\label{fig:Venn2}
 \caption{A Venn diagram showing two dimensions. The overlap of the circles is the intersection, $S \cap T$.}
+\label{fig:Venn2}
 \end{figure}
 
 \begin{figure}
+\centering
 \begin{tikzpicture}
 \draw[black] (0,0) rectangle (12,8);
 \draw[black] (5,5) circle (2);
@@ -282,8 +285,8 @@ Values of $U$ are simply in $S$ or not in $S$.
 \node[text width=1] at (8,5) {$T$};
 \node[text width=1] at (6,2) {$R$};
 \end{tikzpicture}
-\label{fig:Venn3}
 \caption{A Venn diagram showing two dimensions. The overlap of all three circles is the intersection, $R \cap S \cap T$.}
+\label{fig:Venn3}
 \end{figure}
 
 The Venn diagram has its more familiar structure with two and three dimensions,
@@ -426,7 +429,7 @@ In Excel, we use the `BINOM.DIST` function.
 In R, `dbinom` in the *probability density function* (PDF) for the binomial distribution.
 To find the probability that our $1/1024$ event occurs *exactly once* in $\num{1000}$ trials, we find
 
-```
+```r
 > dbinom(1, 1000, 1/1024)
 [1] 0.3679607
 > choose(1000,1) * (1/1024)^1 * (1-1/1024)^(1000-1)
@@ -443,7 +446,7 @@ We have several options to find the probability that *none* of our $\num{1000}$ 
 First, we can use the same `dbinom` and `BINOM.DIST` functions with $x = 0$.
 Second, we can take the sum of probabilities from the range `x = 1:1000` (the probability of $x=1$, probability that $x=2$, and so on) and then subtract this from one.
 
-```
+```r
 > dbinom(0, 1000, 1/1024)
 [1] 0.3764238
 > 1-sum(dbinom(1:1000, 1000, 1/1024))
@@ -579,7 +582,7 @@ fn sd(v: &Vec<f64>) -> f64 {
 }
 ```
 
-To be more precise, the scaled covariance produces a statistic of *linear* correlation.
+To be more precise, the scaled covariance produces a statistic of **linear** correlation.
 The correlation of the vector
 
 $$
@@ -665,8 +668,15 @@ fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
 }
 ```
 
-
 ## Principle Component Analysis (PCA)
+
+*Principle Component Analysis* (PCA) is a powerful technique for discovering linear
+relationships among columns of data and compressing these columns into fewer dimensions
+[@10.1080/14786440109462720] [@hotelling1933analysis].
+
+PCA begins by finding all pairwise correlations among the data set's columns.
+
+**TODO**
 
 ## Discussion prompts
 

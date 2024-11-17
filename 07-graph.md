@@ -869,7 +869,7 @@ to best approach their unique problem domain.
 
 ## Power Law distribution
 
-todo [@doi:10.1126/science.286.5439.509]
+todo [@10.1126/science.286.5439.509]
 
 ## Minimum Spanning Tree
 

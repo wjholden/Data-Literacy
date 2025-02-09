@@ -35,8 +35,6 @@ One might also consider the *absolute value* (`ABS` in Excel) as an alternative,
 Squaring the errors penalizes large errors more than small errors.
 Accepting small errors but avoiding large errors is the bias that gives the least squares method its strength.
 
-## Calculus-based derivation
-
 Readers familiar with calculus may recognize that one can find the arithmetic mean, $\mu$, by finding the zero in the *derivative* for the sum of the squared errors (SSE) function.
 Let $X$ be a sample of size $n$.
 
@@ -60,9 +58,9 @@ To minimize SSE, we take the derivative of SSE in respect to $\bar{x}$ and find 
 
 $$
 \begin{aligned}
-0 &= \text{SSE}' \left( \bar{x} \right) \\
-&=  \left( \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2 \right)' \\
-&= \left( \left( x_1^2 -2 x_1 \bar{x} + \bar{x}^2 \right) + \left( x_2^2 -2 x_2 \bar{x} + \bar{x}^2 \right) + \ldots + \left( x_n^2 -2 x_n \bar{x} + \bar{x}^2 \right) \right)' \\
+0 &= \frac{\mathrm{d} \text{SSE}}{\mathrm{d} \bar{x}} \\
+&=  \frac{\mathrm{d} \left( \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2 \right)}{\mathrm{d} \bar{x}} \\
+&= \frac{\mathrm{d} \left( \left( x_1^2 -2 x_1 \bar{x} + \bar{x}^2 \right) + \left( x_2^2 -2 x_2 \bar{x} + \bar{x}^2 \right) + \ldots + \left( x_n^2 -2 x_n \bar{x} + \bar{x}^2 \right) \right)}{\mathrm{d} \bar{x}} \\
 &= \left(-2x_1 + 2\bar{x} \right) + \left( -2x_2 + 2\bar{x} \right) + \ldots + \left( -2x_n + 2\bar{x} \right) \\
 &= -2x_1 -2x_2 - \ldots - 2x_n + n \left( 2\bar{x} \right) \\
 -2n\bar{x} &= -2x_1 - 2x_2 - \ldots - 2x_n \\

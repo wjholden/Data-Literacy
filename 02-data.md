@@ -36,7 +36,7 @@ $$
 As an exercise, go to https://sqlime.org/#deta:mb9f8wq2mq0b to use a DBMS named SQLite.
 Enter the following commands to reproduce the above Cartesian product.
 
-```
+```sql
 CREATE TABLE A (a text);
 CREATE TABLE B (b text);
 CREATE TABLE C (c text);
@@ -76,7 +76,7 @@ To get a triathletes (the athletes who participate in swimming, cycling, and run
 we use an *equijoin* to find the product where the names are equal.
 Return to https://sqlime.org/#deta:36fadcq9apak to demonstrate experiment with the `JOIN` operator.
 
-```
+```sql
 CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
 CREATE TABLE IF NOT EXISTS Bike (bn TEXT UNIQUE);
 CREATE TABLE IF NOT EXISTS Run (rn TEXT UNIQUE);
@@ -99,7 +99,7 @@ As an exercise, try to predict how many rows will return from `SELECT * FROM Swi
 DBMSs provide robust *grouping* functions for operating on related rows.
 Return to https://sqlime.org/#deta:32lpfoo57r8g and create a small table of hypothetical marathon times.
 
-```
+```sql
 CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
   time INTEGER,
   gender TEXT CHECK( gender IN ('M', 'F') ));
@@ -132,7 +132,7 @@ Should the DBMS return the `rn` associated with the `MIN(time)`, the `MAX(time)`
 
 The solution in this particular case is to nest our `MIN(time)` aggregation as a *subquery*.
 
-```
+```sql
 SELECT * FROM Marathon
   WHERE time IN (
     SELECT MIN(time) FROM Marathon GROUP BY (gender));
@@ -149,7 +149,7 @@ One can find comparable semantics (with different syntax) in many programming la
 Filter works much like the `WHERE` clause: it takes a subset of the rows, based off of a condition.
 In JavaScript, we might filter an array with:
 
-```
+```javascript
 >> ['cat', 'dog', 'fish', 'bird'].filter(v => v.includes('i'))
 <- ['fish', 'bird']
 ```
@@ -158,7 +158,7 @@ In JavaScript, we might filter an array with:
 
 Map performs the same function over each element of an input set, creating "mappings" to elements of an output set.
 
-```
+```javascript
 >> ['fish', 'bird'].map(v => v.toUpperCase())
 <- ['FISH', 'BIRD']
 ```
@@ -168,7 +168,7 @@ Map performs the same function over each element of an input set, creating "mapp
 Reduce, also known as *fold*, performs some operation on each element of an input set and returns an *accumulator*, which is passed again to the reduce function with the next input value.
 To take an array's sum, we use an initial accumulator value of 0.
 
-```
+```javascript
 >> 15 + 25 + 35
 <- 75
 >> [15,25,35].reduce((a, v) => a + v, 0)
@@ -177,7 +177,7 @@ To take an array's sum, we use an initial accumulator value of 0.
 
 For the array's product, we use 1 for the initial accumulator value.
 
-```
+```javascript
 >> 15 * 25 * 35
 <- 13125
 >> [15,25,35].reduce((a, v) => a * v, 1)
@@ -186,7 +186,7 @@ For the array's product, we use 1 for the initial accumulator value.
 
 Both filter and map can be implemented in terms of reduce.
 
-```
+```javascript
 >> ['cat', 'dog', 'fish', 'bird'].reduce((a,v) => {
         if (v.includes('i')) {
             a.push(v);
@@ -209,7 +209,7 @@ A *vectorized function* automatically iterates over array inputs.
 This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
 Some examples in the R language, which one can reproduce at https://webr.r-wasm.org/latest/, are:
 
-```
+```r
 > c(1, 2, 3) + 4
 [1] 5 6 7
 > c(1, 2, 3) + c(4, 5, 6)
@@ -221,11 +221,17 @@ Some examples in the R language, which one can reproduce at https://webr.r-wasm.
 Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
 No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
 
-## Concurrency
+## Parallelism and Concurrency
 
-*Concurrency* is the ability for a computing machine to perform simulataneous operations.
+*Parallelism* is the ability for a computing machine to perform simulataneous operations.
+Two tasks are *concurrent* if their order does not matter.
+Getting dressed in the morning is an example (see figure \ref{fig:get-dressed}).
+When one dons their pants, shirt, coat, hat, socks, and shoes, one must don socks before shoes, but the order in
+which one dons shoes and their hat does not. The hat and shoes are concurrent but the socks and shoes are *sequential*.
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
 but performance benefits often justify the additional complexity.
+
+![Order of operation partially matters when getting dressed. Some clothing items are sequential, but others are concurrent. The system can be modeled as a directed ayclic graph (see section \ref{section:special-cases-of-graphs}).](get-dressed.dot.pdf){#fig:get-dressed}
 
 Some problems can be partitioned into *subproblems* which can be solved in parallel.
 Other problems cannot.
@@ -240,7 +246,7 @@ This process can be repeated.
 
 Go to https://go.dev/play/p/IOwH08R_z7Z to experiment with a divide-and-conquer `minimum` function in the Go language.
 
-```
+```go
 package main
 
 import "fmt"
@@ -276,7 +282,7 @@ func main() {
 Click the "Run" button several times and observe that the output is completely *deterministic*.
 Now go to https://go.dev/play/p/Vbe7BWrwlku for a slightly modified version of the same program.
 
-```
+```go
 	default:
 		middle := n / 2
 		lower := make(chan int)

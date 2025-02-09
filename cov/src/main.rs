@@ -73,7 +73,7 @@ fn isunique(v: &Vec<f64>) -> bool {
 // 
 fn xicor(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
     // This implementation does not handle the case of duplicate values.
-    let n= x.len();
+    let n = x.len();
 
     // 1) Sort y by x.
     let mut i: Vec<_> = (0..n).collect();

@@ -1,0 +1,6 @@
+digraph {
+    hat;
+    socks -> shoes;
+    pants;
+    shirt -> coat;
+}

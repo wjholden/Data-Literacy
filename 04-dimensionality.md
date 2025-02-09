@@ -177,11 +177,11 @@ $$
 We can demonstrate this identity numerically
 
 ```python
-In [2]: [sum(k for k in range(n)) for n in range(2,12)]
-Out[2]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
-
-In [3]: [n*(n-1)//2 for n in range(2,12)]
+In [3]: [sum(k for k in range(n)) for n in range(2,12)]
 Out[3]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
+
+In [4]: [n*(n-1)//2 for n in range(2,12)]
+Out[4]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
 ```
 
 and prove with *induction*.
@@ -607,11 +607,11 @@ is **zero**.
 ```
 
 There is a very recent development in the field of statistics with a new
-coefficient of correlation [@10.1080/01621459.2020.1758115].
+coëfficient of correlation [@10.1080/01621459.2020.1758115].
 This new statistic, known as $\xi$ and pronounced "xi" or "ksaai", seeks to 
 correlate $Y$ as some arbitrary function of $X$ and produces meaningful metrics 
 on non-linear data. For our range $[-5,5]$ and its squares, the correlation 
-coefficient is \num{0.5}.
+coëfficient is \num{0.5}.
 
 The algorithm to compute $\xi(X,Y)$ first sorts $Y$ by $X$, then the *ranks*, 
 $r$, of the resulting order of $Y$. If *order* is a list of positions
@@ -644,7 +644,7 @@ A Rust implementation of this new $\xi$ statistic is given below and at
 ```rust
 fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
     // This implementation does not handle duplicate values.
-    let n= x.len();
+    let n = x.len();
 
     // 1) Sort y by x.
     let mut i: Vec<_> = (0..n).collect();
@@ -677,6 +677,13 @@ relationships among columns of data and compressing these columns into fewer dim
 PCA begins by finding all pairwise correlations among the data set's columns.
 
 **TODO**
+
+<!-- 
+
+https://crates.io/crates/statrs
+https://crates.io/crates/nalgebra
+
+-->
 
 ## Discussion prompts
 

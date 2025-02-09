@@ -20,7 +20,7 @@ Our estimates of population parameters, *statistics*, generally improve with lar
 One might use statistics to create a *model* to explain a population, based upon sampling data.
 Models can be useful both for describing the population and also for forming predictions.
 
-## Levels of measurement
+## Levels of measurement {#sec:levels}
 
 There are four distinct *levels of measurement* that a value may fit [@stevens1946theory].
 *Nominal* data is simply names or categories, with no concept of order or distance.
@@ -53,8 +53,8 @@ Does zero degrees Celsius or zero degrees Fahrenheit mean the absence of tempera
 No. These temperature measurements are simply points along a *scale*.
 Twenty degrees Celsius is not "twice" ten degrees Celsius; multiplication is not defined on interval data.
 
-Grid coordinates are another example of interval data.
-One can calculate the distance between two grid coordinates, but we would not say that coordinate 1111 is "half" of coordinate 2222.
+Grid coördinates are another example of interval data.
+One can calculate the distance between two grid coördinates, but we would not say that coördinate 1111 is "half" of coördinate 2222.
 
 Women's pant sizes in the United States, with the confusing size "00," is yet another example of interval data.
 
@@ -65,9 +65,12 @@ AI methods may form incorrect assumptions about data that domain experts can eas
 
 ## Discretization {#section:discretize}
 
-Measurements with arbitrarily many decimal digits of precision are *continuous*, whereas measurements with finite steps in between (including categories) are *discrete*.
-For example, when driving along a road, the house numbers (150 2nd Street, 152 2nd Street, 154 2nd Street...) are discrete; there is no intermediate value between $\num{150}$ and $\num{151}$.
-On the other hand, the grid coordinates associated with each address are continuous; one could (theoretically) specify grid coordinates to the nanometer.
+Measurements with arbitrarily many decimal digits of precision are *continuous*,
+whereas measurements with finite steps in between (including categories) are *discrete*.
+For example, when driving along a road, the house numbers (150 Main Street, 152 Main Street, 154 Main Street...) are discrete;
+there is no intermediate value between $\num{150}$ and $\num{151}$.
+On the other hand, the grid coördinates associated with each address are continuous;
+one could (theoretically) specify grid position to the square millimeter, picometer, nanometer, and beyond.
 
 It can be useful to combine continuous measurements into discrete categories.
 An example might be one's birth date and birth year.
@@ -99,7 +102,16 @@ If we enter a formula into A7 referencing A6, such as `=SQRT(A6)`, then we will 
 
 Structured Query Language (SQL) databases use the symbol `NULL` to denote missing values.
 One might build the database *schema* (the structure of the database) to explicitly forbid `NULL` values.
-For example, `CREATE TABLE Run (Name TEXT NOT NULL, Time INTEGER NOT NULL, Distance REAL NOT NULL)` defines a table *schema* where each of the three columns must be specified.
+For example,
+
+```sql
+CREATE TABLE Run (
+  Name TEXT NOT NULL,
+  Time INTEGER NOT NULL,
+  Distance REAL NOT NULL)
+```
+
+defines a table *schema* where each of the three columns must be specified.
 Many programming languages (including C, Java, and JavaScript) also use the term `null` for variables that do not reference any specific value.
 
 Many programming languages support a `NaN` ("not a number") value in error conditions.
@@ -161,6 +173,8 @@ The distinction is usually unimportant to data analysts.
 Scientific languages, such as Julia and R, often use the term *data frame* (or *dataframe*) as their method for representing tables of data.
 Data frames often provide rich syntax for row-wise and column-wise operations.
 By contrast, in an object-oriented language, such as Java and JavaScript, the idiomatic representation of a table is likely an array of objects.
+We will discuss object-oriented programming in more detail in section
+\ref{sec:oop}.
 
 <!-- ## Forms and input validation -->
 
@@ -314,11 +328,7 @@ i \times i &= -1 \\
 \end{aligned}
 $$
 
-While complex arithmetic is common in physics and signal progressing,
-many scientific disciplines have no use cases for complex numbers.
-If one has a two-dimensional quantity and no application for the multiplication
-rules shown in figure \ref{fig:argand}, then one should avoid complex types
-and instead favor arrays. Still, many languages provide complex arithmetic for
+Many languages provide complex arithmetic for
 situations that require it. An R example is shown below.
 
 ```r
@@ -326,6 +336,24 @@ situations that require it. An R example is shown below.
 [1]  0+1i -1+0i  0-1i  1+0i
 ```
 
+While complex arithmetic is common in physics and signal progressing,
+many scientific disciplines have no use cases for complex numbers.
+If one has a two-dimensional quantity and no application for the multiplication
+rules shown in figure \ref{fig:argand}, then one should avoid complex types
+and instead favor arrays.
+
+As an example, suppose one wanted to represent the systolic and diastolic
+values in blood pressure samples. One *could* use a complex value instead of
+an array or tuple, but now the values have a concept of multiplication and
+direction that is not appropriate to the problem domain. Just as we learned
+to consider which arithmetic operations apply to our data in section
+\ref{sec:levels}, likewise we must consider the operations applicable to
+composite values.
+
+## Object-Oriented Programming {#sec:oop}
+
+TODO [@10.1145/947955.947961] [@10.5555/3271463]
+ 
 ## Data visualization with plots
 
 *Plots* allow us to visualize data.
@@ -456,7 +484,7 @@ Here, the instructions of the algorithm are part of a model, which is created fr
 
 <!-- ## Bisection algorithm (todo) -->
 
-## Abstraction and Reification
+## Abstraction and Reïfication
 
 Take any three-digit decimal (base 10) number, reverse the digits, and their difference will always be divisible by both 9 and 11.
 For example, $321-123=198$; $198 \div 9 = 22$ and $198 \div 11 = 18$.
@@ -489,7 +517,7 @@ So, 30% of 70 is $\frac{30 \times 70}{100} = \frac{\num{2100}}{100} = 21$.
 Abstraction can be a powerful tool for solving problems and developing proofs.
 In the field of computer networking, countless problems are solved by the pattern, "we have more than one thing, but it is inconvenient to operate more than one of these things, so we built a method to abstractly represent arbitrarily many of these things as super-things."
 
-*Reification* is the opposite of abstraction: we something specific from something general.
+*Reïfication* is the opposite of abstraction: we something specific from something general.
 For example, suppose we have a language translation function
 
 $$
@@ -511,7 +539,7 @@ T'(\text{goodbye}) &= \text{au revoir}
 \end{aligned}
 $$
 
-Function $T'$ reifys $T$ into a less general form.
+Function $T'$ reïfys $T$ into a less general form.
 Such functions might be called *convenience functions* that are provided as a "quality of life" improvement for the user.
 An example of a convenience function might be `LOG10(number)` in Excel.
 Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted), but some users may prefer the explicit syntax `LOG10` to improve clarity.

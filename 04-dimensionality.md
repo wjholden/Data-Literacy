@@ -674,7 +674,81 @@ fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
 relationships among columns of data and compressing these columns into fewer dimensions
 [@10.1080/14786440109462720] [@hotelling1933analysis].
 
-PCA begins by finding all pairwise correlations among the data set's columns.
+PCA begins by finding all pairwise correlations among the data set's scaled columns.
+
+```r
+> head(iris[,-5])
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+3          4.7         3.2          1.3         0.2
+4          4.6         3.1          1.5         0.2
+5          5.0         3.6          1.4         0.2
+6          5.4         3.9          1.7         0.4
+> cor(iris[,-5])
+             Sepal.Length Sepal.Width Petal.Length Petal.Width
+Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
+Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
+Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
+Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000
+> c = .Last.value
+```
+
+We then use a technique from linear algebra called *Singular Value Decomposition* (SVD),
+which extracts a diagonal matrix $D$ from $A$ where $U' AV = D$, $U'U = I$, and $V'V = I$.
+We will not discuss the details of this procedure, but will instead leave it to library software.
+
+```r
+> svd(c)$u
+           [,1]        [,2]       [,3]       [,4]
+[1,] -0.5210659 -0.37741762  0.7195664  0.2612863
+[2,]  0.2693474 -0.92329566 -0.2443818 -0.1235096
+[3,] -0.5804131 -0.02449161 -0.1421264 -0.8014492
+[4,] -0.5648565 -0.06694199 -0.6342727  0.5235971
+> u = .Last.value
+```
+
+We multiply our scaled data set by $U$ to compute the principal components, $\text{PC} = X U$.
+
+```r
+> head(scale(iris[,-5]) %*% u)
+         [,1]       [,2]        [,3]         [,4]
+[1,] 2.257141 -0.4784238  0.12727962  0.024087508
+[2,] 2.074013  0.6718827  0.23382552  0.102662845
+[3,] 2.356335  0.3407664 -0.04405390  0.028282305
+[4,] 2.291707  0.5953999 -0.09098530 -0.065735340
+[5,] 2.381863 -0.6446757 -0.01568565 -0.035802870
+[6,] 2.068701 -1.4842053 -0.02687825  0.006586116
+> pc = scale(iris[,-5]) %*% u
+> head(pc)
+         [,1]       [,2]        [,3]         [,4]
+[1,] 2.257141 -0.4784238  0.12727962  0.024087508
+[2,] 2.074013  0.6718827  0.23382552  0.102662845
+[3,] 2.356335  0.3407664 -0.04405390  0.028282305
+[4,] 2.291707  0.5953999 -0.09098530 -0.065735340
+[5,] 2.381863 -0.6446757 -0.01568565 -0.035802870
+[6,] 2.068701 -1.4842053 -0.02687825  0.006586116
+```
+
+The resulting matrix can be used for small but accurate linear models.
+PCA can also reveal unexpected correlations among the data. 
+One can think of the columns of $U$ as new dimensions that might have been hidden
+among the correlated features of the original data set.
+The covariance among the principal components is effectively zero.
+
+```r
+> library(tidyverse)
+> cov(pc) %>% zapsmall
+         [,1]      [,2]      [,3]      [,4]
+[1,] 2.918498 0.0000000 0.0000000 0.0000000
+[2,] 0.000000 0.9140305 0.0000000 0.0000000
+[3,] 0.000000 0.0000000 0.1467569 0.0000000
+[4,] 0.000000 0.0000000 0.0000000 0.0207148
+```
+
+The columns are ordered from greatest to least variance. This means that a model
+might not need all four columns to form accurate predictions, as the later columns
+account for very little of the variance in the data set.
 
 **TODO**
 

@@ -387,3 +387,4 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 
+__pycache__/

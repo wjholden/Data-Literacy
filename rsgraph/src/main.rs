@@ -102,7 +102,7 @@ fn betweenness_example() {
     let betweenness_statistic = betweenness::betweenness_centrality(&g, true, false).unwrap();
     let closeness_statistic = closeness::closeness_centrality(&g, false, false).unwrap();
     
-    let mut df1: DataFrame = df!(
+    let df1: DataFrame = df!(
         "Name" => betweenness_statistic.clone().into_keys().collect::<Vec<&str>>(),
         "Betweenness" => betweenness_statistic.clone().into_values().collect::<Vec<f64>>(),
     ).unwrap();
@@ -121,7 +121,7 @@ fn betweenness_example() {
 }
 
  
-
+#[allow(dead_code)]
 fn kingdom() {
     let mut graph: Graph<&str, i32> = Graph::new(GraphSpecs::directed_create_missing());
     _ = graph
@@ -166,6 +166,7 @@ fn kingdom() {
     println!("{}", df);
 }
 
+#[allow(dead_code)]
 fn friends() {
     let mut graph: Graph<&str, ()> = Graph::new(GraphSpecs::undirected_create_missing());
     _ = graph

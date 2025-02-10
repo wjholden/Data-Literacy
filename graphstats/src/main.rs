@@ -1,4 +1,3 @@
-use petgraph::dot::Dot;
 use petgraph::graph::Graph;
 use petgraph::algo::page_rank;
 use petgraph::Undirected;

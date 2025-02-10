@@ -51,12 +51,14 @@ fn sd(v: &Vec<f64>) -> f64 {
     (variance.sum::<f64>() / (n - 1.0)).sqrt()
 }
 
+#[allow(dead_code)]
 fn sortperm(v: &Vec<f64>) -> Vec<usize> {
     let mut i: Vec<usize> = (0..v.len()).collect();
     i.sort_by(|&a,&b| (v[a]).total_cmp(&v[b]));
     i
 }
 
+#[allow(dead_code)]
 fn isunique(v: &Vec<f64>) -> bool {
     let mut h = HashSet::new();
     for &i in v.iter() {

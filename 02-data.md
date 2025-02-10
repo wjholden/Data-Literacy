@@ -228,6 +228,8 @@ Two tasks are *concurrent* if their order does not matter.
 Getting dressed in the morning is an example (see figure \ref{fig:get-dressed}).
 When one dons their pants, shirt, coat, hat, socks, and shoes, one must don socks before shoes, but the order in
 which one dons shoes and their hat does not. The hat and shoes are concurrent but the socks and shoes are *sequential*.
+In practice, many programmers confuse the terms *parallel* and *concurrent* as interchangable.
+
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
 but performance benefits often justify the additional complexity.
 

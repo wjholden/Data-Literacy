@@ -171,7 +171,7 @@ This implementation uses a *recursive* definition of the DFS function (the DFS f
 The function uses an external data structure (`quest`) to identify which vertices have already been discovered.
 Upon successful search, the function prints its position in the graph as the recursive calls "unwind."
 
-```
+```go
 package main
 
 import "fmt"
@@ -245,7 +245,7 @@ The BFS function does not invoke itself.
 Instead, the procedure adds unexplored vertices to a queue and records the "parent" of each vertex.
 We "unwind" the resulting tree from child to parent nodes to construct the shortest path.
 
-```
+```go
 func bfs(src, dst string) map[string]string {
 	parent := map[string]string{src: src}
 	queue := []string{src}
@@ -296,7 +296,7 @@ Run this program at https://www.python.org/shell/.
 (Note: the Python language is very "picky" about tabs.
 A plain text verion of this program is available at https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py.)
 
-```
+```python
 from heapq import *
 from collections import defaultdict
 
@@ -559,7 +559,7 @@ but instead of searching for a named destination this function instead uses its 
 If the heuristic function returns the value zero, then the search is considered successful and the program terminates.
 This A* program also prints its search in the DOT graph description language, which can be rendered as a graphic using the GraphViz program.
 
-```
+```julia
 using DataStructures
 
 function informed_search(source, edges::Function, heuristic::Function)
@@ -593,7 +593,7 @@ end
 
 The heuristic function for the stable marriage function seeks to quantify and differentiate instability by returning the sum of the squared distance (see section \ref{section:least-squares-method}) of a rogue couple's candidate and current preferences.
 
-```
+```julia
 function stability(men::Matrix, women::Matrix, matching)
     n = length(matching)
     wife = matching
@@ -632,7 +632,7 @@ A problem of factorial size is a large combinatorial problem.
 We will not attempt to visit all possible nodes in the problem space.
 Instead, our edge function will generate three permutations of the current position by switching two matchings.
 
-```
+```julia
 using StatsBase
 
 function e(u)
@@ -674,14 +674,14 @@ $$
 
 The Julia language has a compact notation to create matrix literals.
 
-```
+```julia
 M = [1 2 3 4; 1 4 3 2; 2 1 3 4; 4 2 3 1]
 W = [3 4 2 1; 3 1 4 2; 2 3 4 1; 3 2 1 4]
 ```
 
 We construct a *closure* to encapsulate $M$ and $W$ with our stability metric function into the heuristic function.
 
-```
+```julia
 h(u) = stability(M, W, u)
 ```
 

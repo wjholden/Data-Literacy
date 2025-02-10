@@ -73,7 +73,7 @@ The arithmetic mean is found at $\mu = \bar{x} = \frac{x_1+x_2+\ldots+x_n}{n}$. 
 
 A less-general demonstration of the above proof is given below in the Wolfram Language.
 
-```
+```mathematica
 Wolfram Language 14.0.0 Engine for Microsoft Windows (64-bit)
 Copyright 1988-2023 Wolfram Research, Inc.
 
@@ -181,10 +181,86 @@ The kurtosis of the normal distribution is 3.
 Karl Pearson defines the *degree of kurtosis* as $\eta = \beta_2 - 3$ [@10.1093/biomet/4.1-2.169, p. 181].
 Other texts call this *excess kurtosis*. Excel's `KURT` function returns excess kurtosis, so when `KURT` returns 0 then the distribution may fit the normal and contains no outliers.
 
+## The Normal Distribution
+
+The *Normal Distribution*, also known as the *Gaussian Distribution*, is parameterized by
+mean and standard deviation.
+
+$$
+P(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}
+$$
+
+$P(x)$ is a *probability density function* which returns the probability that an
+observation will have value $x$. The standard normal has parameters $\mu=0$ and
+$\sigma=1$. It also has a skewness of 0 and kurtosis of 3.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+
+\begin{axis}[
+    axis lines = left,
+    xlabel = \(x\),
+    ylabel = {\(P(x)\)},
+]
+
+\addplot [
+    domain=-4:4,
+    samples=100,
+    color=red,
+]{1/(1 * sqrt(2 * pi)) * exp(-(x - 0)^2/(2 * (1)^2))};
+
+%\addlegendentry{\(\frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}\)}
+
+\end{axis}
+
+\end{tikzpicture}
+\caption{This familiar "bell curve" is a plot of the probability density function of the normal distribution. Though the curve appears to touch the horizontal axis in this plot, the values actually approach but never reach zero, even as $x$ continues infinitely far in either direction.}
+\label{fig:normal}
+\end{figure}
+
+The R language provides functions `dnorm`, `pnorm`, `qnorm`, and `rnorm`.
+`dnorm` is the same probability function shown above as $P(x)$.
+`pnorm` gives the cumulative probability between some range of $x$ values,
+which is simply a definite integral.
+
+```r
+> integrate(dnorm, -1, 1)
+0.6826895 with absolute error < 7.6e-15
+> integrate(dnorm, -2, 2)
+0.9544997 with absolute error < 1.8e-11
+> integrate(dnorm, -3, 3)
+0.9973002 with absolute error < 9.3e-07
+> integrate(dnorm, -Inf, 0)
+0.5 with absolute error < 4.7e-05
+> pnorm(0)
+[1] 0.5
+> pnorm(1) - pnorm(-1)
+[1] 0.6826895
+```
+
+The `qnorm` function is the inverse of cumulative probability, allowing us to
+find an exact point $x$ in the distribution for a probability value $p=P(x)$.
+
+The `rnorm` function generates random numbers which fit a normal distribution.
+Some computing environments provide only uniformly-distributed random numbers.
+In Excel, one can use the `qnorm` equivalent (`NORM.INV`) in a clever way to
+create a normal distribution with
+
+```excel
+=NORM.INV(RAND(),0,1)
+```
+
 ## Exponential moving averages
 
 An *exponential moving average* (EMA) is a weighted average that creates a bias favoring recent observations.
 EMAs are used in the financial sector as an implicit means of modeling stock prices with time.
+
+One might also think of EMA as a method to estimate *instantaneous* values in
+presence of errors. An example application might be a smartwatch using GPS to
+estimate a runner's pace. As the runner's wrist travels back and forth, the
+instantaneous velocity of the watch will not match that of the runner. An EMA
+might be useful to smooth this noise.
 
 EMA is defined *recursively* and parameterized with a weighting multiplier $0 < p < 1$.
 
@@ -207,6 +283,10 @@ EMA can be easily implemented in terms of the `reduce` operation, as shown below
 
 The *base case* is at $x_1$ in mathematical notation but `x[0]` in JavaScript.
 This is a matter of convention; the first element of a list is position 1 in math, but 0 in many programming languages.
+
+## Strong and Weak Links
+
+todo
 
 ## Discussion prompts
 

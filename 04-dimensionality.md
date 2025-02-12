@@ -750,8 +750,6 @@ The columns are ordered from greatest to least variance. This means that a model
 might not need all four columns to form accurate predictions, as the later columns
 account for very little of the variance in the data set.
 
-**TODO**
-
 <!-- 
 
 https://crates.io/crates/statrs

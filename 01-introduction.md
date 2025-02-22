@@ -20,6 +20,45 @@ Our estimates of population parameters, *statistics*, generally improve with lar
 One might use statistics to create a *model* to explain a population, based upon sampling data.
 Models can be useful both for describing the population and also for forming predictions.
 
+## Number Representation {#sec:numbers}
+
+Modern computing machines are *digital* systems which represent numbers as
+*strings* (lists) of *bits*. A bit has only two possible values: 0 or 1.
+Today, *bytes* are eight bits long, although there were computers in the past
+which did not follow this convention.
+
+An unsigned, sixteen-bit integer has $2^{16} = \num{65536}$ possible values.
+The bit string $0011000000111001$ represents \num{12345}.
+
+$$
+2^0+2^3+2^4+2^5+2^{12}+2^{13}=1+8+16+32+\num{4096}+\num{8192}=\num{12345}
+$$
+
+Computer engineers have developed several techniques for representing signed
+(possibly negative) numbers. Some computers use a dedicated sign bit. Others use
+*one's complement* or *two's complementent* representations.
+
+Decimals are still more complex. *Fixed-point* decimals provide some constant
+amount of digits for the whole and fractional parts of the number. *Floating-point*
+decimals provide dynamic whole and fractional digits, enabling the computer to
+represent a large number of decimal digits when possible. Floating-point values
+are common, but have several well-known pitfalls. In any modern web browser,
+such as Firefox, press F12 to open the developer console and enter `0.1+0.2`.
+The result is not `0.3`:
+
+```javascript
+>> 0.1+0.2 
+<- 0.30000000000000004
+```
+
+This happens for the same reason that $2 \div 3$ produces a repeating fraction
+in base 10. The number $2/3$ cannot be exactly represented in a string of decimal
+digits (a sum of powers of ten). Likewise, the number $0.3=3/10$ cannot be
+exactly represented in a string of binary digits.
+
+Computing machines do not process numbers. Rather, they process bit strings
+which represent numbers.
+
 ## Levels of measurement {#sec:levels}
 
 There are four distinct *levels of measurement* that a value may fit [@stevens1946theory].

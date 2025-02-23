@@ -286,7 +286,24 @@ This is a matter of convention; the first element of a list is position 1 in mat
 
 ## Strong and Weak Links
 
-todo
+In a *weak-link problem*, the system is harmed by the presence of any defect.
+The term itself is named for a proverbial chain, which is only as strong as the
+weakest link. Many safety-, quality-, and proces-related problems require one
+to eliminate weak links.
+
+On the other hand, we sometimes encounter *strong-link problems*, where overall
+success of a system depends on the very *best* individuals in the population.
+Olympic athletes are a good example of a strong-link problem: it does not matter
+that a country has thousands of candidate athletes who did not qualify; what
+matters is that the national team selects the very best to compete on the world
+stage.
+
+Venture capital is another example of a strong-link problem. An investor takes
+risks on many different companies in hopes that one "unicorn" startup will yield
+a large return, offsetting losses from those unsuccessful startups.
+
+Both weak-link and strong-link problems can be modeled in terms of variance (see
+section \ref{sec:moments}).
 
 ## Discussion prompts
 
@@ -301,6 +318,15 @@ todo
 5. Given a sample set $x = \left\{ 5 \right\}$, what is the estimate of the mean ($\bar{x}$), and what is the sample variance ($s_x$)?
 That is, what is the expected value ($E(x)$) of a random sample taken from $x$, and what is the average difference of variables to the expected value?
 Use software to verify your answer. In the R language, this would be `mean(c(5))` and `sd(c(5))`.
+
+6. A customer-service organization uses *average handling time* (AHT),
+the expected number of minutes required to complete an interaction, to improve
+service quality. What are some benefits or risks of this approach?
+See https://xkcd.com/2899/.
+
+7. Does the Army's standards-based approach hinder our ability to solve strong-link
+problems requiring unpredictable solutions? How could an ideal institution maintain
+minimum standards while enabling outliers to flourish? 
 
 ## Practical exercises
 

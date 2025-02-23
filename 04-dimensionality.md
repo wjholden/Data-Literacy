@@ -464,7 +464,7 @@ A sharpshooter fires his pistol at random into a barn wall, then draws circles a
 
 A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
 
-5/3/1 is a barbell strength training program (todo: cite).
+5/3/1 is a barbell strength training program [@Wendler2011-ar].
 This program emphasizes *rep records*, where the lifter is to lift a submaximal mass as many times as possible.
 This program design adds a second dimension to strength.
 We say that lifter who progresses from lifting \qty{100}{\kilogram} for 6 repetitions to 9 repetitions in six months has become stronger,

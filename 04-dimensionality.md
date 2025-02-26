@@ -750,6 +750,14 @@ The columns are ordered from greatest to least variance. This means that a model
 might not need all four columns to form accurate predictions, as the later columns
 account for very little of the variance in the data set.
 
+<!--
+I'm not really satisfied with this passage. A PCA plot would have helped.
+A more compelling application would have helped more. The reader probably
+won't be able to see why PCA is so interesting or useful.
+
+**TODO**: PCA plot.
+-->
+
 <!-- 
 
 https://crates.io/crates/statrs
@@ -762,9 +770,13 @@ https://crates.io/crates/nalgebra
 1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
 2. Conduct a classroom competition of "Catch the cheaters!" at https://primerlearning.org. Discuss the winning and losing strategies, then watch https://www.youtube.com/watch?v=XTcP4oo4JI4. 
 3. Read the interactive article https://www.mayerowitz.io/blog/mario-meets-pareto [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
-4. Come up with a creative way to draw a four-dimensional Venn diagram.
+4. Controversial topics may involve several dimensions. Advocates for one position
+may claim on one basis in dimension $x$, where the opposition's counterclaim is
+in dimension $y$. Discuss a contemporary impasse with orthogonal or irreconcilable
+aspects.
 
 ## Practical exericses
 
 1. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
 2. About one in twenty white males have some form of color blindness. About 70.2% of the U.S. military report themselves as white, and about 82.8% as male. Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$. If a Command gives a briefing to twelve random generals each year, what is the probability that one or more of those generals is color blind? (Assume, incorrectly but for the sake of simple calculation, that women and non-whites are never color blind.) Assume further that $W$ and $M$ are independent and that $P(W \cap M) = P(W)P(M) = 0.581256$, therefore $P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}$ and consequently $P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628$. Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
+3. Come up with a creative way to draw a four-dimensional Venn diagram.

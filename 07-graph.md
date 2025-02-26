@@ -867,6 +867,8 @@ these metrics "man-made"; they were created by scientists and mathematicians
 seeking to model a problem. These metrics can be customized to the user's needs
 to best approach their unique problem domain.
 
+<!-- We'll just have to try this again for the next edition.
+
 ## Power Law distribution
 
 todo [@10.1126/science.286.5439.509]
@@ -878,6 +880,7 @@ todo
 ## NP-completeness
 
 todo 
+-->
 
 ## Discussion prompts
 

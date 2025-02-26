@@ -589,6 +589,15 @@ So, 30% of 70 is $\frac{30 \times 70}{100} = \frac{\num{2100}}{100} = 21$.
 Abstraction can be a powerful tool for solving problems and developing proofs.
 In the field of computer networking, countless problems are solved by the pattern, "we have more than one thing, but it is inconvenient to operate more than one of these things, so we built a method to abstractly represent arbitrarily many of these things as super-things."
 
+Abstractions are *leaky* when one must understand the internal details to use the
+abstraction effectively. For example, surprises such as `0.1 + 0.2 == 0.30000000000000004`
+in floating-point arithmetic lead to programmers understanding more implementation
+details than intended; floating-point arithemetic is a leaky abstraction towards
+representing real numbers (see section \ref{sec:numbers}). The object-oriented
+paradigm (see section \ref{sec:oop}) emphasizes *encapsulation* of both data
+and code to allow users to use the *interface* exposed by an object without
+consideration for its implementation.
+
 *Reïfication* is the opposite of abstraction: we something specific from something general.
 For example, suppose we have a language translation function
 

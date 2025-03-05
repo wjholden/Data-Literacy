@@ -221,6 +221,43 @@ Some examples in the R language, which one can reproduce at https://webr.r-wasm.
 Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
 No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
 
+## Object-Oriented Programming {#sec:oop}
+
+Object-Oriented Programming (OOP) is a technique for modeling both the *data*
+and associated *code* for a problem together [@10.1145/947955.947961] [@10.5555/3271463].
+The data of an object are called *fields* and the code are called *methods*.
+Many programming languages, notably C++, Python, JavaScript, and Python, emphasize OOP as the central design.
+
+Object-orientation comes in many varieties [@10.5555/3271463]. Many OO languages
+provide a method inherit data and code from other objects, often in a hierarchy.
+The following Rust program, which one can run at https://play.rust-lang.org,
+demonstrates a `Point` object. The object is defined as a `struct`
+with two fields, `x` and `y`. The implementation for `Point` adds two methods,
+a *constructor* (`new`) and a *Manhattan distance* function.
+
+```rust
+struct Point {
+    x: f32,
+    y: f32,
+}
+
+impl Point {
+    fn new(x: f32, y: f32) -> Self {
+        Self { x, y }
+    }
+
+    fn manhattan_distance(&self, other: &Self) -> f32 {
+        (self.x - other.x).abs() + (self.y - other.y).abs()
+    }
+}
+
+fn main() {
+    let a = Point::new(2.0, 4.0);
+    let b = Point::new(-2.0, 3.0);
+    println!("Distance: {}", a.manhattan_distance(&b));
+}
+```
+
 ## Parallelism and Concurrency
 
 *Parallelism* is the ability for a computing machine to perform simulataneous operations.

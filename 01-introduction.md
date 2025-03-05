@@ -389,43 +389,6 @@ to consider which arithmetic operations apply to our data in section
 \ref{sec:levels}, likewise we must consider the operations applicable to
 composite values.
 
-## Object-Oriented Programming {#sec:oop}
-
-Object-Oriented Programming (OOP) is a technique for modeling both the *data*
-and associated *code* for a problem together [@10.1145/947955.947961] [@10.5555/3271463].
-The data of an object are called *fields* and the code are called *methods*.
-Many programming languages, notably C++, Python, JavaScript, and Python, emphasize OOP as the central design.
-
-Object-orientation comes in many varieties [@10.5555/3271463]. Many OO languages
-provide a method inherit data and code from other objects, often in a hierarchy.
-The following Rust program, which one can run at https://play.rust-lang.org,
-demonstrates a `Point` object. The object is defined as a `struct`
-with two fields, `x` and `y`. The implementation for `Point` adds two methods,
-a *constructor* (`new`) and a *Manhattan distance* function.
-
-```rust
-struct Point {
-    x: f32,
-    y: f32,
-}
-
-impl Point {
-    fn new(x: f32, y: f32) -> Self {
-        Self { x, y }
-    }
-
-    fn manhattan_distance(&self, other: &Self) -> f32 {
-        (self.x - other.x).abs() + (self.y - other.y).abs()
-    }
-}
-
-fn main() {
-    let a = Point::new(2.0, 4.0);
-    let b = Point::new(-2.0, 3.0);
-    println!("Distance: {}", a.manhattan_distance(&b));
-}
-```
-
 ## Data visualization with plots
 
 *Plots* allow us to visualize data.
@@ -448,14 +411,35 @@ As a small exercise to experiment with these four plots, go to https://webr.r-wa
 R is a programming language for statistics and data visualization.
 
 R includes several built-in data sets.
-In the *read-evaluate-print loop* (*REPL*), enter
+We will use included Motor Trend Cars (`mtcars`) data set.
+
+In the *read-evaluate-print loop* (*REPL*) at the bottom-left of the screen, enter
 
 ```r
 > head(mtcars)
 ```
 
 to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
-Now enter the following commands to quickly visualize a few columns in the data set.
+Enter
+
+```r
+> mtcars
+```
+
+to view the full data set.
+
+Place a question mark before a function or data set name in the REPL to get help in R.
+Try opening the R help for `mtcars` and `head` with the following commands:
+
+```r
+> ?mtcars
+> ?head
+```
+
+### Bar Plots
+
+In the REPL of https://webr.r-wasm.org/latest/, create a *bar plot* from the cylinders
+(`cyl`) column of the Motor Trend Cars data set: 
 
 ```r
 > barplot(mtcars$cyl)

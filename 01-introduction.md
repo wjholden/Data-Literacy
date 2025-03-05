@@ -462,8 +462,8 @@ a bar plot is intended to compare the values $x = \left( 3, 10, 11 \right)$,
 but the bars corresponding to each observation are, respectively, $w = \left( 1, 1, 2 \right)$.
 The resulting areas are $x \odot w = \left( 3, 10, 22 \right)$ (here, $\odot$ 
 indicates the *element-wise* product of two vectors, also known as a *Hadamard*
-product). The area of the third bar is more than double that of the second,
-which may mislead the reader.
+product). As shown in figure \ref{fig:misleading-barplot}, the area of the third
+bar is more than double that of the second and may mislead the reader.
 
 \begin{figure}
 \centering
@@ -480,7 +480,6 @@ This bar plot shows values $x = \left( 3, 10, 11 \right)$, but the
 width of the third bar makes this observation appear much larger than the others.}
 \label{fig:misleading-barplot}
 \end{figure}
-
 
 ```r
 > boxplot(mtcars$mpg)

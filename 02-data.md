@@ -138,6 +138,18 @@ SELECT * FROM Marathon
     SELECT MIN(time) FROM Marathon GROUP BY (gender));
 ```
 
+SQL uses the *declarative programming* paradigm, where the language is used to
+describe the *result* that the user^[In this context, the "user" is a programmer
+or data analyst who is "using" the database or programming language] wants while
+leaving the implementation details to the DBMS. Systems designed for declarative
+programming often excel in situations that the developer intended but sometimes
+struggle when the user needs something unusual. For situations where the user
+needs to specify the detailed process to compute the result, we use the
+*imperative programming* paradigm. Two specific imperative approaches are
+*functional* and *object-oriented* programming. In practice, the distinctions
+are often blurred by languages and databases that provide functionality from all
+three.
+
 ## Functional Programming {#section:filter-map-reduce}
 
 SQL syntax makes it easy to write select, project, and join (SPJ) queries.
@@ -203,9 +215,10 @@ Both filter and map can be implemented in terms of reduce.
 
 Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
-## Array Programming {#sec:array-programming}
+### Vectorized Functions and Array Programming {#sec:array-programming}
 
 A *vectorized function* automatically iterates over array inputs.
+This approach is sometimes called *array programming*.
 This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
 Some examples in the R language, which one can reproduce at https://webr.r-wasm.org/latest/, are:
 
@@ -220,6 +233,31 @@ Some examples in the R language, which one can reproduce at https://webr.r-wasm.
 
 Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
 No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
+
+### Immutability
+
+Suppose one needs to write a program to sort its input. An obvious solution is
+to order the inputs directly by *mutating* (changing) the memory in-place.
+An alternative approach is to copy the input, order the copy, and return the ordered copy.
+
+The Julia language provides both: Julia's \texttt{sort!\@} function mutates its input,
+while the `sort` function returns a sorted copy, leaving the input unmodified.
+
+The latter approach obviously uses more memory and will likely be slower.
+Why would one use this approach? **Safety**. If a function "owning" a variable
+passes an *immutable* (read-only) reference to another function, then the caller can
+safely reason about the value and state of that variable after the callee returns.
+
+Some languages provide stronger concepts of ownership and immutability than others.
+The Rust language provides extensive memory safety features [@back-to-the-building-blocks]
+by requiring the `mut` keyword to explicitly mark variables and function parameters mutable.
+Traditionally, languages assumed the opposite and required `const` or `final`
+keywords to establish invariants (with varying levels of enforcement; Java
+programmers might be surprised that the `final` keyword does not make an object
+read-only, but only the *reference to* an object).
+
+Immutability is particularly useful for *thread-safety* in concurrent programming,
+which we will discuss in section \ref{sec:parallelism-and-concurrency}.
 
 ## Object-Oriented Programming {#sec:oop}
 
@@ -258,7 +296,7 @@ fn main() {
 }
 ```
 
-## Parallelism and Concurrency
+## Parallelism and Concurrency {#sec:parallelism-and-concurrency}
 
 *Parallelism* is the ability for a computing machine to perform simulataneous operations.
 Two tasks are *concurrent* if their order does not matter.

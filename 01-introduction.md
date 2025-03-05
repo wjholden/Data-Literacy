@@ -459,12 +459,51 @@ Now enter the following commands to quickly visualize a few columns in the data 
 
 ```r
 > barplot(mtcars$cyl)
+```
+
+![A bar plot of the number of cylinders in each car of the Motor Trend Cars data set.](mtcars-barplot.pdf){#fig:barplot}
+
+Bar plots are useful for numerical features of a data set.
+In figure \ref{fig:barplot}, the horizontal axis is unlabeled and the order is left unspecified.
+One might use labels, order, color, or grouping to aid the reader in interpreting data.
+
+The width of each bar should ordinarily be uniform. As 
+
+$$
+\text{Area} = \text{Width} \times \text{Height},
+$$
+
+the enlarged area of the wider bar may mislead the reader. For example, suppose
+a bar plot is intended to compare the values $x = \left( 3, 10, 11 \right)$,
+but the bars corresponding to each observation are, respectively, $w = \left( 1, 1, 2 \right)$.
+The resulting areas are $x \odot w = \left( 3, 10, 22 \right)$ (here, $\odot$ 
+indicates the *element-wise* product of two vectors, also known as a *Hadamard*
+product). The area of the third bar is more than double that of the second,
+which may mislead the reader.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\filldraw[black, fill=red!5] (1,0) rectangle (2,3);
+\filldraw[black, fill=green!5] (3,0) rectangle (4,10);
+\filldraw[black, fill=blue!5] (5,0) rectangle (7,11);
+\node[text width=1] at (1.5,1) {3};
+\node[text width=1] at (3.375,1) {10};
+\node[text width=1] at (5.825,1) {11};
+\end{tikzpicture}
+\caption{The bars of a bar plot should ordinarily have uniform width.
+This bar plot shows values $x = \left( 3, 10, 11 \right)$, but the
+width of the third bar makes this observation appear much larger than the others.}
+\label{fig:misleading-barplot}
+\end{figure}
+
+
+```r
 > boxplot(mtcars$mpg)
 > hist(mtcars$mpg)
 > plot(mtcars$wt, mtcars$mpg)
 ```
 
-![](mtcars-barplot.pdf){width=25%}
 ![](mtcars-boxplot.pdf){width=25%}
 ![](mtcars-hist.pdf){width=25%}
 ![](mtcars-plot.pdf){width=25%}

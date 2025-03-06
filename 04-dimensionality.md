@@ -499,7 +499,7 @@ $$
 where $x$ is the number of repetitions performed.
 Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
 
-## Covariance and Correlation
+## Covariance and Correlation {#section:cor}
 
 In section \ref{sec:moments}, we defined variance as the average squared 
 difference of a random variable $x$ to its expected value, $\bar{x}$.
@@ -586,23 +586,49 @@ To be more precise, the scaled covariance produces a statistic of **linear** cor
 The correlation of the vector
 
 $$
-\left[ -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 \right]
+x = \left( -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 \right)
 $$
 
-and its squares
+and its element-wise squares
 
 $$
-\left[ 25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25 \right]
+y = x \odot x = \left( 25, 16, 9, 4, 1, 0, 1, 4, 9, 16, 25 \right)
 $$
 
 is **zero**.
 
+\begin{figure}
+\centering
+\begin{tikzpicture}
+
+\draw[<->] (-6,0) -- (6,0);
+\draw[<->] (0,-1) -- (0,3);
+
+\draw[dotted] (-6,1.0) -- (6, 1.0);
+
+\filldraw (-5,2.5) circle (1pt);
+\filldraw (-4,1.6) circle (1pt);
+\filldraw (-3,.9) circle (1pt);
+\filldraw (-2,.4) circle (1pt);
+\filldraw (-1,.1) circle (1pt);
+\filldraw (0,0) circle (1pt);
+\filldraw (1,.1) circle (1pt);
+\filldraw (2,.4) circle (1pt);
+\filldraw (3,.9) circle (1pt);
+\filldraw (4,1.6) circle (1pt);
+\filldraw (5,2.5) circle (1pt);
+
+\end{tikzpicture}
+\caption{The covariance of $x$ and $y = x \odot x$ is zero. The line of best fit for this data is shown on the dotted line, which has a Pearson correlation coefficient of $R^2=0$. Having a covariance of zero does not mean that $y$ is completely independent of $x$, but only that there is no linear dependence.}
+\label{fig:quadratic-zero-r2}
+\end{figure}
+
+Again using the R language at \url{https://docs.r-wasm.org/webr/latest/},
+
 ```r
-> -5:5
- [1] -5 -4 -3 -2 -1  0  1  2  3  4  5
-> (-5:5)^2
- [1] 25 16  9  4  1  0  1  4  9 16 25
-> cor(-5:5, (-5:5)^2)
+> x = -5:5
+> y = x^2
+> cor(x,y)
 [1] 0
 ```
 
@@ -780,3 +806,5 @@ aspects.
 1. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
 2. About one in twenty white males have some form of color blindness. About 70.2% of the U.S. military report themselves as white, and about 82.8% as male. Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$. If a Command gives a briefing to twelve random generals each year, what is the probability that one or more of those generals is color blind? (Assume, incorrectly but for the sake of simple calculation, that women and non-whites are never color blind.) Assume further that $W$ and $M$ are independent and that $P(W \cap M) = P(W)P(M) = 0.581256$, therefore $P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}$ and consequently $P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628$. Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
 3. Come up with a creative way to draw a four-dimensional Venn diagram.
+4. Use Excel to reproduce the zero correlation between $x$ and $y_1 = x \odot x$ from section \ref{section:cor}. Now update the $y$ column to $y_2 = x \odot x + x = \left( 20, 12,  6,  2,  0,  0,  2,  6, 12, 20, 30 \right)$. What is $\text{cor}\left( x, y_2 \right)$?
+5. Use Excel's line of best fit feature to construct a linear models between both $x$ and $y_1$ and also $x$ and $y_2$. Observe that the $y$-intercept in both models is $10$. Try to figure out where this constant comes from. <!-- answer: mean(x) -->

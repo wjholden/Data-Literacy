@@ -161,6 +161,82 @@ Some programming languages will automatically *initialize* variables with some z
 Other languages give some `Undefined` value to uninitialized variables.
 Still other languages raise an error if no explicit value is assigned to a variable.
 
+## Optional and Sentinel Values
+
+Computer scientist Tony Hoare famously called null references a "billion dollar mistake,"
+explaining that programming languages with *nullable* values contain flaws that might
+have been prevented in languages that require value initialization [@BillionDollarMistake].
+
+Rust is one of many young languages that provides an *optional* type to express
+a value which may or may not contain useful information. The form `Some(value)`
+indicates a usable value. If the programmer wishes to express the absence of a
+value, they use `None`.
+
+```r
+use rand::Rng;
+
+fn g() -> Option<f32> {
+    let mut rng = rand::rng();
+    let x = rng.random_range(0.0..=1.0);
+    if x > 0.5 {
+        Some(x)
+    } else {
+        None
+    }
+}
+
+fn main() {
+    match g() {
+        Some(x) => println!("g() returned some value, {x}."),
+        None => println!("g() returned none.")
+    }
+}
+```
+
+Repeatedly run this program at the Rust Playground^[https://play.rust-lang.org/?&gist=df4c6636ab6ff336dbae5994b7508adc]
+and observe that the `g()` function returns `Some(x)` values where $0.5 \le x \le 1.0$ and `None`.
+
+The use of the language's type system to express optional values allows Rust to
+eschew *sentinel values*, which are special values used to control a program.
+An example of a sentinel value is in the `read()` function of the C programming
+language. `read()` is used to read data from files, and ordinarily returns the
+number of bytes read, but in many cases returns 0 or $-1$, signaling status to
+the caller.
+
+*Comma-separated values* (CSV) are a well-known situation where sentinel values
+are especially problematic. A CSV file is a simple method of structuring data in
+plain-text files. For example, a table such as
+
+| $x$   | $y$                 | $z$                |
+|-------|---------------------|--------------------|
+| Rob   | 0.74019382956651820 | 0.3508759018489489 |
+| John  | 0.41331428270607506 | 0.2936926427452584 |
+| David | 0.37671743737357277 | 0.5676190157838865 |
+| Frank | 0.50270122376380740 | 0.7939268929144455 |
+
+can be entered into a CSV file as
+
+```
+x,y,z
+Rob,0.74019382956651820,0.3508759018489489
+John,0.41331428270607506,0.2936926427452584
+David,0.37671743737357277,0.5676190157838865
+Frank,0.50270122376380740,0.7939268929144455
+```
+
+What happens if we add a column where values themselves contain commas?
+RFC 4180, a specification for CSV, recommends enclosing values containing commas
+with quotation marks [@rfc4180]. If the value enclosed with quotation marks also
+contains a quotation mark, then a doubled quotation mark (`"this field contains
+""escaped"" quotation marks"`) *escapes* the inner value for unambiguous parsing.
+
+Unicode and its predecessor, the American Standard Code for Information Interchange (ASCII),
+provide *control codes* `001C`, `001D`, `001E`, and `001F` for file, group,
+record, and unit separators, respectively, but these codes are not commonly used.
+If these codes had been more convenient to type, our world of data might have
+avoided some of the common pitfalls of CSV and other formats containing sentinel
+values.
+
 ## Strong/weak and static/dynamic typing 
 
 Values come in many forms: categorical and numerical, ordered and unordered, discrete and continuous, defined and missing.
@@ -490,8 +566,8 @@ width of the third bar makes this observation appear much larger than the others
 ![](mtcars-boxplot.pdf){width=25%}
 ![](mtcars-hist.pdf){width=25%}
 ![](mtcars-plot.pdf){width=25%}
-\begin{figure}[!h]
-\caption{Visualizations of the Motor Trend Cars (\texttt{mtcars}) data set using the R language.}
+\begin{figure}[!ht]
+\caption{Visualizations of the Motor Trend Cars (\texttt{mtcars}) data set using the R language. *TODO* split into separate subsections.}
 \end{figure}
 
 ## Linear and logarithmic scales

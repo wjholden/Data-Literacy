@@ -173,26 +173,49 @@ We can use the `mean` and `sd` functions with `subset` in the R language at http
 [1] 4600
 ```
 
-We can use skewness ($\beta_1$) to detect whether the data is imbalanced (skewed) above or below the mean. If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer, and if skewness is zero then the distribution is equally balanced over the mean.
-The Excel function for skewness is `SKEW`.
+We can use skewness ($\mu_3 = \beta_1$) to detect whether the data is imbalanced (skewed) above or below the mean.
+If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer,
+and if skewness is zero then the distribution is equally balanced over the mean.
+Excel defines its `SKEW` function^[https://support.microsoft.com/en-us/office/skew-function-bdf49d86-b1ef-4804-a046-28eaea69c9fa] as
 
-We can use kurtosis ($\beta_2$) to detect if a data set contains outliers.
+$$
+\mu_3 = \frac{n}{(n-1)(n-2)} \sum{\left( \frac{x - \bar{x}}{s} \right)^3}.
+$$
+
+We can use kurtosis ($\mu_4 = \beta_2$) to detect if a data set contains outliers.
 The kurtosis of the normal distribution is 3.
 Karl Pearson defines the *degree of kurtosis* as $\eta = \beta_2 - 3$ [@10.1093/biomet/4.1-2.169, p. 181].
-Other texts call this *excess kurtosis*. Excel's `KURT` function returns excess kurtosis, so when `KURT` returns 0 then the distribution may fit the normal and contains no outliers.
+Other texts call this *excess kurtosis*. Excel's `KURT` function returns excess 
+kurtosis. If `KURT` returns 0, then the distribution may fit a normal distribution
+and may contain no outliers. Excel defines its `KURT`
+function^[https://support.microsoft.com/en-us/office/kurt-function-bc3a265c-5da4-4dcb-b7fd-c237789095ab] as
+
+$$
+\mu_4 =
+\frac{n(n+1)}{(n-1)(n-2)(n-3)}
+\sum{\left( \frac{x-\bar{x}}{s} \right)^4}
+-
+\frac{3(n-1)^2}{(n-2)(n-3)}.
+$$
 
 ## The Normal Distribution
 
-The *Normal Distribution*, also known as the *Gaussian Distribution*, is parameterized by
-mean and standard deviation.
+The *Normal Distribution*, also known as the *Gaussian Distribution*, is a well-known
+predictor of the probability of continuous outcomes. Parameterized by mean, $\mu$,
+and standard deviation, $\sigma$, the *probability density function* for the
+normal distribution is
 
 $$
-P(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}
+P(x) = \frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}.
 $$
 
-$P(x)$ is a *probability density function* which returns the probability that an
-observation will have value $x$. The standard normal has parameters $\mu=0$ and
-$\sigma=1$. It also has a skewness of 0 and kurtosis of 3.
+$P(x)$ predicts the probability that an observation will have value $x$.
+The *standard normal* has parameters $\mu=0$ and $\sigma=1$, with skewness $\mu_3 = 0$ and kurtosis $\mu_4 = 3$.
+
+$P(x)$ forms a "bell curve" (see figure \ref{fig:normal}) that one might encounter in a histogram of data, but
+there are other distributions of data which also form a bell-shaped curve. It is
+**not** generally safe to immediately assume that data fits a normal distribution
+when a histogram reflects a bell curve.
 
 \begin{figure}
 \centering
@@ -218,6 +241,12 @@ $\sigma=1$. It also has a skewness of 0 and kurtosis of 3.
 \caption{This familiar "bell curve" is a plot of the probability density function of the normal distribution. Though the curve appears to touch the horizontal axis in this plot, the values actually approach but never reach zero, even as $x$ continues infinitely far in either direction.}
 \label{fig:normal}
 \end{figure}
+
+<!-- TODO: provide symbolic integrals and explain why you need to calculate
+these as ranges, not P(0) (as the integral from x=0 to x=0 is 0).
+
+This is also an opportunity to explain the 68/95/99% things.
+-->
 
 The R language provides functions `dnorm`, `pnorm`, `qnorm`, and `rnorm`.
 `dnorm` is the same probability function shown above as $P(x)$.
@@ -339,3 +368,5 @@ minimum standards while enabling outliers to flourish?
 4. Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
 
 5. Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 
+
+6. Think backwards and try to guess what would be the zeroth moment, $\mu_0$.

@@ -260,7 +260,13 @@ Plotting a fast-growing data series on a log scale is a quick and easy way for t
 Changing the scale on a plot can be a simple but powerful method to develop intuition
 for the shape of the data. However, one should be cautious of over-generalization.
 
-Consider the *sigmoid* function,
+## Sigmoid and Logistic Curves
+
+Consider the *sigmoid* function^[The letter $\sigma$ has many meanings in 
+mathematics and statistics. In section \ref{sec:moments}, we will introduce
+variance and standard deviation, which use the symbols $\sigma^2$ and $\sigma$.
+Even well-known symbols, such as $\pi$ and $e$, have overloaded meanings in this
+field. One must take care to disambiguate meanings using prose.],
 
 $$
 \sigma \left( x \right) = \frac{e^x}{1+e^x}.
@@ -272,9 +278,10 @@ Initially, very few individuals have the disease, but the rate at which the
 disease spreads quickly increases as the number of infected members compounds.
 At the same time, however, the probability that another individual is already
 infected or can resist the contagion also increases, slowing the spread as we
-reach some *inflection point*.
+reach some *inflection point*, as shown in figure \ref{fig:sigmoid}.
 
 <!-- https://tex.stackexchange.com/a/563446/311890 --> 
+<!-- https://tikz.dev/pgfplots/ -->
 \begin{figure}
 \centering
 \begin{tikzpicture}
@@ -303,6 +310,13 @@ reach some *inflection point*.
 \caption{todo sigmoid.}
 \label{fig:sigmoid}
 \end{figure}
+
+<!-- https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context --> 
+The *logistic* function is a parameterized sigmoid function of the form
+
+$$
+
+$$
 
 **TODO**: Sigmoid 
 

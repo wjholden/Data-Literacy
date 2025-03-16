@@ -6,23 +6,23 @@ all: dl.pdf
 
 02-visualization.md:
 
-02-data.md:
+03-data.md:
 
-03-centrality.md:
+04-centrality.md:
 
-04-dimensionality.md:
+05-dimensionality.md:
 
-05-lm.md:
+06-lm.md:
 
-06-testing.md:
+07-testing.md:
 
-07-graph.md:
+08-graph.md:
 
-08-supervised.md:
+09-supervised.md:
 
-09-unsupervised.md:
+10-unsupervised.md:
 
-10-sat.md:
+11-sat.md:
 
 99-references.md:
 
@@ -39,7 +39,7 @@ pareto.pdf: pareto.jl lifts.csv
 
 dl.pdf: $(patsubst %.dot,%.dot.pdf,$(wildcard *.dot)) *.md metadata.txt references.bib pareto.pdf
 	pandoc -o dl.pdf metadata.txt 00-preface.md \
-	01-introduction.md 02-visualization.md 02-data.md 03-centrality.md 04-dimensionality.md \
+	01-introduction.md 02-visualization.md 03-data.md 03-centrality.md 04-dimensionality.md \
 	07-graph.md 99-references.md \
 	--citeproc --pdf-engine=xelatex --toc --number-sections --fail-if-warnings=true
 

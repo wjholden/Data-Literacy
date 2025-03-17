@@ -203,6 +203,8 @@ language. `read()` is used to read data from files, and ordinarily returns the
 number of bytes read, but in many cases returns 0 or $-1$, signaling status to
 the caller.
 
+## Comma-Separated Values (CSV) {#sec:csv}
+
 *Comma-separated values* (CSV) are a well-known situation where sentinel values
 are especially problematic. A CSV file is a simple method of structuring data in
 plain-text files. For example, a table such as
@@ -224,6 +226,9 @@ David,0.37671743737357277,0.5676190157838865
 Frank,0.50270122376380740,0.7939268929144455
 ```
 
+In section \ref{sec:json}, we will see this same data represented in a more
+modern format called JSON.
+
 What happens if we add a column where values themselves contain commas?
 RFC 4180, a specification for CSV, recommends enclosing values containing commas
 with quotation marks [@rfc4180]. If the value enclosed with quotation marks also
@@ -237,7 +242,7 @@ If these codes had been more convenient to type, our world of data might have
 avoided some of the common pitfalls of CSV and other formats containing sentinel
 values.
 
-## Strong/weak and static/dynamic typing 
+## Strong/weak and static/dynamic typing {#sec:strong-weak-types}
 
 Values come in many forms: categorical and numerical, ordered and unordered, discrete and continuous, defined and missing.
 *Types* can be used to constrain variables to allowable values and applicable operations.
@@ -495,7 +500,7 @@ An example of some functions might be:
 
 $$
 \begin{aligned}
-\textrm{Translate} \left( \textrm{Friday}, \textrm{English}, \textrm{German} \right) &= \textrm{Freitag} \\
+\textrm{Translate} \left( \textrm{Friday}, \textrm{English}, \textrm{German} \right) &= \textit{Freitag} \\
 \textrm{Length} \left( \textrm{Wednesday} \right) &= 9 \\
 \textrm{Distance} \left( \textrm{Thursday} , \textrm{Tuesday} \right) &= -2 \\
 \textrm{DaysOfLength} \left( 6 \right) &= \left\{ \textrm{Sunday} , \textrm{Monday} , \textrm{Friday} \right\} \\
@@ -571,7 +576,7 @@ $$
 where $x$ is the message to be translated, $l_1$ is the input language, and $l_2$ is the output language.
 
 $$
-T(\text{hello}, \text{English}, \text{French}) = \text{bonjour}
+T(\text{hello}, \text{English}, \text{French}) = \textit{bonjour}
 $$
 
 From this general function, we can enclose parameters $l_1$ and $l_2$ into a specific function.
@@ -579,7 +584,7 @@ From this general function, we can enclose parameters $l_1$ and $l_2$ into a spe
 $$
 \begin{aligned}
 T'(x) &= T(x, \text{English}, \text{French}) \\
-T'(\text{goodbye}) &= \text{au revoir}
+T'(\text{goodbye}) &= \textit{au revoir}
 \end{aligned}
 $$
 

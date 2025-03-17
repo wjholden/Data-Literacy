@@ -259,8 +259,11 @@ Plotting a fast-growing data series on a log scale is a quick and easy way for t
 
 Changing the scale on a plot can be a simple but powerful method to develop intuition
 for the shape of the data. However, one should be cautious of over-generalization.
+In section \ref{sec:logistic}, we will see misleading shape in the plot of a
+logistic curve, but first we must explain the sigmoid curve in section
+\ref{sec:sigmoid}.
 
-## Sigmoid and Logistic Curves
+## Sigmoid Curves {#sec:sigmoid}
 
 Consider the *sigmoid* function^[The letter $\sigma$ has many meanings in 
 mathematics and statistics. In section \ref{sec:moments}, we will introduce
@@ -272,13 +275,15 @@ $$
 \sigma \left( x \right) = \frac{e^x}{1+e^x}.
 $$
 
-The sigmoid curve can be used to model a system characterized by competing exponential
-growth and decay. An example is the spread of a contagion among a population.
-Initially, very few individuals have the disease, but the rate at which the
-disease spreads quickly increases as the number of infected members compounds.
-At the same time, however, the probability that another individual is already
-infected or can resist the contagion also increases, slowing the spread as we
-reach some *inflection point*, as shown in figure \ref{fig:sigmoid}.
+The sigmoid curve can be used to model a system characterized by competing 
+exponential growth and decay. That is, the sigmoid represents a system with
+limited resources. An example from epidemiology is the spread of a contagion 
+among a population. Initially, very few individuals have the disease, but the 
+rate at which the disease spreads quickly increases as the number of infected 
+members compounds. At the same time, however, the probability that another 
+individual is already infected or can resist the contagion also increases, 
+slowing the spread as we reach some *inflection point*, as shown in figure
+\ref{fig:sigmoid}.
 
 <!-- https://tex.stackexchange.com/a/563446/311890 --> 
 <!-- https://tikz.dev/pgfplots/ -->
@@ -311,14 +316,48 @@ reach some *inflection point*, as shown in figure \ref{fig:sigmoid}.
 \label{fig:sigmoid}
 \end{figure}
 
+## Logistic Curves {#sec:logistic}
 <!-- https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context --> 
 The *logistic* function is a parameterized sigmoid function of the form
 
 $$
-
+\frac{L}{1+e^{-k(x-x_0}}.
 $$
 
-**TODO**: Sigmoid 
+Figure \ref{fig:logistic} shows a logistic function
+
+$$
+l(x) = \frac{100}{1+2.75 e^{-0.4x}}
+$$
+
+plotted over the domain $0 \le x \le 5$. The parameters and domain are chosen carefully to provide aconfusing plot. The curve in figure \ref{fig:logistic}
+forms a mostly straight line. Data sampled from this narrow range might fit a
+linear model with very little error, but of course this is only because we have
+zoomed into the center of the curve.
+
+Consider a fad in the world that starts very small, but quickly spreads in
+popularity as network effects cascade into increased awareness. One might call
+this a "trend," and the trend line may initially appear linear or even
+exponential, but as the fad grows so too might shortages, opposition, or
+regulation slow its growth.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(\frac{100}{1 + 2.75 e^{-0.4x}}\)},
+    ]
+        \addplot [
+            domain=0:5,
+            samples=100,
+        ]{100/(1+2.75 * exp(-0.4 * x))};
+    \end{axis}
+\end{tikzpicture}
+\caption{todo logistic.}
+\label{fig:logistic}
+\end{figure}
 
 ## Discussion prompts
 
@@ -328,8 +367,18 @@ What are some advantages and disadvantages of using pie charts?
 2. What are some plot practices, such as inconsistent scales, that would be
 misleading to the reader? 
 
+3. Consider a situation where the sigmoid and logistic curves might reasonably
+model constrained exponential growth. If one only observes the center of this
+system, then the slow initial growth and diminishing returns might not be 
+visible in a scatter plot of the data. Discuss graphical and analytical methods
+one might use to predict the future behavior of the uncertain system.
+
 ## Practical exercises
 
 1. Given a dataset, plot the data and explain why this plot technique is appropriate. 
 
 2. Be creative and construct intentionally misleading plots, then try to "spot the flaw" in one another's work.  
+
+3. Plot our logistic function from section \ref{sec:logistic},
+$l(x) = \frac{100}{1+2.75 e^{-0.4x}}$, on a logarithmic scale and manipulate
+the domain. Does the logistic function still look linear on a logarithmic scale?

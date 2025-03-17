@@ -296,6 +296,58 @@ fn main() {
 }
 ```
 
+## JavaScript Object Notation (JSON) {#sec:json}
+
+We introduced CSV in section \ref{sec:csv} as a method for representing data in
+a file. *JavaScript Object Notation* (JSON) is an alternative format [@rfc8259].
+JSON's syntax is based on JavaScript. Objects in JSON are key-value pairs. The
+key of a JSON object must be a double-quoted string. Values can be nested objects,
+arrays, numbers, strings, booleans, and `null`. The process of taking a data
+structure from a program's memory and saving it as JSON is called *serialization*.
+The inverse, reading an object into memory from a JSON input, is correspondingly
+*deserialization*. Trailing commas are forbidden.
+
+JSON is much more verbose than CSV, but less verbose than the Extensible
+Markup Language (XML), which we will not discuss further. JSON is generally
+"human-readable" and can be authored by hand, although not as easily as CSV.
+The following code listing shows the table from section \ref{sec:csv} as JSON.
+
+```json
+[
+    {
+        "x": "Rob",
+        "y": 0.74019382956651820,
+        "z": 0.3508759018489489
+    },
+    {
+        "x": "John",
+        "y": 0.41331428270607506,
+        "z": 0.2936926427452584
+    },
+    {
+        "x": "David",
+        "y": 0.37671743737357277,
+        "z": 0.5676190157838865
+    },
+    {
+        "x": "Frank",
+        "y": 0.50270122376380740,
+        "z": 0.7939268929144455
+    }
+]
+```
+
+JSON documents allow arbitrarily nested and shaped objects, but in many applications
+it may be undesirable to deserialize records with missing values. Consider if
+one of the below records were missing a $y$-value, or if a $z$ value were incorrectly
+enclosed in double-quotes, thus forming a string instead of a numeral.
+
+Some JSON parsers, such as Rust's Serde library, allow the programmer to specify
+the shape of the record before parsing. Libraries may ignore or error when records
+do not fit the expected shape. One can expect statically-typed languages to
+require more specification before parsing and dynamically-typed languages to allow
+greater flexibility at runtime (see section \ref{sec:strong-weak-types}).
+
 ## Parallelism and Concurrency {#sec:parallelism-and-concurrency}
 
 *Parallelism* is the ability for a computing machine to perform simulataneous operations.

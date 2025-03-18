@@ -92,18 +92,29 @@ width of the third bar makes this observation appear much larger than the others
 \label{fig:misleading-barplot}
 \end{figure}
 
+## Box Plots {#sec:boxplot}
+
 ```r
 > boxplot(mtcars$mpg)
+```
+
+![todo](mtcars-boxplot.pdf){#fig:boxplot}
+
+## Histograms {#sec:histogram}
+
+```r
 > hist(mtcars$mpg)
+```
+
+![todo](mtcars-hist.pdf){#fig:histogram}
+
+## Scatter Plots {#sec:scatter}
+
+```r
 > plot(mtcars$wt, mtcars$mpg)
 ```
 
-![](mtcars-boxplot.pdf){width=25%}
-![](mtcars-hist.pdf){width=25%}
-![](mtcars-plot.pdf){width=25%}
-\begin{figure}[!ht]
-\caption{Visualizations of the Motor Trend Cars (\texttt{mtcars}) data set using the R language. *TODO* split into separate subsections.}
-\end{figure}
+![todo](mtcars-plot.pdf){#fig:scatter}
 
 ## Linear and logarithmic scales {#sec:scales}
 

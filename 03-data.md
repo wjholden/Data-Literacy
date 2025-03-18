@@ -152,9 +152,11 @@ three.
 
 ## Functional Programming {#section:filter-map-reduce}
 
-SQL syntax makes it easy to write select, project, and join (SPJ) queries.
-SQL's grouping and aggregate functions make it possible to perform row-wise and column-wise operations.
-One can find comparable semantics (with different syntax) in many programming language's *filter*, *map*, and *reduce* functions.
+SQL's declarative syntax makes it easy to write select, project, and join (SPJ) queries.
+SQL grouping and aggregate functions make it possible to perform row-wise and column-wise operations.
+A *functional* programming language, which emphasizes the use of pure functions
+(see section \ref{section:discrete-math}) to express algorithms, provides comparable
+semantics in the *filter*, *map*, and *reduce* functions.
 
 ### Filter
 
@@ -215,11 +217,21 @@ Both filter and map can be implemented in terms of reduce.
 
 Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
+<!-- No bueno on the ~ character in math mode. -->
+\newcommand{\infix}{\char"007E}
+
+<!-- https://neopythonic.blogspot.com/2019/03/why-operators-are-useful.html?m=1 -->
+<!-- https://reference.wolfram.com/language/ref/Infix.html.en -->
+Some languages differentiate `foldl` and `foldr` to differentiate left- and right-associativity.
+A left-associative function would evaluate $x \infix y \infix z$ with first $x \infix y$ and then $(x \infix y) \infix z$.
+(In this context, the "$\infix$" represents an arbitrary infix operator and has no specific meaning).
+A right-associative function evaluates $x \char"007E y \infix z$ as $x \infix (y \infix z)$.
+
 ### Vectorized Functions and Array Programming {#sec:array-programming}
 
 A *vectorized function* automatically iterates over array inputs.
-This approach is sometimes called *array programming*.
-This design is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
+This approach is related to *array programming*.
+Automatic vectorization is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
 Some examples in the R language, which one can reproduce at https://webr.r-wasm.org/latest/, are:
 
 ```r
@@ -343,7 +355,7 @@ one of the below records were missing a $y$-value, or if a $z$ value were incorr
 enclosed in double-quotes, thus forming a string instead of a numeral.
 
 Some JSON parsers, such as Rust's Serde library, allow the programmer to specify
-the shape of the record before parsing. Libraries may ignore or error when records
+the structure of the record before parsing. Libraries may ignore or error when records
 do not fit the expected shape. One can expect statically-typed languages to
 require more specification before parsing and dynamically-typed languages to allow
 greater flexibility at runtime (see section \ref{sec:strong-weak-types}).

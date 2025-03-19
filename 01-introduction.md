@@ -1,5 +1,7 @@
 # Introduction
 
+This document was *definitely* rendered with Lua\LaTeX.
+
 ## The Wisdom Hierarchy
 
 todo [@doi:10.1177/0165551506070706]

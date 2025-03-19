@@ -33,7 +33,7 @@ A \times B \times C = \left\{
 \left( j, z , c \right) \right\}.
 $$
 
-As an exercise, go to https://sqlime.org/#deta:mb9f8wq2mq0b to use a DBMS named SQLite.
+As an exercise, go to the SQLime Playground^[https://sqlime.org/#deta:mb9f8wq2mq0b] to use a DBMS named SQLite.
 Enter the following commands to reproduce the above Cartesian product.
 
 ```sql
@@ -74,7 +74,7 @@ For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
 Each table has a column that uniquely identifies an athlete.
 To get a triathletes (the athletes who participate in swimming, cycling, and running),
 we use an *equijoin* to find the product where the names are equal.
-Return to https://sqlime.org/#deta:36fadcq9apak to demonstrate experiment with the `JOIN` operator.
+Return to the SQLime Playground^[https://sqlime.org/#deta:36fadcq9apak] to demonstrate experiment with the `JOIN` operator.
 
 ```sql
 CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
@@ -94,10 +94,10 @@ SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
 There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
 As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
 
-## Grouping and Aggregation {#section:grouping-and-aggregation}
+## Grouping and Aggregation {#sec:grouping-and-aggregation}
 
 DBMSs provide robust *grouping* functions for operating on related rows.
-Return to https://sqlime.org/#deta:32lpfoo57r8g and create a small table of hypothetical marathon times.
+Return to the SQLime Playground^[https://sqlime.org/#deta:32lpfoo57r8g] and create a small table of hypothetical marathon times.
 
 ```sql
 CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
@@ -150,12 +150,12 @@ needs to specify the detailed process to compute the result, we use the
 are often blurred by languages and databases that provide functionality from all
 three.
 
-## Functional Programming {#section:filter-map-reduce}
+## Functional Programming {#sec:filter-map-reduce}
 
 SQL's declarative syntax makes it easy to write select, project, and join (SPJ) queries.
 SQL grouping and aggregate functions make it possible to perform row-wise and column-wise operations.
 A *functional* programming language, which emphasizes the use of pure functions
-(see section \ref{section:discrete-math}) to express algorithms, provides comparable
+(see section \ref{sec:discrete-math}) to express algorithms, provides comparable
 semantics in the *filter*, *map*, and *reduce* functions.
 
 ### Filter
@@ -177,7 +177,7 @@ Map performs the same function over each element of an input set, creating "mapp
 <- ['FISH', 'BIRD']
 ```
 
-### Reduce
+### Reduce {#sec:reduce}
 
 Reduce, also known as *fold*, performs some operation on each element of an input set and returns an *accumulator*, which is passed again to the reduce function with the next input value.
 To take an array's sum, we use an initial accumulator value of 0.
@@ -198,7 +198,7 @@ For the array's product, we use 1 for the initial accumulator value.
 <- 13125
 ```
 
-Both filter and map can be implemented in terms of reduce.
+Both filter and reduce can be implemented in terms of reduce.
 
 ```javascript
 >> ['cat', 'dog', 'fish', 'bird'].reduce((a,v) => {
@@ -215,7 +215,7 @@ Both filter and map can be implemented in terms of reduce.
 <- ['FISH', 'BIRD']
 ```
 
-Here, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
+In both cases, we use an empty array (`[]`) instead of a numeric identity as our initial accumulator value.
 
 <!-- No bueno on the ~ character in math mode. -->
 \newcommand{\infix}{\char"007E}
@@ -246,7 +246,7 @@ Some examples in the R language, which one can reproduce at https://webr.r-wasm.
 Observe that the pairwise sums in `c(1, 2, 3) + c(4, 5, 6)` are independent.
 No sum depends on another, and therefore the computing machine can safely perform each operation in *parallel*.
 
-### Immutability
+### Immutability {#sec:immutability}
 
 Suppose one needs to write a program to sort its input. An obvious solution is
 to order the inputs directly by *mutating* (changing) the memory in-place.
@@ -280,7 +280,7 @@ Many programming languages, notably C++, Python, JavaScript, and Python, emphasi
 
 Object-orientation comes in many varieties [@10.5555/3271463]. Many OO languages
 provide a method inherit data and code from other objects, often in a hierarchy.
-The following Rust program, which one can run at https://play.rust-lang.org,
+The following Rust program, which one can run at the Rust Playground^[https://play.rust-lang.org/?gist=9542264fd12645a4ee1956ab7f890812],
 demonstrates a `Point` object. The object is defined as a `struct`
 with two fields, `x` and `y`. The implementation for `Point` adds two methods,
 a *constructor* (`new`) and a *Manhattan distance* function.
@@ -372,7 +372,7 @@ In practice, many programmers confuse the terms *parallel* and *concurrent* as i
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
 but performance benefits often justify the additional complexity.
 
-![Order of operation partially matters when getting dressed. Some clothing items are sequential, but others are concurrent. The system can be modeled as a directed ayclic graph (see section \ref{section:special-cases-of-graphs}).](get-dressed.dot.pdf){#fig:get-dressed}
+![Order of operation partially matters when getting dressed. Some clothing items are sequential, but others are concurrent. The system can be modeled as a directed ayclic graph (see section \ref{sec:special-cases-of-graphs}).](get-dressed.dot.pdf){#fig:get-dressed}
 
 Some problems can be partitioned into *subproblems* which can be solved in parallel.
 Other problems cannot.
@@ -385,7 +385,7 @@ A trivial example might be finding the minimum value in a large dataset.
 One can partition the dataset, find the minimum value in each partition, and then find the minimum value among those results.
 This process can be repeated.
 
-Go to https://go.dev/play/p/IOwH08R_z7Z to experiment with a divide-and-conquer `minimum` function in the Go language.
+Go to the Go Playground^[https://go.dev/play/p/IOwH08R_z7Z] to experiment with a divide-and-conquer `minimum` function in the Go language.
 
 ```go
 package main
@@ -421,7 +421,7 @@ func main() {
 ```
 
 Click the "Run" button several times and observe that the output is completely *deterministic*.
-Now go to https://go.dev/play/p/Vbe7BWrwlku for a slightly modified version of the same program.
+Now return to the Go Playground^[https://go.dev/play/p/Vbe7BWrwlku] for a slightly modified version of the same program.
 
 ```go
 	default:
@@ -442,73 +442,6 @@ Click the "Run" button several times and observe that the final result is consis
 The computer industry has recently turned to *Graphical Processing Units* (GPU) as a fast, inexpensive, and energy-efficient method for solving highly parallelizable problems.
 GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
 These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
-
-## Cumulative Sums and Pareto Charts
-
-A *Pareto chart* is a useful analytical tool to show the relative importance of
-problems in industrial settings. The chart shows the proportion of problems
-discretized (see section \ref{section:discretize}) into root causes. We can
-compute these cumulative sums using reduce and visualize them with a bar plot.
-
-The following example uses data gathered from \url{https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions}.
-The `%>%` operator, from the `dplyr` package, anonymously "pipes" the output
-from one function into the first argument of the next function.
-Structurally, the `%>%` produces a left-to-right order of operations that
-can be easier to write, read, and maintain than functions written in prefix and
-infix notation. `dplyr` uses `mutate` as row-wise `map` operation with support
-for aggregate functions (such as `sum(n)` below;
-see also section \ref{section:grouping-and-aggregation}).
-
-```r
-> library(tidyverse)
-> v = c("GW1516", "GW1516", "Methenolone", "Meldonium", "GW1516", 
-  "GW1516", "Oxandrolene", "GW1516", "GW1516", "Clomiphene", "Clomiphene",
-  "GW1516", "Turinabol", "GW1516", "GW1516", "GW1516", "RAD140", "GW1516",
-  "GW1516", "Stanozolol", "Drostanolone", "GW1516", "Clomiphene",
-  "GW1516", "GW1516", "Ostarine", "S-23", "GW1516", "Clomiphene", "GW1516",
-  "Meldonium", "GW1516", "GW1516", "5aAdiol", "Stanozolol", "Testosterone", 
-  "Drostanolone", "GW1516", "GW1516", "Metenolone", "GW1516", "Boldenone", 
-  "GW1516", "GW1516", "GW1516")
-> df = data.frame(Violation = v) %>%
-  count(Violation) %>%
-  arrange(-n) %>%
-  mutate(Proportion = 100.0 * n / sum(n)) %>%
-  select(Violation, Proportion) %>%
-  mutate(CumSum = cumsum(Proportion))
-> df
-      Violation Proportion    CumSum
-1        GW1516  55.555556  55.55556
-2    Clomiphene   8.888889  64.44444
-3  Drostanolone   4.444444  68.88889
-4     Meldonium   4.444444  73.33333
-5    Stanozolol   4.444444  77.77778
-6       5aAdiol   2.222222  80.00000
-7     Boldenone   2.222222  82.22222
-8    Metenolone   2.222222  84.44444
-9   Methenolone   2.222222  86.66667
-10     Ostarine   2.222222  88.88889
-11  Oxandrolene   2.222222  91.11111
-12       RAD140   2.222222  93.33333
-13         S-23   2.222222  95.55556
-14 Testosterone   2.222222  97.77778
-15    Turinabol   2.222222 100.00000
-```
-
-This dataset does not quite show the famous "Pareto principle" where 20% of 
-problems cause 80% of problems, but we do see that the distribution is not
-uniform. The first category accounts for over half of the observations.
-Using R's `ggplot` library, we show the resulting Pareto chart with the bars
-and cumulative sum line.
-
-```r
-df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
-	geom_bar(aes(weight = Proportion)) +
-	geom_line(aes(y = CumSum, group=1)) +
-	xlab("Drug Violation") +
-	ylab("Proportion")
-```
-
-![A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.](pareto-chart.pdf)
 
 ## The CAP Theorem
 
@@ -544,6 +477,12 @@ Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to pre
 
 2. Given a noisy dataset, identify problems in each column that could influence inclusion and exclusion criteria. 
 
-3. Implement filter and map in terms of reduce using a programming language which provides reduce. 
+3. Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 
 
-4. Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 
+4. In section \ref{sec:reduce} we have examples of the filter and map operations
+implemented in terms of reduce. Later, in our discussion of immutability in section
+\ref{sec:immutability}, we learned that a sorting function can either mutate the
+data in-place or copy the data, leaving the original data unchanged and returning
+a new data structure with the desired property. Which design are the filter and
+map operations in section \ref{sec:reduce}? Rewrite both functions in the other
+paradigm.

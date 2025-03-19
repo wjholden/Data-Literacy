@@ -1,6 +1,6 @@
 # Measures of Central Tendency
 
-## Least squares method  {#section:least-squares-method}
+## Least squares method  {#sec:least-squares-method}
 
 The canonical definition of the *arithmetic mean* for a set of $n$ numbers $x$ is
 
@@ -151,7 +151,7 @@ s^2 = \frac{1}{n-1} \sum_{i=1}^{n} {\left( x_i - \bar{x} \right)^2}.
 $$
 
 where $n$ is the number of elements in $x$.
-Observe that the calculation for this statistic is similar to the least squares method in section \ref{section:least-squares-method}.
+Observe that the calculation for this statistic is similar to the least squares method in section \ref{sec:least-squares-method}.
 $s^2$ is the average squared distance from the mean within the data set.
 
 The *standard deviation* is the square root of variance,

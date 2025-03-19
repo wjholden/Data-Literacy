@@ -1,4 +1,4 @@
-all: dl.pdf
+all: test dl.pdf
 
 00-preface.md:
 
@@ -41,9 +41,18 @@ dl.pdf: $(patsubst %.dot,%.dot.pdf,$(wildcard *.dot)) *.md metadata.txt referenc
 	pandoc -o dl.pdf metadata.txt 00-preface.md \
 	01-introduction.md 02-visualization.md 03-data.md 04-centrality.md 05-dimensionality.md \
 	08-graph.md 99-references.md \
-	--citeproc --pdf-engine=xelatex --toc --number-sections --fail-if-warnings=true
+	--citeproc --pdf-engine=xelatex --toc --number-sections --fail-if-warnings=true \
+	--filter pandoc-include
 
+.PHONY: clean
 clean:
 	rm dl.pdf
 	rm *.dot.pdf
 	rm pareto.pdf
+
+# Error on common misspellings. It's supposed to be "first principles" and
+# "principal component analysis."
+.PHONY: test
+test:
+	@! grep -i "first principal" *.md
+	@! grep -i "principle component" *.md

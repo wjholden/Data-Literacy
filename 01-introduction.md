@@ -1,5 +1,9 @@
 # Introduction
 
+## The Wisdom Hierarchy
+
+todo [@doi:10.1177/0165551506070706]
+
 ## Parameters and statistics 
 
 Statistics are the foundation of most data mining, machine learning (ML), and artificial intelligence (AI) methods today.
@@ -102,7 +106,7 @@ Suppose a political scientist encoded voter's political party as "1", "2", "3", 
 Is "2" an intermediate value between "1" and "3", or are these actually nominal data where the only arithmetic operations are $=$ and $\ne$?
 AI methods may form incorrect assumptions about data that domain experts can easily prevent.
 
-## Discretization {#section:discretize}
+## Discretization {#sec:discretize}
 
 Measurements with arbitrarily many decimal digits of precision are *continuous*,
 whereas measurements with finite steps in between (including categories) are *discrete*.
@@ -118,7 +122,7 @@ Rather, the year, year and month, or year, month, and day are almost almost alwa
 We even combine years into groups when discussing generations and peer groups.
 Combining a range of birth years into generational categories is an example of *discretization*.
 
-## Missing values {#section:nan}
+## Missing values {#sec:nan}
 
 In practice, *data sets* often have missing values.
 Different programming languages have substantially different syntax and semantics for representing and handling missing values.
@@ -300,7 +304,7 @@ We will discuss object-oriented programming in more detail in section
 
 
 
-## Vectors and matrices {#section:vector}
+## Vectors and matrices {#sec:vector}
 
 \begin{figure}
 \centering
@@ -470,7 +474,7 @@ to consider which arithmetic operations apply to our data in section
 \ref{sec:levels}, likewise we must consider the operations applicable to
 composite values.
 
-## Sets, relations, functions, and algorithms {#section:discrete-math}
+## Sets, relations, functions, and algorithms {#sec:discrete-math}
 
 We now introduce a few terms from *discrete mathematics* that are fundamental to all analysis.
 A *set* is an unordered collection of *distinct* elements.

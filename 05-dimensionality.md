@@ -30,7 +30,7 @@ $$
     \right|.
 $$
 
-Recall from section \ref{section:discrete-math} that sets are unordered; $\left\{ a, b \right\}$ is equal to $\left\{ b, a \right\}$.
+Recall from section \ref{sec:discrete-math} that sets are unordered; $\left\{ a, b \right\}$ is equal to $\left\{ b, a \right\}$.
 
 Two common notations for the number of possible subsets we can choose are $\binom{n}{r}$  and $nCr$.
 The former is favored in higher mathematics, the latter in secondary schools.
@@ -104,7 +104,7 @@ pascal <- function(n,r) {
 }
 ```
 
-we can reproduce the results of our passengers example. The `sapply` function in R is comparable to the `map` operation (see section \ref{section:filter-map-reduce}).
+we can reproduce the results of our passengers example. The `sapply` function in R is comparable to the `map` operation (see section \ref{sec:filter-map-reduce}).
 
 ```r
 > sapply(0:4, function(r) pascal(4, r))
@@ -313,7 +313,7 @@ Basic demographic variables include age, gender, location, height, weight, and r
 Exercise variables in this study include weekly minutes performing cardiovascular training, minutes of resistance training, and minutes of flexibility training.
 Other exercise variables in this study include metrics of speed, endurance, strength, flexibility, blood pressure, resting heart rate, body composition, bone density, and sleep duration.
 
-Suppose we discretize (see section \ref{section:discretize}) each continuous variable into discrete categories.
+Suppose we discretize (see section \ref{sec:discretize}) each continuous variable into discrete categories.
 For example, we might change the age variable from its numeric values to categories 1-10, 11-20, 21-30, and so on.
 We separate height into very short, short, average, tall, and very tall.
 We categorize minutes of weekly training into 0-20, 20-60, 60-120, and 120+.
@@ -460,7 +460,7 @@ The toy shark example is intended to demonstrate how *spurious correlations* may
 The *Texas sharpshooter fallacy* can describe this effect.
 A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
 
-## Pareto frontier {#section:pareto}
+## Pareto frontier {#sec:pareto}
 
 A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
 
@@ -499,7 +499,7 @@ $$
 where $x$ is the number of repetitions performed.
 Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
 
-## Covariance and Correlation {#section:cor}
+## Covariance and Correlation {#sec:cor}
 
 In section \ref{sec:moments}, we defined variance as the average squared 
 difference of a random variable $x$ to its expected value, $\bar{x}$.
@@ -531,7 +531,7 @@ $$
 $$
 
 The following Rust program implements both covariance and correlation statistics.
-One can execute this program at \url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=1f3b41a17c10c354ee462062772dbd72}
+One can execute this program at the Rust Playground^[https://play.rust-lang.org/?gist=1f3b41a17c10c354ee462062772dbd72]
 and reproduce the result in R at \url{https://docs.r-wasm.org/webr/latest/} with
 `cov(c(5,7,3,6,8), c(65,80,50,70,90))` and `cor(c(5,7,3,6,8), c(65,80,50,70,90))`.
 
@@ -664,8 +664,8 @@ $$
 }
 $$
 
-A Rust implementation of this new $\xi$ statistic is given below and at
-\url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=6336707980cfc3a54511842d937fb344}.
+A Rust implementation of this new $\xi$ statistic is given below and at the
+Rust Playground^[https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=6336707980cfc3a54511842d937fb344].
 
 ```rust
 fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
@@ -694,9 +694,9 @@ fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
 }
 ```
 
-## Principle Component Analysis (PCA)
+## Principal Component Analysis (PCA)
 
-*Principle Component Analysis* (PCA) is a powerful technique for discovering linear
+*Principal Component Analysis* (PCA) is a powerful technique for discovering linear
 relationships among columns of data and compressing these columns into fewer dimensions
 [@10.1080/14786440109462720] [@hotelling1933analysis].
 
@@ -806,5 +806,5 @@ aspects.
 1. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
 2. About one in twenty white males have some form of color blindness. About 70.2% of the U.S. military report themselves as white, and about 82.8% as male. Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$. If a Command gives a briefing to twelve random generals each year, what is the probability that one or more of those generals is color blind? (Assume, incorrectly but for the sake of simple calculation, that women and non-whites are never color blind.) Assume further that $W$ and $M$ are independent and that $P(W \cap M) = P(W)P(M) = 0.581256$, therefore $P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}$ and consequently $P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628$. Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
 3. Come up with a creative way to draw a four-dimensional Venn diagram.
-4. Use Excel to reproduce the zero correlation between $x$ and $y_1 = x \odot x$ from section \ref{section:cor}. Now update the $y$ column to $y_2 = x \odot x + x = \left( 20, 12,  6,  2,  0,  0,  2,  6, 12, 20, 30 \right)$. What is $\text{cor}\left( x, y_2 \right)$?
+4. Use Excel to reproduce the zero correlation between $x$ and $y_1 = x \odot x$ from section \ref{sec:cor}. Now update the $y$ column to $y_2 = x \odot x + x = \left( 20, 12,  6,  2,  0,  0,  2,  6, 12, 20, 30 \right)$. What is $\text{cor}\left( x, y_2 \right)$?
 5. Use Excel's line of best fit feature to construct a linear models between both $x$ and $y_1$ and also $x$ and $y_2$. Observe that the $y$-intercept in both models is $10$. Try to figure out where this constant comes from. <!-- answer: mean(x) -->

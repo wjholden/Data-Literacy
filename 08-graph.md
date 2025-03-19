@@ -3,7 +3,7 @@
 ## Vertices, edges, and paths
 
 A *graph* ($G$) is a collection of *vertices* ($V$; also known as *nodes* or *points*) and the *edges*
-($E$; also known as *relations* or *lines*; see section \ref{section:discrete-math}) connecting them.
+($E$; also known as *relations* or *lines*; see section \ref{sec:discrete-math}) connecting them.
 
 $$
 G = \left\{ V , E \right\}
@@ -62,7 +62,7 @@ RETURN x;
 
 Finally, query the database for a path of any length (`*`) connecting Paris to Hague,
 returning the path (`p`) and its cumulative distance.
-Refer to section \ref{section:filter-map-reduce} for a description of the reduce operation.
+Refer to section \ref{sec:filter-map-reduce} for a description of the reduce operation.
 
 ```
 MATCH (:CITY {name:'Paris'})-[p:ROUTE*]->(:CITY {name:'Hague'}) 
@@ -79,11 +79,11 @@ There is no route (no path) connecting Europe, by ground, to Australia, and ther
 there is no real number to quantify the distance.
 
 Depending on the application, one might represent an unreachable node as having infinite distance,
-as we will in section \ref{section:dijkstra} with Dijkstra's algorithm.
+as we will in section \ref{sec:dijkstra} with Dijkstra's algorithm.
 One might also use a special, non-numeric values, as described in our discussion
-of missing values in section \ref{section:nan}.
+of missing values in section \ref{sec:nan}.
 
-## Special cases of graphs {#section:special-cases-of-graphs}
+## Special cases of graphs {#sec:special-cases-of-graphs}
 
 A *directed acyclic graph* (DAG) is a special case of a directed graph.
 A *cycle* (also known as a *loop*) occurs in a directed graph when there is any path from some vertex to itself.
@@ -166,7 +166,7 @@ This is an example of a *depth-first search* (DFS).
 
 ![There are many paths from the starting point to the treasure in this kingdom.](kingdom.dot.pdf)
 
-Go to https://go.dev/play/p/AuH2qOgSG-c to run the following DFS implementation, written in Go.
+Go to the Go Playground^[https://go.dev/play/p/AuH2qOgSG-c] to run the following DFS implementation, written in Go.
 This implementation uses a *recursive* definition of the DFS function (the DFS function invokes itself as it explores the graph).
 The function uses an external data structure (`quest`) to identify which vertices have already been discovered.
 Upon successful search, the function prints its position in the graph as the recursive calls "unwind."
@@ -239,7 +239,7 @@ The proof for the correctness of a BFS follows:
 6. $\vdots$
 7. At $r=n$, BFS has located $v$ and therefore $n = \delta(u,v)$. $\square$
 
-Gp to https://go.dev/play/p/yMIcmcsK_V9 and run the following BFS implementation, written in Go.
+Go to the Go Playground^[https://go.dev/play/p/yMIcmcsK_V9] and run the following BFS implementation, written in Go.
 This implementation uses an *iterative* BFS function.
 The BFS function does not invoke itself.
 Instead, the procedure adds unexplored vertices to a queue and records the "parent" of each vertex.
@@ -281,7 +281,7 @@ This program should output `Discovered treasure: castle city start`.
 BFS finds the shortest path between two vertices by *hop count*, but it does not consider edge weights.
 In the following section, we will find that we can often explore graphs much faster by ordering our breadth-first traversal by cumulative path cost.
 
-### Dijkstra's algorithm {#section:dijkstra}
+### Dijkstra's algorithm {#sec:dijkstra}
 
 <!--
 Dijkstra in Go https://go.dev/play/p/hcNbTvGli-z
@@ -292,92 +292,13 @@ Too long and ugly to share.
 For this reason, Dijkstra's algorithm is also known as the *shortest-path first* (SPF).
 Like BFS, Dikjstra's algorithm is a *greedy algorithm* that discovered a globally optimal solution by repeatedly making locally optimal decisions.
 Let us turn to the Python language to demonstrate Dijkstra's algorithm on our same treasure-hunting graph, this time with edge weights.
-Run this program at https://www.python.org/shell/.
-(Note: the Python language is very "picky" about tabs.
-A plain text verion of this program is available at https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py.)
+Run this program at https://www.python.org/shell/.^[Python *requires* tab characters
+where other languages might accept spaces and tabs interchangably. Copying this
+program from a PDF will likely not work.
+A plain text verion of this program is available at https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py.]
 
 ```python
-from heapq import *
-from collections import defaultdict
-
-g = dict(
-    [
-        ("start", ["forest", "mountains", "sea", "city"]),
-        ("forest", ["start", "mountains", "desert", "cave"]),
-        ("mountains", ["start", "forest", "glacier"]),
-        ("desert", ["forest"]),
-        ("cave", ["forest", "inferno"]),
-        ("inferno", ["cave"]),
-        ("glacier", ["mountains"]),
-        ("sea", ["start", "beach"]),
-        ("beach", ["sea", "city"]),
-        ("city", ["beach", "start", "castle"]),
-        ("castle", ["city", "treasure"]),
-        ("treasure", ["castle"]),
-    ]
-)
-
-w = dict(
-    [
-        (("start", "forest"), 70),
-        (("start", "mountains"), 60),
-        (("start", "sea"), 54),
-        (("start", "city"), 81),
-        (("forest", "start"), 42),
-        (("forest", "mountains"), 51),
-        (("forest", "desert"), 56),
-        (("forest", "cave"), 63),
-        (("mountains", "start"), 71),
-        (("mountains", "forest"), 38),
-        (("mountains", "glacier"), 72),
-        (("desert", "forest"), 93),
-        (("cave", "forest"), 19),
-        (("cave", "inferno"), 17),
-        (("inferno", "cave"), 71),
-        (("glacier", "mountains"), 25),
-        (("sea", "start"), 49),
-        (("sea", "beach"), 88),
-        (("beach", "sea"), 79),
-        (("beach", "city"), 29),
-        (("city", "beach"), 30),
-        (("city", "start"), 33),
-        (("city", "castle"), 36),
-        (("castle", "city"), 39),
-        (("castle", "treasure"), 76),
-        (("treasure", "castle"), 76),
-    ]
-)
-
-def dijkstra(src, dst):
-    explored = set()
-    distance = defaultdict(lambda: float('inf'))
-    previous = {'start': None}
-    distance[src] = 0
-    queue = []
-    heappush(queue, (0, src))
-    while queue:
-        _, current = heappop(queue)
-        if current == dst:
-            path = []
-            parent = current
-            while parent in previous:
-                path.append(parent)
-                parent = previous[parent]
-            print("Path =", ', '.join(path))
-            print("Distance =", distance[dst])
-            return path, distance[dst]
-        if current in explored:
-            continue
-        explored.add(current)
-        for neighbor in g[current]:
-            d = distance[current] + w[(current, neighbor)]
-            if neighbor not in explored and d < distance[neighbor]:
-                distance[neighbor] = d
-                previous[neighbor] = current
-                heappush(queue, (d, neighbor))
-    print("No path found")
-
-dijkstra("start", "treasure")
+!include "dijkstra.py"
 ```
 
 This program should output `Path found: 193`, and `Path: treasure castle city start`.
@@ -554,7 +475,7 @@ The 8-piece puzzle problem could likely also be solved with a very fast and dire
 Likewise, there may be an optimal algorithm to solve a Rubik's cube, but given an A* solver and a fast computer we may be able to find an economically-acceptable solution.
 
 Our informed search algorithm is implemented in Julia.
-This is comparable our implementation of Dijkstra's algorithm (see section \ref{section:dijkstra}),
+This is comparable our implementation of Dijkstra's algorithm (see section \ref{sec:dijkstra}),
 but instead of searching for a named destination this function instead uses its heuristic function.
 If the heuristic function returns the value zero, then the search is considered successful and the program terminates.
 This A* program also prints its search in the DOT graph description language, which can be rendered as a graphic using the GraphViz program.
@@ -591,7 +512,7 @@ function informed_search(source, edges::Function, heuristic::Function)
 end
 ```
 
-The heuristic function for the stable marriage function seeks to quantify and differentiate instability by returning the sum of the squared distance (see section \ref{section:least-squares-method}) of a rogue couple's candidate and current preferences.
+The heuristic function for the stable marriage function seeks to quantify and differentiate instability by returning the sum of the squared distance (see section \ref{sec:least-squares-method}) of a rogue couple's candidate and current preferences.
 
 ```julia
 function stability(men::Matrix, women::Matrix, matching)

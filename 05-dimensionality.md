@@ -146,7 +146,7 @@ $$
 nCr = \binom{n}{r} = \frac{nPr}{r!} = \frac{\frac{n!}{\left(n-r\right)!}}{r!} = \frac{n!}{r!\left(n-r\right)!}
 $$
 
-## $n$ choose 2
+## $n$ choose 2 {#sec:choose2}
 
 The case $\binom{n}{2}$ occurs frequently and deserves special discussion.
 The first few terms are (in Interactive Python, or IPython):
@@ -694,6 +694,100 @@ fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
 }
 ```
 
+## Causation
+
+One must take care not to confuse correlation with causation. Consider an experiment
+where seven subjects are each given a fair die and assigned "relationship" numbers
+such that each pair of subjects $(x,y)$ shares a relationship $R_{xy}$ with every other subject,
+as shown in figure \ref{fig:full-mesh} and enumerated in the following table.
+
+| Subject | Relationships                               |
+|---------|---------------------------------------------|
+| 1       | $R_{12},R_{13},R_{14},R_{15},R_{16},R_{17}$ |
+| 2       | $R_{12},R_{23},R_{24},R_{25},R_{26},R_{27}$ |
+| 3       | $R_{13},R_{23},R_{34},R_{35},R_{36},R_{37}$ |
+| 4       | $R_{14},R_{24},R_{34},R_{45},R_{46},R_{47}$ |
+| 5       | $R_{15},R_{25},R_{35},R_{45},R_{56},R_{57}$ |
+| 6       | $R_{16},R_{26},R_{36},R_{46},R_{56},R_{67}$ |
+| 7       | $R_{17},R_{27},R_{37},R_{47},R_{57},R_{67}$ |
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+  \filldraw (2., 0.) circle (1pt);
+  \filldraw (1.2469796037174672, 1.5636629649360596) circle (1pt);
+  \filldraw (-0.445042, 1.9498558243636472) circle (1pt);
+  \filldraw (-1.80194, 0.8677674782351165) circle (1pt);
+  \filldraw (-1.80194, -0.867767) circle (1pt);
+  \filldraw (-0.445042, -1.94986) circle (1pt);
+  \filldraw (1.2469796037174667, -1.56366) circle (1pt);
+
+  \draw[-] (2.,0.) -- (1.2469796037174672,1.5636629649360596);
+  \draw[-] (2.,0.) -- (-0.445042,1.9498558243636472);
+  \draw[-] (2.,0.) -- (-1.80194,0.8677674782351165);
+  \draw[-] (2.,0.) -- (-1.80194,-0.867767);
+  \draw[-] (2.,0.) -- (-0.445042,-1.94986);
+  \draw[-] (2.,0.) -- (1.2469796037174667,-1.56366);
+  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-0.445042,1.9498558243636472);
+  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-1.80194,0.8677674782351165);
+  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-1.80194,-0.867767);
+  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-0.445042,-1.94986);
+  \draw[-] (1.2469796037174672,1.5636629649360596) -- (1.2469796037174667,-1.56366);
+  \draw[-] (-0.445042,1.9498558243636472) -- (-1.80194,0.8677674782351165);
+  \draw[-] (-0.445042,1.9498558243636472) -- (-1.80194,-0.867767);
+  \draw[-] (-0.445042,1.9498558243636472) -- (-0.445042,-1.94986);
+  \draw[-] (-0.445042,1.9498558243636472) -- (1.2469796037174667,-1.56366);
+  \draw[-] (-1.80194,0.8677674782351165) -- (-1.80194,-0.867767);
+  \draw[-] (-1.80194,0.8677674782351165) -- (-0.445042,-1.94986);
+  \draw[-] (-1.80194,0.8677674782351165) -- (1.2469796037174667,-1.56366);
+  \draw[-] (-1.80194,-0.867767) -- (-0.445042,-1.94986);
+  \draw[-] (-1.80194,-0.867767) -- (1.2469796037174667,-1.56366);
+  \draw[-] (-0.445042,-1.94986) -- (1.2469796037174667,-1.56366);
+\end{tikzpicture}
+\caption{A \textit{full mesh} network of 7 elements contains $(7)(7-1)/2=21$ connections,
+as explained in section \ref{sec:choose2}.}
+\label{fig:full-mesh}
+\end{figure}
+
+Have each of your seven subjects roll their die. As there are only six sides to the die, we
+are guaranteed that at least one pair of subjects will receive the same roll.
+We look at our set of relationships and discover some $R_{xy}$ between those
+who rolled the same number. We have a correlation, but is there a causal relationship?
+Of course not.
+
+A *mediating variable* makes establishing causality even more difficult.
+(todo: say more about mediating variables)
+
+*Confounding factors* introduce additional dimensions to a system and can make
+analysis more complex or, sometimes, impossible. For example, a cohort of
+hypothetical adult subjects enjoy positive health outcomes in one year having
+started exercising regularly, improving sleep quality and duration, switching to
+a healthy diet, stopping smoking, and always wearing blue clothes. Which of these
+five variables led to improved health? Obviously, the blue clothes did *not*
+contribute to the health outcomes, but in the presence of the other variables it
+may be impossible to dismiss a preposterous claim that blue clothes are healthy.
+
+An ideal study should predict, control, and explore the combinatorial space as
+fully as possible. Consider another hypothetical exercise science study to
+contrast the benefits of running versus cycling. If the researcher realizes that
+the runners were significantly younger than the cyclists, then they may not be
+able to distinguish whether the differences in the cohorts was due to activity
+or age; the difference in age would be a confounding factor not *controlled* in
+the study.
+
+While mediating variables and confounding factors can create spurious or
+misleading correlations, random *noise* in measurements can also obscure or
+create or exaggerate the relationships between variables. Statistics like
+correlation are useful to estimate an *effect size* to distinguish signal from
+noise.
+
+In a data mining effort, the interactions among features in the data set might
+not be known in advance. *Big data*, large volumes of loosely-related and often
+semi-structured data, may facilitate the exploration of the $n$-dimensional
+space by providing vast numbers of both samples and features. In the next
+section, we will learn a method for exploring the linear relationships among
+the features of numerical data sets.
+
 ## Principal Component Analysis (PCA)
 
 *Principal Component Analysis* (PCA) is a powerful technique for discovering linear
@@ -783,6 +877,8 @@ won't be able to see why PCA is so interesting or useful.
 
 **TODO**: PCA plot.
 -->
+
+todo: PCA plot.
 
 <!-- 
 

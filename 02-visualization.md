@@ -419,7 +419,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 
 ## Logistic Curves {#sec:logistic}
 <!-- https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context --> 
-The *logistic* function is a parameterized sigmoid function of the form
+The *logistic* function^[@Shulman01011998] is a parameterized sigmoid function of the form
 
 $$
 \frac{L}{1+e^{-k \left( x-x_0 \right)}}.

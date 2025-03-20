@@ -132,8 +132,8 @@ Different programming languages have substantially different syntax and semantic
 As a small exercise, open Microsoft Excel and enter the values 1, 2, 3, and 5 into cells A1, A2, A3, and A5.
 Leave cell A4 blank.
 In cell A6, enter the formula `=PRODUCT(A1:A5)`.
-The result is $30 = 1 \cdot 2 \cdot 3 \cdot 5$.
-Excel did *not* treat the missing value as a zero.
+The result is $30 = 1 \times 2 \times 3 \times 5$ (the 4 should be missing).
+Excel did *not* treat the empty cell as an implicit zero and silently ignores the missing value.
 
 Now change cell A4 to `=NA()`.
 `NA` means "value not available", an explicit indication that a value is not given.
@@ -145,7 +145,7 @@ Both cells A4 and A6 should both say `#DIV/0!`, a fault telling us that a divisi
 Error values propagate from source data through intermediate calculations to final results.
 If we enter a formula into A7 referencing A6, such as `=SQRT(A6)`, then we will find the same faults in A7 that we see in A6.
 
-Structured Query Language (SQL) databases use the symbol `NULL` to denote missing values.
+*Structured Query Language* (SQL) databases use the symbol `NULL` to denote missing values.
 One might build the database *schema* (the structure of the database) to explicitly forbid `NULL` values.
 For example,
 

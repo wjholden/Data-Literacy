@@ -184,9 +184,17 @@ df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
 
 ![todo](mtcars-plot.pdf){#fig:scatter}
 
-## Colors and Shapes
+Todo: change base R to ggplot so we can show color.
 
-Color and, to a lesser extent, shapes can be useful to express 
+## Heat Maps {#sec:heatmap}
+
+A *heat map* (sometimes written *heatmap*) is a plot that uses a continuous range
+of colors to overlay values onto a two-dimensional plot. Heat maps are especially
+useful for overlaying information onto geographical maps.
+Figure \ref{fig:military-expenditure-europe} demonstrates a map of Europe where
+countries are colored by military expenditures as a fraction of their economies.
+
+![A heat map showing military expenditures in European countries. This plot was created in Wolfram Mathematica with input `GeoRegionValuePlot[Flatten[{CountryData[#, "Polygon"] -> CountryData[#, "MilitaryExpenditureFraction"]} & /@ CountryData["Europe"]]]`.](MilitaryExpenditureFraction.pdf){#fig:military-expenditure-europe}
 
 ## Linear and logarithmic scales {#sec:scales}
 

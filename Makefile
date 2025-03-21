@@ -59,5 +59,5 @@ clean:
 # "principal component analysis."
 .PHONY: test
 test:
-	@! grep -i "first principal" *.md
-	@! grep -i "principle component" *.md
+	@! rg -i "first principal" -g *.md
+	@! rg -i "principle component" -g *.md

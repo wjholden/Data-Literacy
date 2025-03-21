@@ -633,11 +633,11 @@ Again using the R language at <https://docs.r-wasm.org/webr/latest/>,
 ```
 
 There is a very recent development in the field of statistics with a new
-coëfficient of correlation [@10.1080/01621459.2020.1758115].
+coefficient of correlation [@10.1080/01621459.2020.1758115].
 This new statistic, known as $\xi$ and pronounced "xi" or "ksaai", seeks to 
 correlate $Y$ as some arbitrary function of $X$ and produces meaningful metrics 
 on non-linear data. For our range $[-5,5]$ and its squares, the correlation 
-coëfficient is \num{0.5}.
+coefficient is \num{0.5}.
 
 The algorithm to compute $\xi(X,Y)$ first sorts $Y$ by $X$, then the *ranks*, 
 $r$, of the resulting order of $Y$. If *order* is a list of positions

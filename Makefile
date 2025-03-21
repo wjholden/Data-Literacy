@@ -57,9 +57,18 @@ clean:
 
 # Error on common misspellings. It's supposed to be "first principles" and
 # "principal component analysis."
+#
 # We also don't want any more "bare" URLs. As a matter of style, let's always
-# wrap URLs in <angle brackets>.
-# Eventually, we will need to also search for the word "todo", but we aren't ready for that yet.
+# wrap URLs in <angle brackets>. Also, avoid \url{} LaTeX syntax.
+#
+# Don't use pretentious non-English letters in English words:
+### ä 0228
+### ë 0235
+### ï 0239
+### ö 0246
+### ü 0252
+#
+# Eventually, we will need to also search for the word "todo". We aren't ready for this yet.
 .PHONY: test
 test:
 	@! rg -i "first principal" -g *.md
@@ -67,3 +76,4 @@ test:
 	@! rg " http" -g *.md
 	@! rg "\^\[http" -g *.md
 	@! rg "url\{http" -g *.md
+	@! rg "[äëïöü]" -g *.md

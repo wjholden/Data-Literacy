@@ -1,7 +1,5 @@
 # Introduction
 
-This document was *definitely* rendered with Lua\LaTeX.
-
 ## The Wisdom Hierarchy
 
 todo [@doi:10.1177/0165551506070706]
@@ -98,8 +96,8 @@ Does zero degrees Celsius or zero degrees Fahrenheit mean the absence of tempera
 No. These temperature measurements are simply points along a *scale*.
 Twenty degrees Celsius is not "twice" ten degrees Celsius; multiplication is not defined on interval data.
 
-Grid coördinates are another example of interval data.
-One can calculate the distance between two grid coördinates, but we would not say that coördinate 1111 is "half" of coördinate 2222.
+Grid coordinates are another example of interval data.
+One can calculate the distance between two grid coordinates, but we would not say that coordinate 1111 is "half" of coordinate 2222.
 
 Women's pant sizes in the United States, with the confusing size "00," is yet another example of interval data.
 
@@ -114,8 +112,17 @@ Measurements with arbitrarily many decimal digits of precision are *continuous*,
 whereas measurements with finite steps in between (including categories) are *discrete*.
 For example, when driving along a road, the house numbers (150 Main Street, 152 Main Street, 154 Main Street...) are discrete;
 there is no intermediate value between $\num{150}$ and $\num{151}$.
-On the other hand, the grid coördinates associated with each address are continuous;
+On the other hand, the grid coordinates associated with each address are continuous;
 one could (theoretically) specify grid position to the square millimeter, picometer, nanometer, and beyond.
+
+Spoken English has some vocabulary for distinguishing continuous and discrete
+quantities, although these conventions are not strictly necessary in daily
+communication.
+
+ - How *many* glasses do we have?
+ - How *much* water do you want?
+ - I walked *fewer than* $\qty{10}{\km}$.
+ - She weighs $\qty{5}{\kg}$ *less than* her sister.
 
 It can be useful to combine continuous measurements into discrete categories.
 An example might be one's birth date and birth year.
@@ -530,7 +537,7 @@ Here, the instructions of the algorithm are part of a model, which is created fr
 
 <!-- ## Bisection algorithm (todo) -->
 
-## Abstraction and Reïfication
+## Abstraction and Reification
 
 Take any three-digit decimal (base 10) number, reverse the digits, and their difference will always be divisible by both 9 and 11.
 For example, $321-123=198$; $198 \div 9 = 22$ and $198 \div 11 = 18$.
@@ -572,7 +579,7 @@ paradigm (see section \ref{sec:oop}) emphasizes *encapsulation* of both data
 and code to allow users to use the *interface* exposed by an object without
 consideration for its implementation.
 
-*Reïfication* is the opposite of abstraction: we something specific from something general.
+*Reification* is the opposite of abstraction: we something specific from something general.
 For example, suppose we have a language translation function
 
 $$
@@ -594,7 +601,7 @@ T'(\text{goodbye}) &= \textit{au revoir}
 \end{aligned}
 $$
 
-Function $T'$ reïfys $T$ into a less general form.
+Function $T'$ reifys $T$ into a less general form.
 Such functions might be called *convenience functions* that are provided as a "quality of life" improvement for the user.
 An example of a convenience function might be `LOG10(number)` in Excel.
 Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted), but some users may prefer the explicit syntax `LOG10` to improve clarity.

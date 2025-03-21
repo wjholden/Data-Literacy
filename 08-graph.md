@@ -482,7 +482,7 @@ If two pieces are out of place then the heuristic distance is 2,
 if three pieces are out of place then the heuristic distance is 3,
 and so on.
 An alternative, more sophsticated heuristic function, uses the *Manhattan distance* (also known as *Taxicab distance*) of each puzzle piece to its destination.
-Manhattan distance is the sum of unsigned differences of each dimension between two coördinates in $n$-dimensional space.
+Manhattan distance is the sum of unsigned differences of each dimension between two coordinates in $n$-dimensional space.
 The intuition is that a taxicab cannot fly in a straight line, but rather has to corner the rectangular blocks of Manhattan.
 
 $$
@@ -910,6 +910,6 @@ if some extrinsic network effect has a greater effect.
 
 3. Define the Traveling Salesman Problem (TSP) and explain the computational difficulty of this problem. 
 
-4. Determine the minimum paving needed to fully connect a tent complex using a list of coördinates and a Prim or Kruskal implementation.  
+4. Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
 
 5. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 

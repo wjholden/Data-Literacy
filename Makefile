@@ -57,7 +57,13 @@ clean:
 
 # Error on common misspellings. It's supposed to be "first principles" and
 # "principal component analysis."
+# We also don't want any more "bare" URLs. As a matter of style, let's always
+# wrap URLs in <angle brackets>.
+# Eventually, we will need to also search for the word "todo", but we aren't ready for that yet.
 .PHONY: test
 test:
 	@! rg -i "first principal" -g *.md
 	@! rg -i "principle component" -g *.md
+	@! rg " http" -g *.md
+	@! rg "\^\[http" -g *.md
+	@! rg "url\{http" -g *.md

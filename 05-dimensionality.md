@@ -531,8 +531,8 @@ $$
 $$
 
 The following Rust program implements both covariance and correlation statistics.
-One can execute this program at the Rust Playground^[https://play.rust-lang.org/?gist=1f3b41a17c10c354ee462062772dbd72]
-and reproduce the result in R at \url{https://docs.r-wasm.org/webr/latest/} with
+One can execute this program at the Rust Playground^[<https://play.rust-lang.org/?gist=1f3b41a17c10c354ee462062772dbd72>]
+and reproduce the result in R at <https://docs.r-wasm.org/webr/latest/> with
 `cov(c(5,7,3,6,8), c(65,80,50,70,90))` and `cor(c(5,7,3,6,8), c(65,80,50,70,90))`.
 
 ```rust
@@ -623,7 +623,7 @@ is **zero**.
 \label{fig:quadratic-zero-r2}
 \end{figure}
 
-Again using the R language at \url{https://docs.r-wasm.org/webr/latest/},
+Again using the R language at <https://docs.r-wasm.org/webr/latest/>,
 
 ```r
 > x = -5:5
@@ -665,7 +665,7 @@ $$
 $$
 
 A Rust implementation of this new $\xi$ statistic is given below and at the
-Rust Playground^[https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=6336707980cfc3a54511842d937fb344].
+Rust Playground^[<https://play.rust-lang.org/?gist=6336707980cfc3a54511842d937fb344>].
 
 ```rust
 fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
@@ -889,9 +889,9 @@ https://crates.io/crates/nalgebra
 
 ## Discussion prompts
 
-1. https://www.tylervigen.com/spurious-correlations curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
-2. Conduct a classroom competition of "Catch the cheaters!" at https://primerlearning.org. Discuss the winning and losing strategies, then watch https://www.youtube.com/watch?v=XTcP4oo4JI4. 
-3. Read the interactive article https://www.mayerowitz.io/blog/mario-meets-pareto [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
+1. <https://www.tylervigen.com/spurious-correlations> curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
+2. Conduct a classroom competition of "Catch the cheaters!" at <https://primerlearning.org>. Discuss the winning and losing strategies, then watch <https://www.youtube.com/watch?v=XTcP4oo4JI4>. 
+3. Read the interactive article <https://www.mayerowitz.io/blog/mario-meets-pareto> [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
 4. Controversial topics may involve several dimensions. Advocates for one position
 may claim on one basis in dimension $x$, where the opposition's counterclaim is
 in dimension $y$. Discuss a contemporary impasse with orthogonal or irreconcilable

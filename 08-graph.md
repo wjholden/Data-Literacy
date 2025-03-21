@@ -39,7 +39,7 @@ $$
 $$
 
 Let us quickly reproduce this result using a *graph database* named Neo4j.
-Go to https://console.neo4j.org and click the "Clear DB" button.
+Go to <https://console.neo4j.org> and click the "Clear DB" button.
 Enter the below *Cypher query* into the input field and press the triangle-shaped execute button.
 
 ```
@@ -166,7 +166,7 @@ This is an example of a *depth-first search* (DFS).
 
 ![There are many paths from the starting point to the treasure in this kingdom.](kingdom.dot.pdf)
 
-Go to the Go Playground^[https://go.dev/play/p/AuH2qOgSG-c] to run the following DFS implementation, written in Go.
+Go to the Go Playground^[<https://go.dev/play/p/AuH2qOgSG-c>] to run the following DFS implementation, written in Go.
 This implementation uses a *recursive* definition of the DFS function (the DFS function invokes itself as it explores the graph).
 The function uses an external data structure (`quest`) to identify which vertices have already been discovered.
 Upon successful search, the function prints its position in the graph as the recursive calls "unwind."
@@ -239,7 +239,7 @@ The proof for the correctness of a BFS follows:
 6. $\vdots$
 7. At $r=n$, BFS has located $v$ and therefore $n = \delta(u,v)$. $\square$
 
-Go to the Go Playground^[https://go.dev/play/p/yMIcmcsK_V9] and run the following BFS implementation, written in Go.
+Go to the Go Playground^[<https://go.dev/play/p/yMIcmcsK_V9>] and run the following BFS implementation, written in Go.
 This implementation uses an *iterative* BFS function.
 The BFS function does not invoke itself.
 Instead, the procedure adds unexplored vertices to a queue and records the "parent" of each vertex.
@@ -284,7 +284,7 @@ In the following section, we will find that we can often explore graphs much fas
 ### Dijkstra's algorithm {#sec:dijkstra}
 
 <!--
-Dijkstra in Go https://go.dev/play/p/hcNbTvGli-z
+Dijkstra in Go <https://go.dev/play/p/hcNbTvGli-z/>
 Too long and ugly to share.
 -->
 
@@ -292,10 +292,10 @@ Too long and ugly to share.
 For this reason, Dijkstra's algorithm is also known as the *shortest-path first* (SPF).
 Like BFS, Dikjstra's algorithm is a *greedy algorithm* that discovered a globally optimal solution by repeatedly making locally optimal decisions.
 Let us turn to the Python language to demonstrate Dijkstra's algorithm on our same treasure-hunting graph, this time with edge weights.
-Run this program at https://www.python.org/shell/.^[Python *requires* tab characters
+Run this program at <https://www.python.org/shell/>.^[Python *requires* tab characters
 where other languages might accept spaces and tabs interchangably. Copying this
 program from a PDF will likely not work.
-A plain text verion of this program is available at https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py.]
+A plain text verion of this program is available at <https://github.com/wjholden/Data-Literacy/blob/main/dijkstra.py>.]
 
 ```python
 from heapq import *
@@ -385,7 +385,7 @@ This program should output `Path found: 193`, and `Path: treasure castle city st
 The shortest path from `start` to `treasure` has a total path cost of 193.
 
 Neo4j produces the same result.
-We reconstruct our graph in the Cypher language at https://console.neo4j.org:
+We reconstruct our graph in the Cypher language at <https://console.neo4j.org>:
 
 ```sql
 CREATE
@@ -512,7 +512,7 @@ We must understand that search algorithms might not be able to solve a problem i
 We will demonstrate the A* informed search algorithm on the *Stable Marriage Problem* [@gale1962college].
 The Stable Marriage Problem seeks to pair the members of two equal-sized sets to one another based upon their mutual preferences.
 This problem and its solution are applied to many practical situations, including the Army Talent Alignment Process (ATAP);
-see https://www.youtube.com/watch?v=9mEBe7fzrmI for an official and detailed explanation.
+see <https://www.youtube.com/watch?v=9mEBe7fzrmI> for an official and detailed explanation.
 Explained with marriages, the problem has all of the men rank all of the women from most to least preferred.
 Correspondingly, the women also rank all of the men from most to least preferred.
 
@@ -713,9 +713,9 @@ digraph {
 (Note: this *stochastic* algorithm uses randomness in the `sample` operation.
 Outputs are not determininstic.
 In rare cases, this procedure may not discover the one and only solution, $\left[ 3, 4, 1, 2 \right]$.
-See https://github.com/wjholden/Data-Literacy/blob/main/StableMarriageSearch.jl for an expanded version of this program which uses a seeded random number generator for reproducibility.)
+See <https://github.com/wjholden/Data-Literacy/blob/main/StableMarriageSearch.jl> for an expanded version of this program which uses a seeded random number generator for reproducibility.)
 
-We can input this `digraph` data into https://dreampuf.github.io/GraphvizOnline/ to visualize the search tree, as shown in figure \ref{fig:gale-shapley-ex2}.
+We can input this `digraph` data into <https://dreampuf.github.io/GraphvizOnline/> to visualize the search tree, as shown in figure \ref{fig:gale-shapley-ex2}.
 
 ![A search tree of the Stable Marriage Problem, reduced to an informed search that is solvable with A*.](gale-shapley-ex2.dot.pdf){#fig:gale-shapley-ex2}
 
@@ -775,8 +775,8 @@ $$
 The following Rust program uses an unweighted invocation of Dijkstra's algorithm
 in the `petgraph` crate^[The term *crate* is peculiar to Rust.
 In this context, the term is interchangable with "library,"
-which is a more common programming term.].
-One may run this program at \url{https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=e67ef3bc05daab21dd73a7869093d9cb}.
+which is a more common programming term.]. Run this program at the Rust
+Playground^[<https://play.rust-lang.org/?gist=e67ef3bc05daab21dd73a7869093d9cb>].
 
 ```rust
 use petgraph::algo::dijkstra;
@@ -847,7 +847,7 @@ graphs and dense graphs [@10.1080/0022250X.2001.9990249] [@brandes2007centrality
 
 ### PageRank
 
-<!-- http://infolab.stanford.edu/~backrub/google.html -->
+<!-- <http://infolab.stanford.edu/~backrub/google.html> -->
 
 Google's well-known *PageRank* algorithm uses a creative edge weighting function
 based on a page's importance or quality [@BRIN1998107].

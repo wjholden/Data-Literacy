@@ -165,7 +165,7 @@ In the set $x = \left\{ 15, 75, 79, 10, 7, 54, \num{4600}, 91, 45, 86 \right\}$,
 one can immediately observe that the value $\num{4600}$ is substantially different from all of the other values.
 Outliers can be defined in terms of the mean and standard deviation.
 Outliers are any values greater than $\bar{x} + 2s$ or less than $\bar{x} - 2s$.
-We can use the `mean` and `sd` functions with `subset` in the R language at https://webr.r-wasm.org/latest/ to confirm that $\num{4600}$ is an outlier.
+We can use the `mean` and `sd` functions with `subset` in the R language at <https://webr.r-wasm.org/latest/> to confirm that $\num{4600}$ is an outlier.
 
 ```
 > x = c(15, 75, 79, 10, 7, 54, 4600, 91, 45, 86)
@@ -176,7 +176,7 @@ We can use the `mean` and `sd` functions with `subset` in the R language at http
 We can use skewness ($\mu_3 = \beta_1$) to detect whether the data is imbalanced (skewed) above or below the mean.
 If skewness is negative then the left tail is longer, if skewness is positive then the right tail is longer,
 and if skewness is zero then the distribution is equally balanced over the mean.
-Excel defines its `SKEW` function^[https://support.microsoft.com/en-us/office/skew-function-bdf49d86-b1ef-4804-a046-28eaea69c9fa] as
+Excel defines its `SKEW` function^[<https://support.microsoft.com/en-us/office/skew-function-bdf49d86-b1ef-4804-a046-28eaea69c9fa>] as
 
 $$
 \mu_3 = \frac{n}{(n-1)(n-2)} \sum{\left( \frac{x - \bar{x}}{s} \right)^3}.
@@ -188,7 +188,7 @@ Karl Pearson defines the *degree of kurtosis* as $\eta = \beta_2 - 3$ [@10.1093/
 Other texts call this *excess kurtosis*. Excel's `KURT` function returns excess 
 kurtosis. If `KURT` returns 0, then the distribution may fit a normal distribution
 and may contain no outliers. Excel defines its `KURT`
-function^[https://support.microsoft.com/en-us/office/kurt-function-bc3a265c-5da4-4dcb-b7fd-c237789095ab] as
+function^[<https://support.microsoft.com/en-us/office/kurt-function-bc3a265c-5da4-4dcb-b7fd-c237789095ab>] as
 
 $$
 \mu_4 =
@@ -351,7 +351,7 @@ Use software to verify your answer. In the R language, this would be `mean(c(5))
 6. A customer-service organization uses *average handling time* (AHT),
 the expected number of minutes required to complete an interaction, to improve
 service quality. What are some benefits or risks of this approach?
-See https://xkcd.com/2899/.
+See <https://xkcd.com/2899/>.
 
 7. Does the Army's standards-based approach hinder our ability to solve strong-link
 problems requiring unpredictable solutions? How could an ideal institution maintain

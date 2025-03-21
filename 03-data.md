@@ -33,7 +33,7 @@ A \times B \times C = \left\{
 \left( j, z , c \right) \right\}.
 $$
 
-As an exercise, go to the SQLime Playground^[https://sqlime.org/#deta:mb9f8wq2mq0b] to use a DBMS named SQLite.
+As an exercise, go to the SQLime Playground^[<https://sqlime.org/#deta:mb9f8wq2mq0b>] to use a DBMS named SQLite.
 Enter the following commands to reproduce the above Cartesian product.
 
 ```sql
@@ -74,7 +74,7 @@ For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
 Each table has a column that uniquely identifies an athlete.
 To get a triathletes (the athletes who participate in swimming, cycling, and running),
 we use an *equijoin* to find the product where the names are equal.
-Return to the SQLime Playground^[https://sqlime.org/#deta:36fadcq9apak] to demonstrate experiment with the `JOIN` operator.
+Return to the SQLime Playground^[<https://sqlime.org/#deta:36fadcq9apak>] to demonstrate experiment with the `JOIN` operator.
 
 ```sql
 CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
@@ -97,7 +97,7 @@ As an exercise, try to predict how many rows will return from `SELECT * FROM Swi
 ## Grouping and Aggregation {#sec:grouping-and-aggregation}
 
 DBMSs provide robust *grouping* functions for operating on related rows.
-Return to the SQLime Playground^[https://sqlime.org/#deta:32lpfoo57r8g] and create a small table of hypothetical marathon times.
+Return to the SQLime Playground^[<https://sqlime.org/#deta:32lpfoo57r8g>] and create a small table of hypothetical marathon times.
 
 ```sql
 CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
@@ -220,8 +220,8 @@ In both cases, we use an empty array (`[]`) instead of a numeric identity as our
 <!-- No bueno on the ~ character in math mode. -->
 \newcommand{\infix}{\char"007E}
 
-<!-- https://neopythonic.blogspot.com/2019/03/why-operators-are-useful.html?m=1 -->
-<!-- https://reference.wolfram.com/language/ref/Infix.html.en -->
+<!-- <https://neopythonic.blogspot.com/2019/03/why-operators-are-useful.html?m=1> -->
+<!-- <https://reference.wolfram.com/language/ref/Infix.html.en> -->
 Some languages differentiate `foldl` and `foldr` to differentiate left- and right-associativity.
 A left-associative function would evaluate $x \infix y \infix z$ with first $x \infix y$ and then $(x \infix y) \infix z$.
 (In this context, the "$\infix$" represents an arbitrary infix operator and has no specific meaning).
@@ -232,7 +232,7 @@ A right-associative function evaluates $x \char"007E y \infix z$ as $x \infix (y
 A *vectorized function* automatically iterates over array inputs.
 This approach is related to *array programming*.
 Automatic vectorization is less common in traditional languages (C, Java, JavaScript) and more common in scientific programming (R, Matlab, Julia).
-Some examples in the R language, which one can reproduce at https://webr.r-wasm.org/latest/, are:
+Some examples in the R language, which one can reproduce at <https://webr.r-wasm.org/latest/>, are:
 
 ```r
 > c(1, 2, 3) + 4
@@ -280,7 +280,7 @@ Many programming languages, notably C++, Python, JavaScript, and Python, emphasi
 
 Object-orientation comes in many varieties [@10.5555/3271463]. Many OO languages
 provide a method inherit data and code from other objects, often in a hierarchy.
-The following Rust program, which one can run at the Rust Playground^[https://play.rust-lang.org/?gist=9542264fd12645a4ee1956ab7f890812],
+The following Rust program, which one can run at the Rust Playground^[<https://play.rust-lang.org/?gist=9542264fd12645a4ee1956ab7f890812>],
 demonstrates a `Point` object. The object is defined as a `struct`
 with two fields, `x` and `y`. The implementation for `Point` adds two methods,
 a *constructor* (`new`) and a *Manhattan distance* function.
@@ -385,7 +385,7 @@ A trivial example might be finding the minimum value in a large dataset.
 One can partition the dataset, find the minimum value in each partition, and then find the minimum value among those results.
 This process can be repeated.
 
-Go to the Go Playground^[https://go.dev/play/p/IOwH08R_z7Z] to experiment with a divide-and-conquer `minimum` function in the Go language.
+Go to the Go Playground^[<https://go.dev/play/p/IOwH08R_z7Z>] to experiment with a divide-and-conquer `minimum` function in the Go language.
 
 ```go
 package main
@@ -421,7 +421,7 @@ func main() {
 ```
 
 Click the "Run" button several times and observe that the output is completely *deterministic*.
-Now return to the Go Playground^[https://go.dev/play/p/Vbe7BWrwlku] for a slightly modified version of the same program.
+Now return to the Go Playground^[<https://go.dev/play/p/Vbe7BWrwlku>] for a slightly modified version of the same program.
 
 ```go
 	default:

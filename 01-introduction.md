@@ -199,7 +199,7 @@ fn main() {
 }
 ```
 
-Repeatedly run this program at the Rust Playground^[https://play.rust-lang.org/?&gist=df4c6636ab6ff336dbae5994b7508adc]
+Repeatedly run this program at the Rust Playground^[<https://play.rust-lang.org/?&gist=df4c6636ab6ff336dbae5994b7508adc>]
 and observe that the `g()` function returns `Some(x)` values where $0.5 \le x \le 1.0$ and `None`.
 
 The use of the language's type system to express optional values allows Rust to
@@ -258,7 +258,7 @@ It makes no sense to own a fractional or negative car, so we might find an exist
 (in this case, whole numbers) or define some new type to model the domain.
 
 Some programming languages offer *dynamic* types that implicitly change the type (*cast*) of values to operate correctly.
-Go to https://jsfiddle.net or press F12 to open the developer console in most modern browsers.
+Go to <https://jsfiddle.net> or press F12 to open the developer console in most modern browsers.
 Enter the following into the JavaScript console:
 
 ```javascript
@@ -288,7 +288,7 @@ Data analysts can benefit greatly by using the appropriate types for the values 
 
 ## Tables, lists, and data frames 
 
-<!-- https://drops.dagstuhl.de/storage/01oasics/oasics-vol076-plateau2019/OASIcs.PLATEAU.2019.6/OASIcs.PLATEAU.2019.6.pdf -->
+<!-- <https://drops.dagstuhl.de/storage/01oasics/oasics-vol076-plateau2019/OASIcs.PLATEAU.2019.6/OASIcs.PLATEAU.2019.6.pdf> -->
 
 *Tables* of data are structured in *columns* and *rows*, where the rows represent the *individuals* or *observations* in the data set and the columns represent the *features*.
 For example, a table of employee names might have two columns (the given and surnames) and ten rows, where each row represents one of the ten employees.

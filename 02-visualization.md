@@ -18,7 +18,7 @@ A *scatter plot* (sometimes called an $XY$ plot) uses $x$ and $y$ axes to show r
 One can also color and shape the points to show third and fourth variables.
 Three-dimensional $XYZ$ plots are sometimes useful, especially in video and interactive presentations.
 
-As a small exercise to experiment with these four plots, go to https://webr.r-wasm.org/latest/ to use the R language in a web browser.
+As a small exercise to experiment with these four plots, go to <https://webr.r-wasm.org/latest/> to use the R language in a web browser.
 R is a programming language for statistics and data visualization.
 
 R includes several built-in data sets.
@@ -49,7 +49,7 @@ Try opening the R help for `mtcars` and `head` with the following commands:
 
 ## Bar Plots {#sec:barplot}
 
-In the REPL of https://webr.r-wasm.org/latest/, create a *bar plot* from the cylinders
+In the REPL of <https://webr.r-wasm.org/latest/>, create a *bar plot* from the cylinders
 (`cyl`) column of the Motor Trend Cars data set: 
 
 ```r
@@ -100,7 +100,7 @@ discretized (see section \ref{sec:discretize}) into root causes. We can
 compute these cumulative sums using reduce and visualize them with a bar plot.
 
 The following example uses data gathered from
-CrossFit.com^[\url{https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions}].
+CrossFit.com^[<https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions>].
 The `%>%` operator, from the `dplyr` package, anonymously "pipes" the output
 from one function into the first argument of the next function.
 Structurally, the `%>%` produces a left-to-right order of operations that
@@ -162,11 +162,67 @@ df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
 
 ## Box Plots {#sec:boxplot}
 
+A box plot splits data into *quartiles*, where each quartile contains 25% of the
+observations, and represents the spread of each quartile with a "box and whisker."
+Box plots are only useful with numerical data. The box is centered at the *median*
+(sequentially middle) value.
+
+An *interquartile range* (IQR) is the values at the 25th and 75th *percentile*
+of the values. In the Motor Trend Cars data set there are $n=32$ values.
+The first quartile is the first eight values, the second quartile is the second
+eight values, the third quartile is the third eight values, and the fourth
+quartile is the remaining eight values. If there are an even number of values,
+then the boundary between *quantiles* (the specific values marking the boundaries
+of the quartiles; note the difference in spelling) is taken from the midpoint.
+
+```r
+> sort(mtcars$mpg)[8:9]
+[1] 15.2 15.5
+> sort(mtcars$mpg)[24:25]
+[1] 22.8 22.8
+> quantile(mtcars$mpg)
+    0%    25%    50%    75%   100%
+10.400 15.425 19.200 22.800 33.900
+> 22.800-15.425
+[1] 7.375
+> IQR(mtcars$mpg)
+[1] 7.375
+```
+
+When using a boxplot, we traditionally define *outliers*^[We will see an
+alternative definition for outliers in section \ref{sec:moments}.] as any value
+that is $1.5$ IQRs below the first quantile or $1.5$ IQRs above the third quantile.
+
+$$
+\text{Outliers} \left( X \right) =
+\left\{ 
+    x \in X |
+    x < \text{Q1}-1.5\text{IQR} \lor x > \text{Q3}+1.5\text{IQR}
+\right\}
+$$
+
+By this definition, the `mtcars` data set contains one outlier in the `mpg`
+(miles per gallon, a measure of fuel efficiency) column.
+
+```r
+> q1 = quantile(mtcars$mpg)[2]
+> q3 = quantile(mtcars$mpg)[4]
+> iqr = IQR(mtcars$mpg)
+> subset(mtcars, mpg < q1 - 1.5*iqr | mpg > q3 + 1.5*iqr)
+                mpg cyl disp hp drat    wt qsec vs am gear carb
+Toyota Corolla 33.9   4 71.1 65 4.22 1.835 19.9  1  1    4    1
+```
+
+R provides `boxplot` function to render box plots. Return to the <https://webr.r-wasm.org/latest/>
+site and experiment with this function.
+
 ```r
 > boxplot(mtcars$mpg)
 ```
 
-![todo](mtcars-boxplot.pdf){#fig:boxplot}
+![R's `boxplot` function creates box-and-whisker plots with four quartiles.
+Box plots are centered at the median of the data. Outliers may be shown as dots
+or cicles beyond the 0th and 100th percentile markers.](mtcars-boxplot.pdf){#fig:boxplot}
 
 ## Histograms {#sec:histogram}
 
@@ -208,8 +264,8 @@ A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, 
 
 ![](barplot-linear-scale.pdf){width=50%}
 ![](barplot-log-scale.pdf){width=50%}
-\begin{figure}
-\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where succesive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale.}
+\begin{figure}[!ht]
+\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where succesive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale. *TODO: why isn't this appearing with the two barplots?*}
 \label{fig:scales}
 \end{figure}
 
@@ -223,7 +279,7 @@ For example, suppose feature of a data set contains categories $a$, $b$, $c$, an
 | $c$      | \num{398}   |
 | $d$      | \num{319}   |
 
-Return to https://webr.r-wasm.org/latest/ and plot this data with linear and logarithmic scales:
+Return to <https://webr.r-wasm.org/latest/> and plot this data with linear and logarithmic scales:
 
 ```
 > category_counts <- c(10736, 1711, 398, 319)
@@ -360,7 +416,7 @@ $$
 $$
 
 then^[The symbol $\propto$ means "is proportional to."]
-<!-- Don't recognize a symbol? Use https://detexify.kirelabs.org/classify.html --> 
+<!-- Don't recognize a symbol? Use <https://detexify.kirelabs.org/classify.html> --> 
 
 $$
 \text{strength} \propto \text{bodyweight}^{2/3}.
@@ -394,8 +450,8 @@ individual is already infected or can resist the contagion also increases,
 slowing the spread as we reach some *inflection point*, as shown in figure
 \ref{fig:sigmoid}.
 
-<!-- https://tex.stackexchange.com/a/563446/311890 --> 
-<!-- https://tikz.dev/pgfplots/ -->
+<!-- <https://tex.stackexchange.com/a/563446/311890> --> 
+<!-- <https://tikz.dev/pgfplots/> -->
 \begin{figure}
 \centering
 \begin{tikzpicture}
@@ -426,7 +482,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 \end{figure}
 
 ## Logistic Curves {#sec:logistic}
-<!-- https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context --> 
+<!-- <https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context> --> 
 The *logistic* function^[@Shulman01011998] is a parameterized sigmoid function of the form
 
 $$

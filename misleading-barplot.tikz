@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+    \filldraw[black, fill=red!5] (1,0) rectangle (2,1.5);
+    \filldraw[black, fill=green!5] (3,0) rectangle (4,5);
+    \filldraw[black, fill=blue!5] (5,0) rectangle (8,5.5);
+    \node[text width=1] at (1.5,.5) {3};
+    \node[text width=1] at (3.375,.5) {10};
+    \node[text width=1] at (6.25,.5) {11};
+\end{tikzpicture}

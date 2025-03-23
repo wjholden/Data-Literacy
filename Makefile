@@ -71,9 +71,9 @@ clean:
 # Eventually, we will need to also search for the word "todo". We aren't ready for this yet.
 .PHONY: test
 test:
-	@! rg -i "first principal" -g *.md
-	@! rg -i "principle component" -g *.md
-	@! rg " http" -g *.md
-	@! rg "\^\[http" -g *.md
-	@! rg "url\{http" -g *.md
-	@! rg "[äëïöü]" -g *.md
+	@! rg -tmd --ignore-case "first principal"
+	@! rg -tmd --ignore-case "principle component"
+	@! rg -tmd " http"
+	@! rg -tmd --fixed-strings "^[http"
+	@! rg -tmd --fixed-strings "\url{http"
+	@! rg -tmd "[äëïöü]"

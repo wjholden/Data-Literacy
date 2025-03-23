@@ -15,6 +15,9 @@ header-includes:
     - \def\UrlBreaks{\do/\do-\do,}
     - \usepackage{tikz}
     - \usepackage{pgfplots}
+    - \usepackage{pgf-pie}
+    # https://tex.stackexchange.com/a/56473/311890
+    - \usepackage{tikzscale}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
 # https://tug.org/FontCatalogue/typewriterfonts.html

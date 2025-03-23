@@ -78,14 +78,7 @@ bar is more than double that of the second and may mislead the reader.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\filldraw[black, fill=red!5] (1,0) rectangle (2,3);
-\filldraw[black, fill=green!5] (3,0) rectangle (4,10);
-\filldraw[black, fill=blue!5] (5,0) rectangle (7,11);
-\node[text width=1] at (1.5,1) {3};
-\node[text width=1] at (3.375,1) {10};
-\node[text width=1] at (5.825,1) {11};
-\end{tikzpicture}
+\includegraphics{misleading-barplot.tikz}
 \caption{The bars of a bar plot should ordinarily have uniform width.
 This bar plot shows values $x = \left( 3, 10, 11 \right)$, but the
 width of the third bar makes this observation appear much larger than the others.}
@@ -354,7 +347,7 @@ The domain and range for $\ln x$ are the reverse of $e^x$: the domain of $\ln x$
 \label{fig:exp}
 \end{figure}
 
-## Intuition
+## Relationships
 
 Figure \ref{fig:log_exp} shows exponential and quadratic functions $e^x$ and $x^2$ on logarithmic scales.
 The exponential function forms a straight line when plotted this way, but the
@@ -547,3 +540,30 @@ one might use to predict the future behavior of the uncertain system.
 3. Plot our logistic function from section \ref{sec:logistic},
 $l(x) = \frac{100}{1+2.75 e^{-0.4x}}$, on a logarithmic scale and manipulate
 the domain. Does the logistic function still look linear on a logarithmic scale?
+
+4. Spot the flaw in figure \ref{fig:bad-barplot-exercise}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\filldraw[black, fill=red!5] (0,0) rectangle (1,1.5);
+\filldraw[black, fill=green!5] (2,0) rectangle (3,2.5);
+\filldraw[black, fill=blue!5] (4,0) rectangle (5,5);
+\node[text width=1] at (.275,.5) {20};
+\node[text width=1] at (2.275,.5) {30};
+\node[text width=1] at (4.275,.5) {50};
+\end{tikzpicture}
+\caption{These bars represent values 20, 30, and 50.}
+\label{fig:bad-barplot-exercise}
+\end{figure}
+
+5. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\pie[hide number, radius=2]{42/5,28/3,21/2,9/1}
+\end{tikzpicture}
+\caption{These bars represent values 5, 3, 2, and 1.}
+\label{fig:bad-piechart-exercise}
+\end{figure}

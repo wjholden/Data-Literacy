@@ -14,7 +14,14 @@ header-includes:
     - \usepackage[breaklinks]{hyperref}
     - \def\UrlBreaks{\do/\do-\do,}
     - \usepackage{tikz}
+    # - \usetikzlibrary{external}
+    # - \tikzexternalize[prefix=cache/]
     - \usepackage{pgfplots}
+    # Sigh. I just can't get this to work with Pandoc.
+    # Don't know why not.
+    # - \usepgfplotslibrary{external}
+    # - \tikzexternalize
+    - \pgfplotsset{compat=1.18}
     - \usepackage{pgf-pie}
     # https://tex.stackexchange.com/a/56473/311890
     - \usepackage{tikzscale}

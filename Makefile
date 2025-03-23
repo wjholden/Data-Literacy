@@ -68,6 +68,9 @@ clean:
 ### ö 0246
 ### ü 0252
 #
+# TikZ pictures should all be in separate *.tikz files instead of embedded directly
+# into the Markdown source code.
+#
 # Eventually, we will need to also search for the word "todo". We aren't ready for this yet.
 .PHONY: test
 test:
@@ -77,3 +80,6 @@ test:
 	@! rg -tmd --fixed-strings "^[http"
 	@! rg -tmd --fixed-strings "\url{http"
 	@! rg -tmd "[äëïöü]"
+	@! rg -tmd tikzpicture
+
+# Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

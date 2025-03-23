@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+    \draw (-3,0) -- (3,0);
+    \draw (0,-2) -- (0,2);
+
+    \draw[->] (1,0) arc (0:80:1);
+    \draw[->] (0,1) arc (90:170:1);
+    \draw[->] (-1,0) arc (180:260:1);
+    \draw[->] (0,-1) arc (270:350:1);
+
+    \node at (1.5,.5) {$1+0i$};
+    \node at (.75,1.5) {$0+1i$};
+    \node at (-1.75,.5) {$-1+0i$};
+    \node at (.75,-1.5) {$0-1i$};
+
+    \filldraw (1,0) circle (2pt);
+    \filldraw (-1,0) circle (2pt);
+    \filldraw (0,1) circle (2pt);
+    \filldraw (0,-1) circle (2pt);
+\end{tikzpicture}

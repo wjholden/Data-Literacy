@@ -317,21 +317,7 @@ We will discuss object-oriented programming in more detail in section
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\draw (0,0) -- (10,0);
-\draw (0,0) -- (0,10);
-
-\draw[->] (0,0) -- (4,3);
-\draw[->] (4,3) -- (7,8);
-\draw[->] (0,0) -- (7,8);
-\draw[->] (0,0) -- (3,5);
-\draw[->] (3,5) -- (7,8);
-
-\node at (4.5,3) {(4,3)};
-\node at (2.5,5) {(3,5)};
-\node at (7.5,8) {(7,8)};
-
-\end{tikzpicture}
+\includegraphics{vector-sum.tikz}
 \caption{Vectors are geometric entities. This plot shows that $(4,3)+(3,5)=(3,5)+(4,3)=(7,8)$.}
 \label{fig:vector-sum}
 \end{figure}
@@ -423,26 +409,7 @@ scientific languages.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\draw (-3,0) -- (3,0);
-\draw (0,-2) -- (0,2);
-
-\draw[->] (1,0) arc (0:80:1);
-\draw[->] (0,1) arc (90:170:1);
-\draw[->] (-1,0) arc (180:260:1);
-\draw[->] (0,-1) arc (270:350:1);
-
-\node at (1.5,.5) {$1+0i$};
-\node at (.75,1.5) {$0+1i$};
-\node at (-1.75,.5) {$-1+0i$};
-\node at (.75,-1.5) {$0-1i$};
-
-\filldraw (1,0) circle (2pt);
-\filldraw (-1,0) circle (2pt);
-\filldraw (0,1) circle (2pt);
-\filldraw (0,-1) circle (2pt);
-
-\end{tikzpicture}
+\includegraphics{argand.tikz}
 \caption{Complex numbers are two-dimensional quantities. In this Argand diagram, the $x$ axis is $\pm 1$ and the $y$ axis is $\pm i$. Multiplying a value by $i$ rotates the value among the real and imaginary axes.}
 \label{fig:argand}
 \end{figure}

@@ -58,23 +58,31 @@ In the REPL of <https://webr.r-wasm.org/latest/>, create a *bar plot* from the c
 
 ![A bar plot of the number of cylinders in each car of the Motor Trend Cars data set.](mtcars-barplot.pdf){#fig:barplot}
 
-Bar plots are useful for numerical features of a data set.
-In figure \ref{fig:barplot}, the horizontal axis is unlabeled and the order is left unspecified.
-One might use labels, order, color, or grouping to aid the reader in interpreting data.
+Bar plots are useful for comparing numerical features of a data set when grouped
+by some categorical variable. The categorical group is the *independent* variable.
+The numerical feature, plotted as the height of the bars, is the *dependent* varible.
+Independent and dependent variables are sometimes called *free* and *response*
+variables. In an *interventional* study (where a researcher performs an action to
+quantify the effect), the independent variable is the item changed directly and
+the dependent variable is the outcome caused by the change. Bar plots almost
+always require some amount of "data wrangling," such as the use of SQL aggregate
+functions (more on this in section \ref{sec:grouping-and-aggregation}) such as
+`MIN()`, `MAX()`, `COUNT()`, `SUM()`, and `AVG()`. Figure \ref{fig:barplot}
+demonstrates a bar plot.
 
-The width of each bar should ordinarily be uniform. As 
+The width of each bar must be uniform. Only the bar height varies. As 
 
 $$
 \text{Area} = \text{Width} \times \text{Height},
 $$
 
-the enlarged area of the wider bar may mislead the reader. For example, suppose
-a bar plot is intended to compare the values $x = \left( 3, 10, 11 \right)$,
-but the bars corresponding to each observation are, respectively, $w = \left( 1, 1, 2 \right)$.
-The resulting areas are $x \odot w = \left( 3, 10, 22 \right)$ (here, $\odot$ 
+the exaggerated area of a wide or thin bar will mislead the reader.
+For example, suppose a bar plot is intended to compare the values $x = h = \left( 3, 10, 11 \right)$,
+but the bars corresponding to each observation are, respectively, $w = \left( 1, 1, 3 \right)$.
+The resulting areas are $w \odot h = \left( 3, 10, 22 \right)$ (here, $\odot$ 
 indicates the *element-wise* product of two vectors, also known as a *Hadamard*
 product). As shown in figure \ref{fig:misleading-barplot}, the area of the third
-bar is more than double that of the second and may mislead the reader.
+bar is more than triple that of the second and may confuse the reader.
 
 \begin{figure}
 \centering

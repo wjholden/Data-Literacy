@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xbar,
+        y tick label style={
+            /pgf/number format/1000 sep=},
+        xlabel=GDP (billions of US dollars),
+        ylabel=Year,
+    ]
+        \addplot coordinates {
+            (27.7,2023)
+            (26,2022)
+            (23.7,2021)
+            (21.4,2020)
+            (21.5,2019)
+        };
+    \end{axis}
+\end{tikzpicture}

@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(e^x\)},
+    ]
+        \addplot [
+            domain=-4:4,
+            samples=100,
+            color=red,
+        ]{exp(x)};
+    \end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(\ln x\)},
+    ]
+        \addplot [
+            domain=-4:4,
+            samples=100,
+            color=blue,
+        ]{ln(x)};
+\end{axis}
+\end{tikzpicture}

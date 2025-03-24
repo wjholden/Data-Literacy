@@ -49,18 +49,9 @@ Try opening the R help for `mtcars` and `head` with the following commands:
 
 ## Bar Plots {#sec:barplot}
 
-In the REPL of <https://webr.r-wasm.org/latest/>, create a *bar plot* from the cylinders
-(`cyl`) column of the Motor Trend Cars data set: 
-
-```r
-> barplot(mtcars$cyl)
-```
-
-![A bar plot of the number of cylinders in each car of the Motor Trend Cars data set.](mtcars-barplot.pdf){#fig:barplot}
-
-Bar plots are useful for comparing numerical features of a data set when grouped
-by some categorical variable. The categorical group is the *independent* variable.
-The numerical feature, plotted as the height of the bars, is the *dependent* varible.
+*Bar plots* relate categories to aggregated numerical features of a data set.
+The categorical group is the *independent* variable.
+The numerical feature, plotted as the length of the bars, is the *dependent* varible.
 Independent and dependent variables are sometimes called *free* and *response*
 variables. In an *interventional* study (where a researcher performs an action to
 quantify the effect), the independent variable is the item changed directly and
@@ -70,13 +61,17 @@ functions (more on this in section \ref{sec:grouping-and-aggregation}) such as
 `MIN()`, `MAX()`, `COUNT()`, `SUM()`, and `AVG()`. Figure \ref{fig:barplot}
 demonstrates a bar plot.
 
-The width of each bar must be uniform. Only the bar height varies. As 
+\begin{figure}
+\centering
+\includegraphics{barplot.tikz}
+\caption{A bar plot showing the Gross Domestic Product (GDP) of the United States from 2019--2023, according to <https://tradingeconomics.com/united-states/gdp>.
+Bar plots summarize information by representing aggregates, such as sums, as functions of categories, such as years.}
+\label{fig:barplot}
+\end{figure}
 
-$$
-\text{Area} = \text{Width} \times \text{Height},
-$$
-
-the exaggerated area of a wide or thin bar will mislead the reader.
+The width of each bar must be uniform. Only the bar height varies.
+As $\text{Area} = \text{Width} \times \text{Height},$ the exaggerated area of a
+wide or thin bar will mislead the reader.
 For example, suppose a bar plot is intended to compare the values $x = h = \left( 3, 10, 11 \right)$,
 but the bars corresponding to each observation are, respectively, $w = \left( 1, 1, 3 \right)$.
 The resulting areas are $w \odot h = \left( 3, 10, 22 \right)$ (here, $\odot$ 
@@ -92,6 +87,23 @@ This bar plot shows values $x = \left( 3, 10, 11 \right)$, but the
 width of the third bar makes this observation appear much larger than the others.}
 \label{fig:misleading-barplot}
 \end{figure}
+
+In the R language, one can create bar plots using the `barplot`. Using 
+<https://webr.r-wasm.org/latest/>, recreate the figure in \ref {fig:barplot}:
+
+```r
+> gdp = data.frame(Year = 2019:2023, GDP=c(21.5,21.4,23.7,26,27.7))
+> gdp
+  Year  GDP
+1 2019 21.5
+2 2020 21.4
+3 2021 23.7
+4 2022 26.0
+5 2023 27.7
+> barplot(GDP ~ Year, gdp)
+> library(tidyverse)
+> ggplot(gdp, aes(x=Year, y=GDP)) + geom_col()
+```
 
 ## Cumulative Sums and Pareto Charts
 
@@ -265,8 +277,8 @@ A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, 
 
 ![](barplot-linear-scale.pdf){width=50%}
 ![](barplot-log-scale.pdf){width=50%}
-\begin{figure}[!ht]
-\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where succesive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale. *TODO: why isn't this appearing with the two barplots?*}
+\begin{figure}
+\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where succesive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale.}
 \label{fig:scales}
 \end{figure}
 
@@ -321,32 +333,7 @@ Plots of $e^x$ and $\ln x$ are shown in figure \ref{fig:exp}.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(e^x\)},
-    ]
-        \addplot [
-            domain=-4:4,
-            samples=100,
-            color=red,
-        ]{exp(x)};
-    \end{axis}
-\end{tikzpicture}
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(\ln x\)},
-    ]
-        \addplot [
-            domain=-4:4,
-            samples=100,
-            color=blue,
-        ]{ln(x)};
-\end{axis}
-\end{tikzpicture}
+\includegraphics{exp.tikz}
 \caption{The exponential function, $e^x$, models iterated multiplication and grows quickly.
 The domain (allowable inputs) for $e^x$ are all real numbers, but the range (possible outputs) are strictly positive reals.
 It is not possible for $e^x$ to produce a zero or negative output if $x$ is a real number.
@@ -371,34 +358,7 @@ where $\ln b$ is a constant factor and observable as the slope of the resulting 
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(e^x\)},
-        ymode = log,
-    ]
-        \addplot [
-            domain=0:10,
-            samples=100,
-            color=red,
-        ]{exp(x)};
-    \end{axis}
-\end{tikzpicture}
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(x^2\)},
-        ymode = log,
-    ]
-        \addplot [
-            domain=0:10,
-            samples=100,
-            color=blue,
-        ]{x*x};
-    \end{axis}
-\end{tikzpicture}
+\includegraphics{log_exp.tikz}
 \caption{The exponential function, $e^x$, forms a straight line when plotted on a logarithmic scale, as $\ln {e^x} = x$.
 By contrast, the quadratic function, $x^2$, does not form a straight line when plotted on a logarithmic scale.
 Plotting a fast-growing data series on a log scale is a quick and easy way for the data scientist to "feel" if the curve might fit an exponential behavior or not.}

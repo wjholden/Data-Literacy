@@ -1,0 +1,28 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(e^x\)},
+        ymode = log,
+    ]
+        \addplot [
+            domain=0:10,
+            samples=100,
+            color=red,
+        ]{exp(x)};
+    \end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(x^2\)},
+        ymode = log,
+    ]
+        \addplot [
+            domain=0:10,
+            samples=100,
+            color=blue,
+        ]{x*x};
+    \end{axis}
+\end{tikzpicture}

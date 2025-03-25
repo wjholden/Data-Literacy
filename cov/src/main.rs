@@ -98,6 +98,52 @@ fn xicor(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
     1.0 - 3.0 * r_consec_abs_dist / (n.pow(2) as f64 - 1.0)
 }
 
+fn xicor2_original(x: &[f64], y: &[f64]) -> f64 {
+    let n = x.len();
+    
+    let mut order: Vec<usize> = (0..n).collect();
+    order.sort_by(|&a,&b| x[a].total_cmp(&x[b]));
+
+    let r: Vec<usize> = order.iter().map(|&i| {
+        order.iter().filter(|&&j| y[j] <= y[i]).count()
+    }).collect();
+
+    let l: Vec<usize> = order.iter().map(|&i| {
+        order.iter().filter(|&&j| y[j] >= y[i]).count()
+    }).collect();
+
+    let mut r_consec_abs_dist = 0.0;
+    for i in 1..n {
+        r_consec_abs_dist += (r[i] as f64 - r[i-1] as f64).abs();
+    }
+
+    let mut l_term = 0.0;
+    for i in 0..n {
+        l_term += (l[i] * (n - l[i])) as f64;
+    }
+    1.0 - (n as f64 * r_consec_abs_dist) / (2.0 * l_term)
+}
+
+fn xicor_duplicates(x: &[f64], y: &[f64]) -> f64 {
+    let n = x.len();
+    
+    let mut order: Vec<usize> = (0..n).collect();
+    order.sort_by(|&a,&b| x[a].total_cmp(&x[b]));
+
+    let r: Vec<usize> = order.iter().map(|&i| {
+        order.iter().filter(|&&j| y[j] <= y[i]).count()
+    }).collect();
+
+    let l: Vec<usize> = order.iter().map(|&i| {
+        order.iter().filter(|&&j| y[j] >= y[i]).count()
+    }).collect();
+
+    let rsum: f64 = (1..n).map(|i| (r[i] as f64 - r[i-1] as f64).abs()).sum();
+    let lsum: f64 = (0..n).map(|i| (l[i] * (n - l[i])) as f64).sum();
+
+    1.0 - (n as f64 * rsum) / (2.0 * lsum)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -122,22 +168,44 @@ mod tests {
         let x = vec![5., 7., 3., 6., 8.];
         let y = vec![65., 80., 50., 70., 90.];
         assert_eq!(0.5, xicor(&x, &y));
+        assert_eq!(0.5, xicor_duplicates(&x, &y));
     }
 
     #[test]
     fn xicor2() {
-        let x = vec![21.0_f64, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
+        let x = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
             24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4,
             30.4, 33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8,
             19.7, 15.0,21.4
         ];
-        let y = vec![2.620_f64, 2.875, 2.320, 3.215, 3.440, 3.460,
+        let y = vec![2.620, 2.875, 2.320, 3.215, 3.440, 3.460,
             3.570, 3.190, 3.150, 3.440, 3.440, 4.070, 3.730, 3.780, 5.250,
             5.424, 5.345, 2.200, 1.615, 1.835, 2.465, 3.520, 3.435, 3.840,
             3.845, 1.935, 2.140, 1.513, 3.170, 2.770, 3.570, 2.780
         ];
         // We don't quite reproduce the reference value from the XICOR R package.
-        assert_eq!(0.5416058, xicor(&x, &y));
+        assert_eq!(0.5416058, xicor_duplicates(&x, &y));
+    }
+
+    #[test]
+    fn xicor3() {
+        let x = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1];
+        let y = vec![2.620, 2.875, 2.320, 3.215, 3.440, 3.460];
+        assert_eq!(xicor(&x, &y), xicor_duplicates(&x, &y));
+        assert_eq!(0.22857142857142853654, xicor_duplicates(&x, &y));
+    }
+
+    #[test]
+    fn xicor_mtcars() {
+        let mpg = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
+        24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 
+        33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8, 19.7,
+        15.0, 21.4];
+        let cyl = vec![6.0, 6.0, 4.0, 6.0, 8.0, 6.0, 8.0, 4.0, 4.0,
+        6.0, 6.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 4.0, 4.0, 4.0, 4.0, 8.0, 8.0,
+        8.0, 8.0, 4.0, 4.0, 4.0, 8.0, 6.0, 8.0, 4.0];
+        assert_eq!(0.32729384436701514094, xicor_duplicates(&mpg, &cyl));
+        // Extremely different from what R gives us :-( 
     }
 
 }

@@ -601,7 +601,11 @@ Again using the R language at <https://docs.r-wasm.org/webr/latest/>,
 [1] 0
 ```
 
-There is a very recent development in the field of statistics with a new
+Todo: this is a good place to motivate the correlation matrix and cite [@friendly2002corrgrams].
+
+## Chatterjee's Rank Correlation
+
+Sourav Chatterjee has recently developed and published a new
 coefficient of correlation [@10.1080/01621459.2020.1758115].
 This new statistic, known as $\xi$ and pronounced "xi" or "ksaai", seeks to 
 correlate $Y$ as some arbitrary function of $X$ and produces meaningful metrics 
@@ -632,6 +636,8 @@ $$
   2 \sum_{i=1}^{n}{l_i \left( n - l_i \right)}
 }
 $$
+
+<!-- <https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310/> -->
 
 A Rust implementation of this new $\xi$ statistic is given below and at the
 Rust Playground^[<https://play.rust-lang.org/?gist=6336707980cfc3a54511842d937fb344>].
@@ -733,7 +739,7 @@ the features of numerical data sets.
 relationships among columns of data and compressing these columns into fewer dimensions
 [@10.1080/14786440109462720] [@hotelling1933analysis].
 
-PCA begins by finding all pairwise correlations among the data set's scaled columns.
+PCA begins with the pairwise correlations among the data set's scaled numerical columns.
 
 ```r
 > head(iris[,-5])

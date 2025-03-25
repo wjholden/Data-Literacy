@@ -415,29 +415,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 <!-- <https://tikz.dev/pgfplots/> -->
 \begin{figure}
 \centering
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(\sigma \left( x \right) = \frac{e^x}{1+e^x}\)},
-    ]
-        \addplot [
-            domain=-5:5,
-            samples=100,
-        ]{exp(x)/(1+exp(x))};
-        
-        \addplot [
-            only marks,
-            mark = *,
-            mark size = 1pt,
-            point meta=explicit symbolic,
-            nodes near coords,
-            coordinate style/.from=right
-        ] coordinates {
-            (0, 0.5) [Inflection Point]
-        };
-    \end{axis}
-\end{tikzpicture}
+\includegraphics{sigmoid.tikz}
 \caption{todo sigmoid.}
 \label{fig:sigmoid}
 \end{figure}
@@ -469,18 +447,7 @@ regulation slow its growth.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = {\(x\)},
-        ylabel = {\(\frac{100}{1 + 2.75 e^{-0.4x}}\)},
-    ]
-        \addplot [
-            domain=0:5,
-            samples=100,
-        ]{100/(1+2.75 * exp(-0.4 * x))};
-    \end{axis}
-\end{tikzpicture}
+\includegraphics{logistic}
 \caption{todo logistic.}
 \label{fig:logistic}
 \end{figure}
@@ -513,14 +480,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\filldraw[black, fill=red!5] (0,0) rectangle (1,1.5);
-\filldraw[black, fill=green!5] (2,0) rectangle (3,2.5);
-\filldraw[black, fill=blue!5] (4,0) rectangle (5,5);
-\node[text width=1] at (.275,.5) {20};
-\node[text width=1] at (2.275,.5) {30};
-\node[text width=1] at (4.275,.5) {50};
-\end{tikzpicture}
+\include{bad-barplot-exercise.tikz}
 \caption{These bars represent values 20, 30, and 50.}
 \label{fig:bad-barplot-exercise}
 \end{figure}
@@ -529,9 +489,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\pie[hide number, radius=2]{42/5,28/3,21/2,9/1}
-\end{tikzpicture}
+\includegraphics{bad-piechart-exercise}
 \caption{These bars represent values 5, 3, 2, and 1.}
 \label{fig:bad-piechart-exercise}
 \end{figure}

@@ -160,9 +160,18 @@ Out[2]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
 
 It is not possible to choose two elements from a set of only one,
 there is only one way to choose two from two,
-three ways to choose two from three ($\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ b,c \right\} \subset \left\{ a,b,c \right\}$),
-six ways to choose from four
-($\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ a,d \right\}, \left\{ b,c \right\}, \left\{ b,d \right\}, \left\{ c,d \right\} \subset \left\{ a,b,c,d \right\}$),
+three ways to choose two from three,
+
+$$
+\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ b,c \right\} \subset \left\{ a,b,c \right\},
+$$
+
+six ways to choose from four,
+
+$$
+\left\{ a,b \right\}, \left\{ a,c \right\}, \left\{ a,d \right\}, \left\{ b,c \right\}, \left\{ b,d \right\}, \left\{ c,d \right\} \subset \left\{ a,b,c,d \right\},
+$$
+
 and so on.
 The resulting sequence of integers are called the *triangular numbers*.
 

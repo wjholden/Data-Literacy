@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(\sigma \left( x \right) = \frac{e^x}{1+e^x}\)},
+    ]
+        \addplot [
+            domain=-5:5,
+            samples=100,
+        ]{exp(x)/(1+exp(x))};
+        
+        \addplot [
+            only marks,
+            mark = *,
+            mark size = 1pt,
+            point meta=explicit symbolic,
+            nodes near coords,
+            coordinate style/.from=right
+        ] coordinates {
+            (0, 0.5) [Inflection Point]
+        };
+    \end{axis}
+\end{tikzpicture}

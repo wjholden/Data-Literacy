@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = {\(x\)},
+        ylabel = {\(\frac{100}{1 + 2.75 e^{-0.4x}}\)},
+    ]
+        \addplot [
+            domain=0:5,
+            samples=100,
+        ]{100/(1+2.75 * exp(-0.4 * x))};
+    \end{axis}
+\end{tikzpicture}

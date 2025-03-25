@@ -71,6 +71,10 @@ clean:
 # TikZ pictures should all be in separate *.tikz files instead of embedded directly
 # into the Markdown source code.
 #
+# No spaces in the curly braces of URLs in the bibliography. This will make links unusable.
+#
+# Page ranges should have --, not just -.
+#
 # Eventually, we will need to also search for the word "todo". We aren't ready for this yet.
 .PHONY: test
 test:
@@ -82,5 +86,7 @@ test:
 	@! rg -tmd "[äëïöü]"
 	@! rg -tmd tikzpicture
 	@! rg -tmd "probability function"
+	@! rg "\{\s" -g *.bib
+	@! rg "pages.+\d-\d" -g *.bib
 
 # Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

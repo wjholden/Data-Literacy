@@ -81,5 +81,6 @@ test:
 	@! rg -tmd --fixed-strings "\url{http"
 	@! rg -tmd "[äëïöü]"
 	@! rg -tmd tikzpicture
+	@! rg -tmd "probability function"
 
 # Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

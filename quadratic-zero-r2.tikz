@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \draw[<->] (-6,0) -- (6,0);
+    \draw[<->] (0,-1) -- (0,3);
+
+    \draw[dotted] (-6,1.0) -- (6, 1.0);
+
+    \filldraw (-5,2.5) circle (1pt);
+    \filldraw (-4,1.6) circle (1pt);
+    \filldraw (-3,.9) circle (1pt);
+    \filldraw (-2,.4) circle (1pt);
+    \filldraw (-1,.1) circle (1pt);
+    \filldraw (0,0) circle (1pt);
+    \filldraw (1,.1) circle (1pt);
+    \filldraw (2,.4) circle (1pt);
+    \filldraw (3,.9) circle (1pt);
+    \filldraw (4,1.6) circle (1pt);
+    \filldraw (5,2.5) circle (1pt);
+\end{tikzpicture}

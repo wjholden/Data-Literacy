@@ -1,0 +1,19 @@
+\begin{tikzpicture}
+
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = {\(P(x)\)},
+    ]
+
+    \addplot [
+        domain=-4:4,
+        samples=100,
+        color=red,
+    ]{1/(1 * sqrt(2 * pi)) * exp(-(x - 0)^2/(2 * (1)^2))};
+
+    %\addlegendentry{\(\frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}\)}
+
+    \end{axis}
+
+\end{tikzpicture}

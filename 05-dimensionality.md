@@ -242,55 +242,34 @@ $$
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\draw[black] (0,0) rectangle (12,8);
-\draw[black] (6,4) circle (2);
-\node[text width=1] at (1,7) {$U$};
-\node[text width=1] at (6,4) {$S$};
-\end{tikzpicture}
+\includegraphics{venn1.tikz}
 \caption{A Venn diagram showing a single dimension, $S \subset U$.}
-\label{fig:Venn1}
+\label{fig:venn1}
 \end{figure}
 
 The familiar Venn diagram is commonly used to plot set intersections, but this
 plot is limited and is frequently misused. Traditionally, the square frame of
 the plot represents the universal set, $U$. Each circle of the Venn diagram
 shows a subset of $U$ along some binary attribute.
-In figure \ref{fig:Venn1}, we see a degenerate Venn diagram of a single dimension.
+In figure \ref{fig:venn1}, we see a degenerate Venn diagram of a single dimension.
 Values of $U$ are simply in $S$ or not in $S$.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\draw[black] (0,0) rectangle (12,8);
-\draw[black] (5,4) circle (2);
-\draw[black] (7,4) circle (2);
-\node[text width=1] at (1,7) {$U$};
-\node[text width=1] at (4,4) {$S$};
-\node[text width=1] at (8,4) {$T$};
-\end{tikzpicture}
+\includegraphics{venn2.tikz}
 \caption{A Venn diagram showing two dimensions. The overlap of the circles is the intersection, $S \cap T$.}
-\label{fig:Venn2}
+\label{fig:venn2}
 \end{figure}
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-\draw[black] (0,0) rectangle (12,8);
-\draw[black] (5,5) circle (2);
-\draw[black] (7,5) circle (2);
-\draw[black] (6,3) circle (2);
-\node[text width=1] at (1,7) {$U$};
-\node[text width=1] at (4,5) {$S$};
-\node[text width=1] at (8,5) {$T$};
-\node[text width=1] at (6,2) {$R$};
-\end{tikzpicture}
+\includegraphics{venn3.tikz}
 \caption{A Venn diagram showing two dimensions. The overlap of all three circles is the intersection, $R \cap S \cap T$.}
-\label{fig:Venn3}
+\label{fig:venn3}
 \end{figure}
 
 The Venn diagram has its more familiar structure with two and three dimensions,
-as shown in figures \ref{fig:Venn2} and \ref{fig:Venn3}.
+as shown in figures \ref{fig:venn2} and \ref{fig:venn3}.
 
 Venn diagrams are not possible in four or more dimensions -- at least, not with
 circles drawn on a two-dimensional plot.
@@ -314,9 +293,9 @@ Exercise variables in this study include weekly minutes performing cardiovascula
 Other exercise variables in this study include metrics of speed, endurance, strength, flexibility, blood pressure, resting heart rate, body composition, bone density, and sleep duration.
 
 Suppose we discretize (see section \ref{sec:discretize}) each continuous variable into discrete categories.
-For example, we might change the age variable from its numeric values to categories 1-10, 11-20, 21-30, and so on.
+For example, we might change the age variable from its numeric values to categories 1--10, 11--20, 21--30, and so on.
 We separate height into very short, short, average, tall, and very tall.
-We categorize minutes of weekly training into 0-20, 20-60, 60-120, and 120+.
+We categorize minutes of weekly training into 0--20, 20--60, 60--120, and 120+.
 Some variables are divided into very low, low, medium, high, and very high.
 The process continues until all variables can be represented in discrete (sometimes ordered) categories instead of continuous numeric values.
 
@@ -599,26 +578,7 @@ is **zero**.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-
-\draw[<->] (-6,0) -- (6,0);
-\draw[<->] (0,-1) -- (0,3);
-
-\draw[dotted] (-6,1.0) -- (6, 1.0);
-
-\filldraw (-5,2.5) circle (1pt);
-\filldraw (-4,1.6) circle (1pt);
-\filldraw (-3,.9) circle (1pt);
-\filldraw (-2,.4) circle (1pt);
-\filldraw (-1,.1) circle (1pt);
-\filldraw (0,0) circle (1pt);
-\filldraw (1,.1) circle (1pt);
-\filldraw (2,.4) circle (1pt);
-\filldraw (3,.9) circle (1pt);
-\filldraw (4,1.6) circle (1pt);
-\filldraw (5,2.5) circle (1pt);
-
-\end{tikzpicture}
+\includegraphics{quadratic-zero-r2.tikz}
 \caption{The covariance of $x$ and $y = x \odot x$ is zero. The line of best fit for this data is shown on the dotted line, which has a Pearson correlation coefficient of $R^2=0$. Having a covariance of zero does not mean that $y$ is completely independent of $x$, but only that there is no linear dependence.}
 \label{fig:quadratic-zero-r2}
 \end{figure}
@@ -713,37 +673,7 @@ as shown in figure \ref{fig:full-mesh} and enumerated in the following table.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-  \filldraw (2., 0.) circle (1pt);
-  \filldraw (1.2469796037174672, 1.5636629649360596) circle (1pt);
-  \filldraw (-0.445042, 1.9498558243636472) circle (1pt);
-  \filldraw (-1.80194, 0.8677674782351165) circle (1pt);
-  \filldraw (-1.80194, -0.867767) circle (1pt);
-  \filldraw (-0.445042, -1.94986) circle (1pt);
-  \filldraw (1.2469796037174667, -1.56366) circle (1pt);
-
-  \draw[-] (2.,0.) -- (1.2469796037174672,1.5636629649360596);
-  \draw[-] (2.,0.) -- (-0.445042,1.9498558243636472);
-  \draw[-] (2.,0.) -- (-1.80194,0.8677674782351165);
-  \draw[-] (2.,0.) -- (-1.80194,-0.867767);
-  \draw[-] (2.,0.) -- (-0.445042,-1.94986);
-  \draw[-] (2.,0.) -- (1.2469796037174667,-1.56366);
-  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-0.445042,1.9498558243636472);
-  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-1.80194,0.8677674782351165);
-  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-1.80194,-0.867767);
-  \draw[-] (1.2469796037174672,1.5636629649360596) -- (-0.445042,-1.94986);
-  \draw[-] (1.2469796037174672,1.5636629649360596) -- (1.2469796037174667,-1.56366);
-  \draw[-] (-0.445042,1.9498558243636472) -- (-1.80194,0.8677674782351165);
-  \draw[-] (-0.445042,1.9498558243636472) -- (-1.80194,-0.867767);
-  \draw[-] (-0.445042,1.9498558243636472) -- (-0.445042,-1.94986);
-  \draw[-] (-0.445042,1.9498558243636472) -- (1.2469796037174667,-1.56366);
-  \draw[-] (-1.80194,0.8677674782351165) -- (-1.80194,-0.867767);
-  \draw[-] (-1.80194,0.8677674782351165) -- (-0.445042,-1.94986);
-  \draw[-] (-1.80194,0.8677674782351165) -- (1.2469796037174667,-1.56366);
-  \draw[-] (-1.80194,-0.867767) -- (-0.445042,-1.94986);
-  \draw[-] (-1.80194,-0.867767) -- (1.2469796037174667,-1.56366);
-  \draw[-] (-0.445042,-1.94986) -- (1.2469796037174667,-1.56366);
-\end{tikzpicture}
+\includegraphics{full-mesh.tikz}
 \caption{A \textit{full mesh} network of 7 elements contains $(7)(7-1)/2=21$ connections,
 as explained in section \ref{sec:choose2}.}
 \label{fig:full-mesh}

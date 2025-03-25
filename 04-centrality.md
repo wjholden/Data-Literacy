@@ -219,39 +219,57 @@ when a histogram reflects a bell curve.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}
-
-\begin{axis}[
-    axis lines = left,
-    xlabel = \(x\),
-    ylabel = {\(P(x)\)},
-]
-
-\addplot [
-    domain=-4:4,
-    samples=100,
-    color=red,
-]{1/(1 * sqrt(2 * pi)) * exp(-(x - 0)^2/(2 * (1)^2))};
-
-%\addlegendentry{\(\frac{1}{\sigma \sqrt{2 \pi}} e^{-(x-\mu)^2/(2 \sigma^2)}\)}
-
-\end{axis}
-
-\end{tikzpicture}
+\includegraphics{normal.tikz}
 \caption{This familiar "bell curve" is a plot of the probability density function of the normal distribution. Though the curve appears to touch the horizontal axis in this plot, the values actually approach but never reach zero, even as $x$ continues infinitely far in either direction.}
 \label{fig:normal}
 \end{figure}
 
-<!-- TODO: provide symbolic integrals and explain why you need to calculate
-these as ranges, not P(0) (as the integral from x=0 to x=0 is 0).
+Just as *density* in physics is defined as mass per volume, the probability
+density function is correspondingly a rate. The units for $P(x)$ are probability
+per value. If we wanted to find mass from the density of a fluid, we would 
+multiply its density by the volume of fluid we have. Correspondingly, to take
+the *probability mass* from $P(x)$, we multiply probabilities by the range of
+$x$ values.
 
-This is also an opportunity to explain the 68/95/99% things.
--->
+In a *uniform distribution*, finding the probability mass is as simple as multiplying
+the probability, $U(x)$, by the range of $x$ values. For example, the probability
+of getting $0.0 \le x \le 0.5$ from a uniform random number generator producing
+values in the range $\left[ 0.0, 1.0 \right]$ is (informally) $U \times (0.5-0) = 0.5$.
+What is the probability of getting *exactly* $0.12345$? If $U$ can produce infinitely
+many digits, then the probability mass is zero. Not approximately zero --- exactly zero:
+we multiplied $U \times (0.12345 - 0.12345) = U \times (0) = 0$.
+
+Probability density is not constant in the normal distribution, therefore to get
+the probability mass we can use calculus. The integral of the entire space is
+
+<!-- <https://tex.stackexchange.com/questions/14821/whats-the-proper-way-to-typeset-a-differential-operator> -->
+$$
+\int_{-\infty}^{+\infty} P(x)\,dx = 1.
+$$
+
+The probabilities of an event occuring at $\pm \sigma$, $\pm 2\sigma$,
+and $\pm 3\sigma$ are approximately 68%, 95%, and 99%.
+
+$$
+\begin{aligned}
+\int_{-1}^{+1} P(x)\,dx \approx 0.68 \\
+\int_{-2}^{+2} P(x)\,dx \approx 0.95 \\
+\int_{-3}^{+3} P(x)\,dx \approx 0.99 \\
+\end{aligned}
+$$
+
+Just as the probability mass was zero when the range had zero length, we also
+find that the probability mass for a single value is zero.
+
+$$
+\int_{t}^{t} P(x)\,dx = 0
+$$
 
 The R language provides functions `dnorm`, `pnorm`, `qnorm`, and `rnorm`.
-`dnorm` is the same probability function shown above as $P(x)$.
-`pnorm` gives the cumulative probability between some range of $x$ values,
-which is simply a definite integral.
+`dnorm` is the same probability density function shown above as $P(x)$.
+`pnorm` gives the probability mass (also known as *cumulative probability*)
+between some range of $x$ values, which are numerical estimations of the definite
+integrals shown earlier.
 
 ```r
 > integrate(dnorm, -1, 1)
@@ -262,6 +280,8 @@ which is simply a definite integral.
 0.9973002 with absolute error < 9.3e-07
 > integrate(dnorm, -Inf, 0)
 0.5 with absolute error < 4.7e-05
+> integrate(dnorm, 0.12345, 0.12345)
+0 with absolute error < 0
 > pnorm(0)
 [1] 0.5
 > pnorm(1) - pnorm(-1)

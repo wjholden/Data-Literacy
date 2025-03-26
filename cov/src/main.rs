@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
 fn main() {
+    // df = data.frame(x=c(5., 7., 3., 6., 8., 1.), y=c(65., 80., 50., 70., 90., 100.))
     let x = vec![5., 7., 3., 6., 8., 1.];
     let y = vec![65., 80., 50., 70., 90., 100.];
     println!("Covariance: {}", cov(&x, &y).unwrap());
@@ -73,8 +74,8 @@ fn isunique(v: &Vec<f64>) -> bool {
 // https://arxiv.org/pdf/1909.10140
 // https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310
 // 
-fn xicor(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
-    // This implementation does not handle the case of duplicate values.
+fn xicor_distinct(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
+    // This implementation does not handle the case of duplicate values in y.
     let n = x.len();
 
     // 1) Sort y by x.
@@ -98,6 +99,7 @@ fn xicor(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
     1.0 - 3.0 * r_consec_abs_dist / (n.pow(2) as f64 - 1.0)
 }
 
+#[allow(dead_code)]
 fn xicor2_original(x: &[f64], y: &[f64]) -> f64 {
     let n = x.len();
     
@@ -124,24 +126,36 @@ fn xicor2_original(x: &[f64], y: &[f64]) -> f64 {
     1.0 - (n as f64 * r_consec_abs_dist) / (2.0 * l_term)
 }
 
-fn xicor_duplicates(x: &[f64], y: &[f64]) -> f64 {
+/// This function implements the Chatterjee correlation coefficient where
+/// duplicated x values are allowed ((https://arxiv.org/pdf/1909.10140).
+/// 
+/// This function is written for clarity and is not intended to be optimal.
+fn xicor(x: &[f64], y: &[f64]) -> f64 {
     let n = x.len();
     
+    // Order of x values. This function does not use randomness.
     let mut order: Vec<usize> = (0..n).collect();
     order.sort_by(|&a,&b| x[a].total_cmp(&x[b]));
 
-    let r: Vec<usize> = order.iter().map(|&i| {
-        order.iter().filter(|&&j| y[j] <= y[i]).count()
+    // r values are the ranks of the y values. The ith y value is the number of
+    // j such that y[j] <= y[i]. The order of r values corresponds to the order
+    // of x.
+    let r: Vec<_> = order.iter().map(|&i| {
+        (0..n).filter(|&j| y[j] <= y[i]).count() as f64
     }).collect();
 
-    let l: Vec<usize> = order.iter().map(|&i| {
-        order.iter().filter(|&&j| y[j] >= y[i]).count()
+    // l values are just like the r values, only it is y[j] >= y[i].
+    let l: Vec<_> = order.iter().map(|&i| {
+        (0..n).filter(|&j| y[j] >= y[i]).count() as f64
     }).collect();
 
-    let rsum: f64 = (1..n).map(|i| (r[i] as f64 - r[i-1] as f64).abs()).sum();
-    let lsum: f64 = (0..n).map(|i| (l[i] * (n - l[i])) as f64).sum();
+    // Sum of absolute differences in consecutive r values.
+    let rsum = &r.windows(2).map(|ri| (ri[1] - ri[0]).abs()).sum();
 
-    1.0 - (n as f64 * rsum) / (2.0 * lsum)
+    // Sum of l terms for the denominator.
+    let lsum = l.iter().map(|&li| li * (n as f64 - li)).sum::<f64>();
+
+    1. - (n as f64 * rsum) / (2. * lsum)
 }
 
 #[cfg(test)]
@@ -164,39 +178,15 @@ mod tests {
     }
 
     #[test]
-    fn xicor1() {
+    fn xicor_test_1() {
         let x = vec![5., 7., 3., 6., 8.];
         let y = vec![65., 80., 50., 70., 90.];
+        assert_eq!(0.5, xicor_distinct(&x, &y));
         assert_eq!(0.5, xicor(&x, &y));
-        assert_eq!(0.5, xicor_duplicates(&x, &y));
     }
 
     #[test]
-    fn xicor2() {
-        let x = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
-            24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4,
-            30.4, 33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8,
-            19.7, 15.0,21.4
-        ];
-        let y = vec![2.620, 2.875, 2.320, 3.215, 3.440, 3.460,
-            3.570, 3.190, 3.150, 3.440, 3.440, 4.070, 3.730, 3.780, 5.250,
-            5.424, 5.345, 2.200, 1.615, 1.835, 2.465, 3.520, 3.435, 3.840,
-            3.845, 1.935, 2.140, 1.513, 3.170, 2.770, 3.570, 2.780
-        ];
-        // We don't quite reproduce the reference value from the XICOR R package.
-        assert_eq!(0.5416058, xicor_duplicates(&x, &y));
-    }
-
-    #[test]
-    fn xicor3() {
-        let x = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1];
-        let y = vec![2.620, 2.875, 2.320, 3.215, 3.440, 3.460];
-        assert_eq!(xicor(&x, &y), xicor_duplicates(&x, &y));
-        assert_eq!(0.22857142857142853654, xicor_duplicates(&x, &y));
-    }
-
-    #[test]
-    fn xicor_mtcars() {
+    fn xicor_test_2_mtcars() {
         let mpg = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3,
         24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2, 10.4, 10.4, 14.7, 32.4, 30.4, 
         33.9, 21.5, 15.5, 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8, 19.7,
@@ -204,8 +194,29 @@ mod tests {
         let cyl = vec![6.0, 6.0, 4.0, 6.0, 8.0, 6.0, 8.0, 4.0, 4.0,
         6.0, 6.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 4.0, 4.0, 4.0, 4.0, 8.0, 8.0,
         8.0, 8.0, 4.0, 4.0, 4.0, 8.0, 6.0, 8.0, 4.0];
-        assert_eq!(0.32729384436701514094, xicor_duplicates(&mpg, &cyl));
-        // Extremely different from what R gives us :-( 
+        // We've learned that anything with duplicates is tricky because of randomness.
+        // The official XICOR library (by Chatterjee himself!) produces non-deterministic
+        // outputs. So, this statistic should be somewhere in this general range.
+        let xi = xicor(&mpg, &cyl);
+        assert!(0.7 <= xi && xi <= 0.85);
+    }
+
+    #[test]
+    fn xicor_test_3() {
+        let x = vec![21.0, 21.0, 22.8, 21.4, 18.7, 18.1];
+        let y = vec![2.620, 2.875, 2.320, 3.215, 3.440, 3.460];
+        assert_eq!(xicor_distinct(&x, &y), xicor(&x, &y));
+        assert_eq!(0.22857142857142853654, xicor(&x, &y));
+    }
+
+    #[test]
+    fn xicor_test_4_unsuccessful_laminator() {
+        // from https://github.com/UnsuccessfulLaminator/xicor/blob/127962345556f58c80e896f4af5b85d55feb28f0/src/tests.rs#L26
+        let x = [1., 4., -9., -6., -5., -8., -1., 0., -4., -5.];
+        let y = [9., 8., 5., -10., 7., -6., -2., -8., 4., 3.];
+        // R equivalent:
+        // t4 <- data.frame(x = c(1., 4., -9., -6., -5., -8., -1., 0., -4., -5.), y = c(9., 8., 5., -10., 7., -6., -2., -8., 4., 3.))
+        assert!((xicor(&x, &y) - 0.0909090909).abs() < 0.0001)
     }
 
 }

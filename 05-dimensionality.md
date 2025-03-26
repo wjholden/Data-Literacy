@@ -626,7 +626,7 @@ $$
 $$
 
 when there are no ties. If the data set does contain duplicates, then we also
-use $l$ values, where $l_i$ is the number $j$ such that $Y_{(j)} \le Y_{(i)}$.
+use $l$ values, where $l_i$ is the number $j$ such that $Y_{(j)} \ge Y_{(i)}$.
 
 $$
 \xi_n \left( X , Y \right) = 
@@ -640,32 +640,41 @@ $$
 <!-- <https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310/> -->
 
 A Rust implementation of this new $\xi$ statistic is given below and at the
-Rust Playground^[<https://play.rust-lang.org/?gist=6336707980cfc3a54511842d937fb344>].
+Rust Playground^[<https://play.rust-lang.org/?gist=b9a810274f9567213a5b2a649bd806e8>].
 
 ```rust
-fn xicor(x: &Vec<f32>, y: &Vec<f32>) -> f32 {
-    // This implementation does not handle duplicate values.
+/// This function implements the Chatterjee correlation coefficient where
+/// duplicated x values are allowed ((https://arxiv.org/pdf/1909.10140).
+///
+/// This function is written for clarity and is not intended to be optimal.
+fn xicor(x: &[f64], y: &[f64]) -> f64 {
     let n = x.len();
 
-    // 1) Sort y by x.
-    let mut i: Vec<_> = (0..n).collect();
-    i.sort_by(|&a, &b| x[a].total_cmp(&x[b]));
-    let y: Vec<f32> = i.iter().map(|&i| y[i]).collect();
+    // Order of x values. This function does not use randomness.
+    let mut order: Vec<usize> = (0..n).collect();
+    order.sort_by(|&a, &b| x[a].total_cmp(&x[b]));
 
-    // 2) Order y by sorting 1:n by y.
-    let mut order: Vec<_> = (0..n).collect();
-    order.sort_by(|&a, &b| y[a].total_cmp(&y[b]));
+    // r values are the ranks of the y values. The ith y value is the number of
+    // j such that y[j] <= y[i]. The order of r values corresponds to the order
+    // of x.
+    let r: Vec<_> = order
+        .iter()
+        .map(|&i| (0..n).filter(|&j| y[j] <= y[i]).count() as f64)
+        .collect();
 
-    // 3) Rank y by sorting 1:n by order.
-    let mut r: Vec<_> = (0..n).collect();
-    r.sort_by(|&a, &b| order[a].cmp(&order[b]));
+    // l values are just like the r values, only it is y[j] >= y[i].
+    let l: Vec<_> = order
+        .iter()
+        .map(|&i| (0..n).filter(|&j| y[j] >= y[i]).count() as f64)
+        .collect();
 
-    // Sum of absolute distances in successive y ranks.
-    let mut r_consec_abs_dist = 0.0;
-    for i in 1..n {
-        r_consec_abs_dist += (r[i] as f32 - r[i-1] as f32).abs();
-    }
-    1.0 - 3.0 * r_consec_abs_dist / (n.pow(2) as f32 - 1.0)
+    // Sum of absolute differences in consecutive r values.
+    let rsum = &r.windows(2).map(|ri| (ri[1] - ri[0]).abs()).sum();
+
+    // Sum of l terms for the denominator.
+    let lsum = l.iter().map(|&li| li * (n as f64 - li)).sum::<f64>();
+
+    1. - (n as f64 * rsum) / (2. * lsum)
 }
 ```
 

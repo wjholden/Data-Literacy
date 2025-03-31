@@ -518,6 +518,12 @@ $$
 \end{aligned}
 $$
 
+If the data is not scaled, then the Pearson correlation coefficient (PCC) is
+
+$$
+\rho \left( x, y \right) = \frac{\text{cov} \left( x, y \right)}{\sigma_x \sigma_y}.
+$$
+
 The following Rust program implements both covariance and correlation statistics.
 One can execute this program at the Rust Playground^[<https://play.rust-lang.org/?gist=1f3b41a17c10c354ee462062772dbd72>]
 and reproduce the result in R at <https://docs.r-wasm.org/webr/latest/> with
@@ -603,14 +609,13 @@ Again using the R language at <https://docs.r-wasm.org/webr/latest/>,
 
 Todo: this is a good place to motivate the correlation matrix and cite [@friendly2002corrgrams].
 
-## Chatterjee's Rank Correlation
+## Chatterjee's Rank Correlation {#sec:xicor}
 
 Sourav Chatterjee has recently developed and published a new
 coefficient of correlation [@10.1080/01621459.2020.1758115].
 This new statistic, known as $\xi$ and pronounced "xi" or "ksaai", seeks to 
 correlate $Y$ as some arbitrary function of $X$ and produces meaningful metrics 
-on non-linear data. For our range $[-5,5]$ and its squares, the correlation 
-coefficient is \num{0.5}.
+on non-linear data.
 
 The algorithm to compute $\xi(X,Y)$ first sorts $Y$ by $X$, then the *ranks*, 
 $r$, of the resulting order of $Y$. If *order* is a list of positions
@@ -637,16 +642,18 @@ $$
 }
 $$
 
+
+We earlier saw that for $x = \left\{ x \in \mathbb{R} | -5 \le x \le 5 \right\}$
+and $y = x \odot x$, the Pearson correlation was 
+$\text{cor} \left( x, y \right) = 0$.
+Using Chatterjee rank correlation, we find $\xi \left( x , y \right) = 0.5$.
+
 <!-- <https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310/> -->
 
-A Rust implementation of this new $\xi$ statistic is given below and at the
+A naive Rust implementation of this new $\xi$ statistic is given below and at the
 Rust Playground^[<https://play.rust-lang.org/?gist=b9a810274f9567213a5b2a649bd806e8>].
 
 ```rust
-/// This function implements the Chatterjee correlation coefficient where
-/// duplicated x values are allowed ((https://arxiv.org/pdf/1909.10140).
-///
-/// This function is written for clarity and is not intended to be optimal.
 fn xicor(x: &[f64], y: &[f64]) -> f64 {
     let n = x.len();
 
@@ -654,9 +661,9 @@ fn xicor(x: &[f64], y: &[f64]) -> f64 {
     let mut order: Vec<usize> = (0..n).collect();
     order.sort_by(|&a, &b| x[a].total_cmp(&x[b]));
 
-    // r values are the ranks of the y values. The ith y value is the number of
-    // j such that y[j] <= y[i]. The order of r values corresponds to the order
-    // of x.
+    // r values are the ranks of the y values. The ith y value is
+    // the number of j such that y[j] <= y[i]. The order of r values
+    // corresponds to the order of x.
     let r: Vec<_> = order
         .iter()
         .map(|&i| (0..n).filter(|&j| y[j] <= y[i]).count() as f64)

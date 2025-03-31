@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-fn main() {
+fn main() -> Result<(), ()> {
     // df = data.frame(x=c(5., 7., 3., 6., 8., 1.), y=c(65., 80., 50., 70., 90., 100.))
     let x = vec![5., 7., 3., 6., 8., 1.];
     let y = vec![65., 80., 50., 70., 90., 100.];
@@ -8,13 +8,19 @@ fn main() {
     println!("Correlation: {}", cor(&x, &y).unwrap());
     println!("Xi Cor: {}", xicor(&x, &y));
     println!("Xi dups: {}", xicor(&vec![1.,1.,1.], &vec![1.,2.,3.]));
+
+    let x = [-5.,-4.,-3.,-2.,-1.,0.,1.,2.,3.,4.,5.];
+    let y = [25.,16.,9.,4.,1.,0.,1.,4.,9.,16.,25.];
+    println!("Correlation for (-5:5)^2: {}", cor(&x, &y)?);
+    println!("Same but xicor:           {}", xicor(&x, &y));
     //println!("sortperm: {:?}", sortperm(&x));
     //println!("sortperm: {:?}", sortperm(&y));
     //println!("sortperm: {:?}", sortperm(&vec![1.,2.,3.,4.,5.]));
     //println!("sortperm: {:?}", sortperm(&vec![5.,4.,3.,2.,1.]));
+    Ok(())
 }
 
-fn cov(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
+fn cov(x: &[f64], y: &[f64]) -> Result<f64, ()> {
     if x.len() != y.len() {
         return Err(())
     }
@@ -27,11 +33,11 @@ fn cov(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
     Ok(covariance)
 }
 
-fn cor(x: &Vec<f64>, y: &Vec<f64>) -> Result<f64, ()> {
+fn cor(x: &[f64], y: &[f64]) -> Result<f64, ()> {
     cov(&scale(x), &scale(y))
 }
 
-fn scale(v: &Vec<f64>) -> Vec<f64> {
+fn scale(v: &[f64]) -> Vec<f64> {
     let mu = mean(v);
     let sigma = sd(v);
     v.iter().map(|x| {
@@ -39,11 +45,11 @@ fn scale(v: &Vec<f64>) -> Vec<f64> {
     }).collect()
 }
 
-fn mean(v: &Vec<f64>) -> f64 {
+fn mean(v: &[f64]) -> f64 {
     v.iter().sum::<f64>() / (v.len() as f64)
 }
 
-fn sd(v: &Vec<f64>) -> f64 {
+fn sd(v: &[f64]) -> f64 {
     let mu = mean(v);
     let variance = v.iter().map(|x| {
         (x - mu).powi(2)
@@ -53,14 +59,14 @@ fn sd(v: &Vec<f64>) -> f64 {
 }
 
 #[allow(dead_code)]
-fn sortperm(v: &Vec<f64>) -> Vec<usize> {
+fn sortperm(v: &[f64]) -> Vec<usize> {
     let mut i: Vec<usize> = (0..v.len()).collect();
     i.sort_by(|&a,&b| (v[a]).total_cmp(&v[b]));
     i
 }
 
 #[allow(dead_code)]
-fn isunique(v: &Vec<f64>) -> bool {
+fn isunique(v: &[f64]) -> bool {
     let mut h = HashSet::new();
     for &i in v.iter() {
         if h.contains(&i.to_bits()) {
@@ -74,7 +80,7 @@ fn isunique(v: &Vec<f64>) -> bool {
 // https://arxiv.org/pdf/1909.10140
 // https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310
 // 
-fn xicor_distinct(x: &Vec<f64>, y: &Vec<f64>) -> f64 {
+fn xicor_distinct(x: &[f64], y: &[f64]) -> f64 {
     // This implementation does not handle the case of duplicate values in y.
     let n = x.len();
 
@@ -165,7 +171,7 @@ mod tests {
     #[test]
     fn quadratic() {
         let x = vec![-5.0_f64,-4.,-3.,-2.,-1.,0.,1.,2.,3.,4.,5.];
-        let y = x.iter().map(|&i| i.powi(2)).collect();
+        let y = x.iter().map(|&i| i.powi(2)).collect::<Vec<_>>();
         assert_eq!(0.0, cor(&x, &y).unwrap().round());
     }
 

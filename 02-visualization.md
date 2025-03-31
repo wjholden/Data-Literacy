@@ -466,6 +466,12 @@ system, then the slow initial growth and diminishing returns might not be
 visible in a scatter plot of the data. Discuss graphical and analytical methods
 one might use to predict the future behavior of the uncertain system.
 
+4. In addition to numerical grades, a teacher wants their students to know their
+relative standing in comparison to their peers. The teacher wants to minimize
+how much information students can infer about their classmates, although it is
+desirable for students to know the central (mean, median, or mode) grades.
+Which plot technique is better for this task: a bar plot or a box plot?
+
 ## Practical exercises
 
 1. Given a dataset, plot the data and explain why this plot technique is appropriate. 

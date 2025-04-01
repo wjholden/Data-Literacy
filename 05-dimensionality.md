@@ -448,7 +448,7 @@ The toy shark example is intended to demonstrate how *spurious correlations* may
 The *Texas sharpshooter fallacy* can describe this effect.
 A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
 
-## Pareto frontier {#sec:pareto}
+## Pareto frontier {#sec:pareto-frontier}
 
 A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
 

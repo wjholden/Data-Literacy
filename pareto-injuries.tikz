@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar,ymin=0,
+        ylabel={Injuries},
+        symbolic x coords={Power Lifting,Gymnastics,Not Associated,Olympic Lifting,Other,Endurance},
+        xtick=data,
+        xticklabel=\empty
+    ]
+        \addplot [fill=gray!30, nodes near coords] coordinates {
+            (Power Lifting, 19) 
+            (Gymnastics, 17)
+            (Not Associated, 16)
+            (Olympic Lifting, 14)
+            (Other, 13)
+            (Endurance, 5)
+        };
+        \addplot [sharp plot,mark=*] coordinates {
+            (Power Lifting, 19) 
+            (Gymnastics, 36)
+            (Not Associated, 52)
+            (Olympic Lifting, 66)
+            (Other, 79)
+            (Endurance, 84)
+        };
+    \end{axis}
+\end{tikzpicture}

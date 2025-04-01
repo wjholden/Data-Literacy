@@ -591,13 +591,12 @@ then $1=S(0)$, $2=S(1)=S(S(0))$, $3=S(2)=S(S(1))=S(S(S(0)))$, and so on.
 Can we define the reals, $\mathbb{R}$, in such a way? Could we construct a
 successor function for floating-point approximations of real numbers?
 
-<!-- ° ALT+0176 on Windows -->
-6. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
-90° for east, 180° for south, and 270° for west. In trigonometry, the angle
-0° corresponds to $(x,y)$ position $(1,0)$ on the unit circle, 90° to $(0,1)$,
-180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert
-azimuths to angles, another function $A^{-1}$ to convert angles to azimuths,
-and create test cases to verify that $A^{-1}(A(\theta))=\theta$.
+6. CSV makes *appending* data easy: simply write new rows to the end of the file.
+This structure also makes it easy to *stream* the data record-by-record, but it
+makes the schema of the data inflexible. One must define the columns in the header
+of the CSV and continue to use this structure thereafter. Do Excel spreadsheets
+and SQL databases share this problem? How can organizations store their data
+when their requirements may change?
 
 ## Practical exercises
 
@@ -641,3 +640,11 @@ static void count() {
 
 count();
 ```
+
+<!-- ° ALT+0176 on Windows -->
+6. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
+90° for east, 180° for south, and 270° for west. In trigonometry, the angle
+0° corresponds to $(x,y)$ position $(1,0)$ on the unit circle, 90° to $(0,1)$,
+180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert
+azimuths to angles, another function $A^{-1}$ to convert angles to azimuths,
+and create test cases to verify that $A^{-1}(A(\theta))=\theta$.

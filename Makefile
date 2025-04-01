@@ -62,6 +62,7 @@ test:
 # "principal component analysis."
 	@! rg -tmd --ignore-case "first principal"
 	@! rg -tmd --ignore-case "principle component"
+	@! rg -tmd --ignore-case "Pareto Principal"
 # We also don't want any more "bare" URLs. As a matter of style, let's always
 # wrap URLs in <angle brackets>. Also, avoid \url{} LaTeX syntax.
 	@! rg -tmd " http"
@@ -86,5 +87,8 @@ test:
 # Idk why Make is forcing me to double escape these backslashes.
 	@! rg -tmd ",\s?\\\\cdots"
 	@! rg -tmd "(\\\\times|[\+-])\\s?\\\\ldots"
+# "et al.\ " always ends in a period with a non-breaking space.
+	@! rg -tmd "et al "
+	@! rg -tmd "et al. "
 
 # Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

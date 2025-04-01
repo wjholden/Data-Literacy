@@ -105,6 +105,41 @@ In the R language, one can create bar plots using the `barplot`. Using
 > ggplot(gdp, aes(x=Year, y=GDP)) + geom_col()
 ```
 
+## Pareto Charts {#sec:pareto-chart}
+
+A *Pareto chart* is a combination of a sorted box plot and line plot.
+Pareto charts are frequently used in industrial settings to show cumulative
+proportions among categories. A typical application for a Pareto chart is to
+triage the most common causes for a problem to maximize effectiveness of
+finite resources. Pareto charts are closely associated with the "Pareto Principle,"
+an estimation that 80% of problems are caused by 20% of causes.
+
+A 2014 observational study by Weisenthal et al.\ surveyed injury rates among
+CrossFit athletes [@Weisenthal2014, p. 7]. The researchers report a total of 84
+injuries in six movement categories, which are shown in the following table.
+The movement types are presented in descending order by injury count.
+The proportion is simply the injury count for the current row divided by the
+total of injury counts. The cumulative sum, `cumsum` in the R language, is the
+sum of the current injury proportion and those before.
+
+| Movement Type   | Injury Count | Proportion | Cumulative Sum |
+|-----------------|--------------|------------|----------------|
+| Power Lifting   | 19           | 22.619%    | 22.619%        |
+| Gymnastics      | 17           | 20.238%    | 42.857%        |
+| Not Associated  | 16           | 19.048%    | 61.905%        |
+| Olympic Lifting | 14           | 16.667%    | 78.572%        |
+| Other           | 13           | 15.476%    | 94.048%        |
+| Endurance       | 5            | 5.952%     | 100.000%       |
+
+A Pareto chart for this table is shown in figure \ref{fig:pareto-injuries}.
+
+\begin{figure}
+\centering
+\includegraphics{pareto-injuries.tikz}
+\caption{todo}
+\label{fig:pareto-injuries}
+\end{figure}
+
 ## Cumulative Sums and Pareto Charts
 
 A *Pareto chart* is a useful analytical tool to show the relative importance of

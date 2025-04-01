@@ -17,17 +17,7 @@ fn main() -> Result<(), ()> {
     //println!("sortperm: {:?}", sortperm(&y));
     //println!("sortperm: {:?}", sortperm(&vec![1.,2.,3.,4.,5.]));
     //println!("sortperm: {:?}", sortperm(&vec![5.,4.,3.,2.,1.]));
-    count_up();
     Ok(())
-}
-
-fn count_up() {
-    let mut x: f32 = 1.0;
-    while x != f32::INFINITY {
-        println!("{x}");
-        x.to_bits()
-        x *= 2.0;
-    }
 }
 
 fn cov(x: &[f64], y: &[f64]) -> Result<f64, ()> {

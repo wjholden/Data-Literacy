@@ -332,7 +332,7 @@ of two or more elements. A plot demonstrating vector summation is shown in
 figure \ref{fig:vector-sum}.
 
 $$
-\mathbf{x} = \left( x_1 , x_2 , x_3 , \cdots , x_n \right)
+\mathbf{x} = \left( x_1 , x_2 , x_3 , \ldots , x_n \right)
 $$
 
 The above vector $\mathbf{x}$ has three components and length $\sqrt{x_1 ^2 + x_2^2 + x_3^2 + \cdots + x_n^2}$.
@@ -585,6 +585,20 @@ Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted
 enter information and send it back. What are some challenges the manager might
 experience while merging these spreadsheets?
 
+5. The set of natural numbers, $\mathbb{N} = \left\{ 0, 1, 2, 3, \ldots \right\}$,
+can be constructed using a *successor function*, $S(n)=n+1$. If we begin with $0=0$,
+then $1=S(0)$, $2=S(1)=S(S(0))$, $3=S(2)=S(S(1))=S(S(S(0)))$, and so on.
+Can we define the reals, $\mathbb{R}$, in such a way? Could we construct a
+successor function for floating-point approximations of real numbers?
+
+<!-- ° ALT+0176 on Windows -->
+6. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
+90° for east, 180° for south, and 270° for west. In trigonometry, the angle
+0° corresponds to $(x,y)$ position $(1,0)$ on the unit circle, 90° to $(0,1)$,
+180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert
+azimuths to angles, another function $A^{-1}$ to convert angles to azimuths,
+and create test cases to verify that $A^{-1}(A(\theta))=\theta$.
+
 ## Practical exercises
 
 1. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
@@ -594,3 +608,36 @@ manually merging spreadsheets.
 2. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
 
 3. Discretize the values of a dataset and explain the reasoning. 
+
+4. The following Rust program, which one can run at the
+Rust Playground^[<https://play.rust-lang.org/?gist=82eb9505ef18cf3af0faa2a373c11901>],
+doubles a value until we exceed the largest representable value. However, the
+program *appears* to make an arithmetic error at $\num{134217730}$.
+$\num{67108864} \times 2 = \num{134217728}$, not $\num{134217730}$ (no power of
+two could ever end in zero in decimal). Use <https://www.h-schmidt.net/FloatConverter/IEEE754.html>
+to investigate the error.
+
+```rust
+fn main() {
+    let mut x: f32 = 1.0;
+    while x != f32::INFINITY {
+        println!("{x}");
+        x *= 2.0;
+    }
+}
+```
+
+5. What is the output of the following Java program? Use the 
+Java Playground^[<https://dev.java/playground/>] to experiment.
+
+```java
+static void count() {
+    float x = 0.0f;
+    while (x != x + 1.0f) {
+        x += 1.0f;
+    }
+    System.out.println(x);
+}
+
+count();
+```

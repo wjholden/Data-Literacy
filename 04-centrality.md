@@ -51,7 +51,7 @@ $$
 and the sum of the squared errors is
 
 $$
-\text{SSE}\left( \bar{x} \right) = \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2.
+\text{SSE}\left( \bar{x} \right) = \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \cdots + \left( x_n - \bar{x} \right)^2.
 $$
 
 To minimize SSE, we take the derivative of SSE in respect to $\bar{x}$ and find its zero.
@@ -59,17 +59,17 @@ To minimize SSE, we take the derivative of SSE in respect to $\bar{x}$ and find 
 $$
 \begin{aligned}
 0 &= \frac{\mathrm{d} \text{SSE}}{\mathrm{d} \bar{x}} \\
-&=  \frac{\mathrm{d} \left( \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \ldots + \left( x_n - \bar{x} \right)^2 \right)}{\mathrm{d} \bar{x}} \\
-&= \frac{\mathrm{d} \left( \left( x_1^2 -2 x_1 \bar{x} + \bar{x}^2 \right) + \left( x_2^2 -2 x_2 \bar{x} + \bar{x}^2 \right) + \ldots + \left( x_n^2 -2 x_n \bar{x} + \bar{x}^2 \right) \right)}{\mathrm{d} \bar{x}} \\
-&= \left(-2x_1 + 2\bar{x} \right) + \left( -2x_2 + 2\bar{x} \right) + \ldots + \left( -2x_n + 2\bar{x} \right) \\
-&= -2x_1 -2x_2 - \ldots - 2x_n + n \left( 2\bar{x} \right) \\
--2n\bar{x} &= -2x_1 - 2x_2 - \ldots - 2x_n \\
-\bar{x} &= \frac{-2x_1 - 2x_2 - \ldots - 2x_n}{-2n} \\
-&= \frac{x_1+x_2+\ldots+x_n}{n}
+&=  \frac{\mathrm{d} \left( \left( x_1 - \bar{x} \right)^2 + \left( x_2 - \bar{x} \right)^2 + \cdots + \left( x_n - \bar{x} \right)^2 \right)}{\mathrm{d} \bar{x}} \\
+&= \frac{\mathrm{d} \left( \left( x_1^2 -2 x_1 \bar{x} + \bar{x}^2 \right) + \left( x_2^2 -2 x_2 \bar{x} + \bar{x}^2 \right) + \cdots + \left( x_n^2 -2 x_n \bar{x} + \bar{x}^2 \right) \right)}{\mathrm{d} \bar{x}} \\
+&= \left(-2x_1 + 2\bar{x} \right) + \left( -2x_2 + 2\bar{x} \right) + \cdots + \left( -2x_n + 2\bar{x} \right) \\
+&= -2x_1 -2x_2 - \cdots - 2x_n + n \left( 2\bar{x} \right) \\
+-2n\bar{x} &= -2x_1 - 2x_2 - \cdots - 2x_n \\
+\bar{x} &= \frac{-2x_1 - 2x_2 - \cdots - 2x_n}{-2n} \\
+&= \frac{x_1+x_2+\cdots+x_n}{n}
 \end{aligned}
 $$
 
-The arithmetic mean is found at $\mu = \bar{x} = \frac{x_1+x_2+\ldots+x_n}{n}$. $\square$
+The arithmetic mean is found at $\mu = \bar{x} = \frac{x_1+x_2+\cdots+x_n}{n}$. $\square$
 
 A less-general demonstration of the above proof is given below in the Wolfram Language.
 

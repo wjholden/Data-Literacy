@@ -120,13 +120,13 @@ $(a,b)$, $(b,a)$, $(a,c)$, $(c,a)$, $(a,d)$, $(d,a)$, $(b,c)$, $(c, b)$, $(b, d)
 When counting the size of the permutation set of length $r$ chosen from a set of size $n$, we begin wtih $n$ possible elements for the first tuple element, then $n-1$ possible elements for the second tuple element, and so on until all $r$ tuple elements are filled.
 
 $$
-nPr = n \times (n-1) \times (n-2) \times \ldots \times (n-r+1) = \frac{n!}{(n-r)!}
+nPr = n \times (n-1) \times (n-2) \times \cdots \times (n-r+1) = \frac{n!}{(n-r)!}
 $$
 
 The *permutation formula* is usually defined using the *factorial* function, denoted by the "$!$" postfix operator.
 
 $$
-n! = n \times (n-1) \times (n-2) \times \ldots \times 2 \times 1 = \prod_{i=1}^{n}{i}
+n! = n \times (n-1) \times (n-2) \times \cdots \times 2 \times 1 = \prod_{i=1}^{n}{i}
 $$
 
 $0!=1$ by definition.
@@ -180,7 +180,7 @@ if we add a $(k+1)$th element to a set, then we can pair this new element with e
 The generalized form is
 
 $$
-\binom{n}{2} = 1 + 2 + 3 + \ldots + (n-1) = \frac{n(n-1)}{2}.
+\binom{n}{2} = 1 + 2 + 3 + \cdots + (n-1) = \frac{n(n-1)}{2}.
 $$
 
 We can demonstrate this identity numerically
@@ -215,10 +215,10 @@ $$
 An alternative proof is to use algebra from our definition $\binom{n}{r}=\frac{n!}{r!(n-r)!}$ as follows:
 
 $$
-\binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{(n)(n-1)(n-2)\ldots(3)(2)(1)}{(2)(n-2)(n-3)\ldots(3)(2)(1)} = \frac{(n)(n-1)}{2}.
+\binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{(n)(n-1)(n-2)\cdots(3)(2)(1)}{(2)(n-2)(n-3)\cdots(3)(2)(1)} = \frac{(n)(n-1)}{2}.
 $$
 
-Yet another proof is to observe the series $1+2+3+\ldots+(n-1)+n$, cleverly reverse the series and add it to itself to form $(n+1)+((n-1)+2)+\ldots+(n+1)$, observe that there are $n$ of these identical terms and the original sum is half that of the second.
+Yet another proof is to observe the series $1+2+3+\cdots+(n-1)+n$, cleverly reverse the series and add it to itself to form $(n+1)+((n-1)+2)+\cdots+(n+1)$, observe that there are $n$ of these identical terms and the original sum is half that of the second.
 Though elegant, this proof technique may not as portable to other problems as computational, inductive, and algebraic methods.
 
 ## The curse of combinatorics
@@ -365,7 +365,7 @@ We multiply these probabilities together to get
 
 $$
 \begin{aligned}
-q_{10} &= \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \ldots \times \frac{343}{365} \\
+q_{10} &= \frac{365}{365} \times \frac{364}{365} \times \frac{363}{365} \times \cdots \times \frac{343}{365} \\
 &= \prod_{i=1}^{23}{\frac{365 - i + 1}{365}} \\
 &= 0.492703.
 \end{aligned}

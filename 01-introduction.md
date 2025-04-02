@@ -1,8 +1,192 @@
 # Introduction
 
-## The Wisdom Hierarchy
+## Data Literacy
 
-todo [@doi:10.1177/0165551506070706]
+The *Wisdom Hierarchy* [@doi:10.1177/0165551506070706] begins with raw *data*.
+In context, data form *information*. When aggregated and interpreted through
+subjective values, information forms *knowledge*. When applied in novel
+circumstances, knowledge supports *wisdom*. Another model for Data, Information,
+Knowledge, and Wisdom (DKIW) is that they answer measurements, what, how, and why.
+The DKIW model is often visualized as the pyramid shown in figure \ref{fig:dikw}.
+
+\begin{figure}
+\centering
+\includegraphics{dikw.tikz}
+\caption{The DIKW model shows data, information, knowledge, and wisdom in a hierachy.
+Lower layers of abstraction support higher levels of understanding.}
+\label{fig:dikw}
+\end{figure}
+
+This book is intended to develop *data literacy*, one's ability interpret data
+into useful information that will support knowledge and wisdom. Studying data
+requires an understanding of measurements, basic mathematics, statistics,
+computation, computer programming, databases, and graphs.
+
+The weakest form of knowledge is *anecdata*, based on personal experience and
+intuition and not scientific rigor. Acecdata can be difficult to refute.
+Imagine the smoker who insists that *they* have not (yet) experienced any
+harmful side-effects from smoking.
+
+We use the symbol $n$ to represent the size of a *study*. Studies can be
+*interventional* (where the researcher actively makes a change to measure the 
+result) or *observational* (where the researcher passively measures results
+without directly influencing the experiment). Both interventional and
+observational studies support *empirical knowledge* gathered through experiments.
+
+An $n=1$ study is effectively anecdata. Small studies risk incorrect conclusions
+due to *lurking variables* (variables not known or measured by the researcher)
+or *confounding variables* (variables that interfere with one another). The
+smoker might observe that lung cancer patients are elderly, claiming that age,
+not smoking, is the proximate cause.
+
+Larger studies seek to *control* for these problems by capturing many observations
+among many subjects. A large study should also account for *noise* due to 
+sampling. The human population is *approximately* 50% male
+and 50% female, but in an individual classroom we might have, for example, 11
+girls and only 6 boys. This imbalance can be easily explained by random noise.
+If, on the other hand, a large school has 1110 girls and only 600 boys, then one
+should be more surprised by this result, assuming our *first principle* that the
+proportion of men and women should be nearly equal.
+
+*Data mining* is an effort to distill useful information when one lacks those
+first principles. For example, could a climate scientist discover the ideal gas
+law, $P V \propto T$ (pressure and volume are proportionate to temperature) using 
+only weather data? Once the data scientist suspects a relationship among data, a 
+traditional scientist could structure an experiment to *verify* or *falsify* the 
+hypothesis.
+
+Verification and falsification are powerful tools. Both are useful to refute
+absolute statements. If one says, "all swans are white," then the discovery of
+only a single black swan falsifies the statement. Likewise, qualified statements
+with the quantifier "some" or "at least one" are also supported by verification.
+For example, the statement "some people are seven feet tall" is verifiably true,
+although not easily as such people are very rare. 
+
+A joke goes that an astronomer, a physicist, and a mathematician are on a train
+to Edinburgh and see a cow. The astronomer says, "all cows are white." The
+physicist says, "some cows in Scotland are white." The mathematician says, 
+"there exists *at least* one cow in Scotland such that *one side* is white."
+The level of precision reflects the specificity of one's conclusions in each
+field.
+
+*Pure mathematics*, unlike most sciences, primarily uses *deductive* reasoning.
+Mathematical reasoning begins with *axioms* (also known as *postulates* in 
+geometry) that are considered obvious and acceptable without proof. From axioms,
+we prove *theorems* through several methods.
+
+Mathematical methods include proof by construction (also known as direct proof)^[
+The symbol $\implies$ is pronounced "implies" and is called *conditional
+implication*. $a \implies b$ when $b$ is always true when $a$ is true.
+One can alternatively read $a \implies b$ as "if $a$, then $b$."
+The *statement* $S = a \implies b$ is false if $b$ is false when $a$ is true.
+$S$ is still considered true when $a$ is false, regardless of the value of $b$.
+An example is the statement, "if it is raining, then I wear a jacket,"
+$r \implies j$. The statement is false if it rains but the speaker does not
+wear a jacket. The statement remains true if the speaker wears a jacket
+in the snow or cold without rain.]
+
+
+<!-- <https://www.mathcentre.ac.uk/resources/uploaded/mathcentre-direct.pdf> -->
+$$
+p \implies q,
+$$
+
+<!-- <https://math.libretexts.org/Courses/Monroe_Community_College/MTH_220_Discrete_Math/3%3A_Proof_Techniques/3.4%3A_Indirect_Proofs> --> 
+
+proof by contrapositive^[The symbol $\neg$ is pronounced "not" and indicates
+negation. $\neg T = F$ and $\neg F = T$.]
+^[The symbols $\land$ and $\lor$ form
+the logical "and" and "or", also known as *conjunction* and *disjunction*.
+The statement $a \lor b$ is an *inclusive or*, meaning the statement is true if
+$a$ is true, $b$ is true, or both $a$ and $b$ are true. The symbol for an
+*exclusive or* is $a \oplus b$ or, less commonly, $a \veebar b$.]
+
+$$
+\neg p \land \left( \neg q \implies \neg p \right) \implies \left( p \implies q \right),
+$$
+
+<!-- <https://en.wikipedia.org/wiki/Proof_by_contradiction> -->
+proof by contradiction
+
+$$
+\neg \neg p \implies p,
+$$
+
+and proof by mathematical induction^[We will see examples of inductive proofs
+in sections \ref{sec:choose2} and \ref{sec:bfs}.]
+
+$$
+p(i) \land \left( p(k) \implies p(k+1) \right) \implies p(n).
+$$
+
+Most analysis lies somewhere between the extremes of data mining and pure 
+mathematics. These *applied mathematics* endeavors use a combination of data and
+reasoning to construct *models* to *predict* the behavior of the world.
+
+A *binary classifier* is an example of a model. Let $C$ be such a classifier
+returns either true ($T$) or false ($F$). The *accuracy* of the model is the
+proportion of true positives (TP) and true negatives (TN) of its predictions,
+which include false positives (FP) and false negatives (FN).
+
+$$
+\text{Accuracy} = \frac{\text{TP}+\text{TN}}{\text{TP}+\text{FP}+\text{TN}+\text{FN}}
+$$
+
+There are many paradigms for implementing our models on a computing machine.
+*Imperative* programming, visualized in figure \ref{fig:imperative}, allows us
+to represent an *algorithm* (a procedure to compute a result) directly as code.
+These programs construct knowledge from data in a bottom-up structure.
+
+<!-- original work -->
+\begin{figure}
+\centering
+\includegraphics{imperative.tikz}
+\caption{Imperative languages are useful to transform input into output. The
+programmer provides explicit algorithms as instructions to the computing machine.}
+\label{fig:imperative}
+\end{figure}
+
+*Declarative* computing environments allow the analyst to form a *query*,
+where a high-level language automatically answers the desired information from
+the top-down using rules or databases, as illustrated in figure \ref{fig:declarative}.
+These categories are broad generalities. The command `ls *.txt` on a UNIX-like
+system provides a list of files ending with the `txt` filename extension. The
+interface presented to the user is declarative, but the algorithm to filter
+filenames that match the specification is ultimately a set of instructions.
+
+<!-- original work -->
+\begin{figure}
+\centering
+\includegraphics{declarative.tikz}
+\caption{Declarative languages, such as Structured Query Language (SQL),
+regular expressions, and constraint solvers, search for solutions that satisfy
+the desired query. The user of a declarative system should not need to
+understand the internal workings necessary to answer queries.}
+\label{fig:declarative}
+\end{figure}
+
+Artificial Intelligence (AI) methods, such as Machine Learning (ML), seek to
+provide knowledge directly by modeling from data. AI is notoriously difficult
+to define [@aima, p. 1-4]. In the past, spellcheck programs were considered AIs
+[@church1991probability]. Today, the public may conflate the terms AI with ML,
+Generative AI, and Large-Language Models (LLM). The point is that AI is a
+fundamentally different approach to using a computer from traditional programming.
+In any AI method, we seek to let the computer program itself by providing data
+and general rules. The resulting model may or may not satisfy our needs.
+
+<!-- original work -->
+\begin{figure}
+\centering
+\includegraphics{ai.tikz}
+\caption{AI systems seek to model implicit algorithms by learning from data.
+A successful AI model is then used to form predictions on novel inputs not seen
+in the training and testing data. AI models can be difficult or impossible to
+interpret.}
+\label{fig:ai}
+\end{figure}
+
+**TODO**: social impacts of science (consensus, literature review, peer review,
+reproducibility...)
 
 ## Parameters and statistics 
 
@@ -575,23 +759,25 @@ Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted
 
 ## Discussion prompts
 
-1. Who owns knowledge management? 
+1. If `ls *.txt` is a declarative program, then is `rm *.txt` also a declarative program?
 
-2. What are good and bad uses for spreadsheets? 
+2. Who owns knowledge management? 
 
-3. What is reproducibility? Why would this be important for scientific inquiry? 
+3. What are good and bad uses for spreadsheets? 
 
-4. A manager sends an Excel spreadsheet to their employees, telling them to each
+4. What is reproducibility? Why would this be important for scientific inquiry? 
+
+5. A manager sends an Excel spreadsheet to their employees, telling them to each
 enter information and send it back. What are some challenges the manager might
 experience while merging these spreadsheets?
 
-5. The set of natural numbers, $\mathbb{N} = \left\{ 0, 1, 2, 3, \ldots \right\}$,
+6. The set of natural numbers, $\mathbb{N} = \left\{ 0, 1, 2, 3, \ldots \right\}$,
 can be constructed using a *successor function*, $S(n)=n+1$. If we begin with $0=0$,
 then $1=S(0)$, $2=S(1)=S(S(0))$, $3=S(2)=S(S(1))=S(S(S(0)))$, and so on.
 Can we define the reals, $\mathbb{R}$, in such a way? Could we construct a
 successor function for floating-point approximations of real numbers?
 
-6. CSV makes *appending* data easy: simply write new rows to the end of the file.
+7. CSV makes *appending* data easy: simply write new rows to the end of the file.
 This structure also makes it easy to *stream* the data record-by-record, but it
 makes the schema of the data inflexible. One must define the columns in the header
 of the CSV and continue to use this structure thereafter. Do Excel spreadsheets

@@ -221,7 +221,7 @@ func main() {
 The program should output `Discovered treasure: castle city beach sea start`.
 DFS successfully discovers the treasure, but we have no guarantee that this algorithm will find the *optimal* (shortest) path.
 
-### Breadth-first search
+### Breadth-first search {#sec:bfs}
 
 Imagine the protagonist of our hypothetical adventure game was not a lone wanderer, but rather a field marshall commanding a large army.
 This army explores one region at a time, holding each area as adjacent units proceed into their respective area.

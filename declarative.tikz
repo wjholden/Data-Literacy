@@ -1,0 +1,9 @@
+\begin{tikzpicture}
+    \draw[fill=cyan!20] (0,0) rectangle ++(3,2) node[pos=.5,align=center] {Database};
+    \draw[fill=cyan!20] (4,0) rectangle ++(3,2) node[pos=.5,align=center] {Declarative\\Code};
+    \draw[fill=cyan!20] (8,1.5) rectangle ++(3,2) node[pos=.5,align=center] {Query\\(Desired\\Knowledge)};
+    \draw[fill=cyan!20] (8,-1.5) rectangle ++(3,2) node[pos=.5,align=center] {Response\\(Output\\Knowledge)};
+    \draw[->] (3,1) -- ++(1,0);
+    \draw[<-] (7,1.5) -- ++(1,1);
+    \draw[->] (7,0.5) -- ++(1,-1);
+\end{tikzpicture}

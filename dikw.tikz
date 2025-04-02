@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+    \coordinate (a) at (-4,0) {};
+    \coordinate (b) at ( 4,0) {};
+    \coordinate (c) at ( 0,8) {};
+    \coordinate (d) at (-3,2) {};
+    \coordinate (e) at (-2,4) {};
+    \coordinate (f) at (-1,6) {};
+    \coordinate (g) at ( 3,2) {};
+    \coordinate (h) at ( 2,4) {};
+    \coordinate (i) at ( 1,6) {};
+    
+    \draw[-] (a) -- (b);
+    \draw[-] (a) -- (c);
+    \draw[-] (b) -- (c);
+    \draw[-] (d) -- (g);
+    \draw[-] (e) -- (h);
+    \draw[-] (f) -- (i);
+
+    \node at (0,6.5) {Wisdom};
+    \node at (0,4.5) {Knowledge};
+    \node at (0,2.5) {Information};
+    \node at (0,0.5) {Data};
+\end{tikzpicture}

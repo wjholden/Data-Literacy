@@ -19,7 +19,7 @@ header-includes:
     - \usepackage{pgfplots}
     # Sigh. I just can't get this to work with Pandoc.
     # Don't know why not.
-    # - \usepgfplotslibrary{external}
+    # - \usepgfplotslibrary{external, scale only axis}
     # - \tikzexternalize
     - \pgfplotsset{compat=1.18}
     - \usepackage{pgf-pie}

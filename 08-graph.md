@@ -900,6 +900,17 @@ and PageRank) are not effective. As a discussion point, consider whether values
 immediately associated with vertices and edges dominate their importance, or
 if some extrinsic network effect has a greater effect.
 
+6. A manufacturer sells systems that are made of components. Those components
+are assembled from atomic parts. Many parts are interchangable with other parts,
+and many components are interchangable with other components. How can the
+manufacturer discover unused or duplicative parts and components?
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{part-component-system.tikz}
+\label{fig:part-component-system}
+\end{figure}
+
 ## Practical exercises
 
 <!-- Compare two different heuristic functions in a provided A* informed search implementation on the 8-piece puzzle problem. -->

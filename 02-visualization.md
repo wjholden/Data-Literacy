@@ -65,7 +65,7 @@ demonstrates a bar plot.
 \centering
 \includegraphics{barplot.tikz}
 \caption{A bar plot showing the Gross Domestic Product (GDP) of the United States from 2019--2023, according to <https://tradingeconomics.com/united-states/gdp>.
-Bar plots summarize information by representing aggregates, such as sums, as functions of categories, such as years.}
+Bar plots summarize information by representing aggregates (such as sums) as functions of categories. Here, years are treated as a categorical variable.}
 \label{fig:barplot}
 \end{figure}
 

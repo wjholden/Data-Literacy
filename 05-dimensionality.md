@@ -148,8 +148,9 @@ $$
 
 ## $n$ choose 2 {#sec:choose2}
 
-The case $\binom{n}{2}$ occurs frequently and deserves special discussion.
-The first few terms are (in Interactive Python, or IPython):
+The case $\binom{n}{2}$ occurs often and deserves special discussion.
+Using Interactive Python (IPython), we compute the first few terms with 
+*list comprehension*, a form of declarative programming in high-level languages.
 
 ```python
 In [1]: import math
@@ -175,6 +176,16 @@ $$
 and so on.
 The resulting sequence of integers are called the *triangular numbers*.
 
+$$
+\begin{aligned}
+1 &= 1 \\
+1 + 2 &= 3 \\
+1+2+3 &= 6 \\
+1+2+3+4 &= 10 \\
+1+2+3+4+5 &= 15
+\end{aligned}
+$$
+
 Intuitively, the difference in $\binom{k+1}{2}$ and $\binom{k}{2}$ is $k$:
 if we add a $(k+1)$th element to a set, then we can pair this new element with each of the $k$ existing elements.
 The generalized form is
@@ -193,7 +204,7 @@ In [4]: [n*(n-1)//2 for n in range(2,12)]
 Out[4]: [1, 3, 6, 10, 15, 21, 28, 36, 45, 55]
 ```
 
-and prove with *induction*.
+and prove with *mathematical induction*.
 The basis of induction is the case $n=2$, where
 
 $$
@@ -212,7 +223,13 @@ $$
 \end{aligned}
 $$
 
-An alternative proof is to use algebra from our definition $\binom{n}{r}=\frac{n!}{r!(n-r)!}$ as follows:
+An alternative proof is to use algebra from our definition
+
+$$
+\binom{n}{r}=\frac{n!}{r!(n-r)!}
+$$
+
+as follows:
 
 $$
 \binom{n}{2} = \frac{n!}{2!(n-2)!} = \frac{(n)(n-1)(n-2)\cdots(3)(2)(1)}{(2)(n-2)(n-3)\cdots(3)(2)(1)} = \frac{(n)(n-1)}{2}.

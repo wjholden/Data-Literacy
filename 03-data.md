@@ -506,13 +506,21 @@ Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to pre
 
 ## Discussion Prompts
 
-1. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
+1. The Excel function `VLOOKUP(lookup_value, table_array, col_index_num, range_lookup)`
+searches in a table (`table_array`) for a value (`lookup_value`) and returns the
+value in the numbered column (`col_index_num`)^[<https://support.microsoft.com/en-us/office/vlookup-function-0bbc8083-26fe-4963-8ab8-93a18ad188a1>].
+If `range_lookup` is true, then `VLOOKUP` uses approximate matching, otherwise
+exact. Assuming one corrects the SQL syntax, what is the *semantic* difference
+between `VLOOKUP(x, y, z, FALSE)` and the SQL query `SELECT z FROM y WHERE x`?
+Can we parameterize the SQL statement to produce the same result as `VLOOKUP`?
 
-2. Where should unclassified data be stored and processed? 
+2. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
 
-3. What are some methods to prevent conflicts among concurrent writes in a shared database? 
+3. Where should unclassified data be stored and processed? 
 
-4. What could possibly go wrong when altering database schema? 
+4. What are some methods to prevent conflicts among concurrent writes in a shared database? 
+
+5. What could possibly go wrong when altering database schema? 
 
 ## Practical Exercises
 

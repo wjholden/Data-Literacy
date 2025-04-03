@@ -854,6 +854,16 @@ or disprove the statement "if a number ends in 7, then it is prime." Is this
 type of sampling a common experimental strategy for deductive fields, such as
 logic and pure mathematics?
 
+2. What method can we use to prove or disprove each of the following statements?
+
+a. All numbers that end in 7 are prime. <!-- falsification -->
+b. No number that ends in 7 are prime. <!-- falsification -->
+c. Some numbers that end in 7 are prime. <!-- verification -->
+d. Some numbers that end in 7 are not prime. <!-- verification -->
+<!-- <https://math.stackexchange.com/questions/544104/show-that-there-are-infinitely-many-prime-numbers-ending-in-3-or-7-when-written> -->
+e. There are infinitely many numbers that end in 7 and are prime. <!-- contradiction -->
+f. As 
+
 2. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
 Compare this experience to the hypothetical manager who gathered information by
 manually merging spreadsheets.

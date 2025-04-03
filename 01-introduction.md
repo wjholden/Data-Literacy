@@ -130,10 +130,10 @@ p(i) \land \left( p(k) \implies p(k+1) \right) \implies p(n).
 $$
 
 Most analysis lies somewhere between the extremes of data mining and pure 
-mathematics. These *applied mathematics* endeavors use a combination of data and
-reasoning to construct *models* to *predict* the behavior of the world.
+mathematics. The sciences use a combination of data and reasoning, especially
+with statistical methods, to construct, challenge, and refine *models* that
+*predict* the behavior of the world according to *theories* [@bsi_glassman_2024].
 Two examples of simple models are the binary classifier and linear model.
-
 A *binary classifier* is an example of a model that outputs *categorical* predictions,
 often producing either true ($T$) or false ($F$) outputs. The *accuracy* of the model is the
 proportion of true positives (TP) and true negatives (TN) of its predictions,
@@ -229,9 +229,10 @@ interpret.}
 \end{figure}
 
 Scientific models of the world consider more than theories and evidence. Science
-is a social endeavor where consensus, literature, peer review, and reproducibility
-influence the community's acceptance of new knowledge. By contrast, the models
-generated from AI methods have no such inputs.
+is a social endeavor where consensus ("preponderance of evidence"), peer review
+before publishing, and reproducibility influence the community's acceptance of
+new knowledge. By contrast, the models generated from AI methods have no such
+inputs.
 
 Consider, as a toy example, a bitterly divided community of groups $A$ and $B$.
 Local laws forbid businesses from discriminating against the disadvantaged

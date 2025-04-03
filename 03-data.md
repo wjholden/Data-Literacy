@@ -1,5 +1,48 @@
 # Data Operations
 
+## Prose
+
+In this chapter, we will discuss several practical matters for operating on data
+to extract useful information, but first we should quickly discuss the mechanics
+of mixing data, code, plots, mathematical notation, and tables, and prose.
+
+Context is king. One must consider the target audience when writing reports from
+any analysis.
+
+Presentations, such as with Micosoft PowerPoint, are useful as
+visual aids to speeches. The slides themselves should contain mainly plots,
+sparse text, and simple tables to summarize information. Slides are a poor medium
+for presenting raw data, large tables, code, and long passages of prose. Pity
+statements, organized as bullet points, can be useful for both the speaker and
+the audience, but full sentences are often not recommended.
+
+Papers are favorable to slides for deep analysis. Papers vary in length. Summaries
+are short and generally seek to report conclusions without detailed evidence.
+A senior leader may accept the conclusions presented in an employee's report
+based on trust in the person, not the persuasiveness of the analysis itself.
+White papers provide enough evidence to be persuasive on their own merit, although
+white papers may not provide detailed listings of the data and code used.
+
+The sciences use *notebooks* as a means of presenting prose with in-line code,
+plots, mathematical notation, and tables. Some examples of notebook interfaces
+are Jupyter^[<https://jupyter.org>] (commonly used with Python, R,
+Julia, and Scala), Mathematica^[<https://www.wolfram.com/mathematica/>] (the
+Wolfram Language), and RStudio^[<https://posit.co/products/open-source/rstudio/>]
+(R and Python). Notebook interfaces support *literate programming*, a practice
+of writing code with an emphasis on human understanding above computer
+interpretation [@10.1093/comjnl/27.2.97].
+
+<!-- <https://www.sec.gov/Archives/edgar/data/1018724/000119312518121161/d456916dex991.htm> -->
+<!-- <https://www.inc.com/justin-bariso/amazon-jeff-bezos-powerpoint-meetings-how-to-think.html> -->
+Written prose and spoken presentation are key to aggregating and processing data
+into information and then interpretting information into knowledge. Jeff Bezos
+famously insists upon the use of six-page narratives at Amazon in favor of
+PowerPoint^[<https://www.youtube.com/watch?v=L227qFemjqI>]. The rest of this
+chapter will focus on technical matters of working with data, but look at how
+data, code, figures, and mathematical notation are presented throughout. Reflect
+upon how these may or may not be appropriate when writing and presenting
+information, depending on format.
+
 ## The Relational Algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].

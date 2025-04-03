@@ -9,11 +9,12 @@ circumstances, knowledge supports *wisdom*. Another model for Data, Information,
 Knowledge, and Wisdom (DKIW) is that they answer measurements, what, how, and why.
 The DKIW model is often visualized as the pyramid shown in figure \ref{fig:dikw}.
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics{dikw.tikz}
 \caption{The DIKW model shows data, information, knowledge, and wisdom in a hierachy.
-Lower layers of abstraction support higher levels of understanding.}
+Higher levels require subjective valuation. Wisdom is the application of
+generalized knowledge to form decisions in novel circumstances.}
 \label{fig:dikw}
 \end{figure}
 
@@ -62,21 +63,27 @@ with the quantifier "some" or "at least one" are also supported by verification.
 For example, the statement "some people are seven feet tall" is verifiably true,
 although not easily as such people are very rare. 
 
-A joke goes that an astronomer, a physicist, and a mathematician are on a train
-to Edinburgh and see a cow. The astronomer says, "all cows are white." The
-physicist says, "some cows in Scotland are white." The mathematician says, 
-"there exists *at least* one cow in Scotland such that *one side* is white."
-The level of precision reflects the specificity of one's conclusions in each
-field.
+A joke goes that an astronomer, a chemists, and a mathematician are on a train
+to Edinburgh and see a cow. The astronomer says, "all cows are brown." The
+chemists says, "some cows in Scotland are brown." The mathematician says, 
+"there exists *at least* one cow in Scotland such that *one side* is brown."
+The level of precision reflects the specificity each field's conclusions.
+Astronomy is an observational science; interventional studies
+are obviously impossible at interstellar distances. Chemistry, by contrast,
+results from centuries of experimentation.
 
-*Pure mathematics*, unlike most sciences, primarily uses *deductive* reasoning.
+Mathematics and logic, unlike the sciences, primarily use *deductive* reasoning.
+Deductive reasoning states that an argument must be true if premised upon true
+assumptions. The sciences use *inductive* reasoning, which develops conclusions
+from observable evidence. Deductive reasoning produces *facts*; inductive
+reasoning produces *estimates*.
+
 Mathematical reasoning begins with *axioms* (also known as *postulates* in 
 geometry) that are considered obvious and acceptable without proof. From axioms,
-we prove *theorems* through several methods.
-
-Mathematical methods include proof by construction (also known as direct proof)^[
-The symbol $\implies$ is pronounced "implies" and is called *conditional
-implication*. $a \implies b$ when $b$ is always true when $a$ is true.
+we prove *theorems* through several methods. These mathematical methods include
+proof by construction (also known as direct proof)^[The symbol $\implies$ is
+pronounced "implies" and is called *conditional implication*. $a \implies b$
+when $b$ is always true when $a$ is true.
 One can alternatively read $a \implies b$ as "if $a$, then $b$."
 The *statement* $S = a \implies b$ is false if $b$ is false when $a$ is true.
 $S$ is still considered true when $a$ is false, regardless of the value of $b$.
@@ -98,8 +105,9 @@ negation. $\neg T = F$ and $\neg F = T$.]
 ^[The symbols $\land$ and $\lor$ form
 the logical "and" and "or", also known as *conjunction* and *disjunction*.
 The statement $a \lor b$ is an *inclusive or*, meaning the statement is true if
-$a$ is true, $b$ is true, or both $a$ and $b$ are true. The symbol for an
-*exclusive or* is $a \oplus b$ or, less commonly, $a \veebar b$.]
+$a$ is true, $b$ is true, or both $a$ and $b$ are true. The symbols for the
+*exclusive or* ("xor"), where exactly one of $a$ and $b$ are true, not both,
+is $a \oplus b$ and, less commonly, $a \veebar b$.]
 
 $$
 \neg p \land \left( \neg q \implies \neg p \right) \implies \left( p \implies q \right),
@@ -114,6 +122,8 @@ $$
 
 and proof by mathematical induction^[We will see examples of inductive proofs
 in sections \ref{sec:choose2} and \ref{sec:bfs}.]
+^[Mathematical induction is, confusingly, not a form of inductive reasoning.
+Mathematical induction is a form of deductive reasoning.]
 
 $$
 p(i) \land \left( p(k) \implies p(k+1) \right) \implies p(n).
@@ -122,15 +132,47 @@ $$
 Most analysis lies somewhere between the extremes of data mining and pure 
 mathematics. These *applied mathematics* endeavors use a combination of data and
 reasoning to construct *models* to *predict* the behavior of the world.
+Two examples of simple models are the binary classifier and linear model.
 
-A *binary classifier* is an example of a model. Let $C$ be such a classifier
-returns either true ($T$) or false ($F$). The *accuracy* of the model is the
+A *binary classifier* is an example of a model that outputs *categorical* predictions,
+often producing either true ($T$) or false ($F$) outputs. The *accuracy* of the model is the
 proportion of true positives (TP) and true negatives (TN) of its predictions,
 which include false positives (FP) and false negatives (FN).
 
 $$
 \text{Accuracy} = \frac{\text{TP}+\text{TN}}{\text{TP}+\text{FP}+\text{TN}+\text{FN}}
 $$
+
+A *confusion matrix* is a useful representation of the accuracy for a classifier,
+including classifiers with more than two possible outputs. Rows correspond to
+the actual categories. Columns correspond to predicted categories. The elements
+of the matrix are the total number of predictions, grouped by their actual
+categories. The correct predictions fall on the *diagonal* of the matrix.
+
+$$
+C = 
+\begin{bNiceMatrix}[first-row,first-col]
+    & p_1    & p_2    & p_3    & \cdots & p_n    \\
+a_1 & c_{11} & c_{12} & c_{13} & \cdots & c_{1n} \\
+a_2 & c_{21} & c_{22} & c_{23} & \cdots & c_{1n} \\
+a_3 & c_{31} & c_{32} & c_{33} & \cdots & c_{1n} \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+a_n & c_{n1} & c_{n2} & c_{n3} & \cdots & c_{nn} \\
+\end{bNiceMatrix}
+$$
+
+A *linear model* is an example of a model that outputs *numerical* predictions.
+The linear model finds some constants $a_1, a_2, \ldots, a_n$ and $b$ for input variables
+$x_1, x_2, \ldots, x_n$. The model predicts as a *linear combination* of the $x$-values
+
+$$
+y = a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + b + \varepsilon
+$$
+
+where $\varepsilon$ is the residual error. *Linear regression* is the procedure
+for finding the $a$ and $b$ constants that minimize $\varepsilon$. Some algorithms
+use the *least squares method* to fit linear models. We will return to least squares
+in section \ref{sec:least-squares-method}.
 
 There are many paradigms for implementing our models on a computing machine.
 *Imperative* programming, visualized in figure \ref{fig:imperative}, allows us
@@ -166,13 +208,14 @@ understand the internal workings necessary to answer queries.}
 \end{figure}
 
 Artificial Intelligence (AI) methods, such as Machine Learning (ML), seek to
-provide knowledge directly by modeling from data. AI is notoriously difficult
-to define [@aima, p. 1-4]. In the past, spellcheck programs were considered AIs
-[@church1991probability]. Today, the public may conflate the terms AI with ML,
-Generative AI, and Large-Language Models (LLM). The point is that AI is a
-fundamentally different approach to using a computer from traditional programming.
-In any AI method, we seek to let the computer program itself by providing data
-and general rules. The resulting model may or may not satisfy our needs.
+provide knowledge directly by modeling from data. An ML system is illustrated
+in figure \ref{fig:ai}. The term "artificial intelligence" is notoriously
+difficult to define [@aima, p. 1--4]. In the past, spellcheck programs were
+considered AIs [@church1991probability]. Recently, the public conflates the terms
+AI with ML, Generative AI, and Large-Language Models (LLM). The point is that AI
+is a fundamentally different approach to using a computer from traditional
+programming. In any AI method, we seek to let the computer program itself by
+providing data and general rules.
 
 <!-- original work -->
 \begin{figure}
@@ -185,8 +228,26 @@ interpret.}
 \label{fig:ai}
 \end{figure}
 
-**TODO**: social impacts of science (consensus, literature review, peer review,
-reproducibility...)
+Scientific models of the world consider more than theories and evidence. Science
+is a social endeavor where consensus, literature, peer review, and reproducibility
+influence the community's acceptance of new knowledge. By contrast, the models
+generated from AI methods have no such inputs.
+
+Consider, as a toy example, a bitterly divided community of groups $A$ and $B$.
+Local laws forbid businesses from discriminating against the disadvantaged
+members of group $B$. The local bank develops a binary classifier to predict
+whether a loan applicant will default or not. The bank carefully removes any
+inputs to the classifier's training data that might directly reveal group
+membership, but in practice the classifier nearly always predicts that the 
+objectively poor and troublesome members of group $B$ will deefault on their
+loans. The problem here is that the model lacks the subjective wisdom to form
+decisions in the context of contradictory values.
+
+This book aims to expose the reader to many skills for processing, visualizing,
+and interpreting data. We will use many different programming languages, some
+mathematics and statistics, and problems one may encounter. At the end of each
+chapter, this text provides discussion prompts for group learning and practical
+exercises for individuals.
 
 ## Parameters and statistics 
 
@@ -786,15 +847,21 @@ when their requirements may change?
 
 ## Practical exercises
 
-1. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
+1. A sample of $n=6$ numbers $S = \left\{ 7, 17, 37, 47, 67, 97 \right\}$ shares
+two properties: each value ends in 7, and each value is a prime number. Prove
+or disprove the statement "if a number ends in 7, then it is prime." Is this
+type of sampling a common experimental strategy for deductive fields, such as
+logic and pure mathematics?
+
+2. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
 Compare this experience to the hypothetical manager who gathered information by
 manually merging spreadsheets.
 
-2. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
+3. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
 
-3. Discretize the values of a dataset and explain the reasoning. 
+4. Discretize the values of a dataset and explain the reasoning. 
 
-4. The following Rust program, which one can run at the
+5. The following Rust program, which one can run at the
 Rust Playground^[<https://play.rust-lang.org/?gist=82eb9505ef18cf3af0faa2a373c11901>],
 doubles a value until we exceed the largest representable value. However, the
 program *appears* to make an arithmetic error at $\num{134217730}$.
@@ -812,7 +879,7 @@ fn main() {
 }
 ```
 
-5. What is the output of the following Java program? Use the 
+6. What is the output of the following Java program? Use the 
 Java Playground^[<https://dev.java/playground/>] to experiment.
 
 ```java
@@ -828,7 +895,7 @@ count();
 ```
 
 <!-- ° ALT+0176 on Windows -->
-6. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
+7. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
 90° for east, 180° for south, and 270° for west. In trigonometry, the angle
 0° corresponds to $(x,y)$ position $(1,0)$ on the unit circle, 90° to $(0,1)$,
 180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert

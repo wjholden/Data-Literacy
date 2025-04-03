@@ -457,7 +457,7 @@ The A* algorithm is an *informed* search algorithm: it uses some *heuristic* to 
 ordered by minimum estimated distance to the destination [@4082128].
 
 A* can solve hard problems that are not immediately recognizable as searches.
-The canonical example is the 8-piece puzzle problem.
+The canonical example is the 8-piece puzzle problem [@aima, p. 111--117].
 An 8-piece puzzle arranges 8 movable square tiles into a $3 \times 3$ grid.
 One position is empty.
 The challenge is to slide the pieces until all pieces are in order.

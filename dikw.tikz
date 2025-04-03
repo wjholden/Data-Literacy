@@ -20,4 +20,11 @@
     \node at (0,4.5) {Knowledge};
     \node at (0,2.5) {Information};
     \node at (0,0.5) {Data};
+
+    \draw[->] (-6,0) -- ++(4,8) node[pos=0.5,sloped,above] {Context, Judgment, and Values};
+    \draw[-] (-5,0) -- ++(3,6) node[pos=0.5,sloped,above] {Past and Present};
+    \filldraw (-2,6) circle (1pt);
+    \draw[->] (-2,6) -- ++(1,2) node[pos=0.5,sloped,above] {Future};
+    \draw[->] (1,8) -- ++(4,-8) node[pos=0.5,sloped,above] {Objectivity};
+    \draw[->] (2,8) -- ++(4,-8) node[pos=0.5,sloped,above] {Reproducibility};
 \end{tikzpicture}

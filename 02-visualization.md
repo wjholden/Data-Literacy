@@ -519,18 +519,18 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
 4. Spot the flaw in figure \ref{fig:bad-barplot-exercise}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\include{bad-barplot-exercise.tikz}
+\includegraphics{bad-barplot-exercise.tikz}
 \caption{These bars represent values 20, 30, and 50.}
 \label{fig:bad-barplot-exercise}
 \end{figure}
 
 5. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics{bad-piechart-exercise}
+\includegraphics{bad-piechart-exercise.tikz}
 \caption{These bars represent values 5, 3, 2, and 1.}
 \label{fig:bad-piechart-exercise}
 \end{figure}

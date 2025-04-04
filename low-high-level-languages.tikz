@@ -1,0 +1,36 @@
+\begin{tikzpicture}
+    \coordinate (a) at (0,0);
+    \coordinate (b) at (1.5,0);
+    \coordinate (c) at (7.5,0);
+    \coordinate (d) at (9,0);
+    \coordinate (e) at (10.5,0);
+    \coordinate (dxdy) at (1,4);
+
+    \coordinate (m1) at (5,1);
+    \coordinate (m2) at (5,2);
+    \coordinate (m3) at (5,3);
+
+    \draw[fill=cyan!20] (a) rectangle ++(dxdy) node[pos=.5,align=center, rotate=90] {Machine Code};
+    \draw[fill=cyan!20] (b) rectangle ++(dxdy) node[pos=.5,align=center, rotate=90] {Low-Level Programming};
+    \draw[fill=cyan!20] (c) rectangle ++(dxdy) node[pos=.5,align=center, rotate=90] {High-Level Programming};
+    \draw[fill=cyan!20] (d) rectangle ++(dxdy) node[pos=.5,align=center, rotate=90] {Mathematical Notation};
+    \draw[fill=cyan!20] (e) rectangle ++(dxdy) node[pos=.5,align=center, rotate=90] {Spoken Language};
+
+    \filldraw (m1) circle (1pt);
+    \filldraw (m2) circle (1pt);
+    \filldraw (m3) circle (1pt);
+
+    \draw[->] (m1) -- ++(-2.5,0) node[pos=0.5,above] {Static Types};
+    \draw[->] (m1) -- ++(+2.5,0) node[pos=0.5,above] {Dynamic Types};
+
+    \draw[->] (m2) -- ++(-2.5,0) node[pos=0.5,above] {Imperative};
+    \draw[->] (m2) -- ++(+2.5,0) node[pos=0.5,above] {Declarative};
+
+    \draw[->] (m3) -- ++(-2.5,0) node[pos=0.5,above] {Compiled};
+    \draw[->] (m3) -- ++(+2.5,0) node[pos=0.5,above] {Interpreted};
+
+    \coordinate (spacing) at (0.5, 0);
+    \draw[-] (1,2) -- ++(spacing);
+    \draw[-] (8.5,2) -- ++(spacing);
+    \draw[-] (10,2) -- ++(spacing);
+\end{tikzpicture}

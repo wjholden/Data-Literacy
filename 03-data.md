@@ -43,6 +43,52 @@ data, code, figures, and mathematical notation are presented throughout. Reflect
 upon how these may or may not be appropriate when writing and presenting
 information, depending on format.
 
+## Computability
+
+A joke in computer science says that "you can write C in any language." The joke
+is literally true. Assuming adequate resources (compute time, memory, storage,
+and access to necessary inputs and outputs), one could implement a C interpreter
+in any *Turing-compute* language [@michaelson2020programming, p. 4:13 -- 4:17] 
+and execute any C program. Such an endeavor is not theoretical: *virtual machines*
+and related technologies simulate and emulate entire computing machines, allowing
+programs to run on systems that they were not designed for.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1.0\textwidth]{low-high-level-languages.tikz}
+\label{fig:low-high-level-languages}
+\end{figure}
+
+Programming languages are imprecisely categorized as *low-level* and *high-level*.
+One should view these terms as a spectrum, not dichotomies. Low-level languages
+generally require more explicit specification to the machine, allowing for
+greater control of the computation and often faster. The abstractions available
+in high-level languages often allow the programmer to code with syntax closer to
+mathematical notation. Computing in spoken language (or "natural language") has
+historically failed to satisfy the high expectations popularized in science
+fiction [@EWD:EWD667], although recent advances in AI have steadily improved
+machines' ability to compute results from spoken or written prompts.
+
+*Low code* platforms, such as Microsoft's
+Power BI^[<https://www.microsoft.com/en-us/power-platform/products/power-bi>],
+seek to democratize programming to non-developers [@bock2021low]. Low code 
+platforms provide functions to process data into information with prepared
+analytical and visualization features, generally using minimal programming
+languages or even visual programming.
+
+Low code platforms can excel at tasks that they were designed for but complicate
+novel tasks. This tension mirrors the conflict of *narrow* and *general* AI
+systems. Users trust AI systems, such as Apple's
+Siri^[<https://www.apple.com/siri/>], to correctly respond to very specific tasks
+("hey Siri, what's the weather tomorrow?") but do not expect these systems to
+generalize to vague or contextual queries ("hey Siri, recommend a movie for me").
+
+AI systems with natural language input will no doubt continue to advance in the
+coming years, but we will always need to understand the general methods used to
+structure, process, transfer, and store our data in novel situations. Where no
+one has previously described an algorithm to solve new problems, we will likely
+always turn to code as a reification of our mathematical ideas.
+
 ## The Relational Algebra
 
 Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].

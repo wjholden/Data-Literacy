@@ -79,8 +79,11 @@ from observable evidence. Deductive reasoning produces *facts*; inductive
 reasoning produces *estimates*.
 
 Mathematical reasoning begins with *axioms* (also known as *postulates* in 
-geometry) that are considered obvious and acceptable without proof. From axioms,
-we prove *theorems* through several methods. These mathematical methods include
+geometry) that are considered obvious and acceptable without proof. We prove
+*theorems* from axioms and other theorems (known as *lemmas* when used as
+intermediates). Theorems are true derivative statements --- provided the assumed
+axioms hold. *Conjectures* are unproven candidate theorems.
+We have many methods to construct proofs. These mathematical methods include
 proof by construction (also known as direct proof)^[The symbol $\implies$ is
 pronounced "implies" and is called *conditional implication*. $a \implies b$
 when $b$ is always true when $a$ is true.
@@ -862,7 +865,7 @@ c. Some numbers that end in 7 are prime. <!-- verification -->
 d. Some numbers that end in 7 are not prime. <!-- verification -->
 <!-- <https://math.stackexchange.com/questions/544104/show-that-there-are-infinitely-many-prime-numbers-ending-in-3-or-7-when-written> -->
 e. There are infinitely many numbers that end in 7 and are prime. <!-- contradiction -->
-f. As 
+f. The density of prime primes ending in 7 decreases as $x \to \infty$. <!-- derived from the Prime Number Theorem -->
 
 2. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
 Compare this experience to the hypothetical manager who gathered information by

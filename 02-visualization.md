@@ -5,9 +5,9 @@
 *Plots* allow us to visualize data.
 Good plots help us to quickly intuit patterns in the data that might otherwise be difficult to understand.
 
-(Note: the term *graph* has different definitions in lower and higher mathematics.
+The term *graph* has different definitions in lower and higher mathematics.
 We will explain the term "graph" in chapter \ref{chapter:graph}.
-This text uses the term "plot" as the verb and noun for visualizing data with graphics.)
+This text uses the term "plot" as the verb and noun for visualizing data with graphics.
 
 The *bar plot* helps us to compare the count each category in a discrete (or discretized) variable.
 The *box plot* helps us to see the center and variation of a numerical variable.
@@ -270,7 +270,7 @@ site and experiment with this function.
 
 ![R's `boxplot` function creates box-and-whisker plots with four quartiles.
 Box plots are centered at the median of the data. Outliers may be shown as dots
-or cicles beyond the 0th and 100th percentile markers.](mtcars-boxplot.pdf){#fig:boxplot}
+or circles beyond the 0th and 100th percentile markers.](mtcars-boxplot.pdf){#fig:boxplot}
 
 ## Histograms {#sec:histogram}
 
@@ -313,7 +313,7 @@ A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, 
 ![](barplot-linear-scale.pdf){width=50%}
 ![](barplot-log-scale.pdf){width=50%}
 \begin{figure}
-\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where succesive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale.}
+\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where successive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale.}
 \label{fig:scales}
 \end{figure}
 
@@ -353,7 +353,7 @@ $$
 \log_a c = b.
 $$
 
-In this case, $a$ is the *base* of the logarithmc, and we read $\log_a c$ as
+In this case, $a$ is the *base* of the logarithmic, and we read $\log_a c$ as
 "the log, base $a$, of $c$."
 
 Euler's constant, $e \approx 2.718281828459045$, is frequently associated with
@@ -469,7 +469,8 @@ $$
 l(x) = \frac{100}{1+2.75 e^{-0.4x}}
 $$
 
-plotted over the domain $0 \le x \le 5$. The parameters and domain are chosen carefully to provide aconfusing plot. The curve in figure \ref{fig:logistic}
+plotted over the domain $0 \le x \le 5$. The parameters and domain are chosen
+carefully to provide a confusing plot. The curve in figure \ref{fig:logistic}
 forms a mostly straight line. Data sampled from this narrow range might fit a
 linear model with very little error, but of course this is only because we have
 zoomed into the center of the curve.
@@ -489,19 +490,19 @@ regulation slow its growth.
 
 ## Discussion prompts
 
-1. Like a barplot, a pie chart shows the relative sizes of categorical values.
+#. Like a bar plot, a pie chart shows the relative sizes of categorical values.
 What are some advantages and disadvantages of using pie charts?
 
-2. What are some plot practices, such as inconsistent scales, that would be
+#. What are some plot practices, such as inconsistent scales, that would be
 misleading to the reader? 
 
-3. Consider a situation where the sigmoid and logistic curves might reasonably
+#. Consider a situation where the sigmoid and logistic curves might reasonably
 model constrained exponential growth. If one only observes the center of this
 system, then the slow initial growth and diminishing returns might not be 
 visible in a scatter plot of the data. Discuss graphical and analytical methods
 one might use to predict the future behavior of the uncertain system.
 
-4. In addition to numerical grades, a teacher wants their students to know their
+#. In addition to numerical grades, a teacher wants their students to know their
 relative standing in comparison to their peers. The teacher wants to minimize
 how much information students can infer about their classmates, although it is
 desirable for students to know the central (mean, median, or mode) grades.
@@ -509,28 +510,28 @@ Which plot technique is better for this task: a bar plot or a box plot?
 
 ## Practical exercises
 
-1. Given a dataset, plot the data and explain why this plot technique is appropriate. 
+#. Given a dataset, plot the data and explain why this plot technique is appropriate. 
 
-2. Be creative and construct intentionally misleading plots, then try to "spot the flaw" in one another's work.  
+#. Be creative and construct intentionally misleading plots, then try to "spot the flaw" in one another's work.  
 
-3. Plot our logistic function from section \ref{sec:logistic},
+#. Plot our logistic function from section \ref{sec:logistic},
 $l(x) = \frac{100}{1+2.75 e^{-0.4x}}$, on a logarithmic scale and manipulate
 the domain. Does the logistic function still look linear on a logarithmic scale?
 
-4. Spot the flaw in figure \ref{fig:bad-barplot-exercise}.
+#. Spot the flaw in figure \ref{fig:bad-barplot-exercise}.
 
-\begin{figure}[h]
-\centering
-\includegraphics{bad-barplot-exercise.tikz}
-\caption{These bars represent values 20, 30, and 50.}
-\label{fig:bad-barplot-exercise}
-\end{figure}
+    \begin{figure}[h]
+    \centering
+    \includegraphics{bad-barplot-exercise.tikz}
+    \caption{These bars represent values 20, 30, and 50.}
+    \label{fig:bad-barplot-exercise}
+    \end{figure}
 
-5. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
+#. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
 
-\begin{figure}[h]
-\centering
-\includegraphics{bad-piechart-exercise.tikz}
-\caption{These bars represent values 5, 3, 2, and 1.}
-\label{fig:bad-piechart-exercise}
-\end{figure}
+    \begin{figure}[h]
+    \centering
+    \includegraphics{bad-piechart-exercise.tikz}
+    \caption{These bars represent values 5, 3, 2, and 1.}
+    \label{fig:bad-piechart-exercise}
+    \end{figure}

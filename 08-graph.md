@@ -108,7 +108,7 @@ A directed graph with one or more connected components is not a DAG, but the gra
 
 A *tree* is another special case of an acyclic graph.
 Trees are often drawn in a vertical hierarchy where each *child node* has one *parent*, and the only parent node with no parent is called the *root node*.
-One's ancestoral family tree is an instance of a tree.
+One's ancestral family tree is an instance of a tree.
 Without a time machine, it is impossible to one to form a hereditary loop with an ancestor.
 
 ## Representation
@@ -223,7 +223,7 @@ DFS successfully discovers the treasure, but we have no guarantee that this algo
 
 ### Breadth-first search {#sec:bfs}
 
-Imagine the protagonist of our hypothetical adventure game was not a lone wanderer, but rather a field marshall commanding a large army.
+Imagine the protagonist of our hypothetical adventure game was not a lone wanderer, but rather a field marshal commanding a large army.
 This army explores one region at a time, holding each area as adjacent units proceed into their respective area.
 The army incrementally expands the radius of the search *frontier* in a search technique called *breadth-first search* (BFS).
 Once one unit discovers the treasure, we are certain that no shorter path was possible thanks to an *invariant* in our search algorithm.
@@ -231,13 +231,13 @@ Once one unit discovers the treasure, we are certain that no shorter path was po
 Maintaining an invariant is essential for *mathematical induction*, where we establish that some *predicate* $P$ is true for the *base case* $P(0)$ and that $P(k)$ implies $P(k+1)$ and therefore $P(n)$ is true for all $n > 0$.
 The proof for the correctness of a BFS follows:
 
-1. Along the frontier of radius $r=0$, the BFS algorithm on graph $G$ has not discovered a path from $u$ to $v$. $\delta(u,v)$ is therefore at *closest* $r=1$.
-2. At $r=1$, BFS has not found $v$ and therefore $2 \le \delta(u,v)$.
-3. At $r=2$, BFS has not found $v$ and therefore $3 \le \delta(u,v)$.
-4. $\vdots$
-5. At $r=k$, BFS has not found $v$ and therefore $k+1 \le \delta(u,v)$.
-6. $\vdots$
-7. At $r=n$, BFS has located $v$ and therefore $n = \delta(u,v)$. $\square$
+#. Along the frontier of radius $r=0$, the BFS algorithm on graph $G$ has not discovered a path from $u$ to $v$. $\delta(u,v)$ is therefore at *closest* $r=1$.
+#. At $r=1$, BFS has not found $v$ and therefore $2 \le \delta(u,v)$.
+#. At $r=2$, BFS has not found $v$ and therefore $3 \le \delta(u,v)$.
+#. $\vdots$
+#. At $r=k$, BFS has not found $v$ and therefore $k+1 \le \delta(u,v)$.
+#. $\vdots$
+#. At $r=n$, BFS has located $v$ and therefore $n = \delta(u,v)$. $\square$
 
 Go to the Go Playground^[<https://go.dev/play/p/yMIcmcsK_V9>] and run the following BFS implementation, written in Go.
 This implementation uses an *iterative* BFS function.
@@ -481,7 +481,7 @@ One heuristic function for the 8-piece puzzle problem returns the count of misma
 If two pieces are out of place then the heuristic distance is 2,
 if three pieces are out of place then the heuristic distance is 3,
 and so on.
-An alternative, more sophsticated heuristic function, uses the *Manhattan distance* (also known as *Taxicab distance*) of each puzzle piece to its destination.
+An alternative, more sophisticated heuristic function, uses the *Manhattan distance* (also known as *Taxicab distance*) of each puzzle piece to its destination.
 Manhattan distance is the sum of unsigned differences of each dimension between two coordinates in $n$-dimensional space.
 The intuition is that a taxicab cannot fly in a straight line, but rather has to corner the rectangular blocks of Manhattan.
 
@@ -711,7 +711,7 @@ digraph {
 ```
 
 (Note: this *stochastic* algorithm uses randomness in the `sample` operation.
-Outputs are not determininstic.
+Outputs are not deterministic.
 In rare cases, this procedure may not discover the one and only solution, $\left[ 3, 4, 1, 2 \right]$.
 See <https://github.com/wjholden/Data-Literacy/blob/main/StableMarriageSearch.jl> for an expanded version of this program which uses a seeded random number generator for reproducibility.)
 
@@ -774,7 +774,7 @@ $$
 
 The following Rust program uses an unweighted invocation of Dijkstra's algorithm
 in the `petgraph` crate^[The term *crate* is peculiar to Rust.
-In this context, the term is interchangable with "library,"
+In this context, the term is interchangeable with "library,"
 which is a more common programming term.]. Run this program at the Rust
 Playground^[<https://play.rust-lang.org/?gist=e67ef3bc05daab21dd73a7869093d9cb>].
 
@@ -885,42 +885,42 @@ todo
 
 ## Discussion prompts
 
-1. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
+#. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
 
-2. What algorithm can be used to solve the “seven ways to Kevin Bacon” problem? 
+#. What algorithm can be used to solve the “seven ways to Kevin Bacon” problem? 
 
-3. Is a Gantt chart a graph? How can one find the critical path of a project if represented as a graph? 
+#. Is a Gantt chart a graph? How can one find the critical path of a project if represented as a graph? 
 
-4. If the distance from Paris to Sydney is infinitely far, then can we use some 
+#. If the distance from Paris to Sydney is infinitely far, then can we use some 
 *greater infinity* to represent the distance from London to Sydney?
 
-5. Think of a practical problem that can be modeled as a graph, but where the
+#. Think of a practical problem that can be modeled as a graph, but where the
 four discussed measures of center (degree centrality, closeness, betweenness,
 and PageRank) are not effective. As a discussion point, consider whether values 
 immediately associated with vertices and edges dominate their importance, or
 if some extrinsic network effect has a greater effect.
 
-6. A manufacturer sells systems that are made of components. Those components
-are assembled from atomic parts. Many parts are interchangable with other parts,
-and many components are interchangable with other components. How can the
+#. A manufacturer sells systems that are made of components. Those components
+are assembled from atomic parts. Many parts are interchangeable with other parts,
+and many components are interchangeable with other components. How can the
 manufacturer discover unused or duplicative parts and components?
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=1.0\textwidth]{part-component-system.tikz}
-\label{fig:part-component-system}
-\end{figure}
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{part-component-system.tikz}
+    \label{fig:part-component-system}
+    \end{figure}
 
 ## Practical exercises
 
 <!-- Compare two different heuristic functions in a provided A* informed search implementation on the 8-piece puzzle problem. -->
 
-1. Convert currency exchange rates from multiplication to addition using a logarithm, then prove that infinite arbitration is impossible given a set of exchange rates and Bellman-Ford implementation. 
+#. Convert currency exchange rates from multiplication to addition using a logarithm, then prove that infinite arbitration is impossible given a set of exchange rates and Bellman-Ford implementation. 
 
-2. Define a topological sorting and relate it to a workplace problem. 
+#. Define a topological sorting and relate it to a workplace problem. 
 
-3. Define the Traveling Salesman Problem (TSP) and explain the computational difficulty of this problem. 
+#. Define the Traveling Salesman Problem (TSP) and explain the computational difficulty of this problem. 
 
-4. Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
+#. Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
 
-5. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 
+#. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 

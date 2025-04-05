@@ -247,7 +247,7 @@ $$
 \int_{-\infty}^{+\infty} P(x)\,dx = 1.
 $$
 
-The probabilities of an event occuring at $\pm \sigma$, $\pm 2\sigma$,
+The probabilities of an event occurring at $\pm \sigma$, $\pm 2\sigma$,
 and $\pm 3\sigma$ are approximately 68%, 95%, and 99%.
 
 $$
@@ -337,7 +337,7 @@ This is a matter of convention; the first element of a list is position 1 in mat
 
 In a *weak-link problem*, the system is harmed by the presence of any defect.
 The term itself is named for a proverbial chain, which is only as strong as the
-weakest link. Many safety-, quality-, and proces-related problems require one
+weakest link. Many safety-, quality-, and process-related problems require one
 to eliminate weak links.
 
 On the other hand, we sometimes encounter *strong-link problems*, where overall
@@ -356,37 +356,37 @@ section \ref{sec:moments}).
 
 ## Discussion prompts
 
-1. Is four a lot? 
+#. Is four a lot? 
 
-2. First battalion has an average ACFT score of 482 while second battalion has an average ACFT score of 491. Which is better? 
+#. First battalion has an average ACFT score of 482 while second battalion has an average ACFT score of 491. Which is better? 
 
-3. What do we do when statistics show us something that contradicts our values? For example, suppose we discover that Soldiers of a specific demographic have much lower promotion rates than their peers. 
+#. What do we do when statistics show us something that contradicts our values? For example, suppose we discover that Soldiers of a specific demographic have much lower promotion rates than their peers. 
 
-4. Is it more important for an organization to think about variance or the 99th percentile? 
+#. Is it more important for an organization to think about variance or the 99th percentile? 
 
-5. Given a sample set $x = \left\{ 5 \right\}$, what is the estimate of the mean ($\bar{x}$), and what is the sample variance ($s_x$)?
+#. Given a sample set $x = \left\{ 5 \right\}$, what is the estimate of the mean ($\bar{x}$), and what is the sample variance ($s_x$)?
 That is, what is the expected value ($E(x)$) of a random sample taken from $x$, and what is the average difference of variables to the expected value?
 Use software to verify your answer. In the R language, this would be `mean(c(5))` and `sd(c(5))`.
 
-6. A customer-service organization uses *average handling time* (AHT),
+#. A customer-service organization uses *average handling time* (AHT),
 the expected number of minutes required to complete an interaction, to improve
 service quality. What are some benefits or risks of this approach?
 See <https://xkcd.com/2899/>.
 
-7. Does the Army's standards-based approach hinder our ability to solve strong-link
+#. Does the Army's standards-based approach hinder our ability to solve strong-link
 problems requiring unpredictable solutions? How could an ideal institution maintain
 minimum standards while enabling outliers to flourish? 
 
 ## Practical exercises
 
-1. Calculate the influence that outliers have on different-sized datasets that contain outliers. 
+#. Calculate the influence that outliers have on different-sized datasets that contain outliers. 
 
-2. Calculate the exponential moving average in a small dataset. 
+#. Calculate the exponential moving average in a small dataset. 
 
-3. Given a dataset and experimental result, identify problems caused by analyzing categorical data represented in a numeric form. 
+#. Given a dataset and experimental result, identify problems caused by analyzing categorical data represented in a numeric form. 
 
-4. Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
+#. Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
 
-5. Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 
+#. Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 
 
-6. Think backwards and try to guess what would be the zeroth moment, $\mu_0$.
+#. Think backwards and try to guess what would be the zeroth moment, $\mu_0$.

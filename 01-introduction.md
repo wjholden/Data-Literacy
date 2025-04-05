@@ -12,7 +12,7 @@ The DKIW model is often visualized as the pyramid shown in figure \ref{fig:dikw}
 \begin{figure}[t]
 \centering
 \includegraphics{dikw.tikz}
-\caption{The DIKW model shows data, information, knowledge, and wisdom in a hierachy.
+\caption{The DIKW model shows data, information, knowledge, and wisdom in a hierarchy.
 Higher levels require subjective valuation. Wisdom is the application of
 generalized knowledge to form decisions in novel circumstances.}
 \label{fig:dikw}
@@ -289,7 +289,7 @@ $$
 
 Computer engineers have developed several techniques for representing signed
 (possibly negative) numbers. Some computers use a dedicated sign bit. Others use
-*one's complement* or *two's complementent* representations.
+*one's complement* or *two's complement* representations.
 
 Decimals are still more complex. *Fixed-point* decimals provide some constant
 amount of digits for the whole and fractional parts of the number. *Floating-point*
@@ -613,7 +613,7 @@ Remember that the different in ratio and interval data was that *multiplication*
 Similarly, multiplication is well-defined for vectors and matrices, but not on tables of data.
 
 Depending on the problem domain, it may be inappropriate to use matrices and vectors to represent data where such operations are not necessary.
-Some programming languages use the terms "vector" and "array" interchangably,
+Some programming languages use the terms "vector" and "array" interchangeably,
 or to indicate an array has dynamic vice fixed size.
 Many programming languages support *tuples* as an alternative representation
 of a quantity with multiple values.
@@ -817,65 +817,65 @@ T'(\text{goodbye}) &= \textit{au revoir}
 \end{aligned}
 $$
 
-Function $T'$ reifys $T$ into a less general form.
+Function $T'$ reifies $T$ into a less general form.
 Such functions might be called *convenience functions* that are provided as a "quality of life" improvement for the user.
 An example of a convenience function might be `LOG10(number)` in Excel.
 Excel also provides `LOG(number,[base])` (where `base` defaults to 10 if omitted), but some users may prefer the explicit syntax `LOG10` to improve clarity.
 
 ## Discussion prompts
 
-1. If `ls *.txt` is a declarative program, then is `rm *.txt` also a declarative program?
+#. If `ls *.txt` is a declarative program, then is `rm *.txt` also a declarative program?
 
-2. Who owns knowledge management? 
+#. Who owns knowledge management? 
 
-3. What are good and bad uses for spreadsheets? 
+#. What are good and bad uses for spreadsheets? 
 
-4. What is reproducibility? Why would this be important for scientific inquiry? 
+#. What is reproducibility? Why would this be important for scientific inquiry? 
 
-5. A manager sends an Excel spreadsheet to their employees, telling them to each
+#. A manager sends an Excel spreadsheet to their employees, telling them to each
 enter information and send it back. What are some challenges the manager might
 experience while merging these spreadsheets?
 
-6. The set of natural numbers, $\mathbb{N} = \left\{ 0, 1, 2, 3, \ldots \right\}$,
+#. The set of natural numbers, $\mathbb{N} = \left\{ 0, 1, 2, 3, \ldots \right\}$,
 can be constructed using a *successor function*, $S(n)=n+1$. If we begin with $0=0$,
 then $1=S(0)$, $2=S(1)=S(S(0))$, $3=S(2)=S(S(1))=S(S(S(0)))$, and so on.
 Can we define the reals, $\mathbb{R}$, in such a way? Could we construct a
 successor function for floating-point approximations of real numbers?
 
-7. CSV makes *appending* data easy: simply write new rows to the end of the file.
+#. CSV makes *appending* data easy: simply write new rows to the end of the file.
 This structure also makes it easy to *stream* the data record-by-record, but it
 makes the schema of the data inflexible. One must define the columns in the header
 of the CSV and continue to use this structure thereafter. Do Excel spreadsheets
 and SQL databases share this problem? How can organizations store their data
 when their requirements may change?
 
-## Practical exercises
+## Practical Exercises
 
-1. A sample of $n=6$ numbers $S = \left\{ 7, 17, 37, 47, 67, 97 \right\}$ shares
+#. A sample of $n=6$ numbers $S = \left\{ 7, 17, 37, 47, 67, 97 \right\}$ shares
 two properties: each value ends in 7, and each value is a prime number. Prove
 or disprove the statement "if a number ends in 7, then it is prime." Is this
 type of sampling a common experimental strategy for deductive fields, such as
 logic and pure mathematics?
 
-2. What method can we use to prove or disprove each of the following statements?
+#. What method can we use to prove or disprove each of the following statements?
 
-a. All numbers that end in 7 are prime. <!-- falsification -->
-b. No number that ends in 7 are prime. <!-- falsification -->
-c. Some numbers that end in 7 are prime. <!-- verification -->
-d. Some numbers that end in 7 are not prime. <!-- verification -->
-<!-- <https://math.stackexchange.com/questions/544104/show-that-there-are-infinitely-many-prime-numbers-ending-in-3-or-7-when-written> -->
-e. There are infinitely many numbers that end in 7 and are prime. <!-- contradiction -->
-f. The density of prime primes ending in 7 decreases as $x \to \infty$. <!-- derived from the Prime Number Theorem -->
+    #. All numbers that end in 7 are prime. <!-- falsification -->
+    #. No number that ends in 7 are prime. <!-- falsification -->
+    #. Some numbers that end in 7 are prime. <!-- verification -->
+    #. Some numbers that end in 7 are not prime. <!-- verification -->
+    <!-- <https://math.stackexchange.com/questions/544104/show-that-there-are-infinitely-many-prime-numbers-ending-in-3-or-7-when-written> -->
+    #. There are infinitely many numbers that end in 7 and are prime. <!-- contradiction -->
+    #. The density of prime primes ending in 7 decreases as $x \to \infty$. <!-- derived from the Prime Number Theorem -->
 
-2. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
+#. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
 Compare this experience to the hypothetical manager who gathered information by
 manually merging spreadsheets.
 
-3. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
+#. Given a noisy and poorly structured dataset, propose a method of restructuring the data. 
 
-4. Discretize the values of a dataset and explain the reasoning. 
+#. Discretize the values of a dataset and explain the reasoning. 
 
-5. The following Rust program, which one can run at the
+#. The following Rust program, which one can run at the
 Rust Playground^[<https://play.rust-lang.org/?gist=82eb9505ef18cf3af0faa2a373c11901>],
 doubles a value until we exceed the largest representable value. However, the
 program *appears* to make an arithmetic error at $\num{134217730}$.
@@ -883,33 +883,33 @@ $\num{67108864} \times 2 = \num{134217728}$, not $\num{134217730}$ (no power of
 two could ever end in zero in decimal). Use <https://www.h-schmidt.net/FloatConverter/IEEE754.html>
 to investigate the error.
 
-```rust
-fn main() {
-    let mut x: f32 = 1.0;
-    while x != f32::INFINITY {
-        println!("{x}");
-        x *= 2.0;
+    ```rust
+    fn main() {
+        let mut x: f32 = 1.0;
+        while x != f32::INFINITY {
+            println!("{x}");
+            x *= 2.0;
+        }
     }
-}
-```
+    ```
 
-6. What is the output of the following Java program? Use the 
+#. What is the output of the following Java program? Use the 
 Java Playground^[<https://dev.java/playground/>] to experiment.
 
-```java
-static void count() {
-    float x = 0.0f;
-    while (x != x + 1.0f) {
-        x += 1.0f;
+    ```java
+    static void count() {
+        float x = 0.0f;
+        while (x != x + 1.0f) {
+            x += 1.0f;
+        }
+        System.out.println(x);
     }
-    System.out.println(x);
-}
 
-count();
-```
+    count();
+    ```
 
-<!-- ° ALT+0176 on Windows -->
-7. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
+    <!-- ° ALT+0176 on Windows -->
+#. An *azimuth* on a magnetic compass conventionally reads 0° when pointed north, 
 90° for east, 180° for south, and 270° for west. In trigonometry, the angle
 0° corresponds to $(x,y)$ position $(1,0)$ on the unit circle, 90° to $(0,1)$,
 180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert

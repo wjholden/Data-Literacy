@@ -443,7 +443,7 @@ it may be undesirable to deserialize records with missing values. Consider if
 one of the below records were missing a $y$-value, or if a $z$ value were incorrectly
 enclosed in double-quotes, thus forming a string instead of a numeral.
 
-Some JSON parsers, such as Rust's Serde library^[<https://serde.rs>], allow the programmer to specify
+Some JSON parsers, such as Rust's Serde^[<https://serde.rs>], allow the programmer to specify
 the structure of the record before parsing. Libraries may ignore or error when records
 do not fit the expected shape. One can expect statically-typed languages to
 require more specification before parsing and dynamically-typed languages to allow
@@ -451,12 +451,12 @@ greater flexibility at runtime (see section \ref{sec:strong-weak-types}).
 
 ## Parallelism and Concurrency {#sec:parallelism-and-concurrency}
 
-*Parallelism* is the ability for a computing machine to perform simulataneous operations.
+*Parallelism* is the ability for a computing machine to perform simultaneous operations.
 Two tasks are *concurrent* if their order does not matter.
 Getting dressed in the morning is an example (see figure \ref{fig:get-dressed}).
 When one dons their pants, shirt, coat, hat, socks, and shoes, one must don socks before shoes, but the order in
 which one dons shoes and their hat does not. The hat and shoes are concurrent but the socks and shoes are *sequential*.
-In practice, many programmers confuse the terms *parallel* and *concurrent* as interchangable.
+In practice, many programmers confuse the terms *parallel* and *concurrent* as interchangeable.
 
 Concurrent programming can be challenging because one *process* or *thread* (sometimes called *task* or *routine*) might interfere with another,
 but performance benefits often justify the additional complexity.
@@ -552,7 +552,7 @@ Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to pre
 
 ## Discussion Prompts
 
-1. The Excel function `VLOOKUP(lookup_value, table_array, col_index_num, range_lookup)`
+#. The Excel function `VLOOKUP(lookup_value, table_array, col_index_num, range_lookup)`
 searches in a table (`table_array`) for a value (`lookup_value`) and returns the
 value in the numbered column (`col_index_num`)^[<https://support.microsoft.com/en-us/office/vlookup-function-0bbc8083-26fe-4963-8ab8-93a18ad188a1>].
 If `range_lookup` is true, then `VLOOKUP` uses approximate matching, otherwise
@@ -560,23 +560,23 @@ exact. Assuming one corrects the SQL syntax, what is the *semantic* difference
 between `VLOOKUP(x, y, z, FALSE)` and the SQL query `SELECT z FROM y WHERE x`?
 Can we parameterize the SQL statement to produce the same result as `VLOOKUP`?
 
-2. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
+#. How does the CAP theorem impact intelligence and fires in relation to the command and control (C2) warfighting function (WfF)? 
 
-3. Where should unclassified data be stored and processed? 
+#. Where should unclassified data be stored and processed? 
 
-4. What are some methods to prevent conflicts among concurrent writes in a shared database? 
+#. What are some methods to prevent conflicts among concurrent writes in a shared database? 
 
-5. What can go wrong when altering database schema? 
+#. What can go wrong when altering database schema? 
 
 ## Practical Exercises
 
-1. Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
+#. Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
 
-2. Given a noisy dataset, identify problems in each column that could influence inclusion and exclusion criteria. 
+#. Given a noisy dataset, identify problems in each column that could influence inclusion and exclusion criteria. 
 
-3. Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 
+#. Define an “embarrassingly parallel” problem and provide both examples and counterexamples. 
 
-4. In section \ref{sec:reduce} we have examples of the filter and map operations
+#. In section \ref{sec:reduce} we have examples of the filter and map operations
 implemented in terms of reduce. Later, in our discussion of immutability in section
 \ref{sec:immutability}, we learned that a sorting function can either mutate the
 data in-place or copy the data, leaving the original data unchanged and returning

@@ -9,7 +9,7 @@ of mixing data, code, plots, mathematical notation, and tables, and prose.
 Context is king. One must consider the target audience when writing reports from
 any analysis.
 
-Presentations, such as with Micosoft PowerPoint, are useful as
+Presentations, such as with Microsoft PowerPoint, are useful as
 visual aids to speeches. The slides themselves should contain mainly plots,
 sparse text, and simple tables to summarize information. Slides are a poor medium
 for presenting raw data, large tables, code, and long passages of prose. Pity
@@ -35,7 +35,7 @@ interpretation [@10.1093/comjnl/27.2.97].
 <!-- <https://www.sec.gov/Archives/edgar/data/1018724/000119312518121161/d456916dex991.htm> -->
 <!-- <https://www.inc.com/justin-bariso/amazon-jeff-bezos-powerpoint-meetings-how-to-think.html> -->
 Written prose and spoken presentation are key to aggregating and processing data
-into information and then interpretting information into knowledge. Jeff Bezos
+into information and then interpreting information into knowledge. Jeff Bezos
 famously insists upon the use of six-page narratives at Amazon in favor of
 PowerPoint^[<https://www.youtube.com/watch?v=L227qFemjqI>]. The rest of this
 chapter will focus on technical matters of working with data, but look at how
@@ -138,9 +138,9 @@ SELECT * FROM A CROSS JOIN B CROSS JOIN C;
 ```
 
 This text views tuples as unordered and "flattened" sets, and therefore Cartesian products are both *commutative* ($R \times S = S \times R$) and *associative* ($R \times \left( S \times T \right) = \left( R \times S \right) \times T$).
-Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutivity nor associativity.
+Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutativity nor associativity.
 This text uses the looser definition for compatibility with practical DBMSs, including SQLite.
-Mathematics is partly discovered and partly invented.
+(Mathematics is partly discovered and partly invented.)
 
 Set union, $\cup$, combines two sets.
 Sets definitionally contain only distinct elements.
@@ -403,7 +403,7 @@ We introduced CSV in section \ref{sec:csv} as a method for representing data in
 a file. *JavaScript Object Notation* (JSON) is an alternative format [@rfc8259].
 JSON's syntax is based on JavaScript. Objects in JSON are key-value pairs. The
 key of a JSON object must be a double-quoted string. Values can be nested objects,
-arrays, numbers, strings, booleans, and `null`. The process of taking a data
+arrays, numbers, strings, Booleans, and `null`. The process of taking a data
 structure from a program's memory and saving it as JSON is called *serialization*.
 The inverse, reading an object into memory from a JSON input, is correspondingly
 *deserialization*. Trailing commas are forbidden.
@@ -443,7 +443,7 @@ it may be undesirable to deserialize records with missing values. Consider if
 one of the below records were missing a $y$-value, or if a $z$ value were incorrectly
 enclosed in double-quotes, thus forming a string instead of a numeral.
 
-Some JSON parsers, such as Rust's Serde library, allow the programmer to specify
+Some JSON parsers, such as Rust's Serde library^[<https://serde.rs>], allow the programmer to specify
 the structure of the record before parsing. Libraries may ignore or error when records
 do not fit the expected shape. One can expect statically-typed languages to
 require more specification before parsing and dynamically-typed languages to allow
@@ -566,7 +566,7 @@ Can we parameterize the SQL statement to produce the same result as `VLOOKUP`?
 
 4. What are some methods to prevent conflicts among concurrent writes in a shared database? 
 
-5. What could possibly go wrong when altering database schema? 
+5. What can go wrong when altering database schema? 
 
 ## Practical Exercises
 

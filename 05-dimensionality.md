@@ -1,9 +1,49 @@
 # Dimensionality
 
+## Modeling Dimensions
+
+The Myers-Briggs Type Indicator (MBTI) is a well-known model for classifying
+psychiatric preferences [@Myers1962-qg]. The model classifies personalities by
+four *dimensions*. In this context, the term "dimension" does not refer to a
+*spatial* dimension (left/right, up/down, and forward/backward, ordinarily
+symbolized in geometry as $x$, $y$, and $z$), but rather as *orthogonal*
+(independent) *attributes* that characterize a *sample space*, the set of all
+possible outcomes of a process. Each of the four dimensions of MBTI are
+*dichotomies* (binary categorical domains). The four dichotomies of MBTI are
+introversion and extroversion, intuition and sensing, thinking and feeling, and
+judging and perceiving. In total, there are $2 \times 2 \times 2 \times 2 = 2^4 = 16$
+possible *tuples* that can be combined from these inputs.
+
+<!-- Tuples[{{i, e}, {n, s}, {t, f}, {j, p}}] --> 
+$$
+\begin{Bmatrix} I \\ E \end{Bmatrix} \times 
+\begin{Bmatrix} N \\ S \end{Bmatrix} \times 
+\begin{Bmatrix} T \\ F \end{Bmatrix} \times 
+\begin{Bmatrix} J \\ P \end{Bmatrix} =
+\begin{Bmatrix}
+INTJ & INTP & INFJ & INFP \\
+ISTJ & ISTP & ISFJ & ISFP \\
+ENTP & ENTP & ENFJ & ENFP \\
+ESTJ & ESTP & ESFJ & ESFP
+\end{Bmatrix}
+$$
+
+In this chapter, we explore the nature of the *dimensionality* of data sets.
+We begin with a brief introduction to *combinatorics*, a field of discrete
+mathematics for counting and arranging the elements of sets. We see that
+small input domains combine into large output ranges, complicating data
+mining efforts and limiting our ability to draw conclusions from even large data
+corpora. We learn to reason about basic probabilities with the binomial
+distribution. We introduce Pearson and Chatterjee correlation before
+showing Principal Component Analysis (PCA), a powerful tool for compressing the
+dimensions of a data set. Finally, we touch upon the Pareto Frontier, a
+technique one can use for uncompressible data.
+
 ## Combinatorics
 
-Suppose one has four children, $\left\{ a, b, c, d \right\}$, and a motorcycle.
-The motorcycle can carry only one passenger, so there are four possible *combinations* of children that you can transport by motorcycle:
+Suppose a family has four children, $F = \left\{ a, b, c, d \right\}$, and a motorcycle.
+The motorcycle can carry only one passenger, so there are four possible *combinations*
+of children that you can transport by motorcycle^[The vertical bracket notation $\left| S \right| = n$ gives the *cardinality* (the size, $n$) of set $S$.]:
 
 $$
 4 = \left| \left\{
@@ -13,8 +53,6 @@ $$
 \left\{ d \right\}
 \right\} \right|.
 $$
-
-$\left| S \right| = n$ gives the *cardinality* (the size) $n$ of set $S$.
 
 The family adds a sidecar to the motorcycle and can now transport two children at once.
 There are now six ways that one can *choose* two elements from a four-element set:
@@ -63,7 +101,7 @@ $$
 
 There is only one way to take an empty set from another set.
 
-We will now construct a generalized function to count the number of subsets for any combination of $r$ elements taken from a set of size $n$.
+We now construct a generalized function to count the number of subsets for any combination of $r$ elements taken from a set of size $n$.
 Initially, consider the first element in the set.
 If we choose this element, then we still to select $r-1$ elements from the remaining $n-1$ elements.
 If we do not choose this element, then we still must choose $r$ elements from the remaining $n-1$ elements.
@@ -338,7 +376,7 @@ The process continues until all variables can be represented in discrete (someti
 | Speed | 10 |
 | Strength | 10 |
 | Endurance | 10 |
-| Flexbility | 10 |
+| Flexibility | 10 |
 | Blood Pressure | 5 |
 | Heart Rate | 5 |
 | Composition | 7 |
@@ -424,7 +462,7 @@ By the tenth flip, the sample space contains $2^{10} = \num{1024} \approx \num{1
 
 Upon reflection, it should be hardly surprising that one of one thousand toys would randomly associate with a one-in-one-thousand event.
 To find the exact chance, we need the *binomial distribution*.
-The probability of event $x$ occuring in a series of $n$ independent trials of probability $p$ is
+The probability of event $x$ occurring in a series of $n$ independent trials of probability $p$ is
 
 $$
 p(x) = \binom{n}{x} p^x (1-p)^{n-x}.
@@ -465,44 +503,69 @@ The toy shark example is intended to demonstrate how *spurious correlations* may
 The *Texas sharpshooter fallacy* can describe this effect.
 A sharpshooter fires his pistol at random into a barn wall, then draws circles around clusters of bullet holes and claims to be an expert.
 
-## Pareto frontier {#sec:pareto-frontier}
+## Causation
 
-A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing the interaction of two *orthogonal* (statistically independent) features of a data set.
+One must take care not to confuse correlation with causation. Consider an experiment
+where seven subjects are each given a fair die and assigned "relationship" numbers
+such that each pair of subjects $(x,y)$ shares a relationship $R_{xy}$ with every other subject,
+as shown in figure \ref{fig:full-mesh} and enumerated in the following table.
 
-5/3/1 is a barbell strength training program [@Wendler2011-ar].
-This program emphasizes *rep records*, where the lifter is to lift a submaximal mass as many times as possible.
-This program design adds a second dimension to strength.
-We say that lifter who progresses from lifting \qty{100}{\kilogram} for 6 repetitions to 9 repetitions in six months has become stronger,
-even if the athlete has not directly tested their one-repetition maximum.
+| Subject | Relationships                               |
+|---------|---------------------------------------------|
+| 1       | $R_{12},R_{13},R_{14},R_{15},R_{16},R_{17}$ |
+| 2       | $R_{12},R_{23},R_{24},R_{25},R_{26},R_{27}$ |
+| 3       | $R_{13},R_{23},R_{34},R_{35},R_{36},R_{37}$ |
+| 4       | $R_{14},R_{24},R_{34},R_{45},R_{46},R_{47}$ |
+| 5       | $R_{15},R_{25},R_{35},R_{45},R_{56},R_{57}$ |
+| 6       | $R_{16},R_{26},R_{36},R_{46},R_{56},R_{67}$ |
+| 7       | $R_{17},R_{27},R_{37},R_{47},R_{57},R_{67}$ |
 
-![The points along the red line form the Pareto front for this data set.](pareto.pdf){#fig:pareto}
+\begin{figure}
+\centering
+\includegraphics{full-mesh.tikz}
+\caption{A \textit{full mesh} network of 7 elements contains $(7)(7-1)/2=21$ connections,
+as explained in section \ref{sec:choose2}.}
+\label{fig:full-mesh}
+\end{figure}
 
-Figure \ref{fig:pareto} provides an example of an athlete's rep records over a two-year period in the barbell squat.
-The frontier, $P(X)$, is visible at the top-right of the scatter plot.
-If, for example, this lifter were to achieve a \qty{120}{\kilogram} squat for 8 repetitions,
-the lift would *dominate* the previous records at $(120,5)$ and $(116,8)$,
-moving the frontier farther from the origin.
+Have each of your seven subjects roll their die. As there are only six sides to the die, we
+are guaranteed that at least one pair of subjects will receive the same roll.
+We look at our set of relationships and discover some $R_{xy}$ between those
+who rolled the same number. We have a correlation, but is there a causal relationship?
+Of course not.
 
-A Pareto front only makes sense when the two variables cannot be combined into one.
-Consider, as an absurd example, a running race where the minutes and seconds of finishing times are recorded in separate columns.
+A *mediating variable* makes establishing causality even more difficult.
+(todo: say more about mediating variables)
 
-| Athlete | Minutes | Seconds |
-|---------|---------|---------|
-| 1       | 18      | 34      |
-| 2       | 19      | 24      |
-| 3       | 20      | 01      |
+*Confounding factors* introduce additional dimensions to a system and can make
+analysis more complex or, sometimes, impossible. For example, a cohort of
+hypothetical adult subjects enjoy positive health outcomes in one year having
+started exercising regularly, improving sleep quality and duration, switching to
+a healthy diet, stopping smoking, and always wearing blue clothes. Which of these
+five variables led to improved health? Obviously, the blue clothes did *not*
+contribute to the health outcomes, but in the presence of the other variables it
+may be impossible to dismiss a preposterous claim that blue clothes are healthy.
 
-There is no need to compare the three runner's run times in two dimensions: the minutes and seconds are trivially compressible into a single value with no loss of information.
+An ideal study should predict, control, and explore the combinatorial space as
+fully as possible. Consider another hypothetical exercise science study to
+contrast the benefits of running versus cycling. If the researcher realizes that
+the runners were significantly younger than the cyclists, then they may not be
+able to distinguish whether the differences in the cohorts was due to activity
+or age; the difference in age would be a confounding factor not *controlled* in
+the study.
 
-In the case of the rep records shown in figure \ref{fig:pareto}, there is a general negative correlation between mass and repetitions.
-This relationship can be estimated with Brzycki's formula (among others) [@brzycki1993strength], which states
+While mediating variables and confounding factors can create spurious or
+misleading correlations, random *noise* in measurements can also obscure or
+create or exaggerate the relationships between variables. Statistics like
+correlation are useful to estimate an *effect size* to distinguish signal from
+noise.
 
-$$
-\text{Predicted 1-RM} = \frac{\text{Weight Lifted}}{1.0278 - 0.0289x},
-$$
-
-where $x$ is the number of repetitions performed.
-Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
+In a data mining effort, the interactions among features in the data set might
+not be known in advance. *Big data*, large volumes of loosely-related and often
+semi-structured data, may facilitate the exploration of the $n$-dimensional
+space by providing vast numbers of both samples and features. In the following
+sections, we will learn methods for discovering and compressing relationships
+among the numerical features.
 
 ## Covariance and Correlation {#sec:cor}
 
@@ -702,70 +765,6 @@ fn xicor(x: &[f64], y: &[f64]) -> f64 {
 }
 ```
 
-## Causation
-
-One must take care not to confuse correlation with causation. Consider an experiment
-where seven subjects are each given a fair die and assigned "relationship" numbers
-such that each pair of subjects $(x,y)$ shares a relationship $R_{xy}$ with every other subject,
-as shown in figure \ref{fig:full-mesh} and enumerated in the following table.
-
-| Subject | Relationships                               |
-|---------|---------------------------------------------|
-| 1       | $R_{12},R_{13},R_{14},R_{15},R_{16},R_{17}$ |
-| 2       | $R_{12},R_{23},R_{24},R_{25},R_{26},R_{27}$ |
-| 3       | $R_{13},R_{23},R_{34},R_{35},R_{36},R_{37}$ |
-| 4       | $R_{14},R_{24},R_{34},R_{45},R_{46},R_{47}$ |
-| 5       | $R_{15},R_{25},R_{35},R_{45},R_{56},R_{57}$ |
-| 6       | $R_{16},R_{26},R_{36},R_{46},R_{56},R_{67}$ |
-| 7       | $R_{17},R_{27},R_{37},R_{47},R_{57},R_{67}$ |
-
-\begin{figure}
-\centering
-\includegraphics{full-mesh.tikz}
-\caption{A \textit{full mesh} network of 7 elements contains $(7)(7-1)/2=21$ connections,
-as explained in section \ref{sec:choose2}.}
-\label{fig:full-mesh}
-\end{figure}
-
-Have each of your seven subjects roll their die. As there are only six sides to the die, we
-are guaranteed that at least one pair of subjects will receive the same roll.
-We look at our set of relationships and discover some $R_{xy}$ between those
-who rolled the same number. We have a correlation, but is there a causal relationship?
-Of course not.
-
-A *mediating variable* makes establishing causality even more difficult.
-(todo: say more about mediating variables)
-
-*Confounding factors* introduce additional dimensions to a system and can make
-analysis more complex or, sometimes, impossible. For example, a cohort of
-hypothetical adult subjects enjoy positive health outcomes in one year having
-started exercising regularly, improving sleep quality and duration, switching to
-a healthy diet, stopping smoking, and always wearing blue clothes. Which of these
-five variables led to improved health? Obviously, the blue clothes did *not*
-contribute to the health outcomes, but in the presence of the other variables it
-may be impossible to dismiss a preposterous claim that blue clothes are healthy.
-
-An ideal study should predict, control, and explore the combinatorial space as
-fully as possible. Consider another hypothetical exercise science study to
-contrast the benefits of running versus cycling. If the researcher realizes that
-the runners were significantly younger than the cyclists, then they may not be
-able to distinguish whether the differences in the cohorts was due to activity
-or age; the difference in age would be a confounding factor not *controlled* in
-the study.
-
-While mediating variables and confounding factors can create spurious or
-misleading correlations, random *noise* in measurements can also obscure or
-create or exaggerate the relationships between variables. Statistics like
-correlation are useful to estimate an *effect size* to distinguish signal from
-noise.
-
-In a data mining effort, the interactions among features in the data set might
-not be known in advance. *Big data*, large volumes of loosely-related and often
-semi-structured data, may facilitate the exploration of the $n$-dimensional
-space by providing vast numbers of both samples and features. In the next
-section, we will learn a method for exploring the linear relationships among
-the features of numerical data sets.
-
 ## Principal Component Analysis (PCA)
 
 *Principal Component Analysis* (PCA) is a powerful technique for discovering linear
@@ -865,6 +864,46 @@ https://crates.io/crates/nalgebra
 
 -->
 
+## Pareto frontier {#sec:pareto-frontier}
+
+A *Pareto frontier* (also known as a *Pareto front*) is a method for visualizing
+the interaction of two orthogonal (statistically independent) features of a data set.
+
+5/3/1 is a barbell strength training program [@Wendler2011-ar].
+This program emphasizes *rep records*, where the lifter is to lift a submaximal mass as many times as possible.
+This program design adds a second dimension to strength.
+We say that lifter who progresses from lifting \qty{100}{\kilogram} for 6 repetitions to 9 repetitions in six months has become stronger,
+even if the athlete has not directly tested their one-repetition maximum.
+
+![The points along the red line form the Pareto front for this data set.](pareto.pdf){#fig:pareto}
+
+Figure \ref{fig:pareto} provides an example of an athlete's rep records over a two-year period in the barbell squat.
+The frontier, $P(X)$, is visible at the top-right of the scatter plot.
+If, for example, this lifter were to achieve a \qty{120}{\kilogram} squat for 8 repetitions,
+the lift would *dominate* the previous records at $(120,5)$ and $(116,8)$,
+moving the frontier farther from the origin.
+
+A Pareto front only makes sense when the two variables cannot be combined into one.
+Consider, as an absurd example, a running race where the minutes and seconds of finishing times are recorded in separate columns.
+
+| Athlete | Minutes | Seconds |
+|---------|---------|---------|
+| 1       | 18      | 34      |
+| 2       | 19      | 24      |
+| 3       | 20      | 01      |
+
+There is no need to compare the three runner's run times in two dimensions: the minutes and seconds are trivially compressible into a single value with no loss of information.
+
+In the case of the rep records shown in figure \ref{fig:pareto}, there is a general negative correlation between mass and repetitions.
+This relationship can be estimated with Brzycki's formula (among others) [@brzycki1993strength], which states
+
+$$
+\text{Predicted 1-RM} = \frac{\text{Weight Lifted}}{1.0278 - 0.0289x},
+$$
+
+where $x$ is the number of repetitions performed.
+Strong correlations in the columns of a data set present an opportunity to compress the data, thus reducing dimensionality, and search for non-obvious insights where one lacks first principles.
+
 ## Discussion prompts
 
 1. <https://www.tylervigen.com/spurious-correlations> curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
@@ -874,6 +913,16 @@ https://crates.io/crates/nalgebra
 may claim on one basis in dimension $x$, where the opposition's counterclaim is
 in dimension $y$. Discuss a contemporary impasse with orthogonal or irreconcilable
 aspects.
+5. The Monty Hall problem is a notoriously unintuitive probability question.
+In the problem, a game show host hides a prize behind one of three doors. The
+guest is asked to guess which door has the prize. The host then opens one of the
+two unselected doors, which never contains the prize, and asks the guest if they
+would like to change their guess. Should the guest keep their original guess,
+or should the change to the unopened door? Some strategies to decide might be:
+a. Play the game several times and tally results.
+b. Implement the game in software to generate a large number of results quickly.
+c. Attempt to deduce the problem using mathematical reasoning.
+d. Change the assumptions of the game, such as adding more doors or more prizes.
 
 ## Practical exericses
 

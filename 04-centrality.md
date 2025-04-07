@@ -74,9 +74,6 @@ The arithmetic mean is found at $\mu = \bar{x} = \frac{x_1+x_2+\cdots+x_n}{n}$. 
 A less-general demonstration of the above proof is given below in the Wolfram Language.
 
 ```mathematica
-Wolfram Language 14.0.0 Engine for Microsoft Windows (64-bit)
-Copyright 1988-2023 Wolfram Research, Inc.
-
 In[1]:= X := {x1, x2, x3}
 
 In[2]:= Err[mu_] := X - mu

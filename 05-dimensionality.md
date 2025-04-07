@@ -276,9 +276,10 @@ $$
 Yet another proof is to observe the series $1+2+3+\cdots+(n-1)+n$, cleverly reverse the series and add it to itself to form $(n+1)+((n-1)+2)+\cdots+(n+1)$, observe that there are $n$ of these identical terms and the original sum is half that of the second.
 Though elegant, this proof technique may not as portable to other problems as computational, inductive, and algebraic methods.
 
-## The curse of combinatorics
+## The Curse of Combinatorics
 
-The "curse of combinatorics" is simply that the number of possible combinations can become very large.
+The phrase "the curse of combinatorics" refers to the vast combinatorical spaces
+that arise naturally from iterated multiplication.
 Consider a bicycle factory that must manufacture a part in four materials (steel, aluminum, carbon fiber, and titanium),
 three sizes (small, medium, and large), five styles (road, mountain, touring, utility, and economy),
 and for five markets (North America, European Union, Latin America, East Asia, and Middle East) which each have different compliance requirements.
@@ -289,6 +290,152 @@ Should the factory give the the distributor $300 \times 50 = \num{15000}$ of thi
 Now suppose an investor wants a rigorous test of the bicycle factory's products.
 The investor demands that 30 copies of each part be tested in various ways.
 $300 \times 30 = \num{9000}$ total parts being committed to this study might be unrealistic.
+
+## Satisfiability and Constraint Solvers
+
+The Boolean Satisfiability Problem (SAT) is a class of hard problems that are
+*intractably* difficult because of this "curse of combinatorics" [@10.5555/574848].
+The SAT problem asks if there is any set of *literals* (reified true or false
+values) that we can assign to a given set of *variables*, which are combined
+into the *clauses* of a *formula*. For example, the formula
+
+$$
+f = (a \lor b \lor \neg d) \land (\neg a \lor c \lor d) \land (b \lor \neg c)
+$$
+
+contains four variables ($a$, $b$, $c$, and $d$) in three clauses. The formula
+$f$ is given in the *conjunctive normal form* (CNF), which means that it is the
+conjunction (logical and) of clauses, and each clause is a disjunction (logical
+or). The 2SAT variant of the SAT problem restricts each clause to having exactly
+two variables, and the 3SAT variant requires exactly three variables.
+
+The Wolfram language can solve satisfiability
+problems^[<https://reference.wolfram.com/language/ref/SatisfiableQ.html.en>] ^[<https://reference.wolfram.com/language/ref/SatisfiabilityInstances.html>]:
+
+```mathematica
+In[1]:= f := (a || b || Not[d]) && (Not[a] || c || d) && (b || Not[c])
+In[2]:= SatisfiableQ[f]
+Out[2]= True
+
+In[3]:= SatisfiabilityInstances[f, {a, b, c, d}]
+Out[3]= {{False, False, False, False}}
+```
+
+This means that the literals $a=F$, $b=F$, $c=F$, and $d=f$ should result in
+$f$ being true, and indeed we can verify
+
+$$
+\begin{aligned}
+(F \lor F \lor \neg F) \land (\neg F \lor F \lor F) \land (F \lor \neg F) &= \\
+(F \lor F \lor T) \land (T \lor F \lor F) \land (F \lor T) &= \\
+(T) \land (T) \land (T) &= T.
+\end{aligned}
+$$
+
+Small instances of SAT are easily solvable by enumerating all $2^n$ possible
+sets of literals, but as $n$ grows $2^n$ quickly becomes too large to search.
+
+There are many SAT solvers and constraint solvers, but they are not commonly
+understood, even among computer scientists [@codingnestModernSolvers]. 
+Z3 is one such theorem prover from Microsoft Research^[<https://github.com/Z3Prover/z3>]
+[@10.1007/978-3-540-78800-3_24].
+Z3's parenthesized prefix notation resembles that of Lisp languages. Users of
+constraint solvers may prefer to use more familiar languages, such as Python.
+
+Sudoku is a puzzle with a $9 \times 9$ grid of integers in 1--9.
+Each row contains exactly one of 1--9 and each column contains exactly one
+of 1--9. When partitioned into nine $3 \times 3$ squares, each square also
+contains exactly one of 1--9. The number of valid game configurations is an
+immense combinatorial space, on the order of
+$9! \times 8! \times 7! \times \cdots \times 1! \approx 10^{21}$
+(the exact number is believed to be higher [@felgenhauer2005enumerating]),
+yet the following Python program discovers a solution in less than a second
+using Z3^[This program is heavily influenced by
+<https://ericpony.github.io/z3py-tutorial/guide-examples.htm>].
+
+```python
+In [1]: from z3 import *
+
+In [2]: # Declare Integer variables v[0][0] through v[8][8]. Each variable
+   ...: # represents a position of the Sudouku puzzle.
+   ...: v = [[Int(f"v{row}{col}") for col in range(1,10)]
+   ...:      for row in range(1,10)]
+   ...:
+
+In [3]: # Variables have values between 1 and 9, inclusive.
+   ...: constraint1 = [And(1 <= v[row][col], v[row][col] <= 9)
+   ...:                for row in range(9) for col in range(9)]
+
+In [4]: # The values in each row are distinct.
+   ...: constraint2 = [Distinct(v[row]) for row in range(9)]
+
+In [5]: # The values in each column are distinct.
+   ...: constraint3 = [Distinct([v[row][col] for row in range(9)])
+   ...:                for col in range(9)]
+
+In [6]: # The values in each 3x3 square are distinct.
+   ...: constraint4 = [Distinct([v[row + 3 * y][col + 3 * x]
+   ...:                          for row in range(3) for col in range(3)])
+   ...:                          for y in range(3) for x in range(3)]
+
+In [7]: # Literal assignments for our puzzle input.
+   ...: example = [[None, None, 8, 4, 2, None, 9, 1, None],
+   ...:            [4, 3, 2, None, 1, 5, None, 8, 7],
+   ...:            [9, None, None, None, 8, None, 2, None, 4],
+   ...:            [8, None, None, None, None, 2, None, 7, None],
+   ...:            [None, 7, 4, None, None, 8, None, None, None],
+   ...:            [None, 2, 9, None, None, 4, 5, 3, None],
+   ...:            [None, None, None, None, 7, None, None, None, None],
+   ...:            [None, 4, 3, None, None, 6, None, 9, None],
+   ...:            [5, 8, None, None, None, 9, 7, 2, 6]]
+
+In [8]: constraint5 = [v[row][col] == example[row][col]
+   ...:                for row in range(9) for col in range(9)
+   ...:                if example[row][col] is not None]
+
+In [9]: # Create and initialize an instance of a Z3 constraint solver
+   ...: s = Solver()
+
+In [10]: s.add(constraint1 + constraint2 + constraint3 + constraint4 + constraint5)
+
+In [11]: # Is the problem satisfiable?
+    ...: s.check()
+Out[11]: sat
+
+In [12]: m = s.model()
+
+In [13]: [[m.evaluate(v[row][col]) for col in range(9)] for row in range(9)]
+Out[13]:
+[[6, 5, 8, 4, 2, 7, 9, 1, 3],
+ [4, 3, 2, 9, 1, 5, 6, 8, 7],
+ [9, 1, 7, 6, 8, 3, 2, 5, 4],
+ [8, 6, 5, 1, 3, 2, 4, 7, 9],
+ [3, 7, 4, 5, 9, 8, 1, 6, 2],
+ [1, 2, 9, 7, 6, 4, 5, 3, 8],
+ [2, 9, 6, 8, 7, 1, 3, 4, 5],
+ [7, 4, 3, 2, 5, 6, 8, 9, 1],
+ [5, 8, 1, 3, 4, 9, 7, 2, 6]]
+```
+
+A *reduction* is the process of transforming one problem into another. The SAT
+problem is NP-complete, which means that:
+
+#. A Boolean satisfiability problem cannot be solved in polynomial time. There
+are no known algorithm to solve arbitrary SAT problems of $n$ variables in at most
+$n^k$ steps, for arbitrary $n$ where $k$ is a constant.
+#. Candidate solutions to a SAT problem can be verified in polynomial time. We
+do not need check solutions with $2^n$ operations.
+#. Any problem in NP can be reduced to SAT.
+
+The first two conditions are the basis of the famous $P \ne NP$ problem, an
+important unsolved problem in computer science. The third is a reason why the
+computer science community has such interest in developing fast and usable
+constraint solvers. While constraint satisfaction problems are theoretically
+intractable, modern SAT solvers has effective techniques to quickly divide the
+sample space and uncover solutions.
+
+The reductions are the hard part. Refer to Dennis Yurichev's *SAT/SMT by
+Example* as a useful resource [@yurichev].
 
 ## Subsets and Venn diagrams
 

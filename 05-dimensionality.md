@@ -294,20 +294,21 @@ $300 \times 30 = \num{9000}$ total parts being committed to this study might be 
 ## Satisfiability and Constraint Solvers
 
 The Boolean Satisfiability Problem (SAT) is a class of hard problems that are
-*intractably* difficult because of this "curse of combinatorics" [@10.5555/574848].
+considered *intractable* because of this "curse of combinatorics" [@10.5555/574848].
 The SAT problem asks if there is any set of *literals* (reified true or false
 values) that we can assign to a given set of *variables*, which are combined
 into the *clauses* of a *formula*. For example, the formula
 
 $$
-f = (a \lor b \lor \neg d) \land (\neg a \lor c \lor d) \land (b \lor \neg c)
+\mathcal{F} = (a \lor b \lor \neg d) \land (\neg a \lor c \lor d) \land (b \lor \neg c)
 $$
 
-contains four variables ($a$, $b$, $c$, and $d$) in three clauses. The formula
-$f$ is given in the *conjunctive normal form* (CNF), which means that it is the
-conjunction (logical and) of clauses, and each clause is a disjunction (logical
-or). The 2SAT variant of the SAT problem restricts each clause to having exactly
-two variables, and the 3SAT variant requires exactly three variables.
+contains four variables ($a$, $b$, $c$, and $d$) in three clauses. $\mathcal{F}$
+is expressed in the *conjunctive normal form* (CNF), meaning it is the
+conjunction (logical and) of clauses. Each clause of a CNF formula is the
+disjunction (logical or) of Boolean variables. Clauses may contain negated
+variables. The 2SAT variant of the SAT problem restricts each clause to having
+exactly two variables. The 3SAT variant requires exactly three variables.
 
 The Wolfram language can solve satisfiability
 problems^[<https://reference.wolfram.com/language/ref/SatisfiableQ.html.en>] ^[<https://reference.wolfram.com/language/ref/SatisfiabilityInstances.html>]:
@@ -321,8 +322,8 @@ In[3]:= SatisfiabilityInstances[f, {a, b, c, d}]
 Out[3]= {{False, False, False, False}}
 ```
 
-This means that the literals $a=F$, $b=F$, $c=F$, and $d=f$ should result in
-$f$ being true, and indeed we can verify
+This means that the literals $a=F$, $b=F$, $c=F$, and $d=F$ should result in
+$\mathcal{F}$ being true, and indeed we verify
 
 $$
 \begin{aligned}
@@ -332,17 +333,44 @@ $$
 \end{aligned}
 $$
 
+The following *truth table* enumerates all $2^4=16$ possible combinations of
+true and false literals for $a$--$d$. More than one set of literals satisfies
+$\mathcal{F}$.
+
+|$a$|$b$|$c$|$d$|$\mathcal{F}$|
+|---|---|---|---|---|
+|$T$|$T$|$T$|$T$|$T$|
+|$T$|$T$|$T$|$F$|$T$|
+|$T$|$T$|$F$|$T$|$T$|
+|$T$|$T$|$F$|$F$|$F$|
+|$T$|$F$|$T$|$T$|$F$|
+|$T$|$F$|$T$|$F$|$F$|
+|$T$|$F$|$F$|$T$|$T$|
+|$T$|$F$|$F$|$F$|$F$|
+|$F$|$T$|$T$|$T$|$T$|
+|$F$|$T$|$T$|$F$|$T$|
+|$F$|$T$|$F$|$T$|$T$|
+|$F$|$T$|$F$|$F$|$T$|
+|$F$|$F$|$T$|$T$|$F$|
+|$F$|$F$|$T$|$F$|$F$|
+|$F$|$F$|$F$|$T$|$F$|
+|$F$|$F$|$F$|$F$|$T$|
+
 Small instances of SAT are easily solvable by enumerating all $2^n$ possible
 sets of literals, but as $n$ grows $2^n$ quickly becomes too large to search.
 
-There are many SAT solvers and constraint solvers, but they are not commonly
-understood, even among computer scientists [@codingnestModernSolvers]. 
-Z3 is one such theorem prover from Microsoft Research^[<https://github.com/Z3Prover/z3>]
-[@10.1007/978-3-540-78800-3_24].
-Z3's parenthesized prefix notation resembles that of Lisp languages. Users of
-constraint solvers may prefer to use more familiar languages, such as Python.
+SAT solvers and constraint solvers are computer programs and languages intended
+to solve these problems. These solutions are not commonly understood, even among
+computer scientists [@codingnestModernSolvers]. Z3 is one such theorem prover
+from Microsoft Research^[<https://github.com/Z3Prover/z3>]
+[@10.1007/978-3-540-78800-3_24]. Z3's parenthesized prefix notation resembles
+that of Lisp languages. Users of constraint solvers may prefer to use more
+familiar languages, such as Python. Python's list comprehension, which we
+previously saw in section \ref{sec:choose2}, is a useful idiom to declaratively
+create constraints.
 
-Sudoku is a puzzle with a $9 \times 9$ grid of integers in 1--9.
+Sudoku is a puzzle with a $9 \times 9$ grid of integers in 1--9, as shown in
+figure \ref{fig:sudoku}.
 Each row contains exactly one of 1--9 and each column contains exactly one
 of 1--9. When partitioned into nine $3 \times 3$ squares, each square also
 contains exactly one of 1--9. The number of valid game configurations is an
@@ -352,6 +380,19 @@ $9! \times 8! \times 7! \times \cdots \times 1! \approx 10^{21}$
 yet the following Python program discovers a solution in less than a second
 using Z3^[This program is heavily influenced by
 <https://ericpony.github.io/z3py-tutorial/guide-examples.htm>].
+
+\begin{figure}[t]
+\centering
+\includegraphics{sudoku.tikz}
+\caption{This Sudoku puzzle is solvable using Python and Z3.}
+\label{fig:sudoku}
+\end{figure}
+
+<!-- 
+for (r,row) in enumerate(example):
+  for (c,value) in enumerate(row):
+    print(f"\draw ({c},{8-r}) rectangle ++(1,1) node[pos=.5,align=center] {{{value}}};")
+-->
 
 ```python
 In [1]: from z3 import *
@@ -417,25 +458,26 @@ Out[13]:
  [5, 8, 1, 3, 4, 9, 7, 2, 6]]
 ```
 
-A *reduction* is the process of transforming one problem into another. The SAT
-problem is NP-complete, which means that:
+A *reduction* is the process of transforming one problem into another. The 
+Cook-Levin Theorem states that the SAT problem is NP-complete, which means
+[@10.1145/800157.805047]:
 
 #. A Boolean satisfiability problem cannot be solved in polynomial time. There
 are no known algorithm to solve arbitrary SAT problems of $n$ variables in at most
 $n^k$ steps, for arbitrary $n$ where $k$ is a constant.
-#. Candidate solutions to a SAT problem can be verified in polynomial time. We
-do not need check solutions with $2^n$ operations.
+#. While *finding* candidate solutions can requires exponentially many
+operations, *verifying* candidate solutions requires only polynomial time.
 #. Any problem in NP can be reduced to SAT.
 
-The first two conditions are the basis of the famous $P \ne NP$ problem, an
-important unsolved problem in computer science. The third is a reason why the
-computer science community has such interest in developing fast and usable
-constraint solvers. While constraint satisfaction problems are theoretically
-intractable, modern SAT solvers has effective techniques to quickly divide the
-sample space and uncover solutions.
-
-The reductions are the hard part. Refer to Dennis Yurichev's *SAT/SMT by
-Example* as a useful resource [@yurichev].
+The $\text{P} \ne \text{NP}$ problem is an unproven computer science conjecture
+which states that NP problems, those with the first two characteristics, can be
+reduced to other NP-complete problems, but cannot be reduced to any P problem.
+That is, no NP problem can be reduced to a polynomial time solution. Still, 
+modern constraint solvers use many techniques to solve problems quickly,
+sometimes with a loss of precision. If one can reduce a new and difficult
+combinatorial problem to satisfiability, then a SAT solver may be able to solve
+the problem through a declarative interface. Reductions can be difficult. 
+Refer to Dennis Yurichev's *SAT/SMT by Example* for further reading [@yurichev].
 
 ## Subsets and Venn diagrams
 

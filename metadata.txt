@@ -10,7 +10,9 @@ csl: https://www.zotero.org/styles/ieee-with-url
 header-includes:
     - \usepackage{siunitx}
     - \usepackage{nicematrix}
-    - \usepackage{amsmath,amssymb,amsfonts}
+    - \usepackage{amsmath}
+    - \usepackage{amssymb}
+    - \usepackage{amsfonts}
     - \usepackage[breaklinks]{hyperref}
     - \def\UrlBreaks{\do/\do-\do,}
     - \usepackage{tikz}
@@ -25,6 +27,7 @@ header-includes:
     - \usepackage{pgf-pie}
     # https://tex.stackexchange.com/a/56473/311890
     - \usepackage{tikzscale}
+    - \usepackage{unicode-math}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
 # https://tug.org/FontCatalogue/typewriterfonts.html

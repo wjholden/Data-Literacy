@@ -16,15 +16,15 @@ possible *tuples* that can be combined from these inputs.
 
 <!-- Tuples[{{i, e}, {n, s}, {t, f}, {j, p}}] --> 
 $$
-\begin{Bmatrix} I \\ E \end{Bmatrix} \times 
-\begin{Bmatrix} N \\ S \end{Bmatrix} \times 
-\begin{Bmatrix} T \\ F \end{Bmatrix} \times 
-\begin{Bmatrix} J \\ P \end{Bmatrix} =
+\begin{Bmatrix} \text{I} \\ \text{E} \end{Bmatrix} \times 
+\begin{Bmatrix} \text{N} \\ \text{S} \end{Bmatrix} \times 
+\begin{Bmatrix} \text{T} \\ \text{F} \end{Bmatrix} \times 
+\begin{Bmatrix} \text{J} \\ \text{P} \end{Bmatrix} =
 \begin{Bmatrix}
-INTJ & INTP & INFJ & INFP \\
-ISTJ & ISTP & ISFJ & ISFP \\
-ENTP & ENTP & ENFJ & ENFP \\
-ESTJ & ESTP & ESFJ & ESFP
+\text{INTJ} & \text{INTP} & \text{INFJ} & \text{INFP} \\
+\text{ISTJ} & \text{ISTP} & \text{ISFJ} & \text{ISFP} \\
+\text{ENTP} & \text{ENTP} & \text{ENFJ} & \text{ENFP} \\
+\text{ESTJ} & \text{ESTP} & \text{ESFJ} & \text{ESFP}
 \end{Bmatrix}
 $$
 
@@ -322,20 +322,18 @@ In[3]:= SatisfiabilityInstances[f, {a, b, c, d}]
 Out[3]= {{False, False, False, False}}
 ```
 
-This means that the literals $a=F$, $b=F$, $c=F$, and $d=F$ should result in
-$\mathcal{F}$ being true, and indeed we verify
+The literals $a=F$, $b=F$, $c=F$, and $d=F$ satisfy $\mathcal{F}$.
 
 $$
 \begin{aligned}
 (F \lor F \lor \neg F) \land (\neg F \lor F \lor F) \land (F \lor \neg F) &= \\
 (F \lor F \lor T) \land (T \lor F \lor F) \land (F \lor T) &= \\
-(T) \land (T) \land (T) &= T.
+(T) \land (T) \land (T) &= T
 \end{aligned}
 $$
 
-The following *truth table* enumerates all $2^4=16$ possible combinations of
-true and false literals for $a$--$d$. More than one set of literals satisfies
-$\mathcal{F}$.
+$\mathcal{F}$ has more than one solution. The following *truth table* enumerates
+all $2^4=16$ possible combinations of true and false literals for $a$--$d$.
 
 |$a$|$b$|$c$|$d$|$\mathcal{F}$|
 |---|---|---|---|---|
@@ -911,7 +909,6 @@ $$
 }
 $$
 
-
 We earlier saw that for $x = \left\{ x \in \mathbb{R} | -5 \le x \le 5 \right\}$
 and $y = x \odot x$, the Pearson correlation was 
 $\text{cor} \left( x, y \right) = 0$.
@@ -919,8 +916,10 @@ Using Chatterjee rank correlation, we find $\xi \left( x , y \right) = 0.5$.
 
 <!-- <https://towardsdatascience.com/a-new-coefficient-of-correlation-64ae4f260310/> -->
 
-A naive Rust implementation of this new $\xi$ statistic is given below and at the
-Rust Playground^[<https://play.rust-lang.org/?gist=b9a810274f9567213a5b2a649bd806e8>].
+A Rust implementation of this new $\xi$ statistic is given below and at the Rust
+Playground^[<https://play.rust-lang.org/?gist=b9a810274f9567213a5b2a649bd806e8>].
+This program is *naively* written for obviousness to the reader, not for speed
+of execution.
 
 ```rust
 fn xicor(x: &[f64], y: &[f64]) -> f64 {

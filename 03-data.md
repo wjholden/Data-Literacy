@@ -603,3 +603,50 @@ data in-place or copy the data, leaving the original data unchanged and returnin
 a new data structure with the desired property. Which design are the filter and
 map operations in section \ref{sec:reduce}? Rewrite both functions in the other
 paradigm.
+
+#. The *flatten* operation promotes elements of nested collections to a single
+container.
+    A flawed example in Julia is
+
+    ```julia
+    julia> reduce(∪, [[:a,:b], [:c,:a], [:d,:a,:b]])
+    4-element Vector{Symbol}:
+     :a
+     :b
+     :c
+     :d
+    ```
+
+    This one-line solution is a *shallow* flatten. It fails on doubly-nested
+    inputs.
+
+    ```julia
+    julia> reduce(∪, [[:a,:b], [:c,:a], [:d,:a,:b], [[:e]]])
+    5-element Vector{Any}:
+     :a
+     :b
+     :c
+     :d
+     [:e]
+    ```
+
+    Implement a *deep* flatten that correctly traverses arbitrarily nested
+    inputs. Test that the deep flatten operation correctly handles empty inputs,
+    nested empty inputs (such as `[[[[]]]]`), and duplicates.
+
+<!--
+# This program has a bug!
+# deep_union!([], [[1,2], [3,1], [4,1,2], [[5]]])               # works fine!
+# deep_union!([], [[:a,:b], [:c,:a], [:d,:a,:b], [[:e]]])       # method error!
+function deep_union!(dst, src)
+    for e in src
+        if e isa AbstractSet || e isa Array
+            deep_union!(dst, e)
+        else
+            union!(dst, e)
+        end
+    end
+    dst
+end
+-->
+       

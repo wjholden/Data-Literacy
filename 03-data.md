@@ -227,6 +227,26 @@ SELECT * FROM Marathon
     SELECT MIN(time) FROM Marathon GROUP BY (gender));
 ```
 
+Taking aggregates from aggregates can produce different statistics from those
+of the original data set. Consider the election of choices $A$ and $B$ by 100
+voters as shown in figure \ref{fig:simpson-votes}. In elections, the winner may 
+lose the popular vote, as aggregated district votes do not reflect the density
+within their groups. Aggregation is generally a *lossy* process, where the
+inputs cannot be reconstructed from the information it produces [@cai2019data].
+
+\begin{figure}
+\centering
+\includegraphics{simpson-votes.tikz}
+\caption{This plot shows 100 votes grouped into 10 committees. If each
+committee is given only one vote, then decision $A$ will receive more committee
+votes than decision $B$, having lost the *popular vote* with only 36 votes.}
+\label{fig:simpson-votes}
+\end{figure}
+
+The apparent reversal of votes in figure \ref{fig:simpson-votes} is related to
+*Simpson's Paradox* [@10.1111/j.2517-6161.1951.tb00088.x]. TODO: say more about
+this.
+
 SQL uses the *declarative programming* paradigm, where the language is used to
 describe the *result* that the user^[In this context, the "user" is a programmer
 or data analyst who is "using" the database or programming language] wants while

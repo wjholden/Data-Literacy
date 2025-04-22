@@ -1,6 +1,6 @@
 # Introduction
 
-## Data Literacy
+## Data Literacy {#sec:dikw-intro}
 
 The *Wisdom Hierarchy* [@doi:10.1177/0165551506070706] begins with raw *data*.
 In context, data form *information*. When aggregated and interpreted through
@@ -150,7 +150,7 @@ A *confusion matrix* is a useful representation of the accuracy for a classifier
 including classifiers with more than two possible outputs. Rows correspond to
 the actual categories. Columns correspond to predicted categories. The elements
 of the matrix are the total number of predictions, grouped by their actual
-categories. The correct predictions fall on the *diagonal* of the matrix.
+categories.
 
 $$
 C = 
@@ -162,6 +162,20 @@ a_3 & c_{31} & c_{32} & c_{33} & \cdots & c_{1n} \\
 \vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
 a_n & c_{n1} & c_{n2} & c_{n3} & \cdots & c_{nn} \\
 \end{bNiceMatrix}
+$$
+
+The correct predictions fall on the *diagonal* of the matrix, therefore the
+accuracy of a predictor is the sum of the diagonal divided by the *grand sum*
+(the sum of all elements in the matrix).
+
+$$
+\text{Accuracy} = \frac{
+    \sum_{d=1}^{n}{c_{dd}}
+}{
+    \sum_{i=1}^{n}{
+        \sum_{j=1}^{n}{ c_{ij} }
+    }
+}
 $$
 
 A *linear model* is an example of a model that outputs *numerical* predictions.
@@ -564,7 +578,7 @@ We will discuss object-oriented programming in more detail in section
 
 ## Vectors and matrices {#sec:vector}
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics{vector-sum.tikz}
 \caption{Vectors are geometric entities. This plot shows that $(4,3)+(3,5)=(3,5)+(4,3)=(7,8)$.}
@@ -866,6 +880,11 @@ logic and pure mathematics?
     <!-- <https://math.stackexchange.com/questions/544104/show-that-there-are-infinitely-many-prime-numbers-ending-in-3-or-7-when-written> -->
     #. There are infinitely many numbers that end in 7 and are prime. <!-- contradiction -->
     #. The density of prime primes ending in 7 decreases as $x \to \infty$. <!-- derived from the Prime Number Theorem -->
+
+#. There are two equations defining accuracy in section \ref{sec:dikw-intro}.
+Explain why the definition based on a confusion matrix is a generalization of
+the other accuracy statistic, which is built from true and false positives and
+negatives. Which equation is more abstract?
 
 #. Create a small survey using Microsoft Forms (part of Office 365) or Google Forms (part of Google Docs).
 Compare this experience to the hypothetical manager who gathered information by

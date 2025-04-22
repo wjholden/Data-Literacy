@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar stacked,
+    %	bar width=15pt,
+        nodes near coords,
+    %    enlargelimits=0.15,
+        legend style={at={(0.5,-0.30)},
+          anchor=north,legend columns=-1},
+        ylabel={Votes},
+        symbolic x coords={Committee 1, Committee 2, Committee 3, Committee 4, 
+            Committee 5, Committee 6, Committee 7, Committee 8, Committee 9, Committee 10},
+        xtick=data,
+        x tick label style={rotate=45,anchor=east},
+        ]
+    \addplot+[ybar] plot coordinates {(Committee 1,6) (Committee 2,6) 
+      (Committee 3,6) (Committee 4,6) (Committee 5, 6) (Committee 6, 6) (Committee 7, 0)
+      (Committee 8, 0) (Committee 9, 0) (Committee 10, 0)};
+    \addplot+[ybar] plot coordinates {(Committee 1,4) (Committee 2,4) 
+      (Committee 3,4) (Committee 4,4) (Committee 5,4) (Committee 6,4) (Committee 7,10)
+      (Committee 8,10) (Committee 9,10) (Committee 10,10)};
+      \legend{\strut A, \strut B}
+    \end{axis}
+\end{tikzpicture}
+    

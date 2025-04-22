@@ -47,6 +47,33 @@ Try opening the R help for `mtcars` and `head` with the following commands:
 > ?head
 ```
 
+## Line Plots {#sec:lineplot}
+
+The *line plot* is among the most basic of plots. We seldom see one-dimensional
+number plots in the sciences, but they are used extensively in elementary
+education to develop numerical intuition in children. It can also be useful to
+draw line plots to represent *continuums* of ordered data, including discretized
+categories.
+
+<!-- todo: line plot of drop, puddle, pool, pond, lake, sea, ocean -->
+
+## Scatter Plots {#sec:scatter}
+
+```r
+> plot(mtcars$wt, mtcars$mpg)
+```
+
+![todo](mtcars-plot.pdf){#fig:scatter}
+
+Todo: change base R to ggplot so we can show color.
+
+We can combine two or three orthogonal (perpendicular) line plots to create
+a *scatter plot*. Scatter plots show data in two or three dimensions. The
+shape of the plot may reveal patterns and trends in the data. 
+
+The term *data* carries weight in this context. Scatter plots *can* be used to
+represent data in aggregates, but it m
+
 ## Bar Plots {#sec:barplot}
 
 *Bar plots* relate categories to aggregated numerical features of a data set.
@@ -136,26 +163,24 @@ A Pareto chart for this table is shown in figure \ref{fig:pareto-injuries}.
 \begin{figure}
 \centering
 \includegraphics{pareto-injuries.tikz}
-\caption{todo}
+\caption{A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.}
 \label{fig:pareto-injuries}
 \end{figure}
 
-## Cumulative Sums and Pareto Charts
+R does not provide a native method to produce Pareto charts, but we can do so
+ourselves with the `ggplot2` library^[<https://ggplot2.tidyverse.org>]. First,
+we load the `tidyverse` library^[<https://www.tidyverse.org>], which will also
+include the `dplyr` package^[<https://dplyr.tidyverse.org>]. `dplyr` provides
+the `%>%` infix operator, which anonymously "pipes" the output from one function
+into the first argument of the next function. We tally each distinct observation,
+sort them in descending order by count, compute the proportion of the total,
+and compute the cumulative sum. Finally, we plot the proportions as a box plot
+and overlay the cumulative sums as a line plot.
 
-A *Pareto chart* is a useful analytical tool to show the relative importance of
-problems in industrial settings. The chart shows the proportion of problems
-discretized (see section \ref{sec:discretize}) into root causes. We can
-compute these cumulative sums using reduce and visualize them with a bar plot.
-
-The following example uses data gathered from
+This example uses data gathered from 
 CrossFit.com^[<https://games.crossfit.com/article/complete-list-athletes-currently-serving-sanctions>].
-The `%>%` operator, from the `dplyr` package, anonymously "pipes" the output
-from one function into the first argument of the next function.
-Structurally, the `%>%` produces a left-to-right order of operations that
-can be easier to write, read, and maintain than functions written in prefix and
-infix notation. `dplyr` uses `mutate` as row-wise `map` operation with support
-for aggregate functions (such as `sum(n)` below;
-see also section \ref{sec:grouping-and-aggregation}).
+`dplyr` uses `mutate` as row-wise `map` operation with support for aggregate
+functions (such as `sum(n)` below; see also section \ref{sec:grouping-and-aggregation}).
 
 ```r
 > library(tidyverse)
@@ -190,23 +215,12 @@ see also section \ref{sec:grouping-and-aggregation}).
 13         S-23   2.222222  95.55556
 14 Testosterone   2.222222  97.77778
 15    Turinabol   2.222222 100.00000
-```
-
-This dataset does not quite show the famous "Pareto Principle" where 20% of 
-problems cause 80% of problems, but we do see that the distribution is not
-uniform. The first category accounts for over half of the observations.
-Using R's `ggplot` library, we show the resulting Pareto chart with the bars
-and cumulative sum line.
-
-```r
-df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
+> df %>% ggplot(aes(x = reorder(Violation, -Proportion))) +
 	geom_bar(aes(weight = Proportion)) +
 	geom_line(aes(y = CumSum, group=1)) +
 	xlab("Drug Violation") +
 	ylab("Proportion")
 ```
-
-![A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.](pareto-chart.pdf)
 
 ## Box Plots {#sec:boxplot}
 
@@ -279,16 +293,6 @@ or circles beyond the 0th and 100th percentile markers.](mtcars-boxplot.pdf){#fi
 ```
 
 ![todo](mtcars-hist.pdf){#fig:histogram}
-
-## Scatter Plots {#sec:scatter}
-
-```r
-> plot(mtcars$wt, mtcars$mpg)
-```
-
-![todo](mtcars-plot.pdf){#fig:scatter}
-
-Todo: change base R to ggplot so we can show color.
 
 ## Heat Maps {#sec:heatmap}
 
@@ -489,6 +493,12 @@ regulation slow its growth.
 \end{figure}
 
 ## Discussion prompts
+
+#. Take a close look at the CrossFit.com data in section \ref{sec:pareto-chart}
+and ask whether this "GW1516" substance is actually the most commonly *abused*
+substance or whether it is the most commonly *detected* substance. Think of
+other situations where problems may be over- or under-represented due to the
+sensitivity of a test.
 
 #. Like a bar plot, a pie chart shows the relative sizes of categorical values.
 What are some advantages and disadvantages of using pie charts?

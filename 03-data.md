@@ -48,7 +48,7 @@ information, depending on format.
 A joke in computer science says that "you can write C in any language." The joke
 is literally true. Assuming adequate resources (compute time, memory, storage,
 and access to necessary inputs and outputs), one could implement a C interpreter
-in any *Turing-compute* language [@michaelson2020programming, p. 4:13 -- 4:17] 
+in any *Turing-compute* language [@michaelson2020programming, p. 13 -- 17] 
 and execute any C program. Such an endeavor is not theoretical: *virtual machines*
 and related technologies simulate and emulate entire computing machines, allowing
 programs to run on systems that they were not designed for.
@@ -88,6 +88,40 @@ coming years, but we will always need to understand the general methods used to
 structure, process, transfer, and store our data in novel situations. Where no
 one has previously described an algorithm to solve new problems, we will likely
 always turn to code as a reification of our mathematical ideas.
+
+We say that a programming technique is *idiomatic* when the code follows the
+conventions of the language. Languages often provide features that make 
+non-idiomatic constructs possible, but possibly slow or brittle. Code may be
+considered not idiomatic because it fails to use a language feature or because
+it extends the language to provide a feature that was intentionally not
+implemented. For example, one might implement a matrix in Python as
+
+```python
+In [1]: [[1,0,0],[0,1,0],[0,0,1]]
+Out[2]: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+```
+
+However, the resulting object is a `list` that does not guarantee contiguous
+memory layout. Numerical operations with such objects will be significantly
+slower than the `matrix` object in the Numpy library^[<https://numpy.org>].
+
+```python
+In [2]: import numpy
+
+In [3]: numpy.matrix([[1,0,0],[0,1,0],[0,0,1]])
+Out[3]:
+matrix([[1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1]])
+```
+
+The Python community even has a peculiar term for idiomatic Python code:
+"pythonic." When learning new programming languages, one should be aware that
+the new language is much more than new syntax for familiar operations. If an
+operation feels more tedious or difficult in one language than another, this
+can be an indication that the new language has different structure. The new
+language will still compute the computable program, but it may require a changed
+approach.
 
 ## The Relational Algebra
 
@@ -385,6 +419,7 @@ which we will discuss in section \ref{sec:parallelism-and-concurrency}.
 Object-Oriented Programming (OOP) is a technique for modeling both the *data*
 and associated *code* for a problem together [@10.1145/947955.947961] [@10.5555/3271463].
 The data of an object are called *fields* and the code are called *methods*.
+The specification of the fields and methods of an object is called a *class*.
 Many programming languages, notably C++, Python, JavaScript, and Python, emphasize OOP as the central design.
 
 Object-orientation comes in many varieties [@10.5555/3271463]. Many OO languages
@@ -416,6 +451,15 @@ fn main() {
     println!("Distance: {}", a.manhattan_distance(&b));
 }
 ```
+
+Several languages now have special objects that contain only data. In Python, 
+these data-only classes are called
+*data classes*^[<https://docs.python.org/3/library/dataclasses.html>]. In
+Java, they are called
+*records*^[<https://docs.oracle.com/en/java/javase/17/language/records.html>].
+These data-only classes have several limitations but generally reduce the
+"boilerplate" code needed to instantiate, mutate, display, and compare these
+objects.
 
 ## JavaScript Object Notation (JSON) {#sec:json}
 

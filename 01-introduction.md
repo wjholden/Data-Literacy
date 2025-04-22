@@ -257,9 +257,21 @@ members of group $B$. The local bank develops a binary classifier to predict
 whether a loan applicant will default or not. The bank carefully removes any
 inputs to the classifier's training data that might directly reveal group
 membership, but in practice the classifier nearly always predicts that the 
-objectively poor and troublesome members of group $B$ will deefault on their
+objectively poor and troublesome members of group $B$ will default on their
 loans. The problem here is that the model lacks the subjective wisdom to form
 decisions in the context of contradictory values.
+
+Applying our own subjective judgment, anecdotal experiences, contradictory
+values, vague priorities, and burdensome regulations is a feature, not a bug,
+of applying wisdom to for decisions from knowledge. Recent excitement in AI
+methods have led some individuals and organizations to believe that they can
+automate many roles presently performed by knowledge workers. While some roles
+may be deterministic enough to successfully automate, many organizations have
+forgotten the slogan "the process is the product." A compelling chart,
+insightful statistic, or accurate prediction is seldom the main value of
+data-driven analysis. The value of the analysis is in the deep thinking that
+went into the report. In exploring the data, the analyst must test assumptions,
+discover relationships, and uncover the hidden structure of their subject.
 
 This book aims to expose the reader to many skills for processing, visualizing,
 and interpreting data. We will use many different programming languages, some

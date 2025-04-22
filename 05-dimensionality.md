@@ -1115,7 +1115,46 @@ or should the change to the unopened door? Some strategies to decide might be:
 ## Practical Exercises
 
 #. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
-#. About one in twenty white males have some form of color blindness. About 70.2% of the U.S. military report themselves as white, and about 82.8% as male. Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$. If a Command gives a briefing to twelve random generals each year, what is the probability that one or more of those generals is color blind? (Assume, incorrectly but for the sake of simple calculation, that women and non-whites are never color blind.) Assume further that $W$ and $M$ are independent and that $P(W \cap M) = P(W)P(M) = 0.581256$, therefore $P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}$ and consequently $P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628$. Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
+#. About one in twenty white males have some form of color blindness.
+    About 70.2% of the U.S. military report themselves as white, and about 82.8% as male.
+    Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$.
+    If a Command gives a briefing to twelve random generals each year, what is
+    the probability that one or more of those generals is color blind?
+    (Naively assume, for the sake of simple calculation in this exercise, that
+    women and non-whites are never color blind.) Assume further that $W$ and $M$
+    are independent and that 
+    
+    $$
+    P(W \cap M) = P(W)P(M) = 0.581256,
+    $$
+    
+    therefore
+    
+    $$
+    P(C|W \cap M) = \frac{P(C \cap W \cap M)}{P(W \cap M)}
+    $$
+    
+    and consequently 
+    
+    $$
+    P(C \cap W \cap M) = P(C | W \cap M) P(W \cap M) = (0.05)(0.581256) = 0.0290628.
+    $$
+    
+    Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
 #. Come up with a creative way to draw a four-dimensional Venn diagram.
 #. Use Excel to reproduce the zero correlation between $x$ and $y_1 = x \odot x$ from section \ref{sec:cor}. Now update the $y$ column to $y_2 = x \odot x + x = \left( 20, 12,  6,  2,  0,  0,  2,  6, 12, 20, 30 \right)$. What is $\text{cor}\left( x, y_2 \right)$?
 #. Use Excel's line of best fit feature to construct a linear models between both $x$ and $y_1$ and also $x$ and $y_2$. Observe that the $y$-intercept in both models is $10$. Try to figure out where this constant comes from. <!-- answer: mean(x) -->
+#. The empty set, $\emptyset$, is a set containing no elements.
+    Its cardinality is zero.
+    
+    $$
+    \left| \emptyset \right| = 0
+    $$
+
+    If a set contains an empty set, 
+    
+    $$
+    Z = \left\{ \emptyset \right\}
+    $$
+
+    then is $\left| Z \right|$ equal to 0 or 1?

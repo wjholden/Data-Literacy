@@ -545,3 +545,15 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
     \caption{These bars represent values 5, 3, 2, and 1.}
     \label{fig:bad-piechart-exercise}
     \end{figure}
+
+#. The word "exponentially" is sometimes used as a superlative. Identify
+    which, if any, among the following sentences is the term likely used in a
+    valid mathematical sense.
+
+    #. "This sandwich is exponentially better than the last one."
+
+    #. "The stock price has grown exponentially for seven straight quarters."
+
+    #. "Pressure increases exponentially with depth underwater." <!-- <https://oceanservice.noaa.gov/facts/pressure.html> -->
+
+    #. "An air bike becomes exponentially more difficult with speed." <!-- <https://vikingathletics.net/assault-bike/> --> 

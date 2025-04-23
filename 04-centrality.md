@@ -330,7 +330,7 @@ EMA can be easily implemented in terms of the `reduce` operation, as shown below
 The *base case* is at $x_1$ in mathematical notation but `x[0]` in JavaScript.
 This is a matter of convention; the first element of a list is position 1 in math, but 0 in many programming languages.
 
-## Strong and Weak Links
+## Strong and Weak Links {#sec:strong-weak-link}
 
 In a *weak-link problem*, the system is harmed by the presence of any defect.
 The term itself is named for a proverbial chain, which is only as strong as the
@@ -350,6 +350,44 @@ a large return, offsetting losses from those unsuccessful startups.
 
 Both weak-link and strong-link problems can be modeled in terms of variance (see
 section \ref{sec:moments}).
+
+## Inclusion Criteria
+
+The "big" in "big data" refers data mining efforts in very large data sets that
+one cannot process on small computers with traditional methods. For example,
+consider an agricultural process which historically measured its yield in
+volume (such as liters of milk), but later changed this metric to the financial
+value of the yield (such as a dollars per shipping container, where not all 
+shipping containers deliver the same product). In this hypothetical situation,
+an analyst might attempt to transform one or both units to a comparable
+calculated column, but the process may introduce uncertainty.
+
+All studies, large and small, require inclusion criteria. Obvious reasons to
+exclude samples include:
+
+- Duplicated rows
+- Missing values
+- Obvious errors (i.e., height and weight entered as "5" and "11")
+
+Outlier analysis can also cast out potential errors, although this technique
+is inappropriate in strong- and weak-link problems where one's goal is to
+investigate those outliers.
+
+In some situations, one might decide to exclude certain samples that introduce
+uncontrolled variance. An example might be a study on 35 automobiles, where
+33 cars are new and 2 of the cars are 30 years old. Depending on the study, it
+might be appropriate to exclude the two old cars from the study. Another example
+might be a health study of 195 women and only 3 men. The researcher might choose
+to exclude the men to reduce the dimensionality of the problem. We will discuss
+the "curse of combinatorics" in the next chapter and see that every additional
+feature increases the complexity of one's study.
+
+Mark Twain is often quoted to have said, "There are lies, damned lies, and
+statistics." A researcher can create lies by manipulating inclusion criteria.
+Many statistical tests output a probability ($p$), called $p$-*values*.
+Scientists engage in $p$-*hacking* when they seek to manipulate the $p$-values
+in a study to coerce a desired result [@10.3389/fpsyg.2016.01832]. One must
+take care to 
 
 ## Discussion prompts
 
@@ -373,6 +411,22 @@ See <https://xkcd.com/2899/>.
 #. Does the Army's standards-based approach hinder our ability to solve strong-link
 problems requiring unpredictable solutions? How could an ideal institution maintain
 minimum standards while enabling outliers to flourish? 
+
+#. Generate a data frame of random numbers with ten rows and three columns
+    in the R language^[<https://webr.r-wasm.org/latest/>].
+
+    ```r
+    data.frame(A = rnorm(10), B = rnorm(10), C = rnorm(10))
+    ```
+    
+    The values of each column should be normally distributed, with a mean of
+    about 0 and a standard deviation of about 1.
+
+    Share the resulting data and split into groups to compete in a $p$-hacking
+    game. One group should try to find an arbitrary inclusion criteria for $B$
+    or $C$ that satisfies $\bar{A} \le -1$. Another group can try to find a
+    different inclusion criteria that makes $\bar{A} \ge 1$. The winner is the
+    group that retains the most rows using the simplest inclusion criteria.
 
 ## Practical exercises
 

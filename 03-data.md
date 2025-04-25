@@ -1,4 +1,4 @@
-# Data Operations
+# Data and Information Operations
 
 ## Prose
 
@@ -268,7 +268,7 @@ lose the popular vote, as aggregated district votes do not reflect the density
 within their groups. Aggregation is generally a *lossy* process, where the
 inputs cannot be reconstructed from the information it produces [@cai2019data].
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics{simpson-votes.tikz}
 \caption{This plot shows 100 votes grouped into 10 committees. If each
@@ -596,7 +596,28 @@ The computer industry has recently turned to *Graphical Processing Units* (GPU) 
 GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
 These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
 
-## The CAP Theorem
+## Information Management
+
+We conclude this chapter on getting useful information from data with two
+practical matters of managing information. These two "triads" should be common
+knowledge in the Signal and Cyber branches, but may be less known elsewhere.
+A general familiarity with the safeguarding and dissemination of information
+may be beneficial to all knowledge workers.
+
+### Confidentiality, Integrity, and Availability
+
+The information security community promulgates three security objectives:
+*confidentiality*, *integrity*, and *availability* [@ar25-2]. Often drawn as
+a triangle, these objectives are called the *CIA triad*.
+
+Confidentiality is, as the name suggests, preventing unintended disclosure of
+information to anyone not cleared, authorized, and required to access the
+information. Many organizations define confidentiality levels and create both
+policy and technical controls to maintain secrecy.
+
+Integrity is the trustworthiness...todo.
+
+### The CAP Theorem
 
 Brewer's *CAP theorem* states that a *distributed system* has at most two qualities of *consistency*, *availability*, and *partition-tolerance* [@6133253].
 Consider a system of databases with many replicas.

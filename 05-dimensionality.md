@@ -315,6 +315,7 @@ problems^[<https://reference.wolfram.com/language/ref/SatisfiableQ.html.en>] ^[<
 
 ```mathematica
 In[1]:= f := (a || b || Not[d]) && (Not[a] || c || d) && (b || Not[c])
+
 In[2]:= SatisfiableQ[f]
 Out[2]= True
 
@@ -454,6 +455,25 @@ Out[13]:
  [2, 9, 6, 8, 7, 1, 3, 4, 5],
  [7, 4, 3, 2, 5, 6, 8, 9, 1],
  [5, 8, 1, 3, 4, 9, 7, 2, 6]]
+```
+
+Many constraint solvers can also solve optimization problems by maximizing or
+minimizing some objective function. For example, we can find the mean of a
+the vector $x$ in Mathematica using the sum of the squared errors, as explained
+in section \ref{sec:least-squares-method}.
+
+```mathematica
+In[4]:= x := {10, 85, 50, 7, 52, 24, 56, 55, 2, 28}                                                   
+
+In[5]:= Mean[x]                                                                                       
+        369
+Out[5]= ---
+        10
+
+In[6]:= Minimize[Total[(x - mu)^2], mu]                                                               
+         64869         369
+Out[6]= {-----, {mu -> ---}}
+          10           10
 ```
 
 A *reduction* is the process of transforming one problem into another. The 
@@ -1095,26 +1115,35 @@ Strong correlations in the columns of a data set present an opportunity to compr
 ## Discussion Prompts
 
 #. <https://www.tylervigen.com/spurious-correlations> curates an entertaining collection of spurious correlations. However, not all spurious correlations might be so obvious. What are some principals we should apply to either trust or be skeptical of statistical evidence?
+
 #. Conduct a classroom competition of "Catch the cheaters!" at <https://primerlearning.org>. Discuss the winning and losing strategies, then watch <https://www.youtube.com/watch?v=XTcP4oo4JI4>. 
+
 #. Read the interactive article <https://www.mayerowitz.io/blog/mario-meets-pareto> [@mayerowitzMarioMeets]. Discuss the compromises inherent in a multi-objective optimization problem.
+
 #. Controversial topics may involve several dimensions. Advocates for one position
 may claim on one basis in dimension $x$, where the opposition's counterclaim is
 in dimension $y$. Discuss a contemporary impasse with orthogonal or irreconcilable
 aspects.
+
 #. The Monty Hall problem is a notoriously unintuitive probability question.
 In the problem, a game show host hides a prize behind one of three doors. The
 guest is asked to guess which door has the prize. The host then opens one of the
 two unselected doors, which never contains the prize, and asks the guest if they
 would like to change their guess. Should the guest keep their original guess,
 or should the change to the unopened door? Some strategies to decide might be:
+
     #. Play the game several times and tally results.
+
     #. Implement the game in software to generate a large number of results quickly.
+
     #. Attempt to deduce the problem using mathematical reasoning.
+
     #. Change the assumptions of the game, such as adding more doors or more prizes.
 
 ## Practical Exercises
 
 #. Use nested `sapply` statements to improve `sapply(0:4, function(r) pascal(4, r))`. Iterate `pascal(n, r)` over $0 \le n \le 10$ and $0 \le r \le n$, generating the first 11 lines of Pascal's Triangle. Compare the result to `sapply(0:10, function(n) choose(n, 0:n))`. Why does the built-in `choose` function accept ranges (`0:n`) when our own `pascal` function does not?
+
 #. About one in twenty white males have some form of color blindness.
     About 70.2% of the U.S. military report themselves as white, and about 82.8% as male.
     Let $P(C|W \cap M)=0.05$, $P(W)=0.702$, and $P(M)=0.828$.
@@ -1141,9 +1170,13 @@ or should the change to the unopened door? Some strategies to decide might be:
     $$
     
     Use this value for $p$ in your `dbinom` calculation. Based upon this result, is it wise to depend on color-coded graphics in a presentation?
+
 #. Come up with a creative way to draw a four-dimensional Venn diagram.
+
 #. Use Excel to reproduce the zero correlation between $x$ and $y_1 = x \odot x$ from section \ref{sec:cor}. Now update the $y$ column to $y_2 = x \odot x + x = \left( 20, 12,  6,  2,  0,  0,  2,  6, 12, 20, 30 \right)$. What is $\text{cor}\left( x, y_2 \right)$?
+
 #. Use Excel's line of best fit feature to construct a linear models between both $x$ and $y_1$ and also $x$ and $y_2$. Observe that the $y$-intercept in both models is $10$. Try to figure out where this constant comes from. <!-- answer: mean(x) -->
+
 #. The empty set, $\emptyset$, is a set containing no elements.
     Its cardinality is zero.
     

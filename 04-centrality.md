@@ -1,4 +1,31 @@
-# Measures of Central Tendency
+# Distributions and Measures of Central Tendency
+
+## Distributions
+
+Repeated flips of a fair coin should produce about 50% heads and 50% tails.
+Repeated rolls of a fair die should land on each side about $1/6$ of the time.
+The outcomes of the coin and the die fit a *uniform distribution*, which means
+that all outcomes are equally likely.
+
+An understanding of the distribution of data can be an extremely powerful tool
+because it gives enables us to apply deductive reasoning techniques at low
+cost and high confidence.
+
+For example, in the video game Borderlands 3, players estimate that they win
+valuable items in about 10% of attempts. If it takes two minutes per "farming"
+attempt, then in one hours a player can expect to win approximately
+$(0.10) 60 / 2 = 3$ of these valuable items. Sales teams can apply similar
+analysis: if the company expects to close a deal in 10% of customer interactions,
+then this knowledge can inform decisions about advertising and outreach.
+
+The same sales team might also notice that not all of their salespeople are
+equally successful. The company might identify high-performing salespeople to
+sustain, and it correspondingly might identify low-performing salespeople 
+improve.
+
+In this chapter, we will learn about the least squares method, basic statistics,
+and a few practical considerations for studying distributions, their
+central tendencies, and their extrema.
 
 ## Least squares method  {#sec:least-squares-method}
 
@@ -115,7 +142,7 @@ In this case, the modal value (6) is likely a better estimate than the mean valu
 
 ## The Four Moments {#sec:moments}
 
-The *four moments* describe the *distribution* of values in a data set.
+The *four moments* provide measures of central tendency among data and functions.
 The first moment is the mean.
 The second moment is *variance*, the expected squared difference of values to the mean.
 The third moment is *skewness*, the expected cubed difference of values to the mean.
@@ -387,7 +414,11 @@ statistics." A researcher can create lies by manipulating inclusion criteria.
 Many statistical tests output a probability ($p$), called $p$-*values*.
 Scientists engage in $p$-*hacking* when they seek to manipulate the $p$-values
 in a study to coerce a desired result [@10.3389/fpsyg.2016.01832]. One must
-take care to 
+take care to choose inclusion criteria in a logical manner that does not bias
+the result of further statistical analysis. Mathematicians describe their
+beliefs as "strong opinions, weakly held" as a framework for passionately
+pursuing the truth --- until one realizes their opinions are not true. "Strong
+opinions *strongly* held" is just politics by another means.
 
 ## Discussion prompts
 

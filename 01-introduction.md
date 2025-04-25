@@ -273,7 +273,7 @@ data-driven analysis. The value of the analysis is in the deep thinking that
 went into the report. In exploring the data, the analyst must test assumptions,
 discover relationships, and uncover the hidden structure of their subject.
 
-This book aims to expose the reader to many skills for processing, visualizing,
+This book introduces the reader to many skills for processing, visualizing,
 and interpreting data. We will use many different programming languages, some
 mathematics and statistics, and problems one may encounter. At the end of each
 chapter, this text provides discussion prompts for group learning and practical

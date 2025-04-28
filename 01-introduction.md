@@ -444,6 +444,27 @@ Many programming languages (including C, Java, and JavaScript) also use the term
 Many programming languages support a `NaN` ("not a number") value in error conditions.
 One might encounter `NaN` when dividing by zero, subtracting infinities, and parsing non-numeric words as numbers.
 Comparisons with `NaN` can be confusing, such as `NaN == NaN` returning *false*.
+The following Rust program demonstrates several calculations which all
+return false^[<https://play.rust-lang.org/?gist=ef2e7417bb6cd1ff31fc2eb111a1a48c>.
+Observe that the Rust compiler provides many useful warnings that "NaN cannot be
+directly compared to itself" and "NaN is not orderable".].
+
+```rust
+fn main() {
+    let comparisons = vec![
+        f32::NAN == f32::NAN,
+        f32::NAN < f32::NAN,
+        f32::NAN <= f32::NAN,
+        0.0 == f32::NAN - f32::NAN,
+        0.0 == 0.0 * f32::NAN,
+        f32::NAN == 1.0 / 0.0,
+        f32::NAN == 0.0 / 0.0,
+    ];
+    for comparison in comparisons {
+        println!("{comparison}");
+    }
+}
+```
 
 Some programming languages will automatically *initialize* variables with some zero value.
 Other languages give some `Undefined` value to uninitialized variables.

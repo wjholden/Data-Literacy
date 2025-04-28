@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+
+\draw[thick,->] (-4,0) -- (4,0);
+\filldraw (-3,0) circle (2pt) node[anchor=north] {Drop};
+\filldraw (-2,0) circle (2pt) node[anchor=north] {Puddle};
+\filldraw (-1,0) circle (2pt) node[anchor=north] {Pool};
+\filldraw (0,0) circle (2pt) node[anchor=north] {Pond};
+\filldraw (1,0) circle (2pt) node[anchor=north] {Lake};
+\filldraw (2,0) circle (2pt) node[anchor=north] {Sea};
+\filldraw (3,0) circle (2pt) node[anchor=north] {Ocean};
+
+\end{tikzpicture}

@@ -53,9 +53,39 @@ The *line plot* is among the most basic of plots. We seldom see one-dimensional
 number plots in the sciences, but they are used extensively in elementary
 education to develop numerical intuition in children. It can also be useful to
 draw line plots to represent *continuums* of ordered data, including discretized
-categories.
+categories. Figure \ref{fig:lineplot-water} shows a small example of a line plot
+of the relative size of bodies of water.
 
-<!-- todo: line plot of drop, puddle, pool, pond, lake, sea, ocean -->
+\begin{figure}
+\centering
+\includegraphics{lineplot-water.tikz}
+\caption{Line plots can depict the total order of ordinal data.}
+\label{fig:lineplot-water}
+\end{figure}
+
+Let us quickly address a technical matter on the order of sets.
+This will help us to avoid making unsafe assumptions about our data.
+In section \ref{sec:levels}, we said that ordinal data supports tests of
+equality and order but neither distance nor scale. However, there are many forms
+of order. Two important orderings are *partial* and *total* orders. The relation
+$\le$ forms a partial order on sets that are are *reflexive*, *anti-symmetric*,
+and *transitive*.
+
+1. The reflexive property means that $x \le x$.
+
+2. The anti-symmetric property means that if $x \le y$ and $y \le x$ then $x = y$.
+In other words, it is not possible for both $x < y$ and $y < x$.
+
+3. The transitivity property means that if $x \le y$ and $y \le z$ then $x \le z$.
+
+To form a total order, the data needs to allow one more invariant: *comparability*.
+
+4. The comparability property means that for all possible $x$ and $y$, $x \le y$ or $y \le x$.
+
+The integers provide all four properties and therefore form a total order.
+It might not be obvious, but we have already discussed a situation where a
+special value is not orderable: NaN, the "not a number" value that we saw in
+section \ref{sec:nan}.
 
 ## Scatter Plots {#sec:scatter}
 
@@ -72,7 +102,7 @@ a *scatter plot*. Scatter plots show data in two or three dimensions. The
 shape of the plot may reveal patterns and trends in the data. 
 
 The term *data* carries weight in this context. Scatter plots *can* be used to
-represent data in aggregates, but it m
+represent data in aggregates, but it m...todo?
 
 ## Bar Plots {#sec:barplot}
 
@@ -494,6 +524,17 @@ regulation slow its growth.
 
 ## Discussion prompts
 
+#. In section \ref{sec:lineplot} we see a line plot ordering words for bodies of
+water. As a group activity, create line plots to similarly order words for our
+emotions. Some example words include, in no particular order:
+
+    #. Happiness: pleased, excited, inspired, delighted, amused, joy
+
+    #. Sadness: disappointed, blue, depressed, despondent, hopeless
+
+    #. Anger: slighted, miffed, annoyed, frustrated, irritated, angered, 
+    apoplectic, rage
+
 #. Take a close look at the CrossFit.com data in section \ref{sec:pareto-chart}
 and ask whether this "GW1516" substance is actually the most commonly *abused*
 substance or whether it is the most commonly *detected* substance. Think of
@@ -537,15 +578,6 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
     \label{fig:bad-barplot-exercise}
     \end{figure}
 
-#. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
-
-    \begin{figure}[h]
-    \centering
-    \includegraphics{bad-piechart-exercise.tikz}
-    \caption{These bars represent values 5, 3, 2, and 1.}
-    \label{fig:bad-piechart-exercise}
-    \end{figure}
-
 #. The word "exponentially" is sometimes used as a superlative. Identify
     which, if any, among the following sentences is the term likely used in a
     valid mathematical sense.
@@ -557,3 +589,12 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
     #. "Pressure increases exponentially with depth underwater." <!-- <https://oceanservice.noaa.gov/facts/pressure.html> -->
 
     #. "An air bike becomes exponentially more difficult with speed." <!-- <https://vikingathletics.net/assault-bike/> --> 
+
+#. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
+
+    \begin{figure}[h]
+    \centering
+    \includegraphics{bad-piechart-exercise.tikz}
+    \caption{These bars represent values 5, 3, 2, and 1.}
+    \label{fig:bad-piechart-exercise}
+    \end{figure}

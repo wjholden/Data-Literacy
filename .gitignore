@@ -388,3 +388,6 @@ po/*~
 rsconnect/
 
 __pycache__/
+
+# SQLite databases
+*.db

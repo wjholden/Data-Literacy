@@ -84,8 +84,19 @@ To form a total order, the data needs to allow one more invariant: *comparabilit
 
 The integers provide all four properties and therefore form a total order.
 It might not be obvious, but we have already discussed a situation where a
-special value is not orderable: NaN, the "not a number" value that we saw in
-section \ref{sec:nan}.
+special value is not orderable: NaN, the "not a number" value, and missing values
+that we saw in section \ref{sec:nan}.
+
+*Periodic values* are an interesting case of ordinal data that does not form
+a partial order [@Kantardzic, p. 35]. Some examples are:
+
+- Days of the week.
+- The paper, rock, scissors game.
+- Angular measurements, such as around a unit circle (is $2^{\circ} \le 361^{\circ}$?) or lines of longitude around the equator.
+
+Some cultures begin the week with Sunday, others Monday, and this convention is
+purely cultural. If plotting periodic values, one must choose some order based
+on similar conventions.
 
 ## Scatter Plots {#sec:scatter}
 

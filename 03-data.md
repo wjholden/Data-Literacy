@@ -43,6 +43,231 @@ data, code, figures, and mathematical notation are presented throughout. Reflect
 upon how these may or may not be appropriate when writing and presenting
 information, depending on format.
 
+## Databases
+
+### The Relational Algebra
+
+Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].
+The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($-$).
+
+Selection takes all or a subset of a table's rows.
+Projection takes all or a subset of a table's columns.
+In Structured Query Languages (SQL), selection is specified in the `WHERE` clause and projection is specified in the list of columns immediately after `SELECT`.
+
+A Cartesian product is the multiplication of sets.
+If $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$,
+then $A \times B = \left\{
+\left( i, x \right),
+\left( i, y \right),
+\left( i, z \right),
+\left( j, x \right),
+\left( j, y \right),
+\left( j, z \right) \right\}$.
+The Cartesian product produces the set of all possible pairwise combinations of elements in each set.
+These composite values are called *tuples*.
+Tuples may contain more than two values.
+If $C = \left\{ c \right\}$, then
+
+$$
+A \times B \times C = \left\{
+\left( i, x , c\right),
+\left( i, y , c \right),
+\left( i, z , c\right),
+\left( j, x , c \right),
+\left( j, y , c \right),
+\left( j, z , c \right) \right\}.
+$$
+
+As an exercise, go to the SQLime Playground^[<https://sqlime.org/#deta:mb9f8wq2mq0b>] to use a DBMS named SQLite.
+Enter the following commands to reproduce the above Cartesian product.
+
+```sql
+CREATE TABLE A (a text);
+CREATE TABLE B (b text);
+CREATE TABLE C (c text);
+
+INSERT INTO A(a) VALUES ('i'), ('j');
+INSERT INTO B(b) VALUES ('x'), ('y'), ('z');
+INSERT INTO C(c) VALUES ('c');
+
+SELECT * FROM A CROSS JOIN B CROSS JOIN C;
+```
+
+This text views tuples as unordered and "flattened" sets, and therefore Cartesian products are both *commutative* ($R \times S = S \times R$) and *associative* ($R \times \left( S \times T \right) = \left( R \times S \right) \times T$).
+Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutativity nor associativity.
+This text uses the looser definition for compatibility with practical DBMSs, including SQLite.
+(Mathematics is partly discovered and partly invented.)
+
+Set union, $\cup$, combines two sets.
+Sets definitionally contain only distinct elements.
+If $A = \left\{ i, j, k \right\}$ and $B = \left\{ k, l, m \right\}$, then
+
+$$
+A \cup B = \left\{ i, j, k, l, m \right\}.
+$$
+
+Set difference, $-$, retains the elements of the left set that are not present in the right set.
+
+$$
+A - B = \left\{ i, j, k \right\} - \left\{ k, l, m \right\} = \left\{ i, j \right\}.
+$$
+
+### Joining Tables
+
+The *join* ($\bowtie$) is a combination of the Cartesian product and selection.
+For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
+Each table has a column that uniquely identifies an athlete.
+To get a triathletes (the athletes who participate in swimming, cycling, and running),
+we use an *equijoin* to find the product where the names are equal.
+Return to the SQLime Playground^[<https://sqlime.org/#deta:36fadcq9apak>] to demonstrate experiment with the `JOIN` operator.
+
+```sql
+CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS Bike (bn TEXT UNIQUE);
+CREATE TABLE IF NOT EXISTS Run (rn TEXT UNIQUE);
+
+INSERT OR IGNORE INTO Swim (sn) VALUES
+    ('John'), ('Jane'), ('Luke'), ('Phil');
+INSERT OR IGNORE INTO Bike (bn) VALUES
+    ('Mary'), ('Alex'), ('Jane'), ('Levi');
+INSERT OR IGNORE INTO Run (rn) VALUES
+    ('Mike'), ('John'), ('Jane'), ('Sven');
+
+SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
+```
+
+There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
+As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
+
+### Grouping and Aggregation {#sec:grouping-and-aggregation}
+
+DBMSs provide robust *grouping* functions for operating on related rows.
+Return to the SQLime Playground^[<https://sqlime.org/#deta:32lpfoo57r8g>] and create a small table of hypothetical marathon times.
+
+```sql
+CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
+  time INTEGER,
+  gender TEXT CHECK( gender IN ('M', 'F') ));
+
+INSERT OR IGNORE INTO Marathon (rn, time, gender) VALUES
+  ('Kyle', 2*60*60 + 14*60 + 22, 'M'),
+  ('Hank', 2*60*60 + 10*60 + 45, 'M'),
+  ('Lily', 2*60*60 + 24*60 + 47, 'F'),
+  ('Emma', 2*60*60 + 22*60 + 37, 'F'),
+  ('Elle', 2*60*60 + 25*60 + 16, 'F'),
+  ('Fred', 2*60*60 + 6*60 + 17, 'M');
+
+SELECT MIN(time) FROM Marathon GROUP BY (gender);
+```
+
+`MIN` is one of the *aggregate functions* in SQLite.
+The `GROUP BY` clause tells the DBMS to split the rows into groups on the `gender` column.
+
+One might be tempted to find the names of our male and female champions with
+`SELECT rn, MIN(time) FROM Marathon GROUP BY (gender)`.
+This may work in some DBMSs but there is a subtle bug.
+It might be obvious that we want the `rn` associated with the `MIN(time)` value, but suppose we change the query to also include `MAX(time)`:
+
+```
+SELECT rn, MIN(time), MAX(time) FROM Marathon GROUP BY (gender);
+```
+
+Now it is no longer clear which `rn` the query should return.
+Should the DBMS return the `rn` associated with the `MIN(time)`, the `MAX(time)`, or some other `rn` from the group?
+
+The solution in this particular case is to nest our `MIN(time)` aggregation as a *subquery*.
+
+```sql
+SELECT * FROM Marathon
+  WHERE time IN (
+    SELECT MIN(time) FROM Marathon GROUP BY (gender));
+```
+
+Taking aggregates from aggregates can produce different statistics from those
+of the original data set. Consider the election of choices $A$ and $B$ by 100
+voters as shown in figure \ref{fig:simpson-votes}. In elections, the winner may 
+lose the popular vote, as aggregated district votes do not reflect the density
+within their groups. Aggregation is generally a *lossy* process, where the
+inputs cannot be reconstructed from the information it produces [@cai2019data].
+
+\begin{figure}[t]
+\centering
+\includegraphics{simpson-votes.tikz}
+\caption{This plot shows 100 votes grouped into 10 committees. If each
+committee is given only one vote, then decision $A$ will receive more committee
+votes than decision $B$, having lost the *popular vote* with only 36 votes.}
+\label{fig:simpson-votes}
+\end{figure}
+
+The apparent reversal of votes in figure \ref{fig:simpson-votes} is related to
+*Simpson's Paradox* [@10.1111/j.2517-6161.1951.tb00088.x]. TODO: say more about
+this.
+
+SQL uses the *declarative programming* paradigm, where the language is used to
+describe the *result* that the user^[In this context, the "user" is a programmer
+or data analyst who is "using" the database or programming language] wants while
+leaving the implementation details to the DBMS. Systems designed for declarative
+programming often excel in situations that the developer intended but sometimes
+struggle when the user needs something unusual. For situations where the user
+needs to specify the detailed process to compute the result, we use the
+*imperative programming* paradigm. Two specific imperative approaches are
+*functional* and *object-oriented* programming. In practice, the distinctions
+are often blurred by languages and databases that provide functionality from all
+three.
+
+### Normalization
+
+The schema of a database can reduce data duplication while improving data quality
+by separating independent values into separate tables. For example, consider the
+following schema for a contact list:
+
+```sql
+CREATE TABLE Contacts (
+    fname STRING, lname STRING, address STRING, telephone STRING);
+```
+
+This table may contain duplicates of data.
+
+```sql
+INSERT INTO Contacts
+    (fname, lname, address, telephone)
+VALUES
+    ('Tom', 'Smith', '319 Main St, New York, NY 11201', '212-555-6907'),
+    ('Jenn', 'Smith', '319 Main St, New York, NY 11201', '212-555-6907'),
+    ('Ken', 'Powers', '16 Greendale Dr, Springfield, MO 65619', NULL),
+    ('Fran', 'Miranda', NULL, '212-555-6907');
+```
+
+In this small example, two entries have the same last name, two share an address,
+and three have the same phone number. We can reduce the size of our database with
+foreign keys.
+
+```sql
+CREATE TABLE People (
+    fname STRING, lname STRING,
+    PRIMARY KEY(fname, lname));
+CREATE TABLE Addresses (
+    address STRING PRIMARY KEY);
+CREATE TABLE Telephones (
+    telephone STRING PRIMARY KEY);
+CREATE TABLE Contacts2 (
+    fname STRING, lname STRING,
+    address STRING REFERENCES Addresses(address),
+    telephone STRING REFERENCES Telephones(telephone),
+    FOREIGN KEY (fname, lname) REFERENCES People(fname, lname));
+```
+
+Now, assuming the SQLite environment supports foreign keys^[<https://sqlite.org/foreignkeys.html>],
+we insert the same data into the new tables.
+
+```sql
+INSERT INTO People (fname, lname) VALUES
+    ('Tom', 'Smith'), ('Jenn', 'Smith'), ('Ken', 'Powers'), ('Fran', 'Miranda');
+INSERT INTO Addresses (address) VALUES
+    ('319 Main St, New York, NY 11201'),
+    (
+```
+
 ## Computability
 
 A joke in computer science says that "you can write C in any language." The joke
@@ -122,176 +347,6 @@ operation feels more tedious or difficult in one language than another, this
 can be an indication that the new language has different structure. The new
 language will still compute the computable program, but it may require a changed
 approach.
-
-## The Relational Algebra
-
-Codd's *relational algebra* is the framework theory describing all modern *database management systems* (DBMS) [@codd1970relational].
-The relational algebra can be described with five primitives: *selection* ($\sigma$), *projection* ($\pi$), the *Cartesian product* ($\times$; also known as the *cross product*), set *union* ($\cup$), and set *difference* ($-$).
-
-Selection takes all or a subset of a table's rows.
-Projection takes all or a subset of a table's columns.
-In Structured Query Languages (SQL), selection is specified in the `WHERE` clause and projection is specified in the list of columns immediately after `SELECT`.
-
-A Cartesian product is the multiplication of sets.
-If $A = \left\{ i, j \right\}$ and $B = \left\{ x, y, z \right\}$,
-then $A \times B = \left\{
-\left( i, x \right),
-\left( i, y \right),
-\left( i, z \right),
-\left( j, x \right),
-\left( j, y \right),
-\left( j, z \right) \right\}$.
-The Cartesian product produces the set of all possible pairwise combinations of elements in each set.
-These composite values are called *tuples*.
-Tuples may contain more than two values.
-If $C = \left\{ c \right\}$, then
-
-$$
-A \times B \times C = \left\{
-\left( i, x , c\right),
-\left( i, y , c \right),
-\left( i, z , c\right),
-\left( j, x , c \right),
-\left( j, y , c \right),
-\left( j, z , c \right) \right\}.
-$$
-
-As an exercise, go to the SQLime Playground^[<https://sqlime.org/#deta:mb9f8wq2mq0b>] to use a DBMS named SQLite.
-Enter the following commands to reproduce the above Cartesian product.
-
-```sql
-CREATE TABLE A (a text);
-CREATE TABLE B (b text);
-CREATE TABLE C (c text);
-
-INSERT INTO A(a) VALUES ('i'), ('j');
-INSERT INTO B(b) VALUES ('x'), ('y'), ('z');
-INSERT INTO C(c) VALUES ('c');
-
-SELECT * FROM A CROSS JOIN B CROSS JOIN C;
-```
-
-This text views tuples as unordered and "flattened" sets, and therefore Cartesian products are both *commutative* ($R \times S = S \times R$) and *associative* ($R \times \left( S \times T \right) = \left( R \times S \right) \times T$).
-Some mathematical texts use a stricter definition for the Cartesian product where the result is a set, which does not "flatten" and therefore provides neither commutativity nor associativity.
-This text uses the looser definition for compatibility with practical DBMSs, including SQLite.
-(Mathematics is partly discovered and partly invented.)
-
-Set union, $\cup$, combines two sets.
-Sets definitionally contain only distinct elements.
-If $A = \left\{ i, j, k \right\}$ and $B = \left\{ k, l, m \right\}$, then
-
-$$
-A \cup B = \left\{ i, j, k, l, m \right\}.
-$$
-
-Set difference, $-$, retains the elements of the left set that are not present in the right set.
-
-$$
-A - B = \left\{ i, j, k \right\} - \left\{ k, l, m \right\} = \left\{ i, j \right\}.
-$$
-
-## Joining Tables
-
-The *join* ($\bowtie$) is a combination of the Cartesian product and selection.
-For example, suppose we have a tables named `Swim`, `Bike`, and `Run`.
-Each table has a column that uniquely identifies an athlete.
-To get a triathletes (the athletes who participate in swimming, cycling, and running),
-we use an *equijoin* to find the product where the names are equal.
-Return to the SQLime Playground^[<https://sqlime.org/#deta:36fadcq9apak>] to demonstrate experiment with the `JOIN` operator.
-
-```sql
-CREATE TABLE IF NOT EXISTS Swim (sn TEXT UNIQUE);
-CREATE TABLE IF NOT EXISTS Bike (bn TEXT UNIQUE);
-CREATE TABLE IF NOT EXISTS Run (rn TEXT UNIQUE);
-
-INSERT OR IGNORE INTO Swim (sn) VALUES
-    ('John'), ('Jane'), ('Luke'), ('Phil');
-INSERT OR IGNORE INTO Bike (bn) VALUES
-    ('Mary'), ('Alex'), ('Jane'), ('Levi');
-INSERT OR IGNORE INTO Run (rn) VALUES
-    ('Mike'), ('John'), ('Jane'), ('Sven');
-
-SELECT * FROM Swim, Bike, Run WHERE sn = bn AND sn = rn;
-```
-
-There are other syntaxes which achieve the same result using the `ON` and `USING` clauses.
-As an exercise, try to predict how many rows will return from `SELECT * FROM Swim, Bike, Run` without a `WHERE` clause.
-
-## Grouping and Aggregation {#sec:grouping-and-aggregation}
-
-DBMSs provide robust *grouping* functions for operating on related rows.
-Return to the SQLime Playground^[<https://sqlime.org/#deta:32lpfoo57r8g>] and create a small table of hypothetical marathon times.
-
-```sql
-CREATE TABLE IF NOT EXISTS Marathon (rn TEXT UNIQUE,
-  time INTEGER,
-  gender TEXT CHECK( gender IN ('M', 'F') ));
-
-INSERT OR IGNORE INTO Marathon (rn, time, gender) VALUES
-  ('Kyle', 2*60*60 + 14*60 + 22, 'M'),
-  ('Hank', 2*60*60 + 10*60 + 45, 'M'),
-  ('Lily', 2*60*60 + 24*60 + 47, 'F'),
-  ('Emma', 2*60*60 + 22*60 + 37, 'F'),
-  ('Elle', 2*60*60 + 25*60 + 16, 'F'),
-  ('Fred', 2*60*60 + 6*60 + 17, 'M');
-
-SELECT MIN(time) FROM Marathon GROUP BY (gender);
-```
-
-`MIN` is one of the *aggregate functions* in SQLite.
-The `GROUP BY` clause tells the DBMS to split the rows into groups on the `gender` column.
-
-One might be tempted to find the names of our male and female champions with
-`SELECT rn, MIN(time) FROM Marathon GROUP BY (gender)`.
-This may work in some DBMSs but there is a subtle bug.
-It might be obvious that we want the `rn` associated with the `MIN(time)` value, but suppose we change the query to also include `MAX(time)`:
-
-```
-SELECT rn, MIN(time), MAX(time) FROM Marathon GROUP BY (gender);
-```
-
-Now it is no longer clear which `rn` the query should return.
-Should the DBMS return the `rn` associated with the `MIN(time)`, the `MAX(time)`, or some other `rn` from the group?
-
-The solution in this particular case is to nest our `MIN(time)` aggregation as a *subquery*.
-
-```sql
-SELECT * FROM Marathon
-  WHERE time IN (
-    SELECT MIN(time) FROM Marathon GROUP BY (gender));
-```
-
-Taking aggregates from aggregates can produce different statistics from those
-of the original data set. Consider the election of choices $A$ and $B$ by 100
-voters as shown in figure \ref{fig:simpson-votes}. In elections, the winner may 
-lose the popular vote, as aggregated district votes do not reflect the density
-within their groups. Aggregation is generally a *lossy* process, where the
-inputs cannot be reconstructed from the information it produces [@cai2019data].
-
-\begin{figure}[t]
-\centering
-\includegraphics{simpson-votes.tikz}
-\caption{This plot shows 100 votes grouped into 10 committees. If each
-committee is given only one vote, then decision $A$ will receive more committee
-votes than decision $B$, having lost the *popular vote* with only 36 votes.}
-\label{fig:simpson-votes}
-\end{figure}
-
-The apparent reversal of votes in figure \ref{fig:simpson-votes} is related to
-*Simpson's Paradox* [@10.1111/j.2517-6161.1951.tb00088.x]. TODO: say more about
-this.
-
-SQL uses the *declarative programming* paradigm, where the language is used to
-describe the *result* that the user^[In this context, the "user" is a programmer
-or data analyst who is "using" the database or programming language] wants while
-leaving the implementation details to the DBMS. Systems designed for declarative
-programming often excel in situations that the developer intended but sometimes
-struggle when the user needs something unusual. For situations where the user
-needs to specify the detailed process to compute the result, we use the
-*imperative programming* paradigm. Two specific imperative approaches are
-*functional* and *object-oriented* programming. In practice, the distinctions
-are often blurred by languages and databases that provide functionality from all
-three.
 
 ## Functional Programming {#sec:filter-map-reduce}
 
@@ -596,13 +651,14 @@ The computer industry has recently turned to *Graphical Processing Units* (GPU) 
 GPUs were originally designed to draw computer graphics, which extensively use matrix and vector multiplication.
 These linear transformations can be performed in parallel and GPU makers designed their products to perform many simple calculations in parallel.
 
-## Information Management
+## Information and Knowledge Management
 
-We conclude this chapter on getting useful information from data with two
-practical matters of managing information. These two "triads" should be common
-knowledge in the Signal and Cyber branches, but may be less known elsewhere.
-A general familiarity with the safeguarding and dissemination of information
-may be beneficial to all knowledge workers.
+We conclude this chapter with some practical matters of information management
+and knowledge management. Cyber security professionals must balance productivity
+and risk; information that is too easy for trusted insiders to access might also
+be easy for hostile outsiders to capture. We should also have an awareness of a
+hard constraint in disseminating information in a world with imperfect networks.
+Finally, (todo: talk about KM.)
 
 ### Confidentiality, Integrity, and Availability
 
@@ -635,6 +691,10 @@ Perhaps a system reserves certain rows or columns that are only writable by a sp
 A system might establish some form of confidence intervals in certain data, such as the position of a tracked aircraft with error margins, in recognition that imperfect information might still be useful.
 Finally, a system might use a quorum model (i.e., 3 of 5 available nodes) to preserve partial availability in the majority partition.
 
+### Knowledge Management
+
+todo [@atp6-01.1]
+
 ## Discussion Prompts
 
 #. The Excel function `VLOOKUP(lookup_value, table_array, col_index_num, range_lookup)`
@@ -654,6 +714,28 @@ Can we parameterize the SQL statement to produce the same result as `VLOOKUP`?
 #. What can go wrong when altering database schema? 
 
 ## Practical Exercises
+
+#. Spot the flaw in the following SQLite queries^[todo]:
+
+    ```sql
+    CREATE TABLE IF NOT EXISTS Product (
+     id INTEGER PRIMARY KEY, name STRING, price NUMBER);
+    INSERT OR IGNORE INTO Product (id, name, price) VALUES  
+     (1, 'Bicycle', 1000), (2, 'Phone', 500), (3, 'Phone', 650),
+     (4, 'Spoon', 1), (5, 'Towel', 6), (6, 'Bicycle', 220);
+    SELECT DISTINCT name, AVG(price) FROM Product;
+    ```
+
+    The expected output is a table of product names and their average prices.
+
+    |Product|Average Price|
+    |-------|-------------|
+    |Bicycle|610.0|
+    |Phone|575.0|
+    |Spoon|1.0|
+    |Towel|6.0|
+
+    <!-- select name, avg(price) from product group by name; -->
 
 #. Create a custom list in SharePoint that provides multiple views showing grouped and aggregated values. 
 

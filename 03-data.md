@@ -218,79 +218,111 @@ three.
 ### Normalization
 
 The schema of a database can reduce data duplication while improving data quality
-by separating independent values into separate tables. For example, consider the
-following schema for a contact list:
+by separating independent values into separate tables. Those separate tables are
+then joined when necessary. For example, consider a table of $x$, $y$, and $z$
+records. Assume that the components of $x$, $y$, and $z$ are composite fields
+of dependent records, similar to how a mailing address has the number, street,
+city, state, and ZIP code.
 
-```sql
-CREATE TABLE Contacts (
-    fname STRING, lname STRING, address STRING, telephone STRING);
-```
+| $x_1$ | $x_2$ | $x_3$ | $y_1$ | $y_2$ | $y_3$ | $z_1$ | $z_2$ | $z_3$ |
+|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+| 1     | 93    | 59    | 23    | 90    | 57    | 69    | 85    | 6     |
+| 1     | 93    | 59    | 79    | 84    | 80    | 69    | 85    | 6     |
+| 30    | 21    | 13    | 79    | 84    | 80    | 69    | 85    | 6     |
+| 16    | 11    | 41    | 46    | 43    | 17    | 5     | 6     | 37    |
 
-This table may contain duplicates of data.
+This table is in the *first normal form* (1NF).
+Observe that the $x$ values duplicate in the first and second rows, the $y$
+values duplicate in the second and third rows, and the $z$ values duplicate in
+the first three rows. Normalization allows us to compress the database by
+discovering where the records can be split. Continuing the example, we split
+the $x$ records into their own database,
 
-```sql
-INSERT INTO Contacts
-    (fname, lname, address, telephone)
-VALUES
-    ('Tom', 'Smith', '319 Main St, New York, NY 11201', '212-555-6907'),
-    ('Jenn', 'Smith', '319 Main St, New York, NY 11201', '212-555-6907'),
-    ('Ken', 'Powers', '16 Greendale Dr, Springfield, MO 65619', NULL),
-    ('Fran', 'Miranda', NULL, '212-555-6907');
-```
+| $x_{id}$ | $x_1$ | $x_2$ | $x_3$ |
+|----------|-------|-------|-------|
+| 1        | 1     | 93    | 59    |
+| 2        | 30    | 21    | 13    |
+| 3        | 16    | 11    | 41    |
 
-In this small example, two entries have the same last name, two share an address,
-and three have the same phone number. We can reduce the size of our database with
-foreign keys.
+and the $y$ records,
 
-```sql
-CREATE TABLE People (
-    fname STRING, lname STRING,
-    PRIMARY KEY(fname, lname));
-CREATE TABLE Addresses (
-    address STRING PRIMARY KEY);
-CREATE TABLE Telephones (
-    telephone STRING PRIMARY KEY);
-CREATE TABLE Contacts2 (
-    fname STRING, lname STRING,
-    address STRING REFERENCES Addresses(address),
-    telephone STRING REFERENCES Telephones(telephone),
-    FOREIGN KEY (fname, lname) REFERENCES People(fname, lname));
-```
+| $y_{id}$ | $y_1$ | $y_2$ | $y_3$ |
+|----------|-------|-------|-------|
+| 1        | 23    | 90    | 57    |
+| 2        | 79    | 90    | 80    |
+| 3        | 46    | 43    | 17    |
 
-Now, assuming the SQLite environment supports foreign keys^[<https://sqlite.org/foreignkeys.html>],
-we insert the same data into the new tables.
+and the $z$ records.
 
-```sql
-INSERT INTO People (fname, lname) VALUES
-    ('Tom', 'Smith'), ('Jenn', 'Smith'), ('Ken', 'Powers'), ('Fran', 'Miranda');
-INSERT INTO Addresses (address) VALUES
-    ('319 Main St, New York, NY 11201'),
-    (
-```
+| $z_{id}$ | $z_1$ | $z_2$ | $z_3$ |
+|----------|-------|-------|-------|
+| 1        | 69    | 85    | 6     |
+| 2        | 5     | 6     | 37    |
+
+The original table can now be written in the *third normal form* (3NF)^[There
+are other normal forms, but we will not discuss them in any further detail.].
+
+| $x_{id}$ | $y_{id}$ | $z_{id}$ |
+|----------|----------|----------|
+| 1        | 1        | 1        |
+| 1        | 2        | 1        |
+| 2        | 2        | 1        |
+| 3        | 3        | 2        |
+
+The original table contains $9 \times 4 = 36$ integers. The second four tables
+contain a total of $4 \times 3 + 4 \times 3 + 4 \times 2 + 3 \times 4 = 44$
+integers, and disappointing cost savings of $36-44=-8$ integers. If the values
+in each field of $x$, $y$, and $z$ were long strings then we could easily find
+efficiencies even in this small table. If the indices (the $id$ identifiers
+in each table) were eight bytes long but the length of each $x_i$, $y_j$, and
+$z_k$ field were a fixed 100 bytes long, then the new size of the original table
+is $9 \times 4 \times 100 = 3600$ and the four normalized tables is only
+$3 (1 \times 8 + 3 \times 100) + 3 (1 \times 8 + 3 \times 100) +
+2 (1 \times 8 + 3 \times 100) + 4 (3 \times 8) = 2563$ for a storage
+savings of 1037 bytes.
+
+One might now be surprised to learn that many *data warehouses* favor 1NF over
+3NF. *NoSQL* databases particularly trade strictness for flexibility [@6106531].
+Many NoSQL databases, such as Amazon's Dynamo [@10.1145/1323293.1294281], are
+*key-value stores* which do not require static schema.
+
+If a big data platform does not enforce a static schema, then it might contain
+records with inconsistent names, such as `address_1` and `FirstAddr`. Fields
+may be missing or contain inconsistent types of data. Analysis on large databases
+often requires substantial data "wrangling" with programming languages. We will
+now cover several topics on the theory and practice of computing.
 
 ## Computability
 
 A joke in computer science says that "you can write C in any language." The joke
 is literally true. Assuming adequate resources (compute time, memory, storage,
 and access to necessary inputs and outputs), one could implement a C interpreter
-in any *Turing-compute* language [@michaelson2020programming, p. 13 -- 17] 
+in any *Turing-compute* language [@michaelson2020programming, p. 13-17] 
 and execute any C program. Such an endeavor is not theoretical: *virtual machines*
 and related technologies simulate and emulate entire computing machines, allowing
 programs to run on systems that they were not designed for.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\textwidth]{low-high-level-languages.tikz}
 \label{fig:low-high-level-languages}
+\caption{All programming languages ultimately reduce to instructions that the
+computing machine runs on digital circuits. Different languages provide few to
+many abstractions for making code easier to understand. These abstractions
+generally come with some cost in performance. }
 \end{figure}
 
-Programming languages are imprecisely categorized as *low-level* and *high-level*.
+Programming languages are imprecisely categorized as *low-level* and *high-level*
+(see figure \ref{fig:low-high-level-languages}).
 One should view these terms as a spectrum, not dichotomies. Low-level languages
 generally require more explicit specification to the machine, allowing for
 greater control of the computation and often faster. The abstractions available
 in high-level languages often allow the programmer to code with syntax closer to
-mathematical notation. Computing in spoken language (or "natural language") has
-historically failed to satisfy the high expectations popularized in science
+mathematical notation. Some organizations will prototype in a high-level language,
+such as Python, and then re-implement the same algorithms in a faster
+low-language, such as C [@bezanson2015abstraction, p. 23-28].
+Computing in spoken language (or "natural language") has
+often failed to satisfy the high expectations popularized in science
 fiction [@EWD:EWD667], although recent advances in AI have steadily improved
 machines' ability to compute results from spoken or written prompts.
 

@@ -589,6 +589,133 @@ Excel does provide some basic functionality to set number *formats*, but this fe
 Excel uses *weak* typing that does prevent one from using unexpected values.
 Data analysts can benefit greatly by using the appropriate types for the values in their problem.
 
+## Truthy and Falsy Values {#sec:truthy}
+
+What is the output of this C program?
+
+```c
+#include <stdio.h>
+
+int main() {
+    int x = 5;
+    
+    if (x) {
+        printf("%d is truthy.\n", x);
+    } else {
+        printf("%d is falsy.\n", x);
+    }
+}
+```
+
+This JavaScript program?
+
+```javascript
+x = 5;
+if (x) {
+    console.log(x + " is truthy.");
+} else {
+    console.log(x + " is falsy.");
+} 
+```
+
+This Java program?
+
+```java
+int x = 5;
+if (x) {
+  System.out.println(x + " is truthy.");
+} else {
+  System.out.println(x + " is falsy.");
+}
+```
+
+This Rust program?
+
+```rust
+fn main() {
+    let x: i32 = 5;
+    if x {
+        println!("{x} is truthy.");
+    } else {
+        println!("{x} is falsy.");
+    }
+}
+```
+
+Both the C and JavaScript programs output that 5 is "truthy." Neither the Java
+nor Rust programs compile. Both Java and Rust require that the condition of a
+conditional statement has their respective Boolean type with either the value
+true or the value false.
+
+While C is a statically-typed language, like Java and Rust, it did not originally
+include a Boolean type. Instead, C programs treated zero values as false and
+non-zero values as true.
+
+Dynamically-typed languages, such as JavaScript and Python, have concepts of
+*truthy* and *falsy* values. In Python, if the function `bool(x)` returns `True`
+for some value of `x`, then that value is truthy. If `bool(x)` returns `False`,
+then the value of `x` is falsy.
+
+A small demonstration in Python reveals that false Booleans, zeros, empty
+strings, empty collections (lists, dictionaries, sets, and tuples), and empty
+ranges all evaluate to false. Perhaps surprisingly, NaN ("not a number") and
+exceptions do not.
+
+```python
+In [1]: tests = [True, False, 1, -1, 0, float('nan'), "a string", "",
+   ...: Exception(), [1], [], {1: 2}, {}, set([1]), set(), (1,), (),
+   ...: range(10), range(0)]
+
+In [2]: [[t, type(t), bool(t)] for t in tests]
+Out[2]:
+[[True, bool, True],
+ [False, bool, False],
+ [1, int, True],
+ [-1, int, True],
+ [0, int, False],
+ [nan, float, True],
+ ['a string', str, True],
+ ['', str, False],
+ [Exception(), Exception, True],
+ [[1], list, True],
+ [[], list, False],
+ [{1: 2}, dict, True],
+ [{}, dict, False],
+ [{1}, set, True],
+ [set(), set, False],
+ [(1,), tuple, True],
+ [(), tuple, False],
+ [range(0, 10), range, True],
+ [range(0, 0), range, False]]
+```
+
+Now that we understand that non-Boolean values can be *cast* into Booleans when
+used in comparisons, try to predict what this SQL query does:
+
+```sql
+CREATE TABLE Data(x INTEGER);
+INSERT INTO Data(x) VALUES (1), (2), (3), (4), (5);
+DELETE FROM Data WHERE x == 1 OR 2;
+```
+
+One might expect that a subsequent query to `SELECT * FROM Data` would return
+3, 4, and 5, but in fact the `DELETE` statement has actually deleted all five
+values. The `DELETE` query should have been `DELETE FROM Data WHERE x == 1 OR x == 2`.
+Without an explicit comparison to 2, SQLite follows C's behavior of treating
+non-zero values as true.
+
+Many systems struggle with the word "Null", which makes life on the Internet
+difficult for people with the last name "Null"^[<https://www.wired.com/2015/11/null/>].
+Other systems have a "Norway problem" where the country code "NO" is misinterpreted as the falsy
+opposite of "yes"^[<https://hitchdev.com/strictyaml/why/implicit-typing-removed/>].
+
+Dynamically-typed languages and database systems can offer concise syntax and
+rich abstractions which enable rapid development. This is one of many reasons
+why Python has become so popular among data scientists. However, programmers
+warn of "foot guns" --- confusing features or characteristics of a system that
+can be harmful. When learning a new language or database system, take the time
+to understand its syntax, semantics, and structure.
+
 ## Tables, lists, and data frames 
 
 <!-- <https://drops.dagstuhl.de/storage/01oasics/oasics-vol076-plateau2019/OASIcs.PLATEAU.2019.6/OASIcs.PLATEAU.2019.6.pdf> -->
@@ -967,3 +1094,7 @@ Java Playground^[<https://dev.java/playground/>] to experiment.
 180° to $(-1,0)$, and 270° to $(0,-1)$. Implement a function $A$ to convert
 azimuths to angles, another function $A^{-1}$ to convert angles to azimuths,
 and create test cases to verify that $A^{-1}(A(\theta))=\theta$.
+
+#. Re-run the SQL queries in section \ref{sec:truthy} with different values to
+produce different outcomes. The values should not drop with a literal 0 instead
+of the 2.

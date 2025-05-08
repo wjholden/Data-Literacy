@@ -90,5 +90,7 @@ test:
 # "et al.\ " always ends in a period with a non-breaking space.
 	@! rg -tmd "et al "
 	@! rg -tmd "et al. "
+# Always specify placement for figures.
+#	@! rg -tmd -U -e "^\\\\begin\\{figure\\}\\r\\n"
 
 # Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

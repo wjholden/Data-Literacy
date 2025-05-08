@@ -9,7 +9,7 @@ circumstances, knowledge supports *wisdom*. Another model for Data, Information,
 Knowledge, and Wisdom (DKIW) is that they answer measurements, what, how, and why.
 The DKIW model is often visualized as the pyramid shown in figure \ref{fig:dikw}.
 
-\begin{figure}[t]
+\begin{figure}[ht]
 \centering
 \includegraphics{dikw.tikz}
 \caption{The DIKW model shows data, information, knowledge, and wisdom in a hierarchy.
@@ -214,7 +214,7 @@ interface presented to the user is declarative, but the algorithm to filter
 filenames that match the specification is ultimately a set of instructions.
 
 <!-- original work -->
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{declarative.tikz}
 \caption{Declarative languages, such as Structured Query Language (SQL),
@@ -235,7 +235,7 @@ programming. In any AI method, we seek to let the computer program itself by
 providing data and general rules.
 
 <!-- original work -->
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{ai.tikz}
 \caption{AI systems seek to model implicit algorithms by learning from data.
@@ -344,6 +344,38 @@ There are four distinct *levels of measurement* that a value may fit [@stevens19
 *Nominal* data is simply names or categories, with no concept of order or distance.
 A movie might be animated or live-action, a dichotomy without order.
 Another example might be the film's genre (children, comedy, action, romance, documentary, etc).
+
+Many programming languages provide an enumerated type (`enum`) for describing
+these values and handling them. As an example, the following Rust program
+uses `enum` in a simple translation function^[<https://play.rust-lang.org/?gist=5c1686d3800801a2a3e2a331f54aaa14>].
+Try adding or removing a value from the specification; the Rust compiler will
+error on a non-exhaustive `match` statement.
+
+```rust
+#[allow(dead_code)]
+enum Day {
+    Sunday,
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+}
+
+fn main() {
+    let de = match Day::Monday {
+        Day::Sunday => "Sonntag",
+        Day::Monday => "Montag",
+        Day::Tuesday => "Dienstag",
+        Day::Wednesday => "Mittwoch",
+        Day::Thursday => "Donnerstag",
+        Day::Friday => "Freitag",
+        Day::Saturday => "Samstag",
+    };
+    println!("{de}");
+}
+```
 
 *Ordinal* data has ordering but not distance.
 Ordinal data might be represented as ordered categories or as numerals, though these numerals do not provide meaningful addition and subtraction.
@@ -830,7 +862,7 @@ scientific languages.
 
 ## Complex Numbers
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics{argand.tikz}
 \caption{Complex numbers are two-dimensional quantities. In this Argand diagram, the $x$ axis is $\pm 1$ and the $y$ axis is $\pm i$. Multiplying a value by $i$ rotates the value among the real and imaginary axes.}
@@ -1098,3 +1130,5 @@ and create test cases to verify that $A^{-1}(A(\theta))=\theta$.
 #. Re-run the SQL queries in section \ref{sec:truthy} with different values to
 produce different outcomes. The values should not drop with a literal 0 instead
 of the 2.
+
+#. Research how another programming language handles truthy and falsy values.

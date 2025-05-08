@@ -56,7 +56,7 @@ draw line plots to represent *continuums* of ordered data, including discretized
 categories. Figure \ref{fig:lineplot-water} shows a small example of a line plot
 of the relative size of bodies of water.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics{lineplot-water.tikz}
 \caption{Line plots can depict the total order of ordinal data.}
@@ -100,11 +100,11 @@ on similar conventions.
 
 ## Scatter Plots {#sec:scatter}
 
+todo
+
 ```r
 > plot(mtcars$wt, mtcars$mpg)
 ```
-
-![todo](mtcars-plot.pdf){#fig:scatter}
 
 Todo: change base R to ggplot so we can show color.
 
@@ -129,7 +129,7 @@ functions (more on this in section \ref{sec:grouping-and-aggregation}) such as
 `MIN()`, `MAX()`, `COUNT()`, `SUM()`, and `AVG()`. Figure \ref{fig:barplot}
 demonstrates a bar plot.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics{barplot.tikz}
 \caption{A bar plot showing the Gross Domestic Product (GDP) of the United States from 2019--2023, according to <https://tradingeconomics.com/united-states/gdp>.
@@ -147,7 +147,7 @@ indicates the *element-wise* product of two vectors, also known as a *Hadamard*
 product). As shown in figure \ref{fig:misleading-barplot}, the area of the third
 bar is more than triple that of the second and may confuse the reader.
 
-\begin{figure}
+\begin{figure}[ht]
 \centering
 \includegraphics{misleading-barplot.tikz}
 \caption{The bars of a bar plot should ordinarily have uniform width.

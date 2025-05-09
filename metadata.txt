@@ -28,6 +28,10 @@ header-includes:
     # https://tex.stackexchange.com/a/56473/311890
     - \usepackage{tikzscale}
     - \usepackage{unicode-math}
+    # https://tikz.dev/tikz-graphs
+    - \usetikzlibrary{graphs}
+    - \usetikzlibrary{graphdrawing}
+    - \usegdlibrary{trees}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
 # https://tug.org/FontCatalogue/typewriterfonts.html

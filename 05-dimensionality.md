@@ -641,7 +641,7 @@ $$
 
 This means that there is more than 50% chance that any two students will share a birthday in a class of 23, a surprising and unintuitive result.
 
-## The Binomial Distribution
+## The Binomial Distribution {#sec:binomial}
 
 We now continue to another example which will demonstrate a limitation of statistical reasoning.
 Suppose this class of students has a large toy box with 1000 toys.

@@ -883,6 +883,44 @@ todo
 todo 
 -->
 
+## Probability Spaces {#sec:graph-probability}
+
+Probability questions are notoriously unintuitive. Using a graph, we can visualize
+and understand probability spaces by plotting each possible event. Consider the
+following example: a basketball player scores $1/3$ of 3-point attempts. What is
+the probability that they score exactly once after two throws?
+
+We can model the first throw as 3, 0, and 0: there is a $1/3$ chance that they
+score, and $2 \times 1/3$ chance that they score zero.
+
+The second throw creates three branches from the first three outcomes (assuming
+independence, which we infer from the problem formulation). If the player
+scores, then the outcomes are 6, 3, and 3. If player misses, then the outcomes
+are 3, 0, and 0 and another 3, 0, and 0. In total, we have four outcomes of 3,
+and therefore the probability that the player scores exactly once is $4/9$.
+
+As shown in figure \ref{fig:graph-probability}, the event space is easy to
+understand when modeled as a graph. We can verify this result using the binomial
+theorem from section \ref{sec:binomial} as
+
+$$
+\begin{aligned}
+p(1) &= \binom{2}{1} \left( \frac{1}{3} \right)^1 \left( 1 - \frac{1}{3} \right)^{ \left( 2 - 1 \right) } \\
+&= (2) \left( \frac{1}{3} \right) \left( \frac{2}{3} \right) \\
+&= \frac{4}{9}
+\end{aligned}
+$$
+
+and using R's `dbinom` function as `dbinom(x=1, size=2, prob=1/3)`.
+
+\begin{figure}[t]
+\centering
+\includegraphics{graph-probability.tikz}
+\caption{Discrete probabilities can be modeled as a graph. In this graph, each
+row represents the 3-point throw of a basketball with $1/3$ chance of scoring.}
+\label{fig:graph-probability}
+\end{figure}
+
 ## Discussion prompts
 
 #. A graph can be represented with an adjacency list or a matrix. What are the advantages and disadvantages of each approach? 
@@ -900,15 +938,17 @@ and PageRank) are not effective. As a discussion point, consider whether values
 immediately associated with vertices and edges dominate their importance, or
 if some extrinsic network effect has a greater effect.
 
-#. A manufacturer sells systems that are made of components. Those components
-are assembled from atomic parts. Many parts are interchangeable with other parts,
-and many components are interchangeable with other components. How can the
-manufacturer discover unused or duplicative parts and components?
+#. A manufacturer sells systems that are made of components, as conceptualized
+in figure \ref{fig:part-component-system}. Those components are assembled from
+atomic parts. Many parts are interchangeable with other parts, and many
+components are interchangeable with other components. How can the manufacturer
+discover unused or duplicative parts and components?
 
-    \begin{figure}[h]
+    \begin{figure}
     \centering
     \includegraphics[width=1.0\textwidth]{part-component-system.tikz}
     \label{fig:part-component-system}
+    \caption{A \textit{dependency graph} models implication relationships in systems.}
     \end{figure}
 
 ## Practical exercises
@@ -924,3 +964,6 @@ manufacturer discover unused or duplicative parts and components?
 #. Determine the minimum paving needed to fully connect a tent complex using a list of coordinates and a Prim or Kruskal implementation.  
 
 #. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 
+
+#. Use the technique shown in section \ref{sec:graph-probability} to solve the Monty
+Hall problem.

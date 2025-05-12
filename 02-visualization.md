@@ -100,20 +100,45 @@ on similar conventions.
 
 ## Scatter Plots {#sec:scatter}
 
-todo
+*Scatter plots* depict data in two or three spatial dimensions. A scatter plot
+of two dimensions, conventionally $x$ for the horizontal axis and $y$ for
+the vertical axis, the flat space is called a *Cartesian plane*.
+An example scatter plot is shown in figure \ref{fig:mtcars-scatter}.
+Use the R commands `plot(mtcars$mpg, mtcars$wt)` and `plot(mtcars$mpg ~ mtcars$wt)`
+to recreate this plot^[{https://webr.r-wasm.org/latest/}].
 
-```r
-> plot(mtcars$wt, mtcars$mpg)
-```
+\begin{figure}[b]
+\centering
+\includegraphics{mtcars-scatter.tikz}
+\caption{A scatter plot of car efficiency and weight from the Motor Trend Cars data set. The color and shape of the points indicate the number of cylinders (4, 6, or 8).}
+\label{fig:mtcars-scatter}
+\end{figure}
 
-Todo: change base R to ggplot so we can show color.
+It is possible to plot in three dimensions, but these graphics can be difficult
+to understand in printed format and can be more compelling in animated videos
+or in an interactive setting. The Wolfram language provides many 3D 
+visualization features^[<https://reference.wolfram.com/language/howto/PlotDataIn3D.html>].
 
-We can combine two or three orthogonal (perpendicular) line plots to create
-a *scatter plot*. Scatter plots show data in two or three dimensions. The
-shape of the plot may reveal patterns and trends in the data. 
+In mathematics, we often visualize the relation of functions with lines drawn
+against the same Cartesian plane. In a sense, these graphics are also scatter
+plots, but with a large number of samples taken from a function. Shading under
+curves can be useful to explain the accumulation of values over ranges.
 
-The term *data* carries weight in this context. Scatter plots *can* be used to
-represent data in aggregates, but it m...todo?
+\begin{figure}[t]
+\centering
+\includegraphics{scatter-age-density.tikz}
+\caption{Suppose, for the sake of this simple example, that the density of ages
+in our human population linearly decreases until there are none of us left at
+age 100. The blue area answers a child's question: why are there more adults
+than children?}
+\label{fig:scatter-age-density}
+\end{figure}
+
+Scatter plots are typically used to visualize data, but sometimes trends are
+so compelling that we can gather useful information directly. In figure
+\ref{fig:mtcars-scatter}, it is quite clear that four-cylinder cars are both
+lighter and more efficient than eight-cylinder cars. Figure \ref{fig:scatter-age-density}
+illustrates how the area under a curve is a powerful aggregation function.
 
 ## Bar Plots {#sec:barplot}
 
@@ -129,7 +154,7 @@ functions (more on this in section \ref{sec:grouping-and-aggregation}) such as
 `MIN()`, `MAX()`, `COUNT()`, `SUM()`, and `AVG()`. Figure \ref{fig:barplot}
 demonstrates a bar plot.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \includegraphics{barplot.tikz}
 \caption{A bar plot showing the Gross Domestic Product (GDP) of the United States from 2019--2023, according to <https://tradingeconomics.com/united-states/gdp>.
@@ -147,7 +172,7 @@ indicates the *element-wise* product of two vectors, also known as a *Hadamard*
 product). As shown in figure \ref{fig:misleading-barplot}, the area of the third
 bar is more than triple that of the second and may confuse the reader.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
 \includegraphics{misleading-barplot.tikz}
 \caption{The bars of a bar plot should ordinarily have uniform width.
@@ -582,7 +607,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
 #. Spot the flaw in figure \ref{fig:bad-barplot-exercise}.
 
-    \begin{figure}[h]
+    \begin{figure}
     \centering
     \includegraphics{bad-barplot-exercise.tikz}
     \caption{These bars represent values 20, 30, and 50.}
@@ -603,7 +628,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
 #. Spot the flaw in figure \ref{fig:bad-piechart-exercise}.
 
-    \begin{figure}[h]
+    \begin{figure}
     \centering
     \includegraphics{bad-piechart-exercise.tikz}
     \caption{These bars represent values 5, 3, 2, and 1.}

@@ -1,0 +1,21 @@
+\begin{tikzpicture}
+
+    \begin{axis}[
+        ymin=0.0,
+        ymax=0.02,
+        scaled ticks=false
+    ]
+
+    \addplot [name path=adf,
+        domain=0:100,
+        samples=100
+    ]{-x/5000+1/50};
+    
+    \addplot[name path = axis, draw = none] coordinates {(0,0) (100,0)};
+
+  \addplot [blue] fill between[of=adf and axis,
+  soft clip={domain=0:12}];
+
+    \end{axis}
+
+\end{tikzpicture}

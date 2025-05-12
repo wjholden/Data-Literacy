@@ -1,0 +1,51 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        xlabel={Weight (tons)},
+        ylabel={Efficiency (mpg)}
+    ]
+        \addplot [
+            scatter,
+            only marks,
+            point meta=explicit symbolic,
+            scatter/classes={
+                4={mark=square*,green},
+                6={mark=o,draw=black},
+                8={mark=triangle*,red}
+            },
+        ] table [meta=cyl] {
+                wt  mpg cyl
+                2.620 21.0   6
+                2.875 21.0   6
+                2.320 22.8   4
+                3.215 21.4   6
+                3.440 18.7   8
+                3.460 18.1   6
+                3.570 14.3   8
+                3.190 24.4   4
+                3.150 22.8   4
+                3.440 19.2   6
+                3.440 17.8   6
+                4.070 16.4   8
+                3.730 17.3   8
+                3.780 15.2   8
+                5.250 10.4   8
+                5.424 10.4   8
+                5.345 14.7   8
+                2.200 32.4   4
+                1.615 30.4   4
+                1.835 33.9   4
+                2.465 21.5   4
+                3.520 15.5   8
+                3.435 15.2   8
+                3.840 13.3   8
+                3.845 19.2   8
+                1.935 27.3   4
+                2.140 26.0   4
+                1.513 30.4   4
+                3.170 15.8   8
+                2.770 19.7   6
+                3.570 15.0   8
+                2.780 21.4   4
+        };
+    \end{axis}
+\end{tikzpicture}

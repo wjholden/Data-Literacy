@@ -3,7 +3,10 @@
     \begin{axis}[
         ymin=0.0,
         ymax=0.02,
-        scaled ticks=false
+        scaled ticks=false,
+        xlabel={Age},
+        ylabel={Density},
+        yticklabel style={/pgf/number format/fixed}
     ]
 
     \addplot [name path=adf,

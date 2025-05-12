@@ -382,7 +382,7 @@ using Z3^[This program is heavily influenced by
 
 \begin{figure}[t]
 \centering
-\includegraphics{sudoku.tikz}
+\includegraphics{fig/sudoku.tikz}
 \caption{This Sudoku puzzle is solvable using Python and Z3.}
 \label{fig:sudoku}
 \end{figure}
@@ -513,7 +513,7 @@ $$
 
 \begin{figure}
 \centering
-\includegraphics{venn1.tikz}
+\includegraphics{fig/venn1.tikz}
 \caption{A Venn diagram showing a single dimension, $S \subset U$.}
 \label{fig:venn1}
 \end{figure}
@@ -527,14 +527,14 @@ Values of $U$ are simply in $S$ or not in $S$.
 
 \begin{figure}
 \centering
-\includegraphics{venn2.tikz}
+\includegraphics{fig/venn2.tikz}
 \caption{A Venn diagram showing two dimensions. The overlap of the circles is the intersection, $S \cap T$.}
 \label{fig:venn2}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics{venn3.tikz}
+\includegraphics{fig/venn3.tikz}
 \caption{A Venn diagram showing two dimensions. The overlap of all three circles is the intersection, $R \cap S \cap T$.}
 \label{fig:venn3}
 \end{figure}
@@ -729,7 +729,7 @@ as shown in figure \ref{fig:full-mesh} and enumerated in the following table.
 
 \begin{figure}
 \centering
-\includegraphics{full-mesh.tikz}
+\includegraphics{fig/full-mesh.tikz}
 \caption{A \textit{full mesh} network of 7 elements contains $(7)(7-1)/2=21$ connections,
 as explained in section \ref{sec:choose2}.}
 \label{fig:full-mesh}
@@ -880,7 +880,7 @@ is **zero**.
 
 \begin{figure}
 \centering
-\includegraphics{quadratic-zero-r2.tikz}
+\includegraphics{fig/quadratic-zero-r2.tikz}
 \caption{The covariance of $x$ and $y = x \odot x$ is zero. The line of best fit for this data is shown on the dotted line, which has a Pearson correlation coefficient of $R^2=0$. Having a covariance of zero does not mean that $y$ is completely independent of $x$, but only that there is no linear dependence.}
 \label{fig:quadratic-zero-r2}
 \end{figure}

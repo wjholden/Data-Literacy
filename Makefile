@@ -37,7 +37,7 @@ references.bib:
 pareto.pdf: pareto.jl lifts.csv
 	julia pareto.jl
 
-dl.pdf: $(patsubst %.dot,%.dot.pdf,$(wildcard *.dot)) *.md metadata.txt references.bib pareto.pdf *.tikz
+dl.pdf: $(patsubst %.dot,%.dot.pdf,$(wildcard *.dot)) *.md metadata.txt references.bib pareto.pdf fig/*.tikz
 	pandoc -o dl.pdf metadata.txt 00-preface.md \
 	01-introduction.md 02-visualization.md 03-data.md 04-centrality.md 05-dimensionality.md \
 	08-graph.md 99-references.md \
@@ -78,6 +78,8 @@ test:
 # TikZ pictures should all be in separate *.tikz files instead of embedded directly
 # into the Markdown source code.
 	@! rg -tmd tikzpicture
+# Be precise. You are likely meant to say probability density function or 
+# probability mass function.
 	@! rg -tmd "probability function"
 # No spaces in the curly braces of URLs in the bibliography. This will make links unusable.
 	@! rg "\{\s" -g *.bib

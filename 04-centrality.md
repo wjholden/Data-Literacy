@@ -243,7 +243,7 @@ when a histogram reflects a bell curve.
 
 \begin{figure}
 \centering
-\includegraphics{normal.tikz}
+\includegraphics{fig/normal.tikz}
 \caption{This familiar "bell curve" is a plot of the probability density function of the normal distribution. Though the curve appears to touch the horizontal axis in this plot, the values actually approach but never reach zero, even as $x$ continues infinitely far in either direction.}
 \label{fig:normal}
 \end{figure}

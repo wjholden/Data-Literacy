@@ -192,7 +192,7 @@ inputs cannot be reconstructed from the information it produces [@cai2019data].
 
 \begin{figure}[t]
 \centering
-\includegraphics{simpson-votes.tikz}
+\includegraphics{fig/simpson-votes.tikz}
 \caption{This plot shows 100 votes grouped into 10 committees. If each
 committee is given only one vote, then decision $A$ will receive more committee
 votes than decision $B$, having lost the *popular vote* with only 36 votes.}
@@ -304,7 +304,7 @@ programs to run on systems that they were not designed for.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=1.0\textwidth]{low-high-level-languages.tikz}
+\includegraphics[width=1.0\textwidth]{fig/low-high-level-languages.tikz}
 \label{fig:low-high-level-languages}
 \caption{All programming languages ultimately reduce to instructions that the
 computing machine runs on digital circuits. Different languages provide few to

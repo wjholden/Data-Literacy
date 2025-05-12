@@ -11,7 +11,7 @@ The DKIW model is often visualized as the pyramid shown in figure \ref{fig:dikw}
 
 \begin{figure}[ht]
 \centering
-\includegraphics{dikw.tikz}
+\includegraphics{fig/dikw.tikz}
 \caption{The DIKW model shows data, information, knowledge, and wisdom in a hierarchy.
 Higher levels require subjective valuation. Wisdom is the application of
 generalized knowledge to form decisions in novel circumstances.}
@@ -199,7 +199,7 @@ These programs construct knowledge from data in a bottom-up structure.
 <!-- original work -->
 \begin{figure}
 \centering
-\includegraphics{imperative.tikz}
+\includegraphics{fig/imperative.tikz}
 \caption{Imperative languages are useful to transform input into output. The
 programmer provides explicit algorithms as instructions to the computing machine.}
 \label{fig:imperative}
@@ -216,7 +216,7 @@ filenames that match the specification is ultimately a set of instructions.
 <!-- original work -->
 \begin{figure}[h]
 \centering
-\includegraphics{declarative.tikz}
+\includegraphics{fig/declarative.tikz}
 \caption{Declarative languages, such as Structured Query Language (SQL),
 regular expressions, and constraint solvers, search for solutions that satisfy
 the desired query. The user of a declarative system should not need to
@@ -237,7 +237,7 @@ providing data and general rules.
 <!-- original work -->
 \begin{figure}[h]
 \centering
-\includegraphics{ai.tikz}
+\includegraphics{fig/ai.tikz}
 \caption{AI systems seek to model implicit algorithms by learning from data.
 A successful AI model is then used to form predictions on novel inputs not seen
 in the training and testing data. AI models can be difficult or impossible to
@@ -772,7 +772,7 @@ We will discuss object-oriented programming in more detail in section
 
 \begin{figure}[t]
 \centering
-\includegraphics{vector-sum.tikz}
+\includegraphics{fig/vector-sum.tikz}
 \caption{Vectors are geometric entities. This plot shows that $(4,3)+(3,5)=(3,5)+(4,3)=(7,8)$.}
 \label{fig:vector-sum}
 \end{figure}
@@ -864,7 +864,7 @@ scientific languages.
 
 \begin{figure}[ht]
 \centering
-\includegraphics{argand.tikz}
+\includegraphics{fig/argand.tikz}
 \caption{Complex numbers are two-dimensional quantities. In this Argand diagram, the $x$ axis is $\pm 1$ and the $y$ axis is $\pm i$. Multiplying a value by $i$ rotates the value among the real and imaginary axes.}
 \label{fig:argand}
 \end{figure}

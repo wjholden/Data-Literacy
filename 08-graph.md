@@ -915,7 +915,7 @@ and using R's `dbinom` function as `dbinom(x=1, size=2, prob=1/3)`.
 
 \begin{figure}[t]
 \centering
-\includegraphics{graph-probability.tikz}
+\includegraphics{fig/graph-probability.tikz}
 \caption{Discrete probabilities can be modeled as a graph. In this graph, each
 row represents the 3-point throw of a basketball with $1/3$ chance of scoring.}
 \label{fig:graph-probability}
@@ -946,7 +946,7 @@ discover unused or duplicative parts and components?
 
     \begin{figure}
     \centering
-    \includegraphics[width=1.0\textwidth]{part-component-system.tikz}
+    \includegraphics[width=1.0\textwidth]{fig/part-component-system.tikz}
     \label{fig:part-component-system}
     \caption{A \textit{dependency graph} models implication relationships in systems.}
     \end{figure}

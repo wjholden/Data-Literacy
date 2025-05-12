@@ -58,7 +58,7 @@ of the relative size of bodies of water.
 
 \begin{figure}[h]
 \centering
-\includegraphics{lineplot-water.tikz}
+\includegraphics{fig/lineplot-water.tikz}
 \caption{Line plots can depict the total order of ordinal data.}
 \label{fig:lineplot-water}
 \end{figure}
@@ -107,9 +107,9 @@ An example scatter plot is shown in figure \ref{fig:mtcars-scatter}.
 Use the R commands `plot(mtcars$mpg, mtcars$wt)` and `plot(mtcars$mpg ~ mtcars$wt)`
 to recreate this plot^[{https://webr.r-wasm.org/latest/}].
 
-\begin{figure}[b]
+\begin{figure}[h]
 \centering
-\includegraphics{mtcars-scatter.tikz}
+\includegraphics{fig/mtcars-scatter.tikz}
 \caption{A scatter plot of car efficiency and weight from the Motor Trend Cars data set. The color and shape of the points indicate the number of cylinders (4, 6, or 8).}
 \label{fig:mtcars-scatter}
 \end{figure}
@@ -124,12 +124,23 @@ against the same Cartesian plane. In a sense, these graphics are also scatter
 plots, but with a large number of samples taken from a function. Shading under
 curves can be useful to explain the accumulation of values over ranges.
 
-\begin{figure}[t]
+<!--
+adf[age_] := -age/5000 + 1/50
+
+Integrate[adf[x], {x, 0, 100}]
+
+Table[100*NIntegrate[adf[age], {age, x, x + 1}], {x, 0, 99}]
+-->
+
+\begin{figure}[h]
 \centering
-\includegraphics{scatter-age-density.tikz}
+\includegraphics{fig/scatter-age-density.tikz}
 \caption{Suppose, for the sake of this simple example, that the density of ages
 in our human population linearly decreases until there are none of us left at
-age 100. The blue area answers a child's question: why are there more adults
+age 100. 1.99\% of us are younger than 1, 1.97\% are between 1 and 2,
+1.95\% between 2 and 3, and so on until only 0.01\% are between 99 and 100.
+The total area of the curve is 1, representing 100\% of all people.
+The blue shaded area answers a child's question: why are there more adults
 than children?}
 \label{fig:scatter-age-density}
 \end{figure}
@@ -156,7 +167,7 @@ demonstrates a bar plot.
 
 \begin{figure}
 \centering
-\includegraphics{barplot.tikz}
+\includegraphics{fig/barplot.tikz}
 \caption{A bar plot showing the Gross Domestic Product (GDP) of the United States from 2019--2023, according to <https://tradingeconomics.com/united-states/gdp>.
 Bar plots summarize information by representing aggregates (such as sums) as functions of categories. Here, years are treated as a categorical variable.}
 \label{fig:barplot}
@@ -174,7 +185,7 @@ bar is more than triple that of the second and may confuse the reader.
 
 \begin{figure}
 \centering
-\includegraphics{misleading-barplot.tikz}
+\includegraphics{fig/misleading-barplot.tikz}
 \caption{The bars of a bar plot should ordinarily have uniform width.
 This bar plot shows values $x = \left( 3, 10, 11 \right)$, but the
 width of the third bar makes this observation appear much larger than the others.}
@@ -228,7 +239,7 @@ A Pareto chart for this table is shown in figure \ref{fig:pareto-injuries}.
 
 \begin{figure}
 \centering
-\includegraphics{pareto-injuries.tikz}
+\includegraphics{fig/pareto-injuries.tikz}
 \caption{A Pareto chart shows the relative and cumulative proportions of discretized quantities, sorted in decreasing incidence. Frequently used in quality control processes, such as Lean Six Sigma, Pareto charts may show that only one or a few causes lead to a significant proportion of problems.}
 \label{fig:pareto-injuries}
 \end{figure}
@@ -438,7 +449,7 @@ Plots of $e^x$ and $\ln x$ are shown in figure \ref{fig:exp}.
 
 \begin{figure}
 \centering
-\includegraphics{exp.tikz}
+\includegraphics{fig/exp.tikz}
 \caption{The exponential function, $e^x$, models iterated multiplication and grows quickly.
 The domain (allowable inputs) for $e^x$ are all real numbers, but the range (possible outputs) are strictly positive reals.
 It is not possible for $e^x$ to produce a zero or negative output if $x$ is a real number.
@@ -463,7 +474,7 @@ where $\ln b$ is a constant factor and observable as the slope of the resulting 
 
 \begin{figure}
 \centering
-\includegraphics{log_exp.tikz}
+\includegraphics{fig/log_exp.tikz}
 \caption{The exponential function, $e^x$, forms a straight line when plotted on a logarithmic scale, as $\ln {e^x} = x$.
 By contrast, the quadratic function, $x^2$, does not form a straight line when plotted on a logarithmic scale.
 Plotting a fast-growing data series on a log scale is a quick and easy way for the data scientist to "feel" if the curve might fit an exponential behavior or not.}
@@ -520,7 +531,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 <!-- <https://tikz.dev/pgfplots/> -->
 \begin{figure}
 \centering
-\includegraphics{sigmoid.tikz}
+\includegraphics{fig/sigmoid.tikz}
 \caption{todo sigmoid.}
 \label{fig:sigmoid}
 \end{figure}
@@ -553,7 +564,7 @@ regulation slow its growth.
 
 \begin{figure}
 \centering
-\includegraphics{logistic}
+\includegraphics{fig/logistic.tikz}
 \caption{todo logistic.}
 \label{fig:logistic}
 \end{figure}
@@ -609,7 +620,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
     \begin{figure}
     \centering
-    \includegraphics{bad-barplot-exercise.tikz}
+    \includegraphics{fig/bad-barplot-exercise.tikz}
     \caption{These bars represent values 20, 30, and 50.}
     \label{fig:bad-barplot-exercise}
     \end{figure}
@@ -630,7 +641,7 @@ the domain. Does the logistic function still look linear on a logarithmic scale?
 
     \begin{figure}
     \centering
-    \includegraphics{bad-piechart-exercise.tikz}
+    \includegraphics{fig/bad-piechart-exercise.tikz}
     \caption{These bars represent values 5, 3, 2, and 1.}
     \label{fig:bad-piechart-exercise}
     \end{figure}

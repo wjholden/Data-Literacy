@@ -507,7 +507,9 @@ $n$-piece puzzles ($n \ge 3$) contain two partitions and are therefore classifie
 The puzzle is unsolvable if started in the partition that does not contain the solution.
 We must understand that search algorithms might not be able to solve a problem if the graph of the problem space contains a partition.
 
-### A* and the Stable Marriage Problem
+### A* and the Stable Marriage Problem {#sec:stable-marriage}
+
+<!-- original research -->
 
 We will demonstrate the A* informed search algorithm on the *Stable Marriage Problem* [@gale1962college].
 The Stable Marriage Problem seeks to pair the members of two equal-sized sets to one another based upon their mutual preferences.

@@ -236,7 +236,8 @@ $$
 $P(x)$ predicts the probability that an observation will have value $x$.
 The *standard normal* has parameters $\mu=0$ and $\sigma=1$, with skewness $\mu_3 = 0$ and kurtosis $\mu_4 = 3$.
 
-$P(x)$ forms a "bell curve" (see figure \ref{fig:normal}) that one might encounter in a histogram of data, but
+$P(x)$ forms a "bell curve" (see figure \ref{fig:normal}) that one might encounter
+in a histogram (see \ref{sec:histogram}), but
 there are other distributions of data which also form a bell-shaped curve. It is
 **not** generally safe to immediately assume that data fits a normal distribution
 when a histogram reflects a bell curve.

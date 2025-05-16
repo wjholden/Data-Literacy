@@ -1,4 +1,4 @@
-# Data and Information Operations
+# Computing Information from Data
 
 ## Prose
 
@@ -23,7 +23,7 @@ based on trust in the person, not the persuasiveness of the analysis itself.
 White papers provide enough evidence to be persuasive on their own merit, although
 white papers may not provide detailed listings of the data and code used.
 
-The sciences use *notebooks* as a means of presenting prose with in-line code,
+Scientists use *notebooks* as a means of presenting prose with in-line code,
 plots, mathematical notation, and tables. Some examples of notebook interfaces
 are Jupyter^[<https://jupyter.org>] (commonly used with Python, R,
 Julia, and Scala), Mathematica^[<https://www.wolfram.com/mathematica/>] (the
@@ -42,6 +42,84 @@ chapter will focus on technical matters of working with data, but look at how
 data, code, figures, and mathematical notation are presented throughout. Reflect
 upon how these may or may not be appropriate when writing and presenting
 information, depending on format.
+
+## What is AI? {#sec:everything-is-ai}
+
+The computer science community uses a phrase, in many variations, that "AI is
+whatever hasn’t been done yet"^[<https://quoteinvestigator.com/2024/06/20/not-ai/>].
+As the field advances, the definition of AI moves to increasingly abstract,
+difficult, or vague problems.
+
+This text uses a simple, three-element definition for AI:
+
+1. Data to learn from.
+2. Code that forms models from the input data.
+3. Computations from the model, such as classifications, predictions, and solutions.
+
+We will quickly address a spectrum of solutions to a problem that do or do not
+meet this definition.
+
+We will apply this definition to a spectrum of solutions to the following
+computation: convert 28 degrees Celsius to Fahrenheit.
+
+A simple solution is to look up the conversion in a *lookup table*. Lookup
+tables are commonly used in computers for common but computationally-expensive
+tasks[@10.1145/74540.74549], both for the *dynamic programming* technique (an
+algorithmic approach that uses *memoization* to cache duplicate recursive
+calculations) and for calculations on resource-limited or performance-critical
+systems. A video game, for example, might use a lookup table for trigonometry
+where a loss in generality and precision may be acceptably traded for speed.
+Is the lookup table AI? Most people would say no^[What if we infer intermediate
+values that are missing from the table? For example, what if the Celsius to
+Fahrenheit table only provides whole numbers and our thermometer includes a
+fractional part, such as $\qty{28.5}{\degreeCelsius}$?].
+
+Another solution is to calculate the conversion directly using a *closed-form*
+expression. For converting Celsius ($C$) to Fahrenheit ($F$), the closed-form
+formula is
+
+$$
+F = \frac{9}{5} C + 32.
+$$
+
+It would be unconventional to argue that the direct usage of this definition meets
+the definition for AI, but if one uses a constraint solver then the "black box"
+of its declarative solver is free to apply any method it has to find a solution.
+
+```mathematica
+In[1]:= NSolve[f == 9/5 c + 32 && c == 28, {f, c}]
+
+Out[1]= {{f -> 82.4, c -> 28.}}
+```
+
+Constraint solvers meet this text's definition of an AI system: data and code
+to create predictions from a model. These simple qualities would also 
+characterize machine learning (ML), where the machine uses statistics to create
+the model where the closed form model is not known. Below, we use Mathematica's
+`LinearModelFit` feature to infer $F = \frac{9}{5} C + 32$ given
+$\qty{0}{\degreeCelsius} = \qty{32}{°F}$ and
+$\qty{100}{\degreeCelsius} = \qty{212}{°F}$.
+
+```mathematica
+In[2]:= lm = LinearModelFit[{{0, 32}, {100, 212}}, x, x];
+
+In[3]:= lm[28.]
+
+Out[3]= 82.4
+```
+
+Linear models might be a simple form of ML, but they are the basis for more
+complicated ML systems, including artificial neural networks, which can also
+model non-linearity.
+
+Clearly, one would consider asking an AI assistant, such as Siri or Alexa, for
+the calculation would be considered using AI.
+
+Ultimately, all declarative and AI programs must be implemented as imperative
+programs as instructions on a computing machine. From this viewpoint, the term
+"AI" becomes less meaningful. Perhaps the definition of AI shifts with the
+frontier of computability because virtually all computation is some combination
+of code, data, and modeling.
 
 ## Databases
 

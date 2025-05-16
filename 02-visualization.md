@@ -105,7 +105,7 @@ of two dimensions, conventionally $x$ for the horizontal axis and $y$ for
 the vertical axis, the flat space is called a *Cartesian plane*.
 An example scatter plot is shown in figure \ref{fig:mtcars-scatter}.
 Use the R commands `plot(mtcars$mpg, mtcars$wt)` and `plot(mtcars$mpg ~ mtcars$wt)`
-to recreate this plot^[{https://webr.r-wasm.org/latest/}].
+to recreate this plot^[<https://webr.r-wasm.org/latest/>].
 
 \begin{figure}[h]
 \centering
@@ -301,6 +301,15 @@ functions (such as `sum(n)` below; see also section \ref{sec:grouping-and-aggreg
 
 ## Box Plots {#sec:boxplot}
 
+\begin{figure}
+\centering
+\includegraphics{fig/mtcars-boxplot.tikz}
+\caption{A box plot of the fuel efficiency in the Motor Trend Cars (mtcars) data set.
+Box plots are centered at the median of the data. Outliers may be shown as dots
+or circles beyond the 0th and 100th percentile markers.}
+\label{fig:mtcars-boxplot}
+\end{figure}
+
 A box plot splits data into *quartiles*, where each quartile contains 25% of the
 observations, and represents the spread of each quartile with a "box and whisker."
 Box plots are only useful with numerical data. The box is centered at the *median*
@@ -352,24 +361,31 @@ By this definition, the `mtcars` data set contains one outlier in the `mpg`
 Toyota Corolla 33.9   4 71.1 65 4.22 1.835 19.9  1  1    4    1
 ```
 
-R provides `boxplot` function to render box plots. Return to the <https://webr.r-wasm.org/latest/>
-site and experiment with this function.
-
-```r
-> boxplot(mtcars$mpg)
-```
-
-![R's `boxplot` function creates box-and-whisker plots with four quartiles.
-Box plots are centered at the median of the data. Outliers may be shown as dots
-or circles beyond the 0th and 100th percentile markers.](mtcars-boxplot.pdf){#fig:boxplot}
+R provides `boxplot` function to render box plots^[<https://webr.r-wasm.org/latest/>].
+Recreate the box plot shown in figure \ref{fig:mtcars-boxplot} with `boxplot(mtcars$mpg)`.
 
 ## Histograms {#sec:histogram}
 
-```r
-> hist(mtcars$mpg)
-```
+\begin{figure}
+\centering
+\includegraphics{fig/mtcars-hist.tikz}
+\caption{A histogram of the fuel efficiency in the Motor Trend Cars (mtcars) data set,
+the same data shown in figure \ref{fig:mtcars-boxplot}.
+This histogram uses 5 bins.}
+\label{fig:mtcars-hist}
+\end{figure}
 
-![todo](mtcars-hist.pdf){#fig:histogram}
+A *histogram* is a special case of a bar plot. Samples are aggregated into
+intervals, known as *bins*, and counted. Bars representing the size of each bin
+are shown in order to visualize the *distribution* of the data set.
+
+Some distributions form the famous "bell curve" shape when plotted as a histogram.
+The majority of the data fits in a few bins at the center, which quickly tapers
+in the bins away from the center, and gradually reducing to thin "tails" as the
+extremes far from the center.
+
+In the R language, we can easily create histograms with the `hist` function,
+such as `hist(mtcars$mpg)`.
 
 ## Heat Maps {#sec:heatmap}
 
@@ -538,7 +554,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 
 ## Logistic Curves {#sec:logistic}
 <!-- <https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context> --> 
-The *logistic* function^[@Shulman01011998] is a parameterized sigmoid function of the form
+The *logistic* function^[todo @Shulman01011998] is a parameterized sigmoid function of the form
 
 $$
 \frac{L}{1+e^{-k \left( x-x_0 \right)}}.
@@ -565,7 +581,13 @@ regulation slow its growth.
 \begin{figure}
 \centering
 \includegraphics{fig/logistic.tikz}
-\caption{todo logistic.}
+\caption{The area near the inflection point of logistic and sigmoid functions
+might be mistaken for linear growth. In this example, we see only $l(x)$ for
+$0 \le x \le 5$. Such situations are common. Consider investment opportunities,
+such as Bitcoin, which quickly rise from obscurity into a hype cycle only to
+gradually fade. To maximize one's return in such markets one must invest early,
+long before the trend begins to slow, but in a noisy market it is difficult to
+predict if the function has already reached its inflection point or not.}
 \label{fig:logistic}
 \end{figure}
 

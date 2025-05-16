@@ -1,6 +1,6 @@
 \begin{tikzpicture}
 
-\draw[thick,->] (-4,0) -- (4,0);
+\draw[thick,|->] (-4,0) -- (4,0);
 \filldraw (-3,0) circle (2pt) node[anchor=north] {Drop};
 \filldraw (-2,0) circle (2pt) node[anchor=north] {Puddle};
 \filldraw (-1,0) circle (2pt) node[anchor=north] {Pool};

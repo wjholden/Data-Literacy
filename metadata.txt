@@ -34,6 +34,8 @@ header-includes:
     # https://tikz.dev/pgfplots/libs-fillbetween
     # https://tex.stackexchange.com/questions/164991/pgfplots-how-to-fill-bounded-area-under-a-curve-using-addplot-and-fill
     - \usepgfplotslibrary{fillbetween}
+    # https://tikz.dev/pgfplots/libs-statistics#sec-5.12.2
+    - \usepgfplotslibrary{statistics}
     - \usegdlibrary{trees}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc

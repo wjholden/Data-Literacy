@@ -583,16 +583,31 @@ If these codes had been more convenient to type, our world of data might have
 avoided some of the common pitfalls of CSV and other formats containing sentinel
 values.
 
-## Strong/weak and static/dynamic typing {#sec:strong-weak-types}
+## Type Systems {#sec:strong-weak-types}
 
 Values come in many forms: categorical and numerical, ordered and unordered, discrete and continuous, defined and missing.
-*Types* can be used to constrain variables to allowable values and applicable operations.
+*Types* can be used to constrain variables to allowable values and applicable
+operations [@costanza2004dynamic, p. 9--10].
 
-For example, suppose a database indicates how many cars a person owns.
-It makes no sense to own a fractional or negative car, so we might find an existing type
-(in this case, whole numbers) or define some new type to model the domain.
+A language with *weak typing* is generally permissive of operations (such as
+arithmetic) on its inputs. The C programming language is weakly typed and allows
+arithmetic on non-numeric inputs, sometimes to the surprise of the programmer.
+In a few paragraphs we will see one of these surprises in JavaScript, which is
+also weakly typed. Today, *strong* types are much more common. The Python, Java,
+Rust, Go, and R languages all use strong types.
 
-Some programming languages offer *dynamic* types that implicitly change the type (*cast*) of values to operate correctly.
+The type system of a programming language can be a powerful asset to maintain
+*invariants* (an assumption about program state that is always provably true).
+Software engineers use the phrase "make invalid states
+unrepresentable"^[<https://fsharpforfunandprofit.com/posts/designing-with-types-making-illegal-states-unrepresentable/>]
+^[<https://corrode.dev/blog/illegal-state/>]
+^[<https://kevinmahoney.co.uk/articles/applying-misu/>]. Consider a database
+that tracks car ownership. It makes no sense to have a fractional or negative
+number of cars, so ideally the type system of the programming language and
+database should enforce this constraint.
+
+Some programming languages can implicitly change the type (*cast*) of values to operate correctly,
+especially *promoting* a value without loss from a smaller to larger representation.
 Go to <https://jsfiddle.net> or press F12 to open the developer console in most modern browsers.
 Enter the following into the JavaScript console:
 
@@ -615,10 +630,10 @@ The resulting string, `"55"`, is the *concatenation* of two strings -- perhaps n
 Many languages and environments seek to automatically parse values.
 Microsoft Excel and the Python programming language are also dynamic.
 Other languages, such as Java and Go, are more strict with values and do not automatically change values, especially when the conversion might be "lossy" (where information might be lost, such as approximating the exact value of $\pi$ as $3.14$, or rounding $3.14$ to $3$, or even changing $3.0$ to $3$).
-These languages have both *strong* and *static* typing: the programmer must specify the type of each variable, and lossy type conversions require an explicit cast.
+These languages have both strong and static typing: the programmer must specify the type of each variable, and lossy type conversions require an explicit cast.
 
 Excel does provide some basic functionality to set number *formats*, but this feature might not stop one from confusing one type of data for another.
-Excel uses *weak* typing that does prevent one from using unexpected values.
+Excel uses weak typing that does prevent one from using unexpected values.
 Data analysts can benefit greatly by using the appropriate types for the values in their problem.
 
 ## Truthy and Falsy Values {#sec:truthy}

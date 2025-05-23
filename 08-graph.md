@@ -941,17 +941,17 @@ immediately associated with vertices and edges dominate their importance, or
 if some extrinsic network effect has a greater effect.
 
 #. A manufacturer sells systems that are made of components, as conceptualized
-in figure \ref{fig:part-component-system}. Those components are assembled from
+in figure \ref{fig:system}. Those components are assembled from
 atomic parts. Many parts are interchangeable with other parts, and many
 components are interchangeable with other components. How can the manufacturer
 discover unused or duplicative parts and components?
 
-    \begin{figure}
-    \centering
-    \includegraphics[width=1.0\textwidth]{fig/part-component-system.tikz}
-    \label{fig:part-component-system}
-    \caption{A \textit{dependency graph} models implication relationships in systems.}
-    \end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{fig/part-component-system.tikz}
+\label{fig:system}
+\caption{A \textit{dependency graph} models implication relationships in systems.}
+\end{figure}
 
 ## Practical exercises
 
@@ -967,5 +967,5 @@ discover unused or duplicative parts and components?
 
 #. Simulate an infection model in a dense social graph where edge weights represent probability of infection. 
 
-#. Use the technique shown in section \ref{sec:graph-probability} to solve the Monty
-Hall problem.
+#. Use the technique described in section \ref{sec:graph-probability} to solve
+the Monty Hall problem.

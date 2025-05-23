@@ -485,6 +485,19 @@ Map performs the same function over each element of an input set, creating "mapp
 <- ['FISH', 'BIRD']
 ```
 
+The term "map" has second, closely-related meaning in programming. Many
+languages provide a data structure to associate keys and values. Mathematica
+calls these *associations*^[<https://reference.wolfram.com/language/guide/Associations.html>],
+Java calls these *maps*^[<https://docs.oracle.com/javase/8/docs/api/java/util/Map.html>], and
+Python calls these *dictionaries*^[<https://docs.python.org/3/tutorial/datastructures.html#dictionaries>] (`dict`).
+These key-value stores model functions that relate domains to ranges.
+An array is also a relation of domains (sequential integers) to ranges (the
+values of the array), which are stored in contiguous memory. Programmers often
+choose the data structure used to store the data in memory. A *hash map* uses a
+*hashing function* to select which, among many, arrays to find and store items.
+A *tree map* uses a graph (see chapter \ref{chapter:graph}). Hash maps are so commonly
+used that many programmers will say "hash map" instead of the more general term.
+
 ### Reduce {#sec:reduce}
 
 Reduce, also known as *fold*, performs some operation on each element of an input set and returns an *accumulator*, which is passed again to the reduce function with the next input value.
@@ -530,9 +543,9 @@ In both cases, we use an empty array (`[]`) instead of a numeric identity as our
 
 <!-- <https://neopythonic.blogspot.com/2019/03/why-operators-are-useful.html?m=1> -->
 <!-- <https://reference.wolfram.com/language/ref/Infix.html.en> -->
-Some languages differentiate `foldl` and `foldr` to differentiate left- and right-associativity.
-A left-associative function would evaluate $x \infix y \infix z$ with first $x \infix y$ and then $(x \infix y) \infix z$.
-(In this context, the "$\infix$" represents an arbitrary infix operator and has no specific meaning).
+Some languages provide `foldl` and `foldr` functions to differentiate left- and right-associativity.
+A left-associative function evaluates $x \infix y \infix z$ with first $x \infix y$ and then $(x \infix y) \infix z$.
+(In this context, "$\infix$" represents an arbitrary infix operator with no specific meaning).
 A right-associative function evaluates $x \char"007E y \infix z$ as $x \infix (y \infix z)$.
 
 ### Vectorized Functions and Array Programming {#sec:array-programming}

@@ -222,7 +222,7 @@ $$
 \frac{3(n-1)^2}{(n-2)(n-3)}.
 $$
 
-## The Normal Distribution
+## The Normal Distribution {#sec:normal}
 
 The *Normal Distribution*, also known as the *Gaussian Distribution*, is a well-known
 predictor of the probability of continuous outcomes. Parameterized by mean, $\mu$,
@@ -272,16 +272,30 @@ $$
 \int_{-\infty}^{+\infty} P(x)\,dx = 1.
 $$
 
-The probabilities of an event occurring at $\pm \sigma$, $\pm 2\sigma$,
-and $\pm 3\sigma$ are approximately 68%, 95%, and 99%.
+The probabilities of an event occurring between $\pm \sigma$, $\pm 2\sigma$,
+and $\pm 3\sigma$ are approximately 68%, 95%, and 99%, as shown in figures
+\ref{fig:normal-1s}, \ref{fig:normal-2s}, and \ref{fig:normal-3s}.
 
-$$
-\begin{aligned}
-\int_{-1}^{+1} P(x)\,dx \approx 0.68 \\
-\int_{-2}^{+2} P(x)\,dx \approx 0.95 \\
-\int_{-3}^{+3} P(x)\,dx \approx 0.99 \\
-\end{aligned}
-$$
+\begin{figure}
+\centering
+\includegraphics{fig/normal-1s.tikz}
+\caption{$\int_{-1}^{+1} P(x)\,dx \approx 0.68$}
+\label{fig:normal-1s}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{fig/normal-2s.tikz}
+\caption{$\int_{-2}^{+2} P(x)\,dx \approx 0.95$}
+\label{fig:normal-2s}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{fig/normal-3s.tikz}
+\caption{$\int_{-3}^{+3} P(x)\,dx \approx 0.99$}
+\label{fig:normal-3s}
+\end{figure}
 
 Just as the probability mass was zero when the range had zero length, we also
 find that the probability mass for a single value is zero.
@@ -423,11 +437,30 @@ opinions *strongly* held" is just politics by another means.
 
 ## Discussion prompts
 
+#. A weightlifting joke says that one can tell if a gym-goer is weak by asking
+someone what is their maximum leg press. If they respond with any number at all,
+then they are weak. The implication is that strong people either do not use the
+leg press or, if they use it at all, they do not "max out" with this movement.
+
+    If the joke were true, then such imbalanced data would make it impossible
+    to classify strong and weak athletes using the leg press.
+
+    What is a slow marathon time? In our joke, we have a sampling problem where
+    strong lifters cannot report a leg press maximum, confounding our effort to
+    estimate the average leg press. In the real world, we have a corresponding
+    sampling problem: non-runners have no marathon time estimate at all.
+
+    Our calculation of an average marathon time would be ruined by entering
+    zeros or infinities for the non-runners. How can we estimate the *population*
+    marathon time given only samples from marathon finishers?
+
 #. Is four a lot? 
 
 #. First battalion has an average ACFT score of 482 while second battalion has an average ACFT score of 491. Which is better? 
 
-#. What do we do when statistics show us something that contradicts our values? For example, suppose we discover that Soldiers of a specific demographic have much lower promotion rates than their peers. 
+#. What do we do when statistics show us something that contradicts our values?
+For example, suppose we discover that Soldiers of a specific demographic have
+much lower promotion rates than their peers.
 
 #. Is it more important for an organization to think about variance or the 99th percentile? 
 
@@ -470,6 +503,8 @@ minimum standards while enabling outliers to flourish?
 
 #. Given multiple datasets with identical mean and standard deviation, use kurtosis to identify the dataset with more outliers. 
 
-#. Design or implement an algorithm to incrementally calculate standard deviation, where the estimate of the sample standard deviation is updated with each additional value. 
+#. Design or implement an algorithm to *incrementally* calculate standard
+deviation, where the estimate of the sample standard deviation is updated with
+each additional value. 
 
 #. Think backwards and try to guess what would be the zeroth moment, $\mu_0$.

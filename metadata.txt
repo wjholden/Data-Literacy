@@ -37,6 +37,8 @@ header-includes:
     # https://tikz.dev/pgfplots/libs-statistics#sec-5.12.2
     - \usepgfplotslibrary{statistics}
     - \usegdlibrary{trees}
+    #- \usepackage{subcaption}
+    #- \usepackage{graphicx}
 
 # https://tex.stackexchange.com/questions/234786/how-to-set-a-font-family-with-pandoc
 # https://tug.org/FontCatalogue/typewriterfonts.html

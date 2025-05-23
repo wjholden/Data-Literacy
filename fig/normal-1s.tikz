@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(x\),
+        ylabel = {\(P(x)\)},
+    ]
+
+    \addplot [
+        name path=dnorm,
+        domain=-4:4,
+        samples=100,
+        color=red,
+    ]{1/(1 * sqrt(2 * pi)) * exp(-(x - 0)^2/(2 * (1)^2))};
+
+    \addplot[name path = axis, draw = none] coordinates {(-4,0) (4,0)};
+
+    \addplot [blue] fill between[of=dnorm and axis, soft clip={domain=-1:+1}];
+
+    \end{axis}
+
+\end{tikzpicture}

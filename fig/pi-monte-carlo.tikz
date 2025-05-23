@@ -1,0 +1,7 @@
+\begin{tikzpicture}[scale=3]
+    \draw[black,fill=yellow] (-1,-1) rectangle (1,1);
+    \draw[black,fill=orange] (0,0) circle (1);
+    \foreach \x in {1,2,...,100}{
+        \filldraw (rand,rand) circle (1pt);
+    }
+\end{tikzpicture}

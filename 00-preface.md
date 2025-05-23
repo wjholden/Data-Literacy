@@ -15,7 +15,11 @@ ideas and learning new technologies. Another reason for teaching with code is
 that mathematical notation often hides complexity that one cannot ignore when
 solving practical problems.
 
-This book contains several original ideas.
+This book also contains some math. I mostly avoid calculus, except where it is
+necessary to explain the normal distribution (section \ref{sec:normal}) and just
+especially fun regarding least squares (section \ref{sec:least-squares-method}).
+
+I present a few original ideas in this book:
 
  - Models of imperative programming (figure \ref{fig:imperative}), declarative
 programming (figure \ref{fig:declarative}), and artificial intelligence (figure
@@ -23,9 +27,14 @@ programming (figure \ref{fig:declarative}), and artificial intelligence (figure
  - An unconventional claim that almost all programs meet some definition for AI
 and therefore the term "AI" is ultimately meaningless (section \ref{sec:everything-is-ai}).
  - Reduction of the Stable Marriage problem as a (slow) A* solution (section \ref{sec:stable-marriage}).
+ - Correlation matrices using Chatterjee correlation instead of Pearson correlation (section todo).
+
+All of the programs in this book are my own except for the Sudoku 
 
 This book also contains some opinions. In general, I favor:
 
- - Strongly typed programming languages and databases with static schema
- - Simple and well-understood algorithms and analytical techniques
- - 
+ - Strongly- and statically-typed languages.
+ - Databases with static schema.
+ - Simple solutions that we can understand, explain, and (sometimes) implement for ourselves.
+
+I do 

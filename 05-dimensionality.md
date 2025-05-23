@@ -497,7 +497,66 @@ combinatorial problem to satisfiability, then a SAT solver may be able to solve
 the problem through a declarative interface. Reductions can be difficult. 
 Refer to Dennis Yurichev's *SAT/SMT by Example* for further reading [@yurichev].
 
-## Subsets and Venn diagrams
+## Monte Carlo Methods
+
+Constraint solvers gave us a declarative means to describe a problem that we
+might not have been able to solve. Monte Carlo methods, named for a city in
+Monaco famous for casinos, allow us to simulate complex systems and *estimate*
+their properties.
+
+A famous example is a method to estimate $\pi$. We visualize our problem as a
+unit circle inside a $2 \times 2$ square, both centered on a Cartesian plane at
+$(0,0)$. We randomly generate values $-1 \le x \le 1$ and $-1 \le y \le 1$.
+We could how many $(x,y)$ pairs satisfy $1 = x^2 + y^2$. The area of the circle
+is $\pi (1)^2 = \pi$ and the area of the square is $2 \times 2 = 4$, so the
+ratio of $(x,y)$ pairs that fall in the circle to the total should be roughly
+$\pi/4$.
+
+\begin{figure}
+\centering
+\includegraphics[]{fig/pi-monte-carlo.tikz}
+\caption{A Monte Carlo method estimates the value of $\pi$ by randomly generating
+points that fall within a circle.}
+\label{fig:pi-monte-carlo}
+\end{figure}
+
+A Rust implementation of this idea usually produces estimates of $\pi$
+between $3.13$ and $3.15$^[<https://play.rust-lang.org/?gist=e3c51e6e39d93f85868669baca21b6cb>].
+The estimate becomes more accurate with more samples.
+
+```rust
+use rand;
+
+fn main() {
+    let samples = 100_000;
+    let mut inside_circle = 0;
+    for _ in 0..samples {
+        let x = rand::random_range(-1.0_f64..=1.0);
+        let y = rand::random_range(-1.0_f64..=1.0);
+        if (x.powi(2) + y.powi(2)).sqrt() <= 1.0 {
+            inside_circle += 1;
+        }
+    }
+    let a_circ = std::f64::consts::PI * 1.0 * 1.0;
+    let a_sq = 2.0 * 2.0;
+    println!("Area of a unit circle: {}", a_circ);
+    println!("Area of a 2x2 square: {}", a_sq);
+    println!("Proportion of square covered by circle: {}",
+        a_circ / a_sq);
+    println!(
+        "Proportion of points inside circle: {}",
+        (inside_circle as f64) / (samples as f64)
+    );
+    println!(
+        "Estimate of pi: {}",
+        4.0 * (inside_circle as f64) / (samples as f64)
+    )
+}
+```
+
+Todo: coffee & milk problem.
+
+## Set Intersection
 
 A set intersection ($\cap$) of two sets is the set of all elements present in
 both sets.
@@ -742,7 +801,13 @@ who rolled the same number. We have a correlation, but is there a causal relatio
 Of course not.
 
 A *mediating variable* makes establishing causality even more difficult.
-(todo: say more about mediating variables)
+Consider a study on skin cancer that asks if persons with light-colored skin,
+tanned skin, or dark skin are at unequal risk for skin cancer. The problem is
+that exposure to sunlight darkens one's skin and also creates risk of skin
+cancer. The study might incorrectly conclude that very light skin is at the
+least risk only because people with very light skin have likely minimized their
+exposure to sunlight, therefore the natural change in skin tone had not yet
+mediated the risk of skin cancer.
 
 *Confounding factors* introduce additional dimensions to a system and can make
 analysis more complex or, sometimes, impossible. For example, a cohort of

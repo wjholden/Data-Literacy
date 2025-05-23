@@ -26,6 +26,7 @@ programming (figure \ref{fig:declarative}), and artificial intelligence (figure
 \ref{fig:ai}).
  - An unconventional claim that almost all programs meet some definition for AI
 and therefore the term "AI" is ultimately meaningless (section \ref{sec:everything-is-ai}).
+ - Monte Carlo solution and algebraic proof for the "milk and coffee" problem (section \ref{sec:milk-and-coffee}).
  - Reduction of the Stable Marriage problem as a (slow) A* solution (section \ref{sec:stable-marriage}).
  - Correlation matrices using Chatterjee correlation instead of Pearson correlation (section todo).
 

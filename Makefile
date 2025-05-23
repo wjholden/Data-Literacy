@@ -95,5 +95,7 @@ test:
 	@! rg -tmd "et al. "
 # Always specify placement for figures.
 #	@! rg -tmd -U -e "^\\\\begin\\{figure\\}\\r\\n"
+# Should be {aligned}, not {align}, for multi-line equations.
+	@! rg -tmd --fixed-strings "\begin{align}"
 
 # Errors should be in C:\Users\wjhol\AppData\Local\MiKTeX\miktex\log\lualatex.log

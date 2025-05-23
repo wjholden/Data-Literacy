@@ -497,12 +497,14 @@ combinatorial problem to satisfiability, then a SAT solver may be able to solve
 the problem through a declarative interface. Reductions can be difficult. 
 Refer to Dennis Yurichev's *SAT/SMT by Example* for further reading [@yurichev].
 
-## Monte Carlo Methods
+## Monte Carlo Methods {#sec:monte-carlo}
 
 Constraint solvers gave us a declarative means to describe a problem that we
 might not have been able to solve. Monte Carlo methods, named for a city in
 Monaco famous for casinos, allow us to simulate complex systems and *estimate*
 their properties.
+
+### Approximation of $\pi$
 
 A famous example is a method to estimate $\pi$. We visualize our problem as a
 unit circle inside a $2 \times 2$ square, both centered on a Cartesian plane at
@@ -554,7 +556,113 @@ fn main() {
 }
 ```
 
-Todo: coffee & milk problem.
+### Milk and Coffee Problem {#sec:milk-and-coffee}
+
+Estimating the well-known value of $\pi$ allowed us to understand the strength
+limitations of approximation methods. We will now try to explore a very
+different problem where the correct answer is not obvious.
+
+<!-- original work --> 
+
+In a video posted to Instagram^[<https://www.instagram.com/p/DJyieO2Jc_B/>],
+Tanya Zakowich presents the milk and coffee problem. We have a cup of milk and
+a cup of coffee. We take a spoonful of milk from the first cup and mix it into
+the coffee. We then take a spoonful of the mixed milk and coffee and put it back
+into the cup of milk. In the end, both cups contain some mixture of milk and
+coffee. Which cup contains more of the other? Does the cup of milk contain
+more units of coffee, or does the coffee cup contain more units of milk?
+
+Intuition is a powerful tool in human reasoning, but it is fallible and can lead
+us to incorrect results. The Monte Carlo approach can help us to study this milk
+and coffee problem with synthetic data.
+
+```rust
+use rand;
+use rand::seq::SliceRandom;
+
+#[derive(Clone, PartialEq)]
+enum Beverage {
+    Milk,
+    Coffee,
+}
+
+fn main() {
+    let cup_size = 1000;
+    let spoon_size = 100;
+
+    // Create a cup of milk and coffee.
+    let mut milk = vec![Beverage::Milk; cup_size];
+    let mut coffee = vec![Beverage::Coffee; cup_size];
+
+    // Take a spoon of milk and put it in the coffee.
+    for _ in 1..=spoon_size {
+        let i = rand::random_range(0..milk.len());
+        coffee.push(milk.remove(i));
+    }
+
+    // Mix the coffee.
+    coffee.shuffle(&mut rand::rng());
+
+    // Return a spoon of mixed coffee and milk to the milk.
+    for _ in 1..=spoon_size {
+        let i = rand::random_range(0..coffee.len());
+        milk.push(coffee.remove(i));
+    }
+
+    // How much of the opposite beverage do we have?
+    let coffee_in_milk = milk.iter().fold(0, |total, x| match x {
+        Beverage::Coffee => total + 1,
+        Beverage::Milk => total,
+    });
+    println!("We have {coffee_in_milk} units of coffee in our milk.");
+    let milk_in_coffee = coffee.iter().fold(0, |total, x| match x {
+        Beverage::Milk => total + 1,
+        Beverage::Coffee => total,
+    });
+    println!("We have {milk_in_coffee} units of milk in our coffee.");
+}
+```
+
+When we run this Rust program^[<https://play.rust-lang.org/?gist=6c6fb458883c87bca4ec54c69f4f66e7>],
+we see results like
+
+```
+We have 93 units of coffee in our milk.
+We have 93 units of milk in our coffee.
+```
+
+and
+
+```
+We have 91 units of coffee in our milk.
+We have 91 units of milk in our coffee.
+```
+
+If we repeatedly run the simulation, we will find that the reported numbers
+always match. The numbers are not *almost* the same *most* of the time. No,
+the numbers are *always exactly equal*. This result likely does not match our
+intuition of the problem, but helps us to formulate a symbolic proof.
+
+Given a cup of milk of volume $M$ and a cup of coffee of volume $C$, we displace
+some small amount of milk $m_1$ and add it to the coffee. The amount of milk
+remaining in the milk glass is $m_2$, where $m_2=M-m_1$. The milk added to the
+coffee, $m_1$, displaces a corresponding amount of coffee $c_1$, leaving 
+$c_2=C-c_1$ in the coffee cup. At the end, the total volume of fluid in each cup
+is unchanged, so $M = m_2 + c_1 = C = m_1 + c_2$. Now using algebra, we prove
+that $m_1 = c_1$.
+
+$$
+\begin{aligned}
+m_1 &= C - c_2 \\
+c_1 &= M - m_2 \\
+M &= m_1 + m_2 \\
+m_1 &= (c_1 + c_2) - c_2 \\
+&= c_1
+\end{aligned}
+$$
+
+Intuitively, any unit of milk that displaces a unit of coffee will ultimately
+correspond to a unit of coffee returned to the original glass^[<https://www.instagram.com/p/DJ6UjW1JQ9x/>].
 
 ## Set Intersection
 

@@ -1,0 +1,46 @@
+\begin{tikzpicture}
+
+    \begin{axis}[
+        name=plot1,
+        xbar,
+        scaled ticks=false,
+        xlabel=Linear Scale,
+        yticklabel=\empty,
+    ]
+        \addplot coordinates {
+            (10736,1)
+            (5564,2)
+            (1711,3)
+            (398,4)
+            (319,5)
+            (60,6)
+            (44,7)
+            (29,8)
+            (21,9)
+        };
+    \end{axis}
+    
+    \begin{axis}[
+        name=plot2,
+       at={($(plot1.east)+(2cm,0)$)},
+    	anchor=west,
+        xbar,
+        xmode=log,
+        log ticks with fixed point,
+        xlabel=Logarithmic Scale,
+        yticklabel=\empty,
+    ]
+       \addplot coordinates {
+            (10736,1)
+            (5564,2)
+            (1711,3)
+            (398,4)
+            (319,5)
+            (60,6)
+            (44,7)
+            (29,8)
+            (21,9)
+        };
+    \end{axis}
+    
+\end{tikzpicture}

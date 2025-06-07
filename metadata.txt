@@ -31,6 +31,7 @@ header-includes:
     # https://tikz.dev/tikz-graphs
     - \usetikzlibrary{graphs}
     - \usetikzlibrary{graphdrawing}
+    # - \usetikzlibrary{calc}
     # https://tikz.dev/pgfplots/libs-fillbetween
     # https://tex.stackexchange.com/questions/164991/pgfplots-how-to-fill-bounded-area-under-a-curve-using-addplot-and-fill
     - \usepgfplotslibrary{fillbetween}

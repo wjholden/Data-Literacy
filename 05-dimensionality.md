@@ -623,7 +623,7 @@ fn main() {
 }
 ```
 
-When we run this Rust program^[<https://play.rust-lang.org/?gist=6c6fb458883c87bca4ec54c69f4f66e7>],
+When we run this Rust program^[<https://play.rust-lang.org/?edition=2024&gist=6c6fb458883c87bca4ec54c69f4f66e7>],
 we see results like
 
 ```

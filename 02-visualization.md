@@ -18,19 +18,13 @@ A *scatter plot* (sometimes called an $XY$ plot) uses $x$ and $y$ axes to show r
 One can also color and shape the points to show third and fourth variables.
 Three-dimensional $XYZ$ plots are sometimes useful, especially in video and interactive presentations.
 
-As a small exercise to experiment with these four plots, go to <https://webr.r-wasm.org/latest/> to use the R language in a web browser.
-R is a programming language for statistics and data visualization.
-
-R includes several built-in data sets.
-We will use included Motor Trend Cars (`mtcars`) data set.
-
-In the *read-evaluate-print loop* (*REPL*) at the bottom-left of the screen, enter
+We will often refer to the Motor Trend Cars (`mtcars`) data set, which is included
+in the R language^[<https://webr.r-wasm.org/latest/>]. One can begin exploring
+the  `mtcars` data set in R's *read-evaluate-print loop* (*REPL*) with command 
 
 ```r
 > head(mtcars)
 ```
-
-to view the column names and first six rows of the Motor Trend Cars (`mtcars`) data set.
 Enter
 
 ```r
@@ -47,7 +41,7 @@ Try opening the R help for `mtcars` and `head` with the following commands:
 > ?head
 ```
 
-## Line Plots {#sec:lineplot}
+### Line Plots {#sec:lineplot}
 
 The *line plot* is among the most basic of plots. We seldom see one-dimensional
 number plots in the sciences, but they are used extensively in elementary
@@ -56,7 +50,7 @@ draw line plots to represent *continuums* of ordered data, including discretized
 categories. Figure \ref{fig:lineplot-water} shows a small example of a line plot
 of the relative size of bodies of water.
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{fig/lineplot-water.tikz}
 \caption{Line plots can depict the total order of ordinal data.}
@@ -98,7 +92,7 @@ Some cultures begin the week with Sunday, others Monday, and this convention is
 purely cultural. If plotting periodic values, one must choose some order based
 on similar conventions.
 
-## Scatter Plots {#sec:scatter}
+### Scatter Plots {#sec:scatter}
 
 *Scatter plots* depict data in two or three spatial dimensions. A scatter plot
 of two dimensions, conventionally $x$ for the horizontal axis and $y$ for
@@ -107,7 +101,7 @@ An example scatter plot is shown in figure \ref{fig:mtcars-scatter}.
 Use the R commands `plot(mtcars$mpg, mtcars$wt)` and `plot(mtcars$mpg ~ mtcars$wt)`
 to recreate this plot^[<https://webr.r-wasm.org/latest/>].
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{fig/mtcars-scatter.tikz}
 \caption{A scatter plot of car efficiency and weight from the Motor Trend Cars data set. The color and shape of the points indicate the number of cylinders (4, 6, or 8).}
@@ -132,7 +126,7 @@ Integrate[adf[x], {x, 0, 100}]
 Table[100*NIntegrate[adf[age], {age, x, x + 1}], {x, 0, 99}]
 -->
 
-\begin{figure}[h]
+\begin{figure}
 \centering
 \includegraphics{fig/scatter-age-density.tikz}
 \caption{Suppose, for the sake of this simple example, that the density of ages
@@ -151,7 +145,7 @@ so compelling that we can gather useful information directly. In figure
 lighter and more efficient than eight-cylinder cars. Figure \ref{fig:scatter-age-density}
 illustrates how the area under a curve is a powerful aggregation function.
 
-## Bar Plots {#sec:barplot}
+### Bar Plots {#sec:barplot}
 
 *Bar plots* relate categories to aggregated numerical features of a data set.
 The categorical group is the *independent* variable.
@@ -209,7 +203,7 @@ In the R language, one can create bar plots using the `barplot`. Using
 > ggplot(gdp, aes(x=Year, y=GDP)) + geom_col()
 ```
 
-## Pareto Charts {#sec:pareto-chart}
+### Pareto Charts {#sec:pareto-chart}
 
 A *Pareto chart* is a combination of a sorted box plot and line plot.
 Pareto charts are frequently used in industrial settings to show cumulative
@@ -299,7 +293,7 @@ functions (such as `sum(n)` below; see also section \ref{sec:grouping-and-aggreg
 	ylab("Proportion")
 ```
 
-## Box Plots {#sec:boxplot}
+### Box Plots {#sec:boxplot}
 
 \begin{figure}
 \centering
@@ -364,7 +358,7 @@ Toyota Corolla 33.9   4 71.1 65 4.22 1.835 19.9  1  1    4    1
 R provides `boxplot` function to render box plots^[<https://webr.r-wasm.org/latest/>].
 Recreate the box plot shown in figure \ref{fig:mtcars-boxplot} with `boxplot(mtcars$mpg)`.
 
-## Histograms {#sec:histogram}
+### Histograms {#sec:histogram}
 
 \begin{figure}
 \centering
@@ -387,7 +381,7 @@ extremes far from the center.
 In the R language, we can easily create histograms with the `hist` function,
 such as `hist(mtcars$mpg)`.
 
-## Heat Maps {#sec:heatmap}
+### Heat Maps {#sec:heatmap}
 
 A *heat map* (sometimes written *heatmap*) is a plot that uses a continuous range
 of colors to overlay values onto a two-dimensional plot. Heat maps are especially
@@ -397,7 +391,16 @@ countries are colored by military expenditures as a fraction of their economies.
 
 ![A heat map showing military expenditures in European countries. This plot was created in Wolfram Mathematica with input `GeoRegionValuePlot[Flatten[{CountryData[#, "Polygon"] -> CountryData[#, "MilitaryExpenditureFraction"]} & /@ CountryData["Europe"]]]`.](MilitaryExpenditureFraction.pdf){#fig:military-expenditure-europe}
 
-## Linear and logarithmic scales {#sec:scales}
+## Scales
+
+In this section, we will learn to adjust the scale of a plot to better 
+understand the data it represents. Scaling a plot can allow us to compare values
+that are of substantially different size. The scale can also serve as a useful
+tool to discover relationships, especially exponential relationships. We will
+continue our exploration of logarithms and exponentiation with an introduction
+to the sigmoid and logistic curves.
+
+### Linear and logarithmic scales {#sec:scales}
 
 Scientists use the term *order of magnitude* to compare values only by the power of $10$.
 One would say $a = 1.6 \times 10^{3}$ is three orders of magnitude smaller than $b = 8.3 \times 10^{6}$,
@@ -407,36 +410,47 @@ The *scale* of an axis, such as in bar plot, is the spacing between values.
 A *linear scale* might show marks at 10, 20, 30, 40, and so on.
 A *logarithmic scale* might show marks at 10, 100, $\num{1000}$, $\num{10000}$, and so on.
 
-![](barplot-linear-scale.pdf){width=50%}
-![](barplot-log-scale.pdf){width=50%}
 \begin{figure}
-\caption{These two bar plots show the same data using different scales. The left plot uses a linear scale, where successive marks have a constant \textit{additive} distance. The right plot uses a logarithmic scale, where successive marks have a constant \textit{multiplicative} difference. A logarithmic scale is useful when values differ by orders of magnitude, as the large values obscure differences among the smaller values. Observe that the third and fourth values appear nearly the same on a linear scale, but are clearly different on a logarithmic scale.}
-\label{fig:scales}
+\centering
+\includegraphics{fig/scale-linear.tikz}
+\caption{Are the smallest two values equal? It is difficult to tell in this plot.
+On a linear scale, the smaller values are so completely dwarfed by the
+maxima that they are difficult to distinguish.}
+\label{fig:linear-scale}
 \end{figure}
 
 Logarithmic scales can be useful for comparing values that differ by more than one order of magnitude.
-For example, suppose feature of a data set contains categories $a$, $b$, $c$, and $d$, and the count of each category is
+For example, let
 
-| Category | Count        |
-|----------|--------------|
-| $a$      | \num{10736} |
-| $b$      | \num{1711}  |
-| $c$      | \num{398}   |
-| $d$      | \num{319}   |
+$$
+x = \left( \num{10736}, \num{5564}, \num{1711}, 398, 319, 60, 44, 29, 21 \right).
+$$
+
+Compare the bar plots of $x$ in figures \ref{fig:linear-scale} and \ref{fig:log-scale}.
+
+\begin{figure}
+\centering
+\includegraphics{fig/scale-log.tikz}
+\caption{Are the smallest two values equal? Clearly not. On a logarithmic scale,
+we can compare values that differ by orders of magnitude.}
+\label{fig:log-scale}
+\end{figure}
+
+These two bar plots show the same data using different scales. The
+linear scale draws tick marks with a constant *additive*
+distance. The logarithmic scale spaces tick marks with
+by constant *multiplicative* change. Observe that, in both directions, values
+that appear close on one plot appear distant on the other.
 
 Return to <https://webr.r-wasm.org/latest/> and plot this data with linear and logarithmic scales:
 
 ```
-> category_counts <- c(10736, 1711, 398, 319)
-> category_counts
-[1] 10736  1711   398   319
-> barplot(category_counts)
-> barplot(category_counts, log="y")
+> x <- c(10736, 5564, 1711, 398, 319, 60, 44, 29, 21)
+> barplot(x)
+> barplot(x, log="y")
 ```
 
-These plots are shown in figure \ref{fig:scales}.
-
-## Logarithms and exponentiation {#sec:log_exp}
+### Logarithms and exponentiation {#sec:log_exp}
 
 A logarithm is the inverse of exponentiation. If 
 
@@ -474,7 +488,7 @@ The domain and range for $\ln x$ are the reverse of $e^x$: the domain of $\ln x$
 \label{fig:exp}
 \end{figure}
 
-## Relationships
+### Relationships
 
 Figure \ref{fig:log_exp} shows exponential and quadratic functions $e^x$ and $x^2$ on logarithmic scales.
 The exponential function forms a straight line when plotted this way, but the
@@ -521,7 +535,7 @@ In section \ref{sec:logistic}, we will see misleading shape in the plot of a
 logistic curve, but first we must explain the sigmoid curve in section
 \ref{sec:sigmoid}.
 
-## Sigmoid Curves {#sec:sigmoid}
+### Sigmoid Curves {#sec:sigmoid}
 
 The *sigmoid* function, $\sigma(x)$, can be used to model a system characterized
 by competing exponential growth and decay^[The letter $\sigma$ has many meanings in 
@@ -552,7 +566,7 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 \label{fig:sigmoid}
 \end{figure}
 
-## Logistic Curves {#sec:logistic}
+### Logistic Curves {#sec:logistic}
 <!-- <https://www.researchgate.net/publication/233238354_Math-alive_using_original_sources_to_teach_mathematics_in_social_context> --> 
 The *logistic* function^[todo @Shulman01011998] is a parameterized sigmoid function of the form
 

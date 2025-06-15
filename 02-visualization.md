@@ -562,7 +562,9 @@ slowing the spread as we reach some *inflection point*, as shown in figure
 \begin{figure}
 \centering
 \includegraphics{fig/sigmoid.tikz}
-\caption{todo sigmoid.}
+\caption{The sigmoid curve models a system with exponential growth and
+simultaneous exponential decay. At its inflection point, the rate at which the
+curve }
 \label{fig:sigmoid}
 \end{figure}
 

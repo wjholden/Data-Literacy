@@ -47,3 +47,4 @@ s.check()
 
 m = s.model()
 [[m.evaluate(v[row][col]) for col in range(9)] for row in range(9)]
+
